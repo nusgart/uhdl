@@ -2,8 +2,8 @@
 
 INCS = -I/home/ams/local/src/gplcver-2.12a.src/pli_incs
 
-CFLAGS= -fPIC -Wall -g $(INCS) -D__CVER__
-LFLAGS= -G -shared -export-dynamic
+CFLAGS= -m32 -fPIC -Wall -g $(INCS) -D__CVER__
+LFLAGS= -G -shared -export-dynamic -m elf_i386 -L/usr/lib32
 
 all: pli_ide.so pli_ide.vpi
 
