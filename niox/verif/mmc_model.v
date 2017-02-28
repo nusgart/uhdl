@@ -316,7 +316,7 @@ module mmc_model(
 
 `ifdef USE_FILE
 	   file_ret = $fseek(file_fd, blockNumber*512, 0);
-	   file_ret = $fwrite(file_fd, wr_data);
+	   $fwrite(file_fd, wr_data);
 	   $fflush(file_fd);
 `else
 	   case (blockNumber)
