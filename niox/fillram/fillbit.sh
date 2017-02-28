@@ -8,7 +8,7 @@ RAM2=../cli/niox_dram2.hex
 RAM3=../cli/niox_dram3.hex
 ROM=../cli/niox_irom.hex
 
-D2M=/opt/Xilinx/14.4/ISE_DS/ISE/bin/lin/data2mem 
+D2M=/opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/data2mem 
 
 cpu_rom_Mram_mem1
 cpu_rom_Mram_mem2

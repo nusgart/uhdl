@@ -9,10 +9,10 @@ SET_PREFERENCE verilogsim true
 SET_PREFERENCE vhdlsim false
 SET_PREFERENCE simulationfiles Behavioral
 SET_PREFERENCE busformat BusFormatAngleBracketNotRipped
-SET_PREFERENCE outputdirectory /files/code/cpus/caddr/ise-lx45/ipcore_dir/
-SET_PREFERENCE workingdirectory /files/code/cpus/caddr/ise-lx45/ipcore_dir/tmp/
-SET_PREFERENCE subworkingdirectory /files/code/cpus/caddr/ise-lx45/ipcore_dir/tmp/_cg/
-SET_PREFERENCE transientdirectory /files/code/cpus/caddr/ise-lx45/ipcore_dir/tmp/_cg/_dbg/
+SET_PREFERENCE outputdirectory /home/ams/cpus-caddr/ise-lx45/ipcore_dir/
+SET_PREFERENCE workingdirectory /home/ams/cpus-caddr/ise-lx45/ipcore_dir/tmp/
+SET_PREFERENCE subworkingdirectory /home/ams/cpus-caddr/ise-lx45/ipcore_dir/tmp/_cg/
+SET_PREFERENCE transientdirectory /home/ams/cpus-caddr/ise-lx45/ipcore_dir/tmp/_cg/_dbg/
 SET_PREFERENCE designentry Verilog
 SET_PREFERENCE flowvendor Foundation_ISE
 SET_PREFERENCE addpads false
@@ -497,9 +497,9 @@ SET_CORE_NAME Clocking Wizard
 SET_CORE_VERSION 3.6
 SET_CORE_VLNV xilinx.com:ip:clk_wiz:3.6
 SET_CORE_CLASS com.xilinx.ip.clk_wiz_v3_6.clk_wiz_v3_6
-SET_CORE_PATH /opt/Xilinx/14.4/ISE_DS/ISE/coregen/ip/xilinx/primary/com/xilinx/ip/clk_wiz_v3_6
-SET_CORE_GUIPATH /opt/Xilinx/14.4/ISE_DS/ISE/coregen/ip/xilinx/primary/com/xilinx/ip/clk_wiz_v3_6/gui/clk_wiz_v3_6.tcl
-SET_CORE_DATASHEET /opt/Xilinx/14.4/ISE_DS/ISE/coregen/ip/xilinx/primary/com/xilinx/ip/clk_wiz_v3_6/doc/pg065_clk_wiz.pdf
-ADD_CORE_DOCUMENT </opt/Xilinx/14.4/ISE_DS/ISE/coregen/ip/xilinx/primary/com/xilinx/ip/clk_wiz_v3_6/doc/pg065_clk_wiz.pdf><pg065_clk_wiz.pdf>
-ADD_CORE_DOCUMENT </opt/Xilinx/14.4/ISE_DS/ISE/coregen/ip/xilinx/primary/com/xilinx/ip/clk_wiz_v3_6/doc/clk_wiz_v3_6_readme.txt><clk_wiz_v3_6_readme.txt>
-ADD_CORE_DOCUMENT </opt/Xilinx/14.4/ISE_DS/ISE/coregen/ip/xilinx/primary/com/xilinx/ip/clk_wiz_v3_6/doc/clk_wiz_v3_6_vinfo.html><clk_wiz_v3_6_vinfo.html>
+SET_CORE_PATH /opt/Xilinx/14.7/ISE_DS/ISE/coregen/ip/xilinx/primary/com/xilinx/ip/clk_wiz_v3_6
+SET_CORE_GUIPATH /opt/Xilinx/14.7/ISE_DS/ISE/coregen/ip/xilinx/primary/com/xilinx/ip/clk_wiz_v3_6/gui/clk_wiz_v3_6.tcl
+SET_CORE_DATASHEET /opt/Xilinx/14.7/ISE_DS/ISE/coregen/ip/xilinx/primary/com/xilinx/ip/clk_wiz_v3_6/doc/pg065_clk_wiz.pdf
+ADD_CORE_DOCUMENT </opt/Xilinx/14.7/ISE_DS/ISE/coregen/ip/xilinx/primary/com/xilinx/ip/clk_wiz_v3_6/doc/pg065_clk_wiz.pdf><pg065_clk_wiz.pdf>
+ADD_CORE_DOCUMENT </opt/Xilinx/14.7/ISE_DS/ISE/coregen/ip/xilinx/primary/com/xilinx/ip/clk_wiz_v3_6/doc/clk_wiz_v3_6_readme.txt><clk_wiz_v3_6_readme.txt>
+ADD_CORE_DOCUMENT </opt/Xilinx/14.7/ISE_DS/ISE/coregen/ip/xilinx/primary/com/xilinx/ip/clk_wiz_v3_6/doc/clk_wiz_v3_6_vinfo.html><clk_wiz_v3_6_vinfo.html>

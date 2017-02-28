@@ -2,10 +2,10 @@
 [*] GTKWave Analyzer v3.3.34 (w)1999-2012 BSI
 [*] Fri Dec  6 18:09:42 2013
 [*]
-[dumpfile] "/files/code/cpus/caddr/verif/test.vcd"
+[dumpfile] "/home/ams/cpus-caddr/verif/test.vcd"
 [dumpfile_mtime] "Fri Dec  6 18:08:59 2013"
 [dumpfile_size] 616639506
-[savefile] "/files/code/cpus/caddr/verif/test-verilator.sav"
+[savefile] "/home/ams/cpus-caddr/verif/test-verilator.sav"
 [timestart] 303425
 [size] 1676 850
 [pos] -1 -1

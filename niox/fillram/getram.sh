@@ -1,6 +1,6 @@
 #!/bin/sh
 
-BASE=/opt/Xilinx/14.4/ISE_DS/ISE/bin/lin
+BASE=/opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64
 
 NGC=../ise/top_niox.ngc
 #NGC=./top_niox.ngc

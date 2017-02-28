@@ -1,6 +1,6 @@
 #
 
-INCS = -I../../cver/gplcver-2.12a.src/pli_incs
+INCS = -I/home/ams/local/src/gplcver-2.12a.src/pli_incs
 
 CFLAGS= -fPIC -Wall -g $(INCS) -D__CVER__
 LFLAGS= -G -shared -export-dynamic -lSDL -lpthread

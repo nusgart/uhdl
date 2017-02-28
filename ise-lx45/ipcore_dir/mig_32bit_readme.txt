@@ -1,6 +1,6 @@
 
 The design files are located at
-/files/code/cpus/caddr/ise-lx45/ipcore_dir:
+/home/ams/cpus-caddr/ise-lx45/ipcore_dir:
 
    - mig_32bit.veo:
         veo template file containing code that can be used as a model

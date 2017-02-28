@@ -4,7 +4,7 @@
 
 IVERILOG=iverilog
 #VERILOG=cver
-VERILOG=../cver/gplcver-2.12a.src/bin/cver
+VERILOG=/home/ams/local/src/gplcver-2.12a.src/bin/cver
 
 all: crun
 

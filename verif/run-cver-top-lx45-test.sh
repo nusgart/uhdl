@@ -6,7 +6,7 @@ cver $PLI +incdir+../rtl run_top_lx45_test.v
 #!/bin/sh
 
 PLI=+loadvpi=../pli/mmc/pli_mmc.so:vpi_compat_bootstrap
-XV=/opt/Xilinx/14.4/ISE_DS/ISE/verilog/src
+XV=/opt/Xilinx/14.7/ISE_DS/ISE/verilog/src
 ISE=../ise-lx45
 RTL=../rtl
 

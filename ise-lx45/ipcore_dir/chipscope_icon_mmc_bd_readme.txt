@@ -1,5 +1,5 @@
 The following files were generated for 'chipscope_icon_mmc_bd' in directory
-/files/code/cpus/caddr/ise-lx45/ipcore_dir/
+/home/ams/cpus-caddr/ise-lx45/ipcore_dir/
 
 XCO file generator:
    Generate an XCO file for compatibility with legacy flows.

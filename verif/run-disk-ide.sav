@@ -2,10 +2,10 @@
 [*] GTKWave Analyzer v3.3.34 (w)1999-2012 BSI
 [*] Tue Dec  3 13:47:56 2013
 [*]
-[dumpfile] "/files/code/cpus/caddr/verif/run-disk.vcd"
+[dumpfile] "/home/ams/cpus-caddr/verif/run-disk.vcd"
 [dumpfile_mtime] "Tue Dec  3 13:44:40 2013"
 [dumpfile_size] 9731314
-[savefile] "/files/code/cpus/caddr/verif/disk-ide.sav"
+[savefile] "/home/ams/cpus-caddr/verif/disk-ide.sav"
 [timestart] 42650
 [size] 1661 717
 [pos] -87 -16

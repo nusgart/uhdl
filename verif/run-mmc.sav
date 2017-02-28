@@ -2,10 +2,10 @@
 [*] GTKWave Analyzer v3.3.34 (w)1999-2012 BSI
 [*] Fri Jan  3 15:48:46 2014
 [*]
-[dumpfile] "/files/code/cpus/caddr/verif/run-mmc.vcd"
+[dumpfile] "/home/ams/cpus-caddr/verif/run-mmc.vcd"
 [dumpfile_mtime] "Fri Jan  3 15:47:11 2014"
 [dumpfile_size] 5970455
-[savefile] "/files/code/cpus/caddr/verif/run-mmc.sav"
+[savefile] "/home/ams/cpus-caddr/verif/run-mmc.sav"
 [timestart] 878700
 [size] 1264 661
 [pos] -298 -216
