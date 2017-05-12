@@ -101,23 +101,23 @@ TIMESPEC "TS_clkin" = PERIOD "clkin" 20000 ps INPUT_JITTER 200 ps;
 
 # Main board wing layout
 #
-# Wing C			Wing B		Wing A
-# [GND] [C00] F17		[GND] [B00]	[A15]
-# [2V5] [C01] F16		[2V5] [B01]	[A14]
-# [3V3] [C02] E16		[3V3] [B02]	[A13]
-# [5V0] [C03] G16		[5V0] [B03]	[A12]
-#       [C04] F15		      [B04]	[A11] [5V0]
-#       [C05] G14		      [B05]	[A10] [3V3]
-#       [C06] F14		      [B06]	[A09] [2V5]
-#       [C07] H14		      [B07]	[A08] [GND]
-# [GND] [C08] H13		[GND] [B08]	[A07]
-# [2V5] [C09] J13		[2V5] [B09]	[A06]
-# [3V3] [C10] G13		[3V3] [B10]	[A05]
-# [5V0] [C11] H12		[5V0] [B11]	[A04]
-#       [C12] K14		      [B12]	[A03] [5V0]
-#       [C13] K13		      [B13]	[A02] [3V3]
-#       [C14] K12		      [B14]	[A01] [2V5]
-#       [C15] L12		      [B15]	[A00] [GND]
+# Wing C		Wing B		Wing A
+# [GND] [C00]		[GND] [B00]	[A15]
+# [2V5] [C01]		[2V5] [B01]	[A14]
+# [3V3] [C02]		[3V3] [B02]	[A13]
+# [5V0] [C03]		[5V0] [B03]	[A12]
+#       [C04]		      [B04]	[A11] [5V0]
+#       [C05]		      [B05]	[A10] [3V3]
+#       [C06]		      [B06]	[A09] [2V5]
+#       [C07]		      [B07]	[A08] [GND]
+# [GND] [C08]		[GND] [B08]	[A07]
+# [2V5] [C09]		[2V5] [B09]	[A06]
+# [3V3] [C10]		[3V3] [B10]	[A05]
+# [5V0] [C11]		[5V0] [B11]	[A04]
+#       [C12]		      [B12]	[A03] [5V0]
+#       [C13]		      [B13]	[A02] [3V3]
+#       [C14]		      [B14]	[A01] [2V5]
+#       [C15]		      [B15]	[A00] [GND]
 
 #NET "Wing_A15"       LOC = "D18"  | IOSTANDARD = LVTTL | DRIVE = 8 | SLEW = FAST | PULLUP ;
 #NET "Wing_A14"       LOC = "F18"  | IOSTANDARD = LVTTL | DRIVE = 8 | SLEW = FAST | PULLUP ;
