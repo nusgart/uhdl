@@ -1,4 +1,6 @@
+# Pipistrello User Constraints File
 
+CONFIG PART = xc6slx45-csg324-3 ;
 CONFIG VCCAUX = "3.3" ;
 
 
@@ -13,9 +15,9 @@ TIMESPEC "TS_clkin" = PERIOD "clkin" 20000 ps INPUT_JITTER 200 ps;
 #NET "jtag_tdo"       LOC = "D16"  | IOSTANDARD = LVTTL | DRIVE = 8 | SLEW = FAST ;
 
 # SPI Flash
-#NET "flash_miso"     LOC = "R13"  | IOSTANDARD = LVTTL | DRIVE = 8 | SLEW = FAST | PULLUP ; 
-#NET "flash_mosi"     LOC = "T13"  | IOSTANDARD = LVTTL | DRIVE = 8 | SLEW = FAST ; 
-#NET "flash_cs"       LOC = "V3"   | IOSTANDARD = LVTTL | DRIVE = 8 | SLEW = FAST | PULLUP  ; 
+#NET "flash_miso"     LOC = "R13"  | IOSTANDARD = LVTTL | DRIVE = 8 | SLEW = FAST | PULLUP ;
+#NET "flash_mosi"     LOC = "T13"  | IOSTANDARD = LVTTL | DRIVE = 8 | SLEW = FAST ;
+#NET "flash_cs"       LOC = "V3"   | IOSTANDARD = LVTTL | DRIVE = 8 | SLEW = FAST | PULLUP  ;
 #NET "flash_sck"      LOC = "R15"  | IOSTANDARD = LVTTL | DRIVE = 8 | SLEW = FAST ;
 #NET "flash_wp"       LOC = "T14"  | IOSTANDARD = LVTTL | DRIVE = 8 | SLEW = FAST | PULLUP ;
 #NET "flash_hold"     LOC = "V14"  | IOSTANDARD = LVTTL | DRIVE = 8 | SLEW = FAST | PULLUP ;
@@ -58,11 +60,11 @@ TIMESPEC "TS_clkin" = PERIOD "clkin" 20000 ps INPUT_JITTER 200 ps;
 
 #NET "hdmi_det"       LOC = "R8"   | IOSTANDARD = LVTTL ;
 
-# audio
+# Audio
 #NET "audio_l"        LOC = "R7"   | IOSTANDARD = LVTTL | SLEW = SLOW | DRIVE = 8 ;
 #NET "audio_r"        LOC = "T7"   | IOSTANDARD = LVTTL | SLEW = SLOW | DRIVE = 8 ;
 
-# sd-card SDIO interface
+# SD-Card SDIO interface
 #NET "sd_dat<0>"      LOC = "B4"   | IOSTANDARD = SDIO | SLEW = FAST | DRIVE = 8 | PULLUP ;
 #NET "sd_dat<1>"      LOC = "A4"   | IOSTANDARD = SDIO | SLEW = FAST | DRIVE = 8 | PULLUP ;
 #NET "sd_dat<2>"      LOC = "B2"   | IOSTANDARD = SDIO | SLEW = FAST | DRIVE = 8 | PULLUP ;
@@ -70,33 +72,53 @@ TIMESPEC "TS_clkin" = PERIOD "clkin" 20000 ps INPUT_JITTER 200 ps;
 #NET "sd_cmd"         LOC = "B3"   | IOSTANDARD = SDIO | SLEW = FAST | DRIVE = 8 | PULLUP ;
 #NET "sd_clk"         LOC = "A3"   | IOSTANDARD = SDIO | SLEW = FAST | DRIVE = 8 ;
 
-# sd-card SPI interface
+# SD-Card SPI interface
 #NET "sd_miso"        LOC = "B4"   | IOSTANDARD = SDIO | SLEW = FAST | DRIVE = 8 | PULLUP ;
 #NET "sd_cs"          LOC = "A2"   | IOSTANDARD = SDIO | SLEW = FAST | DRIVE = 8 | PULLUP ;
 #NET "sd_mosi"        LOC = "B3"   | IOSTANDARD = SDIO | SLEW = FAST | DRIVE = 8 | PULLUP ;
 #NET "sd_sck"         LOC = "A3"   | IOSTANDARD = SDIO | SLEW = FAST | DRIVE = 8 ;
 
-# leds
+# LEDs
 #NET "LED1"           LOC = "V16"  | IOSTANDARD = LVTTL | SLEW = SLOW | DRIVE = 8 ;
 #NET "LED2"           LOC = "U16"  | IOSTANDARD = LVTTL | SLEW = SLOW | DRIVE = 8 ;
 #NET "LED3"           LOC = "A16"  | IOSTANDARD = LVTTL | SLEW = SLOW | DRIVE = 8 ;
 #NET "LED4"           LOC = "A15"  | IOSTANDARD = LVTTL | SLEW = SLOW | DRIVE = 8 ;
 #NET "LED5"           LOC = "A12"  | IOSTANDARD = LVTTL | SLEW = SLOW | DRIVE = 8 ;
 
-# switch
+# Switch
 #NET "switch"         LOC = "N14"  | IOSTANDARD = LVTTL | PULLDOWN ;
 
-# PMOD
+# PMOD (top row)
 #NET "PMOD1_IO1"      LOC = "D9"   | IOSTANDARD = LVTTL | SLEW = SLOW | DRIVE = 8 ;
 #NET "PMOD1_IO2"      LOC = "C8"   | IOSTANDARD = LVTTL | SLEW = SLOW | DRIVE = 8 ;
 #NET "PMOD1_IO3"      LOC = "D6"   | IOSTANDARD = LVTTL | SLEW = SLOW | DRIVE = 8 ;
 #NET "PMOD1_IO4"      LOC = "C4"   | IOSTANDARD = LVTTL | SLEW = SLOW | DRIVE = 8 ;
+# PMOD (bottom row)
 #NET "PMOD2_IO1"      LOC = "B11"  | IOSTANDARD = LVTTL | SLEW = SLOW | DRIVE = 8 ;
 #NET "PMOD2_IO2"      LOC = "C9"   | IOSTANDARD = LVTTL | SLEW = SLOW | DRIVE = 8 ;
 #NET "PMOD2_IO3"      LOC = "D8"   | IOSTANDARD = LVTTL | SLEW = SLOW | DRIVE = 8 ;
 #NET "PMOD2_IO4"      LOC = "C6"   | IOSTANDARD = LVTTL | SLEW = SLOW | DRIVE = 8 ;
 
-# Wings
+# Main board wing layout
+#
+# Wing C			Wing B		Wing A
+# [GND] [C00] F17		[GND] [B00]	[A15]
+# [2V5] [C01] F16		[2V5] [B01]	[A14]
+# [3V3] [C02] E16		[3V3] [B02]	[A13]
+# [5V0] [C03] G16		[5V0] [B03]	[A12]
+#       [C04] F15		      [B04]	[A11] [5V0]
+#       [C05] G14		      [B05]	[A10] [3V3]
+#       [C06] F14		      [B06]	[A09] [2V5]
+#       [C07] H14		      [B07]	[A08] [GND]
+# [GND] [C08] H13		[GND] [B08]	[A07]
+# [2V5] [C09] J13		[2V5] [B09]	[A06]
+# [3V3] [C10] G13		[3V3] [B10]	[A05]
+# [5V0] [C11] H12		[5V0] [B11]	[A04]
+#       [C12] K14		      [B12]	[A03] [5V0]
+#       [C13] K13		      [B13]	[A02] [3V3]
+#       [C14] K12		      [B14]	[A01] [2V5]
+#       [C15] L12		      [B15]	[A00] [GND]
+
 #NET "Wing_A15"       LOC = "D18"  | IOSTANDARD = LVTTL | DRIVE = 8 | SLEW = FAST | PULLUP ;
 #NET "Wing_A14"       LOC = "F18"  | IOSTANDARD = LVTTL | DRIVE = 8 | SLEW = FAST | PULLUP ;
 #NET "Wing_A13"       LOC = "H18"  | IOSTANDARD = LVTTL | DRIVE = 8 | SLEW = FAST | PULLUP ;
@@ -147,5 +169,3 @@ TIMESPEC "TS_clkin" = PERIOD "clkin" 20000 ps INPUT_JITTER 200 ps;
 #NET "Wing_C2"        LOC = "E16"  | IOSTANDARD = LVTTL | DRIVE = 8 | SLEW = FAST | PULLUP ;
 #NET "Wing_C1"        LOC = "F16"  | IOSTANDARD = LVTTL | DRIVE = 8 | SLEW = FAST | PULLUP ;
 #NET "Wing_C0"        LOC = "F17"  | IOSTANDARD = LVTTL | DRIVE = 8 | SLEW = FAST | PULLUP ;
-
-
