@@ -4,6 +4,7 @@
 #include <fcntl.h>
 #include <termios.h>
 #include <errno.h>
+#include <unistd.h>
 
 typedef unsigned long long u64;
 typedef unsigned int u32;
@@ -176,13 +177,18 @@ int verbose;
 #define	CONS_DISP_RPN_BITS 01603
 #define	CONS_DISP_PARITY_BIT 02101
 
-u32 cc_read_md(void);
+typedef u64 ucw_t;
+void disassemble_ucode_loc(int loc, ucw_t u);
 
+u32 cc_read_md(void);
+int cc_noop_debug_clock(void);
+int cc_noop_clock(void);
+int cc_debug_clock(void);
+int cc_clock(void);
 
 int cc_send(unsigned char *b, int len)
 {
 	int i, ret;
-	char bb[5];
 
 #if 0
 	ret = write(fd, b, len);
@@ -437,8 +443,6 @@ cc_read_status(void)
 int
 cc_write_diag_ir(u64 ir)
 {
-	int tries;
-
 	if (debug || verbose) disassemble_ucode_loc(0, ir);
 	cc_set(wr_spy_ir_high, (u16)((ir >> 32) & 0xffff));
 	cc_set(wr_spy_ir_med,  (u16)((ir >> 16) & 0xffff));
@@ -624,7 +628,7 @@ cc_read_md(void)
 	return _cc_read_pair(rd_spy_md_high, rd_spy_md_low);
 }
 
-int
+void
 cc_write_md(u32 md)
 {
 	cc_set(wr_spy_md_high, (u16)(md >> 16) & 0xffff);
@@ -650,7 +654,7 @@ cc_read_vma(void)
 	return _cc_read_pair(rd_spy_vma_high, rd_spy_vma_low);
 }
 
-int
+void
 cc_write_vma(u32 vma)
 {
 	cc_set(wr_spy_vma_high, (u16)(vma >> 16) & 0xffff);
@@ -661,15 +665,16 @@ cc_write_vma(u32 vma)
 		cc_set(wr_spy_vma_high, (u16)(vma >> 16) & 0xffff);
 		cc_set(wr_spy_vma_low,  (u16)(vma >>  0) & 0xffff);
 	}
-	
 }
 
 
+void
 cc_write_md_1s(void)
 {
 	cc_write_md(0xffffffff);
 }
 
+void
 cc_write_md_0s(void)
 {
 	cc_write_md(0x00000000);
@@ -685,7 +690,7 @@ cc_read_a_mem(u32 adr)
 	return cc_read_obus();
 }
 
-u32
+void
 cc_write_a_mem(u32 loc, u32 val)
 {
 	u32 v2;
@@ -833,7 +838,7 @@ cc_report_pc_md_ir(u32 *ppc)
 }
 
 
-int
+void
 cc_report_status(void)
 {
 	u32 s, f1, f2;
@@ -896,12 +901,12 @@ cc_pipe(void)
 	return 0;
 }
 
-int
+void
 cc_pipe2(void)
 {
-	int r;
+	u32 r;
 	u64 isn;
-	u32 val, v2;
+	u32 v2;
 	for (r = 0; r < 8; r++) {
 		printf("val %o:\n", r);
 		cc_write_md(r);
@@ -968,7 +973,7 @@ cc_setup_map(void)
 }
 
 
-int
+void
 cc_report_ide_regs(void)
 {
 	int r;
@@ -1057,7 +1062,7 @@ _test_scratch(u16 v)
 
 static int vv = 0;
 
-int
+void
 cc_test_scratch(void)
 {
 	_test_scratch(01234);
@@ -1069,6 +1074,7 @@ cc_test_scratch(void)
 	_test_scratch(++vv);
 }
 
+int
 _test_ir(u64 isn)
 {
 	u64 iv;
