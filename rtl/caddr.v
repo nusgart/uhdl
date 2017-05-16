@@ -2755,7 +2755,7 @@ if (state_fetch) ssdone <= sstep;
   
 `endif
 
-`define CHIPSCOPE_CADDR
+//`define CHIPSCOPE_CADDR
 
 `ifdef __CVER__
  `ifdef CHIPSCOPE_CADDR
