@@ -2,7 +2,7 @@
 
 export PATH=$PATH:/opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64
 
-UCF=/home/ams/cpus-caddr/pipistrello/pipistrello_v2.01.ucf
+UCF=/home/ams/cpus-caddr/pipistrello/pipistrello_v2.03.ucf
 
 #cd ise
 xst -intstyle ise -ifn "/home/ams/cpus-caddr/niox/ise/top_niox.xst" -ofn "/home/ams/cpus-caddr/niox/ise/top_niox.syr" && \
