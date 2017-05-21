@@ -28,11 +28,12 @@ module test_mmc;
    wire       mmc_di;
    wire       mmc_do;
    wire       mmc_sclk;
+   wire [3:0] mmc_state_out;
    reg [7:0]  data;
 	
    mmc mmc(.clk(clk), .reset(reset), .speed(mmc_speed),
 	   .wr(mmc_wr), .rd(mmc_rd), .init(mmc_init), .send(mmc_send), .stop(mmc_stop),
-	   .cmd(mmc_cmd), .data_in(mmc_data_in), .data_out(mmc_data_out), .done(mmc_done),
+	   .cmd(mmc_cmd), .data_in(mmc_data_in), .data_out(mmc_data_out), .done(mmc_done), .state_out(mmc_state_out),
 	   .mmc_cs(mmc_cs), .mmc_di(mmc_di), .mmc_do(mmc_do), .mmc_sclk(mmc_sclk));
 
    task wait_for_mmc_busy;
@@ -42,7 +43,7 @@ module test_mmc;
 	 while (mmc_done == 1'b1)
 	   begin 
 	      loops = loops + 1;
-	      if (loops > 100000)
+	      if (loops > 200000)
 		begin
 		   $display("TIMEOUT: wait_for_mmc_busy");
 		   $finish;
@@ -59,7 +60,7 @@ module test_mmc;
 	 while (mmc_done == 1'b0)
 	   begin 
 	      loops = loops + 1;
-	      if (loops > 100000)
+	      if (loops > 200000)
 		begin
 		   $display("TIMEOUT: wait_for_mmc_done");
 		   $finish;
@@ -190,8 +191,10 @@ module test_mmc;
 
 	#5000 reset = 0;
 	#50 ;
-	
+
+	$display("TB: do_mmc_init");
 	do_mmc_init;
+	$display("TB: do_mmc_send");
 	do_mmc_send(48'h400000000095);
 	wait_for_data(8'h01);
 	do_mmc_done;
