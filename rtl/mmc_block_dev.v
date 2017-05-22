@@ -3,7 +3,7 @@
 // $Id$
 //
 
-//`define  CHIPSCOPE_MMC_BD
+`define  CHIPSCOPE_MMC_BD
    
 `ifdef SIMULATION
  `define debug

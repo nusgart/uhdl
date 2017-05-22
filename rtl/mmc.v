@@ -6,7 +6,7 @@
 // serialization of data
 //
 
-`define CHIPSCOPE_MMC
+//`define CHIPSCOPE_MMC
 
 module mmc(clk, reset, speed, rd, wr, init, send, stop, cmd,
 	   data_in, data_out, done, state_out,
