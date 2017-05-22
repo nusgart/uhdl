@@ -1,8 +1,13 @@
 
 chipscope:
 
-/home/ams/cpus-caddr/xvcd/xvcd &
+xvcd/xvcd &
 /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/analyzer 
+
+or
+
+python2 playtag/tools/jtag/xilinx_xvc.py ftdi 0 &
+/opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/analyzer
 
 setup:
 
