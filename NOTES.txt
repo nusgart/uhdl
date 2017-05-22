@@ -1,7 +1,11 @@
+make sure ftdi_sio is unloaded before hooking up chipscope, otherwise
+you will get the following error:
 
-make sure ftdi_sio is unloaded before hooking up chipscope:
+  $ tools/jtag/xilinx_xvc.py ftdi 0
+  FTDI Driver error in function FT_Open: FT_DEVICE_NOT_OPENED (3)
 
 rmmod ftdi_sio
+
 
 chipscope:
 
