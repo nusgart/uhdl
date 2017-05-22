@@ -8,7 +8,7 @@
 // Brad Parker <brad@heeltoe.com> 2014
 //
 
-`define USE_FILE
+//`define USE_FILE
 
 module mmc_model(
 		 input 	    spiClk,
