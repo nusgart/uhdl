@@ -1,4 +1,8 @@
 
+make sure ftdi_sio is unloaded before hooking up chipscope:
+
+rmmod ftdi_sio
+
 chipscope:
 
 xvcd/xvcd &
