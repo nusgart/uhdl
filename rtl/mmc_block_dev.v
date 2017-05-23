@@ -801,7 +801,7 @@ module mmc_block_dev(clk, reset,
    assign trig0 = {
 		   mmc_hold, //16
 		   mclk_en,  //1
-		   2'b0,     //2
+		   2'b1,     //2
 		   mmc_state,//4
 		   bd_rdy,   //1
 		   bd_iordy, //1
