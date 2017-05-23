@@ -420,7 +420,7 @@ module mmc(clk, reset, speed, rd, wr, init, send, stop, cmd,
    reg 	       mclk;
    reg [6:0]   mcnt;
    
-	
+   //               7,     6,  5,  4,    3,        2,      1,      0	
    assign trig0 = { speed, rd, wr, send, mmc_sclk, mmc_di, mmc_do, mmc_cs };
 
    always @(posedge clk)
