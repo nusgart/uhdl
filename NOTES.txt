@@ -25,5 +25,5 @@ fpgprog:
 
 fpgaprog/fpgaprog -r  -v -b fpgaprog/bscan_spi_lx45_csg324.bit -f ise-lx45/top.bit
 
-fpgaprog/fpgaprog --v -f ise-lx45/top.bit 
+fpgaprog/fpgaprog -v -f ise-lx45/top.bit 
 
