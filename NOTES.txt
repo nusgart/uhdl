@@ -23,4 +23,7 @@ xilinx_xvc host=127.0.0.1:2542 disableversioncheck=true
 
 fpgprog:
 
-fpgaprog/fpgaprog -r  -v -b fpgaprog/bscan_spi_lx45_csg324.bit -f ise-lx45/top.bit 
+fpgaprog/fpgaprog -r  -v -b fpgaprog/bscan_spi_lx45_csg324.bit -f ise-lx45/top.bit
+
+fpgaprog/fpgaprog --v -f ise-lx45/top.bit 
+
