@@ -2771,13 +2771,13 @@ if (state_fetch) ssdone <= sstep;
    wire        mclk;
 	
    assign trig0 = {
-		   busint.disk.state, //5
+		   busint.disk.state, //5  127
 		   bd_state_in,       //12
 		   state_decode,      //1
 		   lpc,		      //14
 		   a,		      //32
 		   m,		      //32
-		   md		      //32
+		   md		      //32 0
 		   };
 
    chipscope_icon_caddr icon1 (.CONTROL0(control0));
