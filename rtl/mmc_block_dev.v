@@ -799,7 +799,7 @@ module mmc_block_dev(clk, reset,
    wire        mclk;
 	
    assign trig0 = {
-		   mmc_hold, //16
+		   mmc_hold, //16  39
 		   mclk_en,  //1
 		   2'b1,     //2
 		   mmc_state,//4
@@ -807,7 +807,7 @@ module mmc_block_dev(clk, reset,
 		   bd_iordy, //1
 		   mmc_out,  //8
 		   mmc_done, //1
-		   state     //6
+		   state     //6   0
 		   };
 
    assign mclk_en = state != state_next ? 1'b1 : 1'b0;
