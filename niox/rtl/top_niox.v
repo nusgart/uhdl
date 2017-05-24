@@ -32,7 +32,7 @@ module top_niox(usb_txd, usb_rxd,
    input	usb_rxd;
    output	usb_txd;
 
-   output [4:0] led;
+   output [3:0] led;
    input 	sysclk;
 
    input	ps2_clk;
@@ -589,17 +589,9 @@ module top_niox(usb_txd, usb_rxd,
    assign ms_button = 0;
 `endif
 
-//   assign led[4] = disk_state[3];
-//   assign led[3] = machrun;
-//   assign led[2] = disk_state[2];
-//   assign led[1] = disk_state[1];
-//   assign led[0] = disk_state[0];
-
-   assign led[4] = disk_state[3];
-   assign led[3] = machrun;
-   assign led[2] = boot;
-   assign led[1] = reset;
-   assign led[0] = switch;
-
+   assign led[3] = disk_state[3];
+   assign led[2] = machrun;
+   assign led[1] = boot;
+   assign led[0] = reset;
 
 endmodule
