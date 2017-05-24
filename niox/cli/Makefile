@@ -1,5 +1,5 @@
 #CC = /opt/tools/6809/bin/m6809-unknown-none-gcc
-CROSS= /opt/altera/13.1/nios2eds/bin/gnu/H-i686-pc-linux-gnu/bin/nios2-elf-
+CROSS= /opt/Altera/13.0sp1/nios2eds/bin/gnu/H-i686-pc-linux-gnu/bin/nios2-elf-
 CC = $(CROSS)gcc
 LD = $(CROSS)ld
 OBJDUMP = $(CROSS)objdump
