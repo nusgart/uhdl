@@ -36,13 +36,13 @@ echo "../../rtl/xbus-spy.v" >>run.vc
 echo "xilinx.v" >>run.vc
 echo "../../rtl/part_21kx32ram.v" >>run.vc
 echo "+incdir+../../../niox/core" >>run.vc
-echo "../../../niox/core/niox_alu.v" >>run.vc
-echo "../../../niox/core/niox_barrel.v" >>run.vc
-echo "../../../niox/core/niox_ctrl_reg.v" >>run.vc
-echo "../../../niox/core/niox_defines.v" >>run.vc
-echo "../../../niox/core/niox_reg32.v" >>run.vc
-echo "../../../niox/core/niox_regs.v" >>run.vc
-echo "../../../niox/core/niox.v" >>run.vc
+echo "../../NIOX/core/niox_alu.v" >>run.vc
+echo "../../NIOX/core/niox_barrel.v" >>run.vc
+echo "../../NIOX/core/niox_ctrl_reg.v" >>run.vc
+echo "../../NIOX/core/niox_defines.v" >>run.vc
+echo "../../NIOX/core/niox_reg32.v" >>run.vc
+echo "../../NIOX/core/niox_regs.v" >>run.vc
+echo "../../NIOX/core/niox.v" >>run.vc
 
 #cver -f run.vc
 cver $PLI -f run.vc
