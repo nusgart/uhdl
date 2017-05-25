@@ -799,15 +799,15 @@ module mmc_block_dev(clk, reset,
    wire        mclk;
 	
    assign trig0 = {
-		   mmc_hold, //16  39
+		   mmc_hold, //16  39			0
 		   mclk_en,  //1
-		   2'b1,     //2
+		   2'b0,    //2 		DataPort[16], [17]
 		   mmc_state,//4
 		   bd_rdy,   //1
 		   bd_iordy, //1
 		   mmc_out,  //8
 		   mmc_done, //1
-		   state     //6   0
+		   state     //6   0			39
 		   };
 
    assign mclk_en = state != state_next ? 1'b1 : 1'b0;
