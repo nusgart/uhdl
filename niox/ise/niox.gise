@@ -15,7 +15,7 @@
 
   <!--                                                          -->
 
-  <!-- Copyright (c) 1995-2012 Xilinx, Inc.  All rights reserved. -->
+  <!-- Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved. -->
 
   <version xmlns="http://www.xilinx.com/XMLSchema">11.1</version>
 
@@ -75,6 +75,7 @@
     <file xil_pn:fileType="FILE_ISIM_MISC" xil_pn:name="top_niox_tb_isim_beh.wdb"/>
     <file xil_pn:fileType="FILE_WEBTALK" xil_pn:name="top_niox_usage.xml"/>
     <file xil_pn:fileType="FILE_XRPT" xil_pn:name="top_niox_xst.xrpt"/>
+    <file xil_pn:fileType="FILE_HTML" xil_pn:name="usage_statistics_webtalk.html"/>
     <file xil_pn:fileType="FILE_LOG" xil_pn:name="webtalk.log"/>
     <file xil_pn:fileType="FILE_FITTER_REPORT" xil_pn:name="webtalk_pn.xml"/>
     <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_INI" xil_pn:name="xilinxsim.ini"/>
@@ -134,7 +135,7 @@
     </transform>
     <transform xil_pn:end_ts="1392474595" xil_pn:in_ck="150258546630515892" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="-3787955624802324742" xil_pn:start_ts="1392474595">
       <status xil_pn:value="SuccessfullyRun"/>
-      <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="NotReadyToRun"/>
       <status xil_pn:value="OutOfDateForInputs"/>
       <status xil_pn:value="OutOfDateForPredecessor"/>
       <status xil_pn:value="OutOfDateForOutputs"/>
@@ -170,13 +171,11 @@
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1393782793" xil_pn:in_ck="-103864815118061917" xil_pn:name="TRANEXT_xstsynthesize_spartan6" xil_pn:prop_ck="1644622809834183040" xil_pn:start_ts="1393782712">
+    <transform xil_pn:end_ts="1495697037" xil_pn:in_ck="-1815984406344845610" xil_pn:name="TRANEXT_xstsynthesize_spartan6" xil_pn:prop_ck="1644622809834183040" xil_pn:start_ts="1495696994">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>
-      <status xil_pn:value="OutOfDateForInputs"/>
       <status xil_pn:value="OutOfDateForOutputs"/>
-      <status xil_pn:value="InputChanged"/>
       <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="_xmsgs/xst.xmsgs"/>
       <outfile xil_pn:name="top_niox.lso"/>
@@ -195,22 +194,22 @@
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1393782813" xil_pn:in_ck="2703639013731418046" xil_pn:name="TRANEXT_ngdbuild_FPGA" xil_pn:prop_ck="4614979652461461815" xil_pn:start_ts="1393782793">
+    <transform xil_pn:end_ts="1495697049" xil_pn:in_ck="-4947019176694971456" xil_pn:name="TRANEXT_ngdbuild_FPGA" xil_pn:prop_ck="4614979652461461815" xil_pn:start_ts="1495697037">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>
-      <status xil_pn:value="OutOfDateForPredecessor"/>
       <outfile xil_pn:name="_ngo"/>
       <outfile xil_pn:name="_xmsgs/ngdbuild.xmsgs"/>
       <outfile xil_pn:name="top_niox.bld"/>
       <outfile xil_pn:name="top_niox.ngd"/>
       <outfile xil_pn:name="top_niox_ngdbuild.xrpt"/>
     </transform>
-    <transform xil_pn:end_ts="1393782932" xil_pn:in_ck="7811870714454313164" xil_pn:name="TRANEXT_map_spartan6" xil_pn:prop_ck="4245753365082497697" xil_pn:start_ts="1393782813">
+    <transform xil_pn:end_ts="1495697115" xil_pn:in_ck="161212524027923662" xil_pn:name="TRANEXT_map_spartan6" xil_pn:prop_ck="4245753365082497697" xil_pn:start_ts="1495697049">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>
-      <status xil_pn:value="OutOfDateForPredecessor"/>
+      <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="_xmsgs/map.xmsgs"/>
       <outfile xil_pn:name="top_niox.pcf"/>
       <outfile xil_pn:name="top_niox_map.map"/>
@@ -221,11 +220,10 @@
       <outfile xil_pn:name="top_niox_summary.xml"/>
       <outfile xil_pn:name="top_niox_usage.xml"/>
     </transform>
-    <transform xil_pn:end_ts="1393783055" xil_pn:in_ck="-6938907729568735771" xil_pn:name="TRANEXT_par_spartan6" xil_pn:prop_ck="-3829590541433901613" xil_pn:start_ts="1393782932">
+    <transform xil_pn:end_ts="1495697191" xil_pn:in_ck="3262129880257647335" xil_pn:name="TRANEXT_par_spartan6" xil_pn:prop_ck="-3829590541433901613" xil_pn:start_ts="1495697115">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>
-      <status xil_pn:value="OutOfDateForPredecessor"/>
       <outfile xil_pn:name="_xmsgs/par.xmsgs"/>
       <outfile xil_pn:name="top_niox.ncd"/>
       <outfile xil_pn:name="top_niox.pad"/>
@@ -237,24 +235,23 @@
       <outfile xil_pn:name="top_niox_pad.txt"/>
       <outfile xil_pn:name="top_niox_par.xrpt"/>
     </transform>
-    <transform xil_pn:end_ts="1393783105" xil_pn:in_ck="6038226146149395859" xil_pn:name="TRANEXT_bitFile_spartan6" xil_pn:prop_ck="5341574683187206424" xil_pn:start_ts="1393783055">
+    <transform xil_pn:end_ts="1495697218" xil_pn:in_ck="6038226146149395859" xil_pn:name="TRANEXT_bitFile_spartan6" xil_pn:prop_ck="5341574683187206424" xil_pn:start_ts="1495697191">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>
-      <status xil_pn:value="OutOfDateForPredecessor"/>
       <outfile xil_pn:name="_xmsgs/bitgen.xmsgs"/>
       <outfile xil_pn:name="top_niox.bgn"/>
       <outfile xil_pn:name="top_niox.bit"/>
       <outfile xil_pn:name="top_niox.drc"/>
       <outfile xil_pn:name="top_niox.ut"/>
+      <outfile xil_pn:name="usage_statistics_webtalk.html"/>
       <outfile xil_pn:name="webtalk.log"/>
       <outfile xil_pn:name="webtalk_pn.xml"/>
     </transform>
-    <transform xil_pn:end_ts="1393783055" xil_pn:in_ck="7811870714454313032" xil_pn:name="TRAN_postRouteTrce" xil_pn:prop_ck="445577401284416185" xil_pn:start_ts="1393783038">
+    <transform xil_pn:end_ts="1495697191" xil_pn:in_ck="161212524027923530" xil_pn:name="TRAN_postRouteTrce" xil_pn:prop_ck="445577401284416185" xil_pn:start_ts="1495697181">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>
-      <status xil_pn:value="OutOfDateForPredecessor"/>
       <outfile xil_pn:name="_xmsgs/trce.xmsgs"/>
       <outfile xil_pn:name="top_niox.twr"/>
       <outfile xil_pn:name="top_niox.twx"/>

@@ -4,6 +4,10 @@ export PATH=$PATH:/opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64
 
 UCF=/home/ams/cpus-caddr/pipistrello/pipistrello_v2.03.ucf
 
+cd ../cli
+make || exit 1
+cd -
+
 #cd ise
 xst -intstyle ise -ifn "/home/ams/cpus-caddr/niox/ise/top_niox.xst" -ofn "/home/ams/cpus-caddr/niox/ise/top_niox.syr" && \
 ngdbuild -intstyle ise -dd _ngo -sd ../../ise-lx45/ipcore_dir -nt timestamp -uc $UCF -p xc6slx45-csg324-3 top_niox.ngc top_niox.ngd   && \
