@@ -34,7 +34,7 @@ module niox_cpu ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    output [15:0] spy_out;
    input 	dbread;
    input 	dbwrite;
-   input [3:0] 	eadr;
+   input [4:0] 	eadr;
    output [3:0] spy_reg;
    output 	spy_rd;
    output 	spy_wr;

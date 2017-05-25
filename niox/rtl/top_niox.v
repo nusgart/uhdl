@@ -94,7 +94,7 @@ module top_niox(usb_txd, usb_rxd,
    wire 	 spy_rd;
    wire 	 spy_wr;
    wire 	 dbread, dbwrite;
-   wire [3:0] 	 eadr;
+   wire [4:0] 	 eadr;
    wire 	 halt;
    
    wire [13:0] 	 mcr_addr;
@@ -204,6 +204,7 @@ module top_niox(usb_txd, usb_rxd,
 	      .machrun_out(machrun),
 	      .prefetch_out(prefetch),
 	      .fetch_out(fetch),
+
 	      .mcr_addr(mcr_addr),
 	      .mcr_data_out(mcr_data_out),
 	      .mcr_data_in(mcr_data_in),
@@ -589,9 +590,9 @@ module top_niox(usb_txd, usb_rxd,
    assign ms_button = 0;
 `endif
 
-   assign led[3] = disk_state[3];
-   assign led[2] = machrun;
-   assign led[1] = boot;
-   assign led[0] = reset;
+   assign led[0] = disk_state[3];
+   assign led[1] = machrun;
+   assign led[2] = boot;
+   assign led[3] = reset;
 
 endmodule
