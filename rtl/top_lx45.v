@@ -2,13 +2,18 @@
  * top of LX45 fpga for CADDR
  */
 
-`define full_design
+`define use_cpu
 `define use_spyport
 `define use_vga
 //`define use_hdmi
 `define use_ps2
 `define use_mmc
 //`define spy_mmc
+//`define slow
+
+`ifdef ISE
+ `undef XILINX_ISIM
+`endif
 
 module top(usb_txd, usb_rxd,
 	   sysclk, led,
@@ -159,18 +164,6 @@ module top(usb_txd, usb_rxd,
 
    BUFG sysclk_bufg (.I(sysclk), .O(sysclk_buf));
 
-//   lx45_clocks fpga_clocks(.sysclk(sysclk_buf),
-//			   .dcm_reset(dcm_reset),
-//			   .clk50(clk50),
-//			   .clk1x(cpuclk),
-//`ifdef use_hdmi
-//			   .pixclk()
-//`else
-//			   .pixclk(pixclk)
-//`endif
-//			   
-//			   );
-   
    support support(.sysclk(sysclk_buf),
 		   .cpuclk(cpuclk),
 		   .button_r(switch),
@@ -188,7 +181,7 @@ module top(usb_txd, usb_rxd,
    assign rs232_rxd = usb_rxd;
    assign usb_txd = rs232_txd;
 
-`ifdef full_design
+`ifdef use_cpu
    caddr cpu (
 	      .clk(cpuclk),
 	      .ext_int(interrupt),
@@ -316,6 +309,38 @@ module top(usb_txd, usb_rxd,
    assign      spyin = 0;
    assign      rs232_txd = 1'b1;
 `endif
+`else
+   assign spy_out = 0;
+   assign spy_reg = 0;
+   assign spy_rd = 0;
+   assign spy_wr = 0;
+
+   assign pc = 0;
+   assign cpu_state = 0;
+   assign disk_state = 0;
+   assign bus_state = 0;
+   assign machrun = 0;
+   assign prefetch = 0;
+   assign fetch = 0;
+
+   assign mcr_addr = 0;
+   assign mcr_data_out = 0;
+   assign mcr_write = 0;
+   assign sdram_addr = 0;
+   assign sdram_data_cpu2rc = 0;
+   assign sdram_req = 0;
+   assign sdram_write = 0;
+   assign vram_cpu_addr = 0;
+   assign vram_cpu_data_out = 0;
+   assign vram_cpu_req = 0;
+   assign vram_cpu_write = 0;
+   assign bd_cmd = 0;
+   assign bd_start = 0;
+   assign bd_addr = 0;
+   assign bd_data_cpu2bd = 0;
+   assign bd_rd = 0;
+   assign bd_wr = 0;
+`endif
    
    lx45_ram_controller rc (
 			   .sysclk_in(sysclk/*sysclk_buf*/),
@@ -324,7 +349,7 @@ module top(usb_txd, usb_rxd,
 			   .lpddr_calib_done(lpddr_calib_done),
 			   
 			   .clk(clk50),
-			   .vga_clk(pixclk/*clk50*/),
+			   .vga_clk(pixclk),
 			   .cpu_clk(cpuclk),
 			   .reset(reset),
 			   .prefetch(prefetch),
@@ -375,13 +400,6 @@ module top(usb_txd, usb_rxd,
 			   .mcb3_dram_ck(mcb3_dram_ck),
 			   .mcb3_dram_ck_n(mcb3_dram_ck_n)
 			   );
-`else
-   assign eadr = 4'b0;
-   assign dbread = 0;
-   assign dbwrite = 0;
-   assign spyin = 0;
-   assign rs232_txd = 1'b1;
-`endif
 
 `ifdef use_mmc
    mmc_block_dev mmc_bd(
@@ -409,11 +427,54 @@ module top(usb_txd, usb_rxd,
    assign bd_bsy = 0;
    assign bd_rdy = 0;
    assign bd_err = 0;
-   assign bd_data_out = 0;
+   assign bd_data_bd2cpu = 0;
    assign bd_iordy = 0;
+
+ `ifndef spy_mmc
+   assign mmc_cs = 0;
+   assign mmc_do = 0;
+   assign mmc_sclk = 0;
+ `endif
 `endif
 
 `ifdef spy_mmc
+   wire [1:0] 	 spy_bd_cmd;
+   wire 	 spy_bd_start;
+   wire 	 spy_bd_bsy;
+   wire 	 spy_bd_rdy;
+   wire 	 spy_bd_err;
+   wire [23:0] 	 spy_bd_addr;
+   wire [15:0] 	 spy_bd_data_bd2cpu;
+   wire [15:0] 	 spy_bd_data_cpu2bd;
+   wire 	 spy_bd_rd;
+   wire 	 spy_bd_wr;
+   wire 	 spy_bd_iordy;
+   wire [11:0] 	 spy_bd_state;
+
+   niox_spy niox_spy_port(
+//		     .sysclk(clk50),
+		     .clk(cpuclk),
+		     .reset(reset),
+		     .spy_in(spy_out),
+		     .spy_out(spy_in),
+		     .spy_reg(spy_reg),
+		     .spy_rd(spy_rd),
+		     .spy_wr(spy_wr),
+			  
+   		     .bd_cmd(spy_bd_cmd),
+		     .bd_start(spy_bd_start),
+		     .bd_bsy(spy_bd_bsy),
+		     .bd_rdy(spy_bd_rdy),
+		     .bd_err(spy_bd_err),
+		     .bd_addr(spy_bd_addr),
+		     .bd_data_in(spy_bd_data_bd2cpu),
+		     .bd_data_out(spy_bd_data_cpu2bd),
+		     .bd_rd(spy_bd_rd),
+		     .bd_wr(spy_bd_wr),
+		     .bd_iordy(spy_bd_iordy),
+		     .bd_state(spy_bd_state)
+		     );
+
    mmc_block_dev mmc_bd(
 			.clk(clk50),
 			.reset(reset),
@@ -435,6 +496,8 @@ module top(usb_txd, usb_rxd,
 			.mmc_do(mmc_do),
 			.mmc_sclk(mmc_sclk)
 			);
+`else
+   //xxx add spy r/w of state
 `endif
    
 `ifdef use_vga
@@ -490,10 +553,27 @@ module top(usb_txd, usb_rxd,
 		     .tmds(tmds),
 		     .tmdsb(tmdsb)
 		     );
-`else
-   // generate xsvga clock (108Mhz)
+`else // !`ifdef use_hdmi
+
    wire pixclk_locked;
 
+ `ifdef XILINX_ISIM
+   assign pixclk_locked = 1'b1;
+   reg pclk;
+   initial
+    pclk = 1'b0;
+   always
+     begin
+	#4.63;
+	pclk = 1'b1;
+	#4.63;
+	pclk = 1'b0;
+     end
+   assign pixclk = pclk;
+   assign vga_reset = reset;
+ `else
+
+   // generate xsvga clock (108Mhz)
    clocking clocking_inst(
 			  .CLK_50(sysclk_buf/*sysclk*//*sysclk_buf*/),
 			  .CLK_VGA(pixclk),
@@ -502,25 +582,28 @@ module top(usb_txd, usb_rxd,
 			  );
 
    assign vga_reset = reset;
-   assign clk50 = sysclk_buf;
-
-   //
-//   reg [3:0] clkcnt;
-//   initial
-//     clkcnt = 0;
-//   always @(posedge clk50/*sysclk_buf*/)
-//     clkcnt <= clkcnt + 4'd1;
-//   BUFG cpuclk_bufg (.I(clkcnt[0]), .O(cpuclk));
-   assign cpuclk = clk50;
+ `endif
       
-   // dummy drivers
    wire [3:0] tmds_dummy;
    OBUFDS obufds_0(.I(tmds_dummy[0]), .O(tmds[0]), .OB(tmdsb[0]));
    OBUFDS obufds_1(.I(tmds_dummy[1]), .O(tmds[1]), .OB(tmdsb[1]));
    OBUFDS obufds_2(.I(tmds_dummy[2]), .O(tmds[2]), .OB(tmdsb[2]));
    OBUFDS obufds_3(.I(tmds_dummy[3]), .O(tmds[3]), .OB(tmdsb[3]));
 `endif
-   
+
+`ifdef slow
+   reg [3:0] clkcnt;
+   initial
+     clkcnt = 0;
+   always @(posedge clk50/*sysclk_buf*/)
+     clkcnt <= clkcnt + 4'd1;
+   BUFG cpuclk_bufg (.I(clkcnt[0]), .O(cpuclk));
+`else
+   assign cpuclk = sysclk_buf;
+`endif
+   assign clk50 = sysclk_buf;
+
+  
 `ifdef use_ps2
    wire   kb_ps2_clk_in;
    wire   kb_ps2_data_in;
