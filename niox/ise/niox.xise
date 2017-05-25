@@ -540,7 +540,7 @@
     <!-- project is analyzed based on files automatically identified as       -->
     <!-- include files.                                                       -->
     <file xil_pn:name="../verif/vendor_defines.v" xil_pn:type="FILE_VERILOG"/>
-    <file xil_pn:name="../../NIOX/core/niox_defines.v" xil_pn:type="FILE_VERILOG"/>
+    <file xil_pn:name="../verif/niox_defines.v" xil_pn:type="FILE_VERILOG"/>
     <file xil_pn:name="../verif/defines.vh" xil_pn:type="FILE_VERILOG"/>
   </autoManagedFiles>
 
