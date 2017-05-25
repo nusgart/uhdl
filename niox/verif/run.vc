@@ -30,10 +30,10 @@ top_niox_tb.v
 xilinx.v
 ../../rtl/part_21kx32ram.v
 +incdir+../../../niox/core
-../../../niox/core/niox_alu.v
-../../../niox/core/niox_barrel.v
-../../../niox/core/niox_ctrl_reg.v
-../../../niox/core/niox_defines.v
-../../../niox/core/niox_reg32.v
-../../../niox/core/niox_regs.v
-../../../niox/core/niox.v
+../../NIOX/core/niox_alu.v
+../../NIOX/core/niox_barrel.v
+../../NIOX/core/niox_ctrl_reg.v
+../../NIOX/core/niox_defines.v
+../../NIOX/core/niox_reg32.v
+../../NIOX/core/niox_regs.v
+../../NIOX/core/niox.v
