@@ -9,7 +9,7 @@
 `define use_ps2
 `define use_mmc
 //`define spy_mmc
-//`define slow_cpu_clk
+`define slow
 
 `ifdef ISE
  `undef XILINX_ISIM
@@ -593,7 +593,7 @@ module top(usb_txd, usb_rxd,
    OBUFDS obufds_3(.I(tmds_dummy[3]), .O(tmds[3]), .OB(tmdsb[3]));
 `endif
 
-`ifdef slow_cpu_clk
+`ifdef slow
    // run cpu clock at half sysclk (25MHz)
    reg [3:0] clkcnt;
    initial
