@@ -2,16 +2,10 @@
 
 export PATH=$PATH:/opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64
 
-#UCF=/files/code/cpus/caddr/pipistrello/pipistrello_v2.01.ucf
-UCF=`cd ../../pipistrello/pipistrello_v2.01.ucf && pwd`
+UCF=/home/ams/cpus-caddr/pipistrello/pipistrello_v2.03.ucf
 WD=`pwd`
 XST="$WD/top_niox.xst"
 SYR="$WD/top_niox.syr"
-
-ls -l $UCF
-ls -l $XST
-ls -l $SYR
-exit
 
 cd ../cli
 make || exit 1
