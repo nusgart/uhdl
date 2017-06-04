@@ -96,8 +96,14 @@ module mmc(clk, reset, speed, rd, wr, init, send, stop, cmd,
    parameter BITWIDTH_LO_1QTR = BITWIDTH_LO/4;
    parameter BITWIDTH_LO_3QTR = BITWIDTH_LO - BITWIDTH_LO/4;
    
-   parameter BITWIDTH_HI_MIDCNT = 10;
-   parameter BITWIDTH_HI_MAXCNT = 19;
+//   parameter BITWIDTH_HI_MIDCNT = 10;
+//   parameter BITWIDTH_HI_MAXCNT = 19;
+
+//   parameter BITWIDTH_HI_MIDCNT = 5;
+//   parameter BITWIDTH_HI_MAXCNT = 9;
+
+    parameter BITWIDTH_HI_MIDCNT = 2;
+    parameter BITWIDTH_HI_MAXCNT = 3;
 `endif
 
    wire [31:0] bitmiddle;

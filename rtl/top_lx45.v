@@ -9,7 +9,7 @@
 `define use_ps2
 `define use_mmc
 //`define spy_mmc
-//`define slow
+//`define slow_cpu_clk
 
 `ifdef ISE
  `undef XILINX_ISIM
@@ -593,18 +593,18 @@ module top(usb_txd, usb_rxd,
    OBUFDS obufds_3(.I(tmds_dummy[3]), .O(tmds[3]), .OB(tmdsb[3]));
 `endif
 
-`ifdef slow
+`ifdef slow_cpu_clk
+   // run cpu clock at half sysclk (25MHz)
    reg [3:0] clkcnt;
    initial
      clkcnt = 0;
    always @(posedge clk50/*sysclk_buf*/)
      clkcnt <= clkcnt + 4'd1;
+
    BUFG cpuclk_bufg (.I(clkcnt[0]), .O(cpuclk));
 `else
-   assign cpuclk = sysclk_buf;
+     assign cpuclk = clk50;
 `endif
-   assign clk50 = sysclk_buf;
-
   
 `ifdef use_ps2
    wire   kb_ps2_clk_in;
@@ -654,9 +654,9 @@ module top(usb_txd, usb_rxd,
    assign ms_button = 0;
 `endif
 
-   assign led[0] = disk_state[3];
-   assign led[1] = machrun;
-   assign led[2] = boot;
+   assign led[0] = disk_state[1];
+   assign led[1] = disk_state[2];
+   assign led[2] = machrun;
    assign led[3] = reset;
 
 endmodule

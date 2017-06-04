@@ -529,7 +529,7 @@ module mmc_block_dev(clk, mmcclk, reset,
 	    
 	  s_reset8:
 	    begin
-//	       mmc_hispeed = 1;
+	       mmc_hispeed = 1;
 	       mmc_send = 1;
 	       mmc_cmd = { 8'h50, 32'd512, 8'h01 };
 	       if (~mmc_done)
