@@ -14,8 +14,8 @@ module mmc(clk, reset, speed, rd, wr, init, send, stop, cmd,
 
    parameter [31:0] FREQ    = 50000000;
    parameter [31:0] RATE_HI = 10000000;
-//   parameter [31:0] RATE_LO =   100000;
-   parameter [31:0] RATE_LO =   50000;
+   parameter [31:0] RATE_LO =   100000;
+//   parameter [31:0] RATE_LO =    50000;
 
    input clk;
    input reset;
@@ -88,24 +88,14 @@ module mmc(clk, reset, speed, rd, wr, init, send, stop, cmd,
    parameter BITWIDTH_LO_1QTR = BITWIDTH_LO/4;
    parameter BITWIDTH_LO_3QTR = BITWIDTH_LO - BITWIDTH_LO/4;
    
-//   parameter BITWIDTH_HI_MIDCNT = 0/*BITWIDTH_HI/2*/;
-//   parameter BITWIDTH_HI_MAXCNT = 1/*BITWIDTH_HI-1*/;
-//   parameter BITWIDTH_HI_MIDCNT = 3/*BITWIDTH_HI/2*/;
-//   parameter BITWIDTH_HI_MAXCNT = 5/*BITWIDTH_HI-1*/;
-   parameter BITWIDTH_HI_MIDCNT = 10/*BITWIDTH_HI/2*/;
-   parameter BITWIDTH_HI_MAXCNT = 19/*BITWIDTH_HI-1*/;
+   parameter BITWIDTH_HI_MIDCNT = BITWIDTH_HI/2;
+   parameter BITWIDTH_HI_MAXCNT = BITWIDTH_HI-1;
 `else
    parameter BITWIDTH_LO_MIDCNT = BITWIDTH_LO/2;
    parameter BITWIDTH_LO_MAXCNT = BITWIDTH_LO-1;
    parameter BITWIDTH_LO_1QTR = BITWIDTH_LO/4;
    parameter BITWIDTH_LO_3QTR = BITWIDTH_LO - BITWIDTH_LO/4;
    
-//   parameter BITWIDTH_HI_MIDCNT = 0;
-//   parameter BITWIDTH_HI_MAXCNT = 1;
-//   parameter BITWIDTH_HI_MIDCNT = 3;
-//   parameter BITWIDTH_HI_MAXCNT = 5;
-//   parameter BITWIDTH_HI_MIDCNT = 6;
-//   parameter BITWIDTH_HI_MAXCNT = 10;
    parameter BITWIDTH_HI_MIDCNT = 10;
    parameter BITWIDTH_HI_MAXCNT = 19;
 `endif
@@ -120,6 +110,15 @@ module mmc(clk, reset, speed, rd, wr, init, send, stop, cmd,
    integer debug/* verilator public_flat */;
    initial
      debug = 0;
+
+   initial
+     begin
+	$display("BITWIDTH_HI %d, BITWIDTH_LO %d", BITWIDTH_HI, BITWIDTH_LO);
+	$display("BITWIDTH_LO_MIDCNT %d, BITWIDTH_LO_MAXCNT %d", BITWIDTH_LO_MIDCNT, BITWIDTH_LO_MAXCNT);
+	$display("BITWIDTH_LO_1QTR %d, BITWIDTH_LO_3QTR %d", BITWIDTH_LO_1QTR, BITWIDTH_LO_3QTR);
+	$display("BITWIDTH_HI_MIDCNT %d, BITWIDTH_HI_MAXCNT %d", BITWIDTH_HI_MIDCNT, BITWIDTH_HI_MAXCNT);
+	//$finish;
+     end
 `endif
 
    //
@@ -230,7 +229,7 @@ module mmc(clk, reset, speed, rd, wr, init, send, stop, cmd,
    // all output is referenced to clk
    wire      mc_done;
 
-   assign mc_done = state == s_done2;
+   assign mc_done = state == s0/*s_done2*/;
    assign done = mc_done;
    
    assign bit8 = bitcount == 8;
@@ -328,7 +327,7 @@ module mmc(clk, reset, speed, rd, wr, init, send, stop, cmd,
    always @(posedge clk)
      if (reset)
        begin
-	  mmc_cs <= 1'b0;
+	  mmc_cs <= 1'b1;
 	  mmc_do <= 1'b0;
 	  s_cmd <= 0;
 	  s_rd <= 0;

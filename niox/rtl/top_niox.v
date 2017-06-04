@@ -341,7 +341,8 @@ module top_niox(usb_txd, usb_rxd,
 
 `ifdef use_mmc
    mmc_block_dev mmc_bd(
-			.clk(clk50),
+			.clk(cpuclk),
+			.mmcclk(clk50),
 			.reset(reset),
    			.bd_cmd(bd_cmd),
 			.bd_start(bd_start),
@@ -414,7 +415,8 @@ module top_niox(usb_txd, usb_rxd,
 		     );
 
    mmc_block_dev mmc_bd(
-			.clk(clk50),
+			.clk(cpuclk),
+			.mmcclk(clk50),
 			.reset(reset),
    			.bd_cmd(spy_bd_cmd),
 			.bd_start(spy_bd_start),

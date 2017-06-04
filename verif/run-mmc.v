@@ -1,3 +1,5 @@
+`define debug
+`define SIMULATION
 
 //`define use_pli_mmc
 `define use_vlog_mmc

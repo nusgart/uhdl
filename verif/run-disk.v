@@ -26,6 +26,7 @@
 `include "../rtl/mmc_block_dev.v"
 `include "../rtl/ide.v"
 `include "../rtl/mmc.v"
+`include "../rtl/mmc_wrapper.v"
 
 `ifdef use_vlog_mmc
  `include "../niox/verif/mmc_model.v"
@@ -35,6 +36,7 @@
 
 module test_busint;
    reg clk;
+   reg mmcclk;
    reg reset;
 
    reg [21:0] addr;
@@ -365,6 +367,12 @@ module test_busint;
 	#20 clk = 1;
      end
 
+   always
+     begin
+	#5 mmcclk = 0;
+	#5 mmcclk = 1;
+     end
+
 `ifdef use_ide
    // ide
    wire [15:0] 	ide_data_bus;
@@ -418,6 +426,7 @@ module test_busint;
 
    mmc_block_dev mmc_bd(
 			.clk(clk),
+			.mmcclk(mmcclk),
 			.reset(reset),
    			.bd_cmd(bd_cmd),
 			.bd_start(bd_start),

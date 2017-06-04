@@ -45,6 +45,7 @@ module mmc_model(
    reg [7:0] block3[0:511];
 `endif
    
+   integer   debug = 0;
    
    parameter [3:0]
      POWERUP = 4'd0,
@@ -86,14 +87,14 @@ module mmc_model(
  
       integer i;
       begin
-	 //$display("MMC: txRxByte txData %x; %t", txData, $time);
+	 if (debug) $display("MMC: txRxByte txData %x; %t", txData, $time);
 	 spiDataOut <= txData[7];
 	 for (i = 0; i < 8; i=i+1) begin
 	    @(posedge spiClk);
 	    if (spiCS_n == 0) begin
 	       rxData = rxData << 1;
 	       rxData[0] <= spiDataIn;
-	       //$display("txRxByte: bit %d <- %b (%x); %t", i, spiDataIn, rxData, $time);
+	       if (debug) $display("txRxByte: bit %d <- %b (%x); %t", i, spiDataIn, rxData, $time);
 	       @(negedge spiClk);
 	       spiDataOut <= txData[6];
 	       txData = txData << 1;
@@ -123,10 +124,13 @@ module mmc_model(
 	 oldclk = 0;
 	 clkcnt = 0;
 
-	 //$display("waitForCS: %t", $time);
+	 if (debug) $display("waitForCS: cs %b %t", spiCS_n, $time);
 
 	 while (done == 0)
 	   begin
+	      //if (spiCS_n === 1'bx)
+	      //$display("spiCS_n is x");
+	      
 	      if (spiCS_n == 0/* && spiDataIn == 1*/)
 		done = 1;
 	      
@@ -142,11 +146,13 @@ module mmc_model(
 	      #1;
 	   end
 
-	 if (clkcnt != 0)
-	   $display("waitForCS: clkcnt %d; %t", clkcnt, $time);
+//	 if (clkcnt != 0)
+	   $display("waitForCS: clkcnt %d cs %b; %t", clkcnt, spiCS_n, $time);
 	 
-	 if (clkcnt > 74)
-           state = IDLE;
+	 if (clkcnt > 74) begin
+            state = IDLE;
+	    if (debug) $display("mmc_modem: IDLE");
+	 end
       end
    endtask
 
@@ -177,10 +183,12 @@ module mmc_model(
 	   end
 	   else begin
 	      $display("MMC: idle, byte %d = %x; %t", cnt, rxByte, $time);
-		cmdBytes[cnt] = rxByte;
-		cnt = cnt + 1;
-		if (cnt == 6)
-		  state = CMD;
+	      cmdBytes[cnt] = rxByte;
+	      cnt = cnt + 1;
+	      if (cnt == 6) begin
+		 state = CMD;
+		 if (debug) $display("mmc_modem: CMD");
+	      end
 	   end
         end
 
@@ -238,6 +246,7 @@ module mmc_model(
 	      respDelay = respDelay - 1;
 	   end
 
+	   $display("MMC: send resp byte %x; %t", respByte, $time);
            txRxByte(respByte, rxByte);
 	   cnt = 0;
 	   state = IDLE;

@@ -1207,6 +1207,9 @@ module xbus_disk (
 		 $display("disk: s_write1; bd_data_out %o, dma_addr %o",
 			  bd_data_out, { 10'b0, disk_ccw, wc });
 
+	    s_write1a:
+	      $display("disk: s_write1a bd_iordy=%b", bd_iordy);
+	    
 	    s_write2:
 	      if (bd_iordy)
 		$display("disk: s_write2; wc=%x", wc);
