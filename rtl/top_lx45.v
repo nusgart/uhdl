@@ -8,7 +8,6 @@
 //`define use_hdmi
 `define use_ps2
 `define use_mmc
-//`define spy_mmc
 `define slow
 
 `ifdef ISE
@@ -273,34 +272,7 @@ module top(usb_txd, usb_rxd,
 		     .spy_out(spy_in),
 		     .dbread(dbread),
 		     .dbwrite(dbwrite),
-		     .eadr(eadr),
- `ifdef spy_mmc
-   		     .bd_cmd(spy_bd_cmd),
-		     .bd_start(spy_bd_start),
-		     .bd_bsy(spy_bd_bsy),
-		     .bd_rdy(spy_bd_rdy),
-		     .bd_err(spy_bd_err),
-		     .bd_addr(spy_bd_addr),
-		     .bd_data_in(spy_bd_data_bd2cpu),
-		     .bd_data_out(spy_bd_data_cpu2bd),
-		     .bd_rd(spy_bd_rd),
-		     .bd_wr(spy_bd_wr),
-		     .bd_iordy(spy_bd_iordy),
-		     .bd_state(spy_bd_state)
- `else
-   		     .bd_cmd(),
-		     .bd_start(),
-		     .bd_bsy(1'b0),
-		     .bd_rdy(1'b0),
-		     .bd_err(1'b0),
-		     .bd_addr(),
-		     .bd_data_in(16'b0),
-		     .bd_data_out(),
-		     .bd_rd(),
-		     .bd_wr(),
-		     .bd_iordy(1'b0),
-		     .bd_state(spy_bd_state[11:0])
- `endif
+		     .eadr(eadr)
 		     );
 `else   
    assign      eadr = 4'b0;
@@ -407,31 +379,6 @@ module top(usb_txd, usb_rxd,
    assign bd_iordy = 0;
 `endif
 
-`ifdef spy_mmc
-   mmc_block_dev mmc_bd(
-			.clk(cpuclk),
-			.mmcclk(clk50),
-			.reset(reset),
-   			.bd_cmd(spy_bd_cmd),
-			.bd_start(spy_bd_start),
-			.bd_bsy(spy_bd_bsy),
-			.bd_rdy(spy_bd_rdy),
-			.bd_err(spy_bd_err),
-			.bd_addr(spy_bd_addr),
-			.bd_data_in(spy_bd_data_cpu2bd),
-			.bd_data_out(spy_bd_data_bd2cpu),
-			.bd_rd(spy_bd_rd),
-			.bd_wr(spy_bd_wr),
-			.bd_iordy(spy_bd_iordy),
-			.bd_state(spy_bd_state),
-				  
-			.mmc_cs(mmc_cs),
-			.mmc_di(mmc_di),
-			.mmc_do(mmc_do),
-			.mmc_sclk(mmc_sclk)
-			);
-`endif
-   
 `ifdef use_vga
    wire vga_red, vga_blu, vga_grn, vga_blank;
 

@@ -57,9 +57,7 @@ f
 */
 
 module spy_port(sysclk, clk, reset, rs232_rxd, rs232_txd,
-		spy_in, spy_out, dbread, dbwrite, eadr,
-		bd_cmd, bd_start, bd_bsy, bd_rdy, bd_err, bd_addr,
-		bd_data_in, bd_data_out, bd_rd, bd_wr, bd_iordy, bd_state
+		spy_in, spy_out, dbread, dbwrite, eadr
 		);
 
    input sysclk;
@@ -83,20 +81,6 @@ module spy_port(sysclk, clk, reset, rs232_rxd, rs232_txd,
    output [4:0]	 eadr;
    reg [4:0] 	 eadr;
 
-   //
-   output [1:0]  bd_cmd;
-   output 	 bd_start;
-   input 	 bd_bsy;
-   input 	 bd_rdy;
-   input 	 bd_err;
-   output [23:0] bd_addr;
-   input [15:0] bd_data_in;
-   output [15:0]  bd_data_out;
-   output 	 bd_rd;
-   output 	 bd_wr;
-   input 	 bd_iordy;
-   input [11:0]	 bd_state;
-   
    //   
    wire 	 uart_reset;
    wire 	 uart_clk;
@@ -295,19 +279,6 @@ module spy_port(sysclk, clk, reset, rs232_rxd, rs232_txd,
      end
 `endif
    
-   always @(posedge spy_clk)
-     if (spy_reset)
-       response <= 0;
-     else
-       if (dbread)
-	 response <= spy_in;
-       else
-	 if (start_bd_read)
-	   response <= 
-		       (reg_addr == 0) ? { bd_state, bd_bsy, bd_rdy, bd_err, bd_iordy} :
-		       (reg_addr == 1) ? bd_data_in :
-		       16'h1111;
-
    // transmit one character
    assign tx_start = 
 		     (spyu_state == SPYU_TX1) ||
@@ -372,12 +343,6 @@ module spy_port(sysclk, clk, reset, rs232_rxd, rs232_txd,
 	  else
 	    spy_bd_reg[2] <= 0;
        end
-   
-   assign bd_cmd = spy_bd_reg[1:0];
-   assign bd_start = spy_bd_reg[2];
-   assign bd_rd = spy_bd_reg[3];
-   assign bd_wr = spy_bd_reg[4];
-   assign bd_data_out = spy_bd_data;
    
 endmodule // spy_port
 
