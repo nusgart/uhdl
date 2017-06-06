@@ -1099,19 +1099,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
             sequence_break <= ob[26];
 	 end
 
-`ifdef 1
    IOR cadr_ior (.iob(iob), .i(i), .ob(ob));
-`else
-   // iob 47 46 45 44 43 42 41 40 39 38 37 36 35 34 33 32 31 30 29 28 27 26
-   // i   47 46 45 44 43 42 41 40 39 38 37 36 35 34 33 32 31 30 29 28 27 26
-   // ob  21 20 19 18 17 16 15 14 13 12 11 10 9  8  7  6  5  4  3  2  1  0  
-
-   // iob 25 24 ... 1  0
-   // i   25 24 ... 1  0
-   // ob  25 24 ... 1  0
-
-   assign iob = i[47:0] | { ob[21:0], ob[25:0] };
-`endif
 
    // page IPAR -- empty
 
@@ -1287,22 +1275,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    assign wpc = (irdisp & ir[25]) ? lpc : pc;
 `endif
      
-
-`ifdef 1
    MCTL cadr_mctl (.mpassm(mpassm), .srcm(srcm), .mrp(mrp), .mwp(mwp), .madr(madr), .ir(ir), .destm(destm), .wadr(wadr), .state_decode(state_decode), .state_write(state_write));
-`else
-//   assign mpass = { 1'b1, ir[30:26] } == { destm, wadr[4:0] };
-//   assign mpassl = mpass & phase1 & ~ir[31];
-   assign mpassm  = /*~mpass & phase1 &*/ ~ir[31];
-
-   assign srcm = ~ir[31]/* & ~mpass*/;	/* srcm = m-src is m-memory */
-
-   assign mrp = state_decode;
-   assign mwp = destm & state_write;
-   
-   // use wadr during state_write
-   assign madr = ~state_write ? ir[30:26] : wadr[4:0];
-`endif
 
    // page MD
 
@@ -1334,25 +1307,9 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    assign mdclk = loadmd | destmdr;
 
-`ifdef 0
    MDS cadr_mds(.mds(mds), .mdsel(mdsel), .ob(ob), .memdrive(memdrive), .loadmd(loadmd), .busint_bus(busint_bus), .md(md));
-`else
-   assign mds = mdsel ? ob : mem;
 
-   // mux MEM
-   assign mem =
-	       memdrive ? md :
-	       loadmd ? busint_bus :
-	       32'b0;
-`endif
-
-`ifdef 0
    MF cadr_mf (.mfenb(mfenb), .mfdrive(mfdrive), .srcm(srcm), .spcenb(spcenb), .pdlenb(pdlenb), .state_alu(state_alu), .state_write(state_write), .state_mmu(state_mmu), .state_fetch(state_fetch));
-`else
-   assign mfenb = ~srcm & !(spcenb | pdlenb);
-   assign mfdrive = mfenb &
-		    (state_alu || state_write || state_mmu || state_fetch);
-`endif
 
    // page MLATCH
 
@@ -1453,17 +1410,8 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 	 pc <= npc;
 
    assign ipc = pc + 14'd1;
-
-`ifdef 1
+	
    OPCD cadr_opcd (.dcdrive(dcdrive), .opcdrive(opcdrive), .srcdc(srcdc), .srcopc(srcopc), .state_alu(state_alu), .state_write(state_write), .state_mmu(state_mmu), .state_fetch(state_fetch));
-`else
-   assign dcdrive = srcdc &  	/* dispatch constant */
-		    (state_alu || state_write || state_mmu || state_fetch);
-
-   assign opcdrive  = srcopc &
-		      (state_alu | state_write);
-`endif
-
 
    // page PDL
 
@@ -1680,27 +1628,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 		{s4,s3,s2} == 3'b110 ? { sa[7], sa[3], sa[31],sa[27] } :
 		                       { sa[3], sa[31],sa[27],sa[23] };
 
-`ifdef 1
    SMCTL cadr_smctl (.mr(mr), .sr(sr), .mskr(mskr), .s0(s0), .s1(s1), .s2(s2), .s3(s3), .s4(s4), .mskl(mskl), .irbyte(irbyte), .ir(ir), .sh3(sh3), .sh4(sh4));
-`else
-   assign mr = ~irbyte | ir[13];
-   assign sr = ~irbyte | ir[12];
-
-   assign mskr[4] = mr & sh4;
-   assign mskr[3] = mr & sh3;
-   assign mskr[2] = mr & ir[2];
-   assign mskr[1] = mr & ir[1];
-   assign mskr[0] = mr & ir[0];
-
-   assign s4 = sr & sh4;
-   assign s3 = sr & sh3;
-   assign s2 = sr & ir[2];
-   assign s1 = sr & ir[1];
-   assign s0 = sr & ir[0];
-
-   assign mskl = mskr + ir[9:5];
-`endif
-
 
    // page SOURCE
 
@@ -2356,19 +2284,8 @@ if (state_fetch) ssdone <= sstep;
    // the machine runs.  Only change OPCINH when CLK is high 
    // (e.g. machine stopped).
 
-`ifdef 1
    PCTL cadr_pctl(.pc(pc), .idebug(idebug), .promdisabled(promdisabled), .iwrited(iwrited), .prompc(prompc), .bottom_1k(bottom_1k), .promenable(promenable), .promce(promce), .promaddr(promaddr));
-`else
-   assign bottom_1k = ~(pc[13] | pc[12] | pc[11] | pc[10]);
-   assign promenable = bottom_1k & ~idebug & ~promdisabled & ~iwrited;
 
-   assign promce = promenable & ~pc[9];
-
-   assign prompc = pc[11:0];
-
-   assign promaddr = prompc[8:0];
-`endif
-   
    // page PROM0
 
    part_512x49prom i_PROM(
