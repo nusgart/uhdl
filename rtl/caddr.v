@@ -1260,22 +1260,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
 	MO cadr_mo(.msk(msk), .r(r), .a(a), .mo(mo), .alu(alu), .q(q), .osel(osel), .ob(ob));
 
-	// page MSKG4
-
-   part_32x32prom_maskleft i_MSKR(
-				  .clk(~clk),
-				  .q(msk_left_out),
-				  .addr(mskl)
-				  );
-
-   part_32x32prom_maskright i_MSKL(
-				   .clk(~clk),
-				   .q(msk_right_out),
-				   .addr(mskr)
-				   );
-
-   assign msk = msk_right_out & msk_left_out;
-
+	MSKG4 cadr_mskg4 (.clk(clk), .msk(msk), .mskl(mskl), .mskr(mskr));
 
    // page NPC
 
@@ -1403,96 +1388,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
             endcase
 	 end
 
-
-   // page SHIFT0-1
-
-   assign sa =
-	      {s1,s0} == 2'b00 ? m :
-	      {s1,s0} == 2'b01 ? { m[30:0], m[31] } : 
-	      {s1,s0} == 2'b10 ? { m[29:0], m[31], m[30] } : 
-	      { m[28:0], m[31], m[30], m[29] };
-
-   assign {r[12],r[8],r[4],r[0]} =
-		{s4,s3,s2} == 3'b000 ? { sa[12],sa[8], sa[4], sa[0] } :
-		{s4,s3,s2} == 3'b001 ? { sa[8], sa[4], sa[0], sa[28] } :
-		{s4,s3,s2} == 3'b010 ? { sa[4], sa[0], sa[28],sa[24] } :
-		{s4,s3,s2} == 3'b011 ? { sa[0], sa[28],sa[24],sa[20] } :
-		{s4,s3,s2} == 3'b100 ? { sa[28],sa[24],sa[20],sa[16] } :
-		{s4,s3,s2} == 3'b101 ? { sa[24],sa[20],sa[16],sa[12] } :
-		{s4,s3,s2} == 3'b110 ? { sa[20],sa[16],sa[12],sa[8] } :
-		{ sa[16],sa[12],sa[8], sa[4] };
-
-   assign {r[13],r[9],r[5],r[1]} =
-		{s4,s3,s2} == 3'b000 ? { sa[13],sa[9], sa[5], sa[1] } :
-		{s4,s3,s2} == 3'b001 ? { sa[9], sa[5], sa[1], sa[29] } :
-		{s4,s3,s2} == 3'b010 ? { sa[5], sa[1], sa[29],sa[25] } :
-		{s4,s3,s2} == 3'b011 ? { sa[1], sa[29],sa[25],sa[21] } :
-		{s4,s3,s2} == 3'b100 ? { sa[29],sa[25],sa[21],sa[17] } :
-		{s4,s3,s2} == 3'b101 ? { sa[25],sa[21],sa[17],sa[13] } :
-		{s4,s3,s2} == 3'b110 ? { sa[21],sa[17],sa[13],sa[9] } :
-		{ sa[17],sa[13],sa[9], sa[5] };
-
-   assign {r[14],r[10],r[6],r[2]} =
-		{s4,s3,s2} == 3'b000 ? { sa[14],sa[10],sa[6], sa[2] } :
-		{s4,s3,s2} == 3'b001 ? { sa[10],sa[6], sa[2], sa[30] } :
-		{s4,s3,s2} == 3'b010 ? { sa[6], sa[2], sa[30],sa[26] } :
-		{s4,s3,s2} == 3'b011 ? { sa[2], sa[30],sa[26],sa[22] } :
-		{s4,s3,s2} == 3'b100 ? { sa[30],sa[26],sa[22],sa[18] } :
-		{s4,s3,s2} == 3'b101 ? { sa[26],sa[22],sa[18],sa[14] } :
-		{s4,s3,s2} == 3'b110 ? { sa[22],sa[18],sa[14],sa[10] } :
-		{ sa[18],sa[14],sa[10], sa[6] };
-
-   assign {r[15],r[11],r[7],r[3]} =
-		{s4,s3,s2} == 3'b000 ? { sa[15],sa[11],sa[7], sa[3] } :
-		{s4,s3,s2} == 3'b001 ? { sa[11],sa[7], sa[3], sa[31] } :
-		{s4,s3,s2} == 3'b010 ? { sa[7], sa[3], sa[31],sa[27] } :
-		{s4,s3,s2} == 3'b011 ? { sa[3], sa[31],sa[27],sa[23] } :
-		{s4,s3,s2} == 3'b100 ? { sa[31],sa[27],sa[23],sa[19] } :
-		{s4,s3,s2} == 3'b101 ? { sa[27],sa[23],sa[19],sa[15] } :
-		{s4,s3,s2} == 3'b110 ? { sa[23],sa[19],sa[15],sa[11] } :
-		{ sa[19],sa[15],sa[11], sa[7] };
-
-   //
-
-   assign {r[28],r[24],r[20],r[16]} =
-		{s4,s3,s2} == 3'b000 ? { sa[28],sa[24],sa[20],sa[16] } :
-		{s4,s3,s2} == 3'b001 ? { sa[24],sa[20],sa[16],sa[12] } :
-		{s4,s3,s2} == 3'b010 ? { sa[20],sa[16],sa[12],sa[8] } :
-		{s4,s3,s2} == 3'b011 ? { sa[16],sa[12],sa[8], sa[4] } :
-		{s4,s3,s2} == 3'b100 ? { sa[12],sa[8],sa[4], sa[0] } :
-		{s4,s3,s2} == 3'b101 ? { sa[8], sa[4],sa[0], sa[28] } :
-		{s4,s3,s2} == 3'b110 ? { sa[4], sa[0],sa[28],sa[24] } :
-		{ sa[0],sa[28],sa[24],sa[20] };
-
-   assign {r[29],r[25],r[21],r[17]} =
-		{s4,s3,s2} == 3'b000 ? { sa[29],sa[25],sa[21],sa[17] } :
-		{s4,s3,s2} == 3'b001 ? { sa[25],sa[21],sa[17],sa[13] } :
-		{s4,s3,s2} == 3'b010 ? { sa[21],sa[17],sa[13],sa[9] } :
-		{s4,s3,s2} == 3'b011 ? { sa[17],sa[13],sa[9], sa[5] } :
-		{s4,s3,s2} == 3'b100 ? { sa[13],sa[9],sa[5], sa[1] } :
-		{s4,s3,s2} == 3'b101 ? { sa[9], sa[5],sa[1], sa[29] } :
-		{s4,s3,s2} == 3'b110 ? { sa[5], sa[1],sa[29],sa[25] } :
-		{ sa[1],sa[29],sa[25],sa[21] };
-
-   assign {r[30],r[26],r[22],r[18]} =
-		{s4,s3,s2} == 3'b000 ? { sa[30],sa[26],sa[22],sa[18] } :
-		{s4,s3,s2} == 3'b001 ? { sa[26],sa[22],sa[18],sa[14] } :
-		{s4,s3,s2} == 3'b010 ? { sa[22],sa[18],sa[14],sa[10] } :
-		{s4,s3,s2} == 3'b011 ? { sa[18],sa[14],sa[10], sa[6] } :
-		{s4,s3,s2} == 3'b100 ? { sa[14],sa[10],sa[6], sa[2] } :
-		{s4,s3,s2} == 3'b101 ? { sa[10],sa[6], sa[2], sa[30] } :
-		{s4,s3,s2} == 3'b110 ? { sa[6], sa[2], sa[30],sa[26] } :
-		                       { sa[2], sa[30],sa[26],sa[22] };
-	
-   assign {r[31],r[27],r[23],r[19]} =
-		{s4,s3,s2} == 3'b000 ? { sa[31],sa[27],sa[23],sa[19] } :
-		{s4,s3,s2} == 3'b001 ? { sa[27],sa[23],sa[19],sa[15] } :
-		{s4,s3,s2} == 3'b010 ? { sa[23],sa[19],sa[15],sa[11] } :
-		{s4,s3,s2} == 3'b011 ? { sa[19],sa[15],sa[11],sa[7] } :
-		{s4,s3,s2} == 3'b100 ? { sa[15],sa[11],sa[7], sa[3] } :
-		{s4,s3,s2} == 3'b101 ? { sa[11],sa[7], sa[3], sa[31] } :
-		{s4,s3,s2} == 3'b110 ? { sa[7], sa[3], sa[31],sa[27] } :
-		                       { sa[3], sa[31],sa[27],sa[23] };
+	SHIFT01 cadr_shift01 (.sa(sa), .r(r), .s0(s0), .s1(s1), .s2(s2), .s3(s3), .s4(s4), .m(m));
 
    SMCTL cadr_smctl (.mr(mr), .sr(sr), .mskr(mskr), .s0(s0), .s1(s1), .s2(s2), .s3(s3), .s4(s4), .mskl(mskl), .irbyte(irbyte), .ir(ir), .sh3(sh3), .sh4(sh4));
 
@@ -1646,56 +1542,17 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    assign reta = n ? wpc : ipc;
 
-   // page SPY1-2
-
-   reg [31:0] ob_last;
-
-   /* grab ob from last cycle for spy */
-   always @(posedge clk)
-     if (reset)
-       ob_last <= 0;
-     else
-       if (/*state_fetch*/state_write)
-	 ob_last <= ob;
-   
-   wire[15:0] spy_mux;
-
-   assign spy_out = dbread ? spy_mux : 16'b1111111111111111;
-
-   wire [4:0] disk_state_in;
-   
-   assign spy_mux =
-	spy_irh ? ir[47:32] :
-	spy_irm ? ir[31:16] :
-	spy_irl ? ir[15:0] :
-	spy_obh ? ob_last[31:16] :
-	spy_obl ? ob_last[15:0] :
-spy_obh_ ? ob[31:16] :
-spy_obl_ ? ob[15:0] :
-        spy_disk ? { 11'b0, disk_state_in } :
-        spy_bd ? { 4'b0, bd_state_in } :
-	spy_ah  ? a[31:16] :
-	spy_al  ? a[15:0] :
-	spy_mh  ? m[31:16] :
-	spy_ml  ? m[15:0] :
-	spy_mdh ? md[31:16] :
-        spy_mdl ? md[15:0] :
-	spy_vmah ? vma[31:16] :
-        spy_vmal ? vma[15:0] :
-	spy_flag2 ?
-			{ 2'b0,wmap,destspc,iwrited,imod,pdlwrite,spush,
-			  2'b0,ir[48],nop,vmaok,jcond,pcs1,pcs0 } :
-	spy_opc ?
-			{ 2'b0,opc } :
-	spy_flag1 ?
-			{ waiting, 1'b0, boot, promdisable,
-			  stathalt, err, ssdone, srun,
-			  1'b0, 1'b0, 1'b0, 1'b0,
-			  1'b0, 1'b0, 1'b0, 1'b0 } :
-	spy_pc ?
-			{ 2'b0,pc } :
-        spy_scratch ?   scratch :
-        16'b1111111111111111;
+	SPY12 cadr_spy12(.clk(clk), .reset(reset), .spy_out(spy_out), .ir(ir), .state_write(state_write),
+.spy_mdh(spy_mdh), .spy_vmah(spy_vmah), .spy_vmal(spy_vmal), .spy_obh_(spy_obh_), .spy_obl_(spy_obl_), .md(md), .vma(vma),
+.ob(ob), .opc(opc), .waiting(waiting), .boot(boot), .promdisable(promdisable), .stathalt(stathalt), .dbread(dbread), .nop(nop),
+.spy_obh(spy_obh), .spy_obl(spy_obl), .spy_pc(spy_pc), .spy_opc(spy_opc), .spy_scratch(spy_scratch), .spy_irh(spy_irh), .spy_irm(spy_irm), .spy_irl(spy_irl),
+.spy_disk(spy_disk), .spy_bd(spy_bd), .pc(pc),
+.err(err), .scratch(scratch),
+.spy_sth(spy_sth), .spy_stl(spy_stl), .spy_ah(spy_ah), .spy_al(spy_al),
+.spy_mh(spy_mh), .spy_ml(spy_ml), .spy_flag2(spy_flag2), .spy_flag1(spy_flag1),
+.m(m), .a(a), .bd_state_in(bd_state_in), .wmap(wmap), .ssdone(ssdone),.vmaok(vmaok), .destspc(destspc), .jcond(jcond), .srun(srun),
+.pcs1(pcs1),.pcs0(pcs0),.iwrited(iwrited),.imod(imod),.pdlwrite(pdlwrite),.spush(spush)
+	);
 
 	TRAP cadr_trap (.trap(trap), .boot_trap(boot_trap));
 
