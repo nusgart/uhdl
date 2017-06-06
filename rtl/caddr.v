@@ -547,7 +547,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    // page IWR
    reg [48:0] 	iwr;
 
-   reg [13:0] 	lpc;
+   wire [13:0] 	lpc;
 
    wire 	lvmo_23;
    wire 	lvmo_22;
@@ -651,11 +651,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    // use wadr during state_write
    assign aadr = ~state_write ? { ir[41:32] } : wadr;
 
-`ifdef 1
    ALATCH cadr_alatch (.amem(amem), .a(a));
-`else
-   assign a = amem;
-`endif
 
    // page ALU0-1
 
@@ -1224,24 +1220,8 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    assign sh3  = ~(~ir[3] ^ inst_in_2nd_or_4th_quarter);
 
-
-`ifdef 1
    LPC cadr_lpc (.clk(clk), .reset(reset), .lpc(lpc), .lpc_hold(lpc_hold), .pc(pc), .wpc(wpc), .irdisp(irdisp), .ir(ir), .state_fetch(state_fetch));
-`else
-   always @(posedge clk)
-     if (reset)
-       lpc <= 0;
-     else
-       if (state_fetch)
-	 begin
-	    if (~lpc_hold)
-	      lpc <= pc;
-	 end
 
-   /* dispatch and instruction as N set */
-   assign wpc = (irdisp & ir[25]) ? lpc : pc;
-`endif
-     
    MCTL cadr_mctl (.mpassm(mpassm), .srcm(srcm), .mrp(mrp), .mwp(mwp), .madr(madr), .ir(ir), .destm(destm), .wadr(wadr), .state_decode(state_decode), .state_write(state_write));
 
    // page MD
@@ -1297,25 +1277,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 	     mfdrive ? mf :
 	     32'b0;
 
-   // page MMEM
-
-   part_32x32dpram i_MMEM(
-			  .reset(reset),
-
-			  .clk_a(clk),
-			  .address_a(madr),
-			  .data_a(32'b0),
-			  .q_a(mmem),
-			  .wren_a(1'b0),
-			  .rden_a(mrp),
-
-			  .clk_b(clk),
-			  .address_b(madr),
-			  .data_b(l),
-			  .q_b(),
-			  .wren_b(mwp),
-			  .rden_b(1'b0)
-			);
+	MMEM cadr_mmem (.clk(clk), .reset(reset), .mwp(mwp), .mrp(mrp), .madr(madr), .l(l), .b(b), .mmem(mmem));
 
    // page MO
 
