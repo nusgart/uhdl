@@ -206,7 +206,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    wire [13:0] 	ipc;
    wire [18:0] 	spc;
 
-   reg [48:0] 	ir;
+   wire [48:0] 	ir;
 
    wire [31:0] 	a;
    wire [9:0] 	aadr;
@@ -869,26 +869,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 		  {alusub,aluadd} == 2'b10 ? ~irjump :
                   1'b1;
 
-
-   // page AMEM0-1
-
-   part_1kx32dpram_a i_AMEM(
-			    .reset(reset),
-
-			    .clk_a(clk),
-			    .address_a(aadr),
-			    .data_a(32'b0),
-			    .q_a(amem),
-			    .wren_a(1'b0),
-			    .rden_a(arp),
-			    
-			    .clk_b(clk),
-			    .address_b(aadr),
-			    .data_b(l),
-			    .q_b(),
-			    .wren_b(awp),
-			    .rden_b(1'b0)
-			    );
+   AMEM01 cadr_amem01(.clk(clk), .reset(reset), .aadr(aadr), .amem(amem), .awp(awp), .arp(arp), .l(l));
 
    // page CONTRL
 
@@ -1103,21 +1084,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    // page IPAR -- empty
 
-`ifdef 1
    IREG cadr_ireg (.clk(clk), .reset(reset), .i(i), .iob(iob), .ir(ir), .state_fetch(state_fetch), .destimod1(destimod1), .destimod0(destimod0));
-`else
-   always @(posedge clk)
-     if (reset)
-       ir <= 49'b0;
-     else
-       if (state_fetch)
-	 begin
-	    ir[48] <= ~destimod1 ? i[48] : 1'b0;
-	    ir[47:26] <= ~destimod1 ? i[47:26] : iob[47:26]; 
-	    ir[25:0] <= ~destimod0 ? i[25:0] : iob[25:0];
-	 end
-`endif
-
 
    // page IWR
 
