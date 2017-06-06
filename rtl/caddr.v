@@ -529,13 +529,13 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    reg 		halted;
 
    // page L
-   reg [31:0] 	l;
+   wire [31:0] 	l;
 
    // page NPC
    reg [13:0] 	pc;
 
    // page OPCS
-   reg [13:0] 	opc;
+   wire [13:0] 	opc;
 
    // page PDLPTR
    reg [9:0] 	pdlptr;
@@ -545,7 +545,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    wire [13:0] 	reta;
 
    // page IWR
-   reg [48:0] 	iwr;
+   wire [48:0] 	iwr;
 
    wire [13:0] 	lpc;
 
@@ -1082,30 +1082,9 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    IREG cadr_ireg (.clk(clk), .reset(reset), .i(i), .iob(iob), .ir(ir), .state_fetch(state_fetch), .destimod1(destimod1), .destimod0(destimod0));
 
-   // page IWR
+   IWR cadr_iwr (.clk(clk), .reset(reset), .state_fetch(state_fetch), .iwr(iwr), .a(a), .m(m));
 
-   always @(posedge clk)
-     if (reset)
-       iwr <= 0;
-     else
-       if (state_fetch)
-	 begin
-	    iwr[48] <= 0;
-	    iwr[47:32] <= a[15:0];
-	    iwr[31:0] <= m[31:0];
-	 end
-
-
-   // page L
-
-   always @(posedge clk)
-     if (reset)
-       l <= 0;
-     else
-       // vma is latched during alu, so this must be too
-       if ((vmaenb && (state_write||state_alu)) || (~vmaenb && state_alu))
-	 l <= ob;
-
+	L cadr_l (.clk(clk), .reset(reset), .vmaenb(vmaenb), .state_write(state_write), .state_alu(state_alu), .ob(ob), .l(l));
 
    // page LC
 
@@ -1279,33 +1258,9 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
 	MMEM cadr_mmem (.clk(clk), .reset(reset), .mwp(mwp), .mrp(mrp), .madr(madr), .l(l), .b(b), .mmem(mmem));
 
-   // page MO
+	MO cadr_mo(.msk(msk), .r(r), .a(a), .mo(mo), .alu(alu), .q(q), .osel(osel), .ob(ob));
 
-   //for (i = 0; i < 31; i++)
-   //  assign mo[i] =
-   //	osel == 2'b00 ? (msk[i] ? r[i] : a[i]) : a[i];
-
-   // msk r  a       (msk&r)|(~msk&a)
-   //  0  0  0   0      0 0  0
-   //  0  0  1   1      0 1  1
-   //  0  1  0   0      0 0  0
-   //  0  1  1   1      0 1  1
-   //  1  0  0   0      0 0  0 
-   //  1  0  1   0      0 0  0
-   //  1  1  0   1      1 0  1 
-   //  1  1  1   1      1 0  1
-
-   // masker output 
-   assign mo = (msk & r) | (~msk & a);
-
-   assign ob =
-	      osel == 2'b00 ? mo :
-	      osel == 2'b01 ? alu[31:0] :
-	      osel == 2'b10 ? alu[32:1] :
-	      /*2'b11*/ {alu[30:0],q[31]};
-
-
-   // page MSKG4
+	// page MSKG4
 
    part_32x32prom_maskleft i_MSKR(
 				  .clk(~clk),
@@ -2160,17 +2115,7 @@ if (state_fetch) ssdone <= sstep;
 	 if (srun)
            boot_trap <= 1'b0;
 
-
-   // page OPCS
-
-   assign opcclka = (state_fetch | opcclk) & ~opcinh;
-
-   always @(posedge clk)
-     if (reset)
-       opc <= 0;
-     else
-       if (opcclka)
-	 opc <= pc;
+	OPCS cadr_opcs (.clk(clk), .reset(reset), .state_fetch(state_fetch), .opcclk(opcclk), .opcinh(opcinh), .opc(opc), .pc(pc));
 
    // With the machine stopped, taking OPCCLK high then low will
    // generate a clock to just the OPCS.
@@ -2180,14 +2125,7 @@ if (state_fetch) ssdone <= sstep;
 
    PCTL cadr_pctl(.pc(pc), .idebug(idebug), .promdisabled(promdisabled), .iwrited(iwrited), .prompc(prompc), .bottom_1k(bottom_1k), .promenable(promenable), .promce(promce), .promaddr(promaddr));
 
-   // page PROM0
-
-   part_512x49prom i_PROM(
-			  .clk(clk),
-			  .addr(~promaddr),
-			  .q(iprom)
-			  );
-
+	PROM0 cadr_prom0(.clk(clk), .promaddr(promaddr), .iprom(iprom));
 
    // page IRAM
 `ifdef use_ucode_ram
