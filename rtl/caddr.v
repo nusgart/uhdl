@@ -547,7 +547,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    // page IWR
    reg [48:0] 	iwr;
 
-   reg [13:0] 	lpc;
+   wire [13:0] 	lpc;
 
    wire 	lvmo_23;
    wire 	lvmo_22;
@@ -651,7 +651,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    // use wadr during state_write
    assign aadr = ~state_write ? { ir[41:32] } : wadr;
 
-`ifdef 1
+`ifdef 0
    ALATCH cadr_alatch (.amem(amem), .a(a));
 `else
    assign a = amem;
@@ -1099,7 +1099,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
             sequence_break <= ob[26];
 	 end
 
-`ifdef 1
+`ifdef 0
    IOR cadr_ior (.iob(iob), .i(i), .ob(ob));
 `else
    // iob 47 46 45 44 43 42 41 40 39 38 37 36 35 34 33 32 31 30 29 28 27 26
@@ -1115,7 +1115,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    // page IPAR -- empty
 
-`ifdef 1
+`ifdef 0
    IREG cadr_ireg (.clk(clk), .reset(reset), .i(i), .iob(iob), .ir(ir), .state_fetch(state_fetch), .destimod1(destimod1), .destimod0(destimod0));
 `else
    always @(posedge clk)
@@ -1270,39 +1270,9 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    assign sh3  = ~(~ir[3] ^ inst_in_2nd_or_4th_quarter);
 
 
-`ifdef 1
    LPC cadr_lpc (.clk(clk), .reset(reset), .lpc(lpc), .lpc_hold(lpc_hold), .pc(pc), .wpc(wpc), .irdisp(irdisp), .ir(ir), .state_fetch(state_fetch));
-`else
-   always @(posedge clk)
-     if (reset)
-       lpc <= 0;
-     else
-       if (state_fetch)
-	 begin
-	    if (~lpc_hold)
-	      lpc <= pc;
-	 end
 
-   /* dispatch and instruction as N set */
-   assign wpc = (irdisp & ir[25]) ? lpc : pc;
-`endif
-     
-
-`ifdef 1
    MCTL cadr_mctl (.mpassm(mpassm), .srcm(srcm), .mrp(mrp), .mwp(mwp), .madr(madr), .ir(ir), .destm(destm), .wadr(wadr), .state_decode(state_decode), .state_write(state_write));
-`else
-//   assign mpass = { 1'b1, ir[30:26] } == { destm, wadr[4:0] };
-//   assign mpassl = mpass & phase1 & ~ir[31];
-   assign mpassm  = /*~mpass & phase1 &*/ ~ir[31];
-
-   assign srcm = ~ir[31]/* & ~mpass*/;	/* srcm = m-src is m-memory */
-
-   assign mrp = state_decode;
-   assign mwp = destm & state_write;
-   
-   // use wadr during state_write
-   assign madr = ~state_write ? ir[30:26] : wadr[4:0];
-`endif
 
    // page MD
 
@@ -1334,25 +1304,9 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    assign mdclk = loadmd | destmdr;
 
-`ifdef 0
    MDS cadr_mds(.mds(mds), .mdsel(mdsel), .ob(ob), .memdrive(memdrive), .loadmd(loadmd), .busint_bus(busint_bus), .md(md));
-`else
-   assign mds = mdsel ? ob : mem;
 
-   // mux MEM
-   assign mem =
-	       memdrive ? md :
-	       loadmd ? busint_bus :
-	       32'b0;
-`endif
-
-`ifdef 0
    MF cadr_mf (.mfenb(mfenb), .mfdrive(mfdrive), .srcm(srcm), .spcenb(spcenb), .pdlenb(pdlenb), .state_alu(state_alu), .state_write(state_write), .state_mmu(state_mmu), .state_fetch(state_fetch));
-`else
-   assign mfenb = ~srcm & !(spcenb | pdlenb);
-   assign mfdrive = mfenb &
-		    (state_alu || state_write || state_mmu || state_fetch);
-`endif
 
    // page MLATCH
 
