@@ -1342,26 +1342,8 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 	
    OPCD cadr_opcd (.dcdrive(dcdrive), .opcdrive(opcdrive), .srcdc(srcdc), .srcopc(srcopc), .state_alu(state_alu), .state_write(state_write), .state_mmu(state_mmu), .state_fetch(state_fetch));
 
-   // page PDL
+	PDL cadr_pdl (.clk(clk), .reset(reset), .prp(prp), .pdla(pdla), .l(l), .pwp(pwp), .pdl(pdl));
 
-   part_1kx32dpram_p i_PDL(
-			 .reset(reset),
-
-			 .clk_a(clk),
-			 .address_a(pdla),
-			 .q_a(pdl),
-			 .data_a(32'b0),
-			 .rden_a(prp),
-			 .wren_a(1'b0),
-
-			 .clk_b(clk),
-			 .address_b(pdla),
-			 .q_b(),
-			 .data_b(l),
-			 .rden_b(1'b0),
-			 .wren_b(pwp)
-			 );
-   
    // page PDLCTL
 
    /* m-src = pdl buffer, or index based write */
@@ -1690,14 +1672,10 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 		   spcptr <= spcptr - 5'd1;
 	      end
 	 end
-   
-   // page SPCLCH
 
-   // mux SPC
-   assign spc = spco;
+	SPCLCH cadr_spclch (.spc(spc), .spco(spco));
 
-   // page SPCPAR
-
+   // page SPCPAR -- empty
    
    // page SPCW
 
@@ -1764,11 +1742,7 @@ spy_obl_ ? ob[15:0] :
         spy_scratch ?   scratch :
         16'b1111111111111111;
 
-
-   // page TRAP
-
-   assign trap = boot_trap;
-
+	TRAP cadr_trap (.trap(trap), .boot_trap(boot_trap));
 
    // page VCTRL1
 
@@ -2033,17 +2007,8 @@ spy_obl_ ? ob[15:0] :
 	     promenable ? iprom :
 	     iram;
 
-`ifdef 1
    wire   iwe;
-   ICTL cadr_ictl (.ramdisable(ramdisable), .idebug(idebug), .promdisabled(promdisabled), .iwrited(iwrited), .iwe(iwe));
-`else
-   assign ramdisable = idebug | ~(promdisabled | iwrited);
-
-   // see clocks below
-   wire   iwe;
-   assign iwe = iwrited & state_write;
-`endif
-
+   ICTL cadr_ictl (.ramdisable(ramdisable), .idebug(idebug), .promdisabled(promdisabled), .iwrited(iwrited), .state_write(state_write), .iwe(iwe));
 
    // page OLORD1 
 
