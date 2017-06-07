@@ -1,4 +1,14 @@
-module DSPCTL();
+module DSPCTL( clk, reset, state_fetch, irdisp, 	funct, 	ir, 	dmask, 	dmapbenb, dispwr, 	dc);
+
+   input clk, reset;
+   input state_fetch;
+   input irdisp;
+      input [3:0] 	funct;
+      input [48:0] 	ir;
+      input [6:0] 	dmask;
+output 	dmapbenb, dispwr;
+output   reg [9:0] 	dc;
+
 
    assign dmapbenb  = ir[8] | ir[9];
 

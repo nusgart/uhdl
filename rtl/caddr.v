@@ -252,7 +252,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    // page DSPCTL
    wire 	dmapbenb, dispwr;
-   reg [9:0] 	dc;
+   wire [9:0] 	dc;
    wire [11:0] 	prompc;
    wire [8:0] 	promaddr;
 
@@ -532,7 +532,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    wire [31:0] 	l;
 
    // page NPC
-   reg [13:0] 	pc;
+   wire [13:0] 	pc;
 
    // page OPCS
    wire [13:0] 	opc;
@@ -994,26 +994,8 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 			  .rden_b(1'b0)
 			  );
 
-   // page DSPCTL
+ DSPCTL cadr_dspctl(.clk(clk), .reset(reset), .state_fetch(state_fetch), .irdisp(irdisp), .funct(funct), .ir(ir), .dmask(dmask), .dmapbenb(dmapbenb), .dispwr(dispwr), .dc(dc));
 
-   assign dmapbenb  = ir[8] | ir[9];
-
-   assign dispwr = irdisp & funct[2];
-
-   always @(posedge clk)
-     if (reset)
-       dc <= 0;
-     else
-       if (state_fetch && irdisp)
-	 dc <= ir[41:32];
-
-   wire   nc_dmask;
-   
-   part_32x8prom i_DMASK(
-			 .clk(~clk),
-			 .addr( {1'b0, 1'b0, ir[7], ir[6], ir[5]} ),
-			 .q( {nc_dmask, dmask[6:0]} )
-			 );
 
    // page FLAG
 
@@ -1225,23 +1207,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    MSKG4 cadr_mskg4 (.clk(clk), .msk(msk), .mskl(mskl), .mskr(mskr));
 
-   // page NPC
-
-   assign npc = 
-		trap ? 14'b0 :
-		{pcs1,pcs0} == 2'b00 ? { spc[13:2], spc1a, spc[0] } :
-		{pcs1,pcs0} == 2'b01 ? { ir[25:12] } :
-		{pcs1,pcs0} == 2'b10 ? dpc :
-                 /*2'b11*/ ipc;
-
-   always @(posedge clk)
-     if (reset)
-       pc <= 0;
-     else
-       if (state_fetch)
-	 pc <= npc;
-
-   assign ipc = pc + 14'd1;
+   NPC cadr_npc(.clk(clk), .reset(reset), .state_fetch(state_fetch), .ipc(ipc), .npc(npc), .trap(trap), .pcs1(pcs1), .pcs0(pcs0), .ir(ir), .spc(spc), .spc1a(spc1a), .dpc(dpc), .pc(pc));
 	
    OPCD cadr_opcd (.dcdrive(dcdrive), .opcdrive(opcdrive), .srcdc(srcdc), .srcopc(srcopc), .state_alu(state_alu), .state_write(state_write), .state_mmu(state_mmu), .state_fetch(state_fetch));
 
