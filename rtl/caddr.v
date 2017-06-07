@@ -213,7 +213,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    wire 	awp;
    wire 	arp;
    
-   reg [9:0] 	wadr;
+   wire [9:0] 	wadr;
 
    wire [7:0] 	aeqm_bits;
    wire 	aeqm;
@@ -486,7 +486,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    wire [48:0] 	i;
    wire [48:0] 	iprom;
    wire [48:0] 	iram;
-   reg [47:0] 	spy_ir;
+   wire [47:0] 	spy_ir;
 
    wire 	ramdisable;
 
@@ -629,27 +629,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    assign state_prefetch = state[5] & mcr_hold;
    assign state_fetch = state[5] & ~mcr_hold;
 
-   // page actl
-
-   always @(posedge clk)
-     if (reset)
-       begin
-	  wadr <= 0;
-       end
-     else
-       if (state_decode)
-	 begin
-	    // wadr 9  8  7  6  5  4  3  2  1  0
-	    //      0  0  0  0  0  18 17 16 15 14
-	    // ir   23 22 21 20 19 18 17 16 15 14
-	    wadr <= destm ? { 5'b0, ir[18:14] } : { ir[23:14] };
-	 end
-
-   assign awp = dest & state_write;
-   assign arp = state_decode;
-
-   // use wadr during state_write
-   assign aadr = ~state_write ? { ir[41:32] } : wadr;
+   ACTL cadr_actl(.clk(clk), .reset(reset), .state_decode(state_decode), .state_write(state_write), .wadr(wadr), .destm(destm), .awp(awp), .arp(arp), .aadr(aadr), .ir(ir), .dest(dest));
 
    ALATCH cadr_alatch (.amem(amem), .a(a));
 
@@ -1237,24 +1217,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    MF cadr_mf (.mfenb(mfenb), .mfdrive(mfdrive), .srcm(srcm), .spcenb(spcenb), .pdlenb(pdlenb), .state_alu(state_alu), .state_write(state_write), .state_mmu(state_mmu), .state_fetch(state_fetch));
 
-   // page MLATCH
-
-`ifdef debug_with_usim
-   // tell disk controller when each fetch passes to force sync with usim
-   always @(posedge clk)
-	if (state_fetch)
-	  busint.disk.fetch = 1;
-	else
-	  busint.disk.fetch = 0;
-`endif
-       
-   // mux M
-   assign m =
-/*same as srcm*/mpassm ? mmem :
-	     pdldrive ? pdl :
-	     spcdrive ? {3'b0, spcptr, 5'b0, spco} :
-	     mfdrive ? mf :
-	     32'b0;
+   MLATCH cadr_mlatch(.pdldrive(pdldrive), .mpassm(mpassm), .spcdrive(spcdrive), .mfdrive(mfdrive), .mmem(mmem), .pdl(pdl), .spcptr(spcptr), .spco(spco), .mf(mf), .m(m));
 
    MMEM cadr_mmem (.clk(clk), .reset(reset), .mwp(mwp), .mrp(mrp), .madr(madr), .l(l), .b(b), .mmem(mmem));
 
@@ -1528,19 +1491,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    // page SPCPAR -- empty
    
-   // page SPCW
-
-   assign spcw = destspc ? l[18:0] : { 5'b0, reta };
-
-//   always @(posedge clk)
-//     if (reset)
-//       reta <= 0;
-//     else
-//       /* n is not valid until after decode */
-//       if (state_alu)
-//	 reta <= n ? wpc : ipc;
-
-   assign reta = n ? wpc : ipc;
+   SPCW cadr_spcw(.destspc(destspc), .l(l), .reta(reta), .spcw(spcw), .n(n), .ipc(ipc), .wpc(wpc));
 
    SPY12 cadr_spy12(.clk(clk), .reset(reset), .spy_out(spy_out), .ir(ir), .state_write(state_write), .spy_mdh(spy_mdh), .spy_vmah(spy_vmah), .spy_vmal(spy_vmal), .spy_obh_(spy_obh_), .spy_obl_(spy_obl_), .md(md), .vma(vma), .ob(ob), .opc(opc), .waiting(waiting), .boot(boot), .promdisable(promdisable), .stathalt(stathalt), .dbread(dbread), .nop(nop), .spy_obh(spy_obh), .spy_obl(spy_obl), .spy_pc(spy_pc), .spy_opc(spy_opc), .spy_scratch(spy_scratch), .spy_irh(spy_irh), .spy_irm(spy_irm), .spy_irl(spy_irl), .spy_disk(spy_disk), .spy_bd(spy_bd), .pc(pc), .err(err), .scratch(scratch), .spy_sth(spy_sth), .spy_stl(spy_stl), .spy_ah(spy_ah), .spy_al(spy_al), .spy_mh(spy_mh), .spy_ml(spy_ml), .spy_flag2(spy_flag2), .spy_flag1(spy_flag1), .m(m), .a(a), .bd_state_in(bd_state_in), .wmap(wmap), .ssdone(ssdone), .vmaok(vmaok), .destspc(destspc), .jcond(jcond), .srun(srun), .pcs1(pcs1), .pcs0(pcs0), .iwrited(iwrited), .imod(imod), .pdlwrite(pdlwrite), .spush(spush));
 
@@ -1716,98 +1667,15 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    assign vmadrive = srcvma &
 		     (state_alu || state_write || state_fetch);
 
+   VMAS cadr_vmas(.vmas(vmas), .mapi(mapi), .vmasel(vmasel), .ob(ob), .memprepare(memprepare), .md(md), .vma(vma), .lc(lc));
 
-   // page VMAS
+   VMEM0 cadr_vmem0(.clk(clk), .reset(reset), .vmem0_adr(vmem0_adr), .mapi(mapi), .vmap(vmap), .vm0rp(vm0rp), .vma(vma), .use_map(use_map), .srcmap(srcmap), .memstart(memstart), .vm0wp(vm0wp));
 
-   assign vmas = vmasel ? ob : { 8'b0, lc[25:2] };
+   VMEM12 cadr_vmem12(.clk(clk), .reset(reset), .vmem1_adr(vmem1_adr), .vmap(vmap), .mapi(mapi), .vma(vma), .vmo(vmo), .vm1rp(vm1rp), .vm1wp(vm1wp));
 
-   assign mapi = ~memprepare ? md[23:8] : vma[23:8];
+   VMEMDR cadr_vmemdr(.vmo(vmo), .srcmap(srcmap), .state_alu(state_alu), .state_write(state_write), .state_mmu(state_mmu), .state_fetch(state_fetch), .lvmo_23(lvmo_23), .lvmo_22(lvmo_22), .mapdrive(mapdrive), .pma(pma));
 
-
-   // page VMEM0 - virtual memory map stage 0
-
-   assign vmem0_adr = mapi[23:13];
-   
-   part_2kx5dpram i_VMEM0(
-			  .reset(reset),
-
-			  .clk_a(clk),
-			  .address_a(vmem0_adr),
-			  .q_a(vmap),
-			  .data_a(5'b0),
-			  .wren_a(1'b0),
-			  .rden_a(vm0rp && ~vm0wp),
-
-			  .clk_b(clk),
-			  .address_b(vmem0_adr),
-			  .q_b(),
-			  .data_b(vma[31:27]),
-			  .wren_b(vm0wp),
-			  .rden_b(1'b0)
-			  );
-
-   assign use_map = srcmap | memstart;
-
-   // page VMEM1&2
-
-   assign vmem1_adr = {vmap[4:0], mapi[12:8]};
-
-   part_1kx24dpram i_VMEM1(
-			   .reset(reset),
-
-			   .clk_a(clk),
-			   .address_a(vmem1_adr),
-			   .q_a(vmo),
-			   .data_a(24'b0),
-			   .wren_a(1'b0),
-			   .rden_a(vm1rp && ~vm1wp),
-
-			   .clk_b(clk),
-			   .address_b(vmem1_adr),
-			   .q_b(),
-			   .data_b(vma[23:0]),
-			   .wren_b(vm1wp),
-			   .rden_b(1'b0)
-			   );
-
-   // page VMEMDR - map output drive
-
-   // output of vmem1 is registered
-   assign lvmo_23 = vmo[23];
-   assign lvmo_22 = vmo[22];
-   assign pma = vmo[13:0];
-
-   assign mapdrive = srcmap &
-		     (state_alu || state_write || state_mmu || state_fetch);
-
-   // page DEBUG
-
-   always @(posedge clk)
-     if (reset)
-       spy_ir[47:32] <= 16'b0;
-     else
-       if (lddbirh)
-	 spy_ir[47:32] <= spy_in;
-
-   always @(posedge clk)
-     if (reset)
-       spy_ir[31:16] <= 16'b0;
-     else
-       if (lddbirm)
-	 spy_ir[31:16] <= spy_in;
-
-   always @(posedge clk)
-     if (reset)
-       spy_ir[15:0] <= 16'b0;
-     else
-       if (lddbirl)
-	 spy_ir[15:0] <= spy_in;
-
-   // put latched value on I bus when idebug asserted
-   assign i =
-	     idebug ? {1'b0, spy_ir} :
-	     promenable ? iprom :
-	     iram;
+   DEBUG cadr_debug(.clk(clk), .reset(reset), .spy_ir(spy_ir), .spy_in(spy_in), .i(i), .idebug(idebug), .promenable(promenable), .iprom(iprom), .iram(iram), .lddbirh(lddbirh), .lddbirm(lddbirm), .lddbirl(lddbirl));
 
    wire   iwe;
    ICTL cadr_ictl (.ramdisable(ramdisable), .idebug(idebug), .promdisabled(promdisabled), .iwrited(iwrited), .state_write(state_write), .iwe(iwe));
@@ -2005,112 +1873,7 @@ if (state_fetch) ssdone <= sstep;
    assign state_out = state;
    assign machrun_out = machrun;
    
-   // *************
-   // Spy Interface
-   // *************
-
-   // page SPY0
-
-`ifdef old_spy
-   /* read registers */
-   assign {spy_obh, spy_obl, spy_pc, spy_opc,
-	   spy_scratch, spy_irh, spy_irm, spy_irl} =
-	  (eadr[3] | ~dbread) ? 8'b0000000 :
-		({eadr[2],eadr[1],eadr[0]} == 3'b000) ? 8'b00000001 :
-		({eadr[2],eadr[1],eadr[0]} == 3'b001) ? 8'b00000010 :
-		({eadr[2],eadr[1],eadr[0]} == 3'b010) ? 8'b00000100 :
-		({eadr[2],eadr[1],eadr[0]} == 3'b011) ? 8'b00001000 :
-		({eadr[2],eadr[1],eadr[0]} == 3'b100) ? 8'b00010000 :
-		({eadr[2],eadr[1],eadr[0]} == 3'b101) ? 8'b00100000 :
-		({eadr[2],eadr[1],eadr[0]} == 3'b110) ? 8'b01000000 :
-		({eadr[2],eadr[1],eadr[0]} == 3'b111) ? 8'b10000000 :
-		                                        8'b00000000;
-
-   /* read registers */
-   assign {spy_sth, spy_stl, spy_ah, spy_al,
-	   spy_mh, spy_ml, spy_flag2, spy_flag1} =
-	  (~eadr[3] | ~dbread) ? 8'b00000000 :
-		({eadr[2],eadr[1],eadr[0]} == 3'b000) ? 8'b00000001 :
-		({eadr[2],eadr[1],eadr[0]} == 3'b001) ? 8'b00000010 :
-		({eadr[2],eadr[1],eadr[0]} == 3'b010) ? 8'b00000100 :
-		({eadr[2],eadr[1],eadr[0]} == 3'b011) ? 8'b00001000 :
-		({eadr[2],eadr[1],eadr[0]} == 3'b100) ? 8'b00010000 :
-		({eadr[2],eadr[1],eadr[0]} == 3'b101) ? 8'b00100000 :
-		({eadr[2],eadr[1],eadr[0]} == 3'b110) ? 8'b01000000 :
-		({eadr[2],eadr[1],eadr[0]} == 3'b111) ? 8'b10000000 :
-		                                        8'b00000000;
-
-   /* load registers */
-   assign {ldscratch2, ldscratch1, ldmode, ldopc, ldclk, lddbirh, lddbirm, lddbirl} =
-	  (~dbwrite) ? 8'b00000000 :
-		({eadr[2],eadr[1],eadr[0]} == 3'b000) ? 8'b00000001 :
-		({eadr[2],eadr[1],eadr[0]} == 3'b001) ? 8'b00000010 :
-		({eadr[2],eadr[1],eadr[0]} == 3'b010) ? 8'b00000100 :
-		({eadr[2],eadr[1],eadr[0]} == 3'b011) ? 8'b00001000 :
-		({eadr[2],eadr[1],eadr[0]} == 3'b100) ? 8'b00010000 :
-		({eadr[2],eadr[1],eadr[0]} == 3'b101) ? 8'b00100000 :
-		({eadr[2],eadr[1],eadr[0]} == 3'b110) ? 8'b01000000 :
-                ({eadr[2],eadr[1],eadr[0]} == 3'b111) ? 8'b10000000 :
-		                                        8'b00000000;
-`else
-   /* read registers */
-   assign {spy_obh, spy_obl, spy_pc, spy_opc,
-	   spy_scratch, spy_irh, spy_irm, spy_irl} =
-          ({dbread, eadr} == 6'b10_0000) ? 8'b00000001 :
-          ({dbread, eadr} == 6'b10_0001) ? 8'b00000010 :
-          ({dbread, eadr} == 6'b10_0010) ? 8'b00000100 :
-          ({dbread, eadr} == 6'b10_0011) ? 8'b00001000 :
-          ({dbread, eadr} == 6'b10_0100) ? 8'b00010000 :
-          ({dbread, eadr} == 6'b10_0101) ? 8'b00100000 :
-          ({dbread, eadr} == 6'b10_0110) ? 8'b01000000 :
-          ({dbread, eadr} == 6'b10_0111) ? 8'b10000000 :
-		                           8'b00000000;
-
-   /* read registers */
-   assign {spy_sth, spy_stl, spy_ah, spy_al,
-	   spy_mh, spy_ml, spy_flag2, spy_flag1} =
-          ({dbread, eadr} == 6'b10_1000) ? 8'b00000001 :
-          ({dbread, eadr} == 6'b10_1001) ? 8'b00000010 :
-          ({dbread, eadr} == 6'b10_1010) ? 8'b00000100 :
-          ({dbread, eadr} == 6'b10_1011) ? 8'b00001000 :
-          ({dbread, eadr} == 6'b10_1100) ? 8'b00010000 :
-          ({dbread, eadr} == 6'b10_1101) ? 8'b00100000 :
-          ({dbread, eadr} == 6'b10_1110) ? 8'b01000000 :
-          ({dbread, eadr} == 6'b10_1111) ? 8'b10000000 :
-		                           8'b00000000;
-
-   /* read registers */
-   assign {spy_bd, spy_disk, spy_obh_, spy_obl_, spy_vmah, spy_vmal, spy_mdh, spy_mdl} =
-          ({dbread, eadr} == 6'b11_0000) ? 8'b00000001 :
-          ({dbread, eadr} == 6'b11_0001) ? 8'b00000010 :
-          ({dbread, eadr} == 6'b11_0010) ? 8'b00000100 :
-          ({dbread, eadr} == 6'b11_0011) ? 8'b00001000 :
-          ({dbread, eadr} == 6'b11_0100) ? 8'b00010000 :
-          ({dbread, eadr} == 6'b11_0101) ? 8'b00100000 :
-          ({dbread, eadr} == 6'b11_0110) ? 8'b01000000 :
-          ({dbread, eadr} == 6'b11_0111) ? 8'b10000000 :
-                                           8'b00000000;
-
-   /* load registers */
-   assign {ldscratch2, ldscratch1, ldmode,
-	   ldopc, ldclk, lddbirh, lddbirm, lddbirl} =
-          ({dbwrite, eadr} == 6'b10_0000) ? 8'b00000001 :
-          ({dbwrite, eadr} == 6'b10_0001) ? 8'b00000010 :
-          ({dbwrite, eadr} == 6'b10_0010) ? 8'b00000100 :
-          ({dbwrite, eadr} == 6'b10_0011) ? 8'b00001000 :
-          ({dbwrite, eadr} == 6'b10_0100) ? 8'b00010000 :
-          ({dbwrite, eadr} == 6'b10_0101) ? 8'b00100000 :
-          ({dbwrite, eadr} == 6'b10_0110) ? 8'b01000000 :
-          ({dbwrite, eadr} == 6'b10_0111) ? 8'b10000000 :
-		                            8'b00000000;
-
-   assign {ldvmah, ldvmal, ldmdh, ldmdl} =
-          ({dbwrite, eadr} == 6'b10_1000) ? 4'b0001 :
-          ({dbwrite, eadr} == 6'b10_1001) ? 4'b0010 :
-          ({dbwrite, eadr} == 6'b10_1010) ? 4'b0100 :
-          ({dbwrite, eadr} == 6'b10_1011) ? 4'b1000 :
-		                            4'b0000;
-`endif
+   SPY0 cadr_spy0(.spy_obh(spy_obh), .spy_obl(spy_obl), .spy_pc(spy_pc), .spy_opc(spy_opc), .spy_scratch(spy_scratch), .spy_irh(spy_irh), .spy_irm(spy_irm), .spy_irl(spy_irl), .spy_sth(spy_sth), .spy_stl(spy_stl), .spy_ah(spy_ah), .spy_al(spy_al), .spy_mh(spy_mh), .spy_ml(spy_ml), .spy_flag2(spy_flag2), .spy_flag1(spy_flag1), .ldscratch2(dscratch2), .ldscratch1(ldscratch1), .ldmode(ldmode), .ldopc(ldopc), .ldclk(ldclk), .lddbirh(lddbirh), .lddbirm(lddbirm), .lddbirl(lddbirl), .eadr(eadr), .dbread(dbread), .dbwrite(dbwrite), .spy_mdl(spy_mdl), .spy_vmal(spy_vmal), .spy_vmah(spy_vmah), .spy_mdh(spy_mdh), .spy_disk(spy_disk), .spy_bd(spy_bd));
    
    // *************
    // Bus Interface
