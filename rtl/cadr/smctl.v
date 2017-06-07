@@ -1,18 +1,18 @@
 module SMCTL (mr, sr, mskr, s0, s1, s2, s3, s4, sh3, sh4, mskl, irbyte, ir);
 
-   input  irbyte;   
+   input irbyte;
    input [48:0] ir;
-   input 	sh4, sh3;
-   output 	mr;
-   output 	sr;
+   input	sh4, sh3;
+   output	mr;
+   output	sr;
    output [4:0] mskr;
-   output  	s0;
-   output 	s1;
-   output 	s2;
-   output 	s3;
-   output 	s4;
+   output	s0;
+   output	s1;
+   output	s2;
+   output	s3;
+   output	s4;
    output [4:0] mskl;
-   
+
    assign mr = ~irbyte | ir[13];
    assign sr = ~irbyte | ir[12];
 

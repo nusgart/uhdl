@@ -1,8 +1,8 @@
 module ALATCH (a, amem);
-   
-   input      [31:0] 	amem;
-   output [31:0] 	a;
-   
+
+   input [31:0]		amem;
+   output [31:0]	a;
+
    assign a = amem;
-   
+
 endmodule

@@ -1,15 +1,13 @@
-module MMEM(
-clk, reset, mrp, mwp, madr, l, b, mmem
-    );
+module MMEM (clk, reset, mrp, mwp, madr, l, b, mmem);
 
    input reset;
    input clk;
-   input 	mrp;
+   input mrp;
    input [4:0] madr;
    input [31:0] l;
-   input 	b;
+   input	b;
    output [31:0] mmem;
-input mwp;
+   input	 mwp;
 
    part_32x32dpram i_MMEM(
 			  .reset(reset),
@@ -27,5 +25,5 @@ input mwp;
 			  .q_b(),
 			  .wren_b(mwp),
 			  .rden_b(1'b0)
-			);
+			  );
 endmodule
