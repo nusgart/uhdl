@@ -350,7 +350,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    reg [9:0] 	pdlidx;
 
    // page Q
-   reg [31:0] 	q;
+   wire [31:0] 	q;
    wire 	qs1, qs0, qdrive;
 
    // page SHIFT0-1
@@ -459,7 +459,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    // page VMA
 
-   reg [31:0] 	vma;
+   wire [31:0] 	vma;
    wire 	vmadrive;
 
    // page VMAS
@@ -1327,29 +1327,9 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 //		end
 //	 end
 
-   // page PLATCH
+   // page PLATCH -- empty
 
-   // page Q
-
-   assign qs1 = ir[1] & iralu;
-   assign qs0 = ir[0] & iralu;
-
-   assign qdrive = srcq &
-		   (state_alu || state_write || state_mmu || state_fetch);
-
-   always @(posedge clk)
-     if (reset)
-       q <= 0;
-     else
-       if (state_fetch && (qs1 | qs0))
-	 begin
-            case ( {qs1,qs0} )
-              2'b00: q <= q;
-	      2'b01: q <= { q[30:0], ~alu[31] };
-              2'b10: q <= { alu[0], q[31:1] };
-              2'b11: q <= alu[31:0];
-            endcase
-	 end
+   Q cadr_q(.clk(clk), .reset(reset), .state_alu(state_alu), .state_write(state_write), .state_mmu(state_mmu), .state_fetch(state_fetch), .alu(alu), .srcq(srcq), .qs1(qs1), .qs0(qs0), .qdrive(qdrive), .q(q),.ir(ir),.iralu(iralu));
 
    SHIFT01 cadr_shift01 (.sa(sa), .r(r), .s0(s0), .s1(s1), .s2(s2), .s3(s3), .s4(s4), .m(m));
 
@@ -1649,23 +1629,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 			      (ir[20:19] == 2'b11) ? 3'b100 :
 	                      3'b000 ;
 
-   // page VMA
-
-   always @(posedge clk)
-     if (reset)
-       vma <= 0;
-     else
-       if (state_alu && vmaenb)
-	 vma <= vmas;
-       else
-	 if (ldvmah)
-	   vma[31:16] <= spy_in;
-	 else
-	   if (ldvmal)
-	     vma[15:0] <= spy_in;
-   
-   assign vmadrive = srcvma &
-		     (state_alu || state_write || state_fetch);
+   VMA cadr_vma(.clk(clk), .reset(reset), .state_alu(state_alu), .state_write(state_write), .state_fetch(state_fetch), .vmaenb(vmaenb), .vmas(vmas), .spy_in(spy_in), .srcvma(srcvma), .ldvmal(ldvmal), .ldvmah(ldvmah), .vma(vma), .vmadrive(vmadrive));
 
    VMAS cadr_vmas(.vmas(vmas), .mapi(mapi), .vmasel(vmasel), .ob(ob), .memprepare(memprepare), .md(md), .vma(vma), .lc(lc));
 
