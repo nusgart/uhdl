@@ -1084,7 +1084,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    IWR cadr_iwr (.clk(clk), .reset(reset), .state_fetch(state_fetch), .iwr(iwr), .a(a), .m(m));
 
-	L cadr_l (.clk(clk), .reset(reset), .vmaenb(vmaenb), .state_write(state_write), .state_alu(state_alu), .ob(ob), .l(l));
+   L cadr_l (.clk(clk), .reset(reset), .vmaenb(vmaenb), .state_write(state_write), .state_alu(state_alu), .ob(ob), .l(l));
 
    // page LC
 
@@ -1256,11 +1256,11 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 	     mfdrive ? mf :
 	     32'b0;
 
-	MMEM cadr_mmem (.clk(clk), .reset(reset), .mwp(mwp), .mrp(mrp), .madr(madr), .l(l), .b(b), .mmem(mmem));
+   MMEM cadr_mmem (.clk(clk), .reset(reset), .mwp(mwp), .mrp(mrp), .madr(madr), .l(l), .b(b), .mmem(mmem));
 
-	MO cadr_mo(.msk(msk), .r(r), .a(a), .mo(mo), .alu(alu), .q(q), .osel(osel), .ob(ob));
+   MO cadr_mo(.msk(msk), .r(r), .a(a), .mo(mo), .alu(alu), .q(q), .osel(osel), .ob(ob));
 
-	MSKG4 cadr_mskg4 (.clk(clk), .msk(msk), .mskl(mskl), .mskr(mskr));
+   MSKG4 cadr_mskg4 (.clk(clk), .msk(msk), .mskl(mskl), .mskr(mskr));
 
    // page NPC
 
@@ -1282,7 +1282,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 	
    OPCD cadr_opcd (.dcdrive(dcdrive), .opcdrive(opcdrive), .srcdc(srcdc), .srcopc(srcopc), .state_alu(state_alu), .state_write(state_write), .state_mmu(state_mmu), .state_fetch(state_fetch));
 
-	PDL cadr_pdl (.clk(clk), .reset(reset), .prp(prp), .pdla(pdla), .l(l), .pwp(pwp), .pdl(pdl));
+   PDL cadr_pdl (.clk(clk), .reset(reset), .prp(prp), .pdla(pdla), .l(l), .pwp(pwp), .pdl(pdl));
 
    // page PDLCTL
 
@@ -1388,7 +1388,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
             endcase
 	 end
 
-	SHIFT01 cadr_shift01 (.sa(sa), .r(r), .s0(s0), .s1(s1), .s2(s2), .s3(s3), .s4(s4), .m(m));
+   SHIFT01 cadr_shift01 (.sa(sa), .r(r), .s0(s0), .s1(s1), .s2(s2), .s3(s3), .s4(s4), .m(m));
 
    SMCTL cadr_smctl (.mr(mr), .sr(sr), .mskr(mskr), .s0(s0), .s1(s1), .s2(s2), .s3(s3), .s4(s4), .mskl(mskl), .irbyte(irbyte), .ir(ir), .sh3(sh3), .sh4(sh4));
 
@@ -1524,7 +1524,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 	      end
 	 end
 
-	SPCLCH cadr_spclch (.spc(spc), .spco(spco));
+   SPCLCH cadr_spclch (.spc(spc), .spco(spco));
 
    // page SPCPAR -- empty
    
@@ -1542,19 +1542,9 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    assign reta = n ? wpc : ipc;
 
-	SPY12 cadr_spy12(.clk(clk), .reset(reset), .spy_out(spy_out), .ir(ir), .state_write(state_write),
-.spy_mdh(spy_mdh), .spy_vmah(spy_vmah), .spy_vmal(spy_vmal), .spy_obh_(spy_obh_), .spy_obl_(spy_obl_), .md(md), .vma(vma),
-.ob(ob), .opc(opc), .waiting(waiting), .boot(boot), .promdisable(promdisable), .stathalt(stathalt), .dbread(dbread), .nop(nop),
-.spy_obh(spy_obh), .spy_obl(spy_obl), .spy_pc(spy_pc), .spy_opc(spy_opc), .spy_scratch(spy_scratch), .spy_irh(spy_irh), .spy_irm(spy_irm), .spy_irl(spy_irl),
-.spy_disk(spy_disk), .spy_bd(spy_bd), .pc(pc),
-.err(err), .scratch(scratch),
-.spy_sth(spy_sth), .spy_stl(spy_stl), .spy_ah(spy_ah), .spy_al(spy_al),
-.spy_mh(spy_mh), .spy_ml(spy_ml), .spy_flag2(spy_flag2), .spy_flag1(spy_flag1),
-.m(m), .a(a), .bd_state_in(bd_state_in), .wmap(wmap), .ssdone(ssdone),.vmaok(vmaok), .destspc(destspc), .jcond(jcond), .srun(srun),
-.pcs1(pcs1),.pcs0(pcs0),.iwrited(iwrited),.imod(imod),.pdlwrite(pdlwrite),.spush(spush)
-	);
+   SPY12 cadr_spy12(.clk(clk), .reset(reset), .spy_out(spy_out), .ir(ir), .state_write(state_write), .spy_mdh(spy_mdh), .spy_vmah(spy_vmah), .spy_vmal(spy_vmal), .spy_obh_(spy_obh_), .spy_obl_(spy_obl_), .md(md), .vma(vma), .ob(ob), .opc(opc), .waiting(waiting), .boot(boot), .promdisable(promdisable), .stathalt(stathalt), .dbread(dbread), .nop(nop), .spy_obh(spy_obh), .spy_obl(spy_obl), .spy_pc(spy_pc), .spy_opc(spy_opc), .spy_scratch(spy_scratch), .spy_irh(spy_irh), .spy_irm(spy_irm), .spy_irl(spy_irl), .spy_disk(spy_disk), .spy_bd(spy_bd), .pc(pc), .err(err), .scratch(scratch), .spy_sth(spy_sth), .spy_stl(spy_stl), .spy_ah(spy_ah), .spy_al(spy_al), .spy_mh(spy_mh), .spy_ml(spy_ml), .spy_flag2(spy_flag2), .spy_flag1(spy_flag1), .m(m), .a(a), .bd_state_in(bd_state_in), .wmap(wmap), .ssdone(ssdone), .vmaok(vmaok), .destspc(destspc), .jcond(jcond), .srun(srun), .pcs1(pcs1), .pcs0(pcs0), .iwrited(iwrited), .imod(imod), .pdlwrite(pdlwrite), .spush(spush));
 
-	TRAP cadr_trap (.trap(trap), .boot_trap(boot_trap));
+   TRAP cadr_trap (.trap(trap), .boot_trap(boot_trap));
 
    // page VCTRL1
 
@@ -1972,7 +1962,7 @@ if (state_fetch) ssdone <= sstep;
 	 if (srun)
            boot_trap <= 1'b0;
 
-	OPCS cadr_opcs (.clk(clk), .reset(reset), .state_fetch(state_fetch), .opcclk(opcclk), .opcinh(opcinh), .opc(opc), .pc(pc));
+   OPCS cadr_opcs (.clk(clk), .reset(reset), .state_fetch(state_fetch), .opcclk(opcclk), .opcinh(opcinh), .opc(opc), .pc(pc));
 
    // With the machine stopped, taking OPCCLK high then low will
    // generate a clock to just the OPCS.
@@ -1982,7 +1972,7 @@ if (state_fetch) ssdone <= sstep;
 
    PCTL cadr_pctl(.pc(pc), .idebug(idebug), .promdisabled(promdisabled), .iwrited(iwrited), .prompc(prompc), .bottom_1k(bottom_1k), .promenable(promenable), .promce(promce), .promaddr(promaddr));
 
-	PROM0 cadr_prom0(.clk(clk), .promaddr(promaddr), .iprom(iprom));
+   PROM0 cadr_prom0(.clk(clk), .promaddr(promaddr), .iprom(iprom));
 
    // page IRAM
 `ifdef use_ucode_ram
