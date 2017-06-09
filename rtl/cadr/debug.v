@@ -1,14 +1,25 @@
+// TK		CADR	PDP11 DEBUG INSTRUCTION
+
 module DEBUG(clk, reset, spy_ir, spy_in, i, idebug, promenable, iprom, iram, lddbirh, lddbirm, lddbirl);
 
-   input  clk, reset;
-output     reg [47:0] 	spy_ir;
+   input clk;
+   input reset;
+
    input [15:0] spy_in;
-   output     [48:0] 	i;
-   input 		idebug,promenable;
-input [48:0] 	iprom;
-input [48:0] 	iram;
-   input 	lddbirh, lddbirm, lddbirl;
-   
+   input [48:0] iprom;
+   input [48:0] iram;
+   input	idebug;
+   input	lddbirh;
+   input	lddbirl;
+   input	lddbirm;
+   input	promenable;
+   output [47:0] spy_ir;
+   output [48:0] i;
+
+   ////////////////////////////////////////////////////////////////////////////////
+
+   reg [47:0]	 spy_ir;
+
    always @(posedge clk)
      if (reset)
        spy_ir[47:32] <= 16'b0;

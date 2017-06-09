@@ -1,9 +1,15 @@
-module SHIFT01 (sa, r, s0, s1, s2, s3, s4, m);
+module SHIFT01(sa, r, s0, s1, s2, s3, s4, m);
 
-   output [31:0] sa;
+   input [31:0] m;
+   input	s0;
+   input	s1;
+   input	s2;
+   input	s3;
+   input	s4;
    output [31:0] r;
-   input	 s0, s1, s2, s3, s4;
-   input [31:0]  m;
+   output [31:0] sa;
+
+   ////////////////////////////////////////////////////////////////////////////////
 
    assign sa =
 	      {s1,s0} == 2'b00 ? m :

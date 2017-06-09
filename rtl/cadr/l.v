@@ -1,10 +1,17 @@
-module L (clk, reset, vmaenb, state_write, state_alu, ob, l);
+module L(clk, reset, vmaenb, state_write, state_alu, ob, l);
 
-   input clk, reset;
-   input vmaenb;
-   input state_write, state_alu;
+   input clk;
+   input reset;
+
    input [31:0] ob;
-   output reg [31:0] l;
+   input	state_alu;
+   input	state_write;
+   input	vmaenb;
+   output [31:0] l;
+
+   ////////////////////////////////////////////////////////////////////////////////
+
+   reg [31:0]	 l;
 
    always @(posedge clk)
      if (reset)

@@ -1,4 +1,18 @@
-module SPC();
+// TK	CADR	SPC MEMORY AND POINTER
+
+module SPC(clk, reset, spcnt, state_fetch, spush, spcptr);
+
+   input clk;
+   input reset;
+
+   input spcnt;
+   input spush;
+   input state_fetch;
+   output [4:0] spcptr;
+
+   ////////////////////////////////////////////////////////////////////////////////
+
+   reg [4:0]	spcptr;
 
    // orig rtl:
    //  pop  = read[p], decr p

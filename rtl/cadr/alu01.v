@@ -1,4 +1,41 @@
-module ALU01();
+module ALU01(aeqm_bits, a, m, aluf, alumode, aeqm, alu, cin12_n, cin16_n, cin20_n, cin24_n, cin28_n, cin32_n, cin4_n, cin8_n, cin0, xout11, xout15, xout19, xout23, xout27, xout3, xout31, xout7, yout11, yout15, yout19, yout23, yout27, yout3, yout31, yout7);
+
+   input [31:0] a;
+   input [31:0] m;
+   input [3:0]	aluf;
+   input [7:0]	aeqm_bits;
+   output [32:0] alu;
+   output	 aeqm;
+   output	 alumode;
+   output	 cin0;
+   output	 cin12_n;
+   output	 cin16_n;
+   output	 cin20_n;
+   output	 cin24_n;
+   output	 cin28_n;
+   output	 cin32_n;
+   output	 cin4_n;
+   output	 cin8_n;
+   output	 xout11;
+   output	 xout15;
+   output	 xout19;
+   output	 xout23;
+   output	 xout27;
+   output	 xout31;
+   output	 xout3;
+   output	 xout7;
+   output	 yout11;
+   output	 yout15;
+   output	 yout19;
+   output	 yout23;
+   output	 yout27;
+   output	 yout31;
+   output	 yout3;
+   output	 yout7;
+
+   ////////////////////////////////////////////////////////////////////////////////
+
+   wire [2:0]	 nc_alu;
 
    // 74181 pulls down AEB if not equal
    // aeqm is the simulated open collector
@@ -8,16 +45,6 @@ module ALU01();
    //       aeqm <= 0;
    //     else
    //       aeqm <= aeqm_bits == { 8'b11111111 } ? 1'b1 : 1'b0;
-
-   wire[2:0] nc_alu;
-   wire      cin32_n, cin28_n, cin24_n, cin20_n;
-   wire      cin16_n, cin12_n, cin8_n, cin4_n;
-
-   wire      xx0, xx1;
-   wire      yy0, yy1;
-
-   wire      xout3, xout7, xout11, xout15, xout19, xout23, xout27, xout31;
-   wire      yout3, yout7, yout11, yout15, yout19, yout23, yout27, yout31;
 
    ic_74S181  i_ALU1_2A03 (
 			   .B({3'b0,a[31]}),

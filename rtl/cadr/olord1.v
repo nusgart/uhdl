@@ -1,4 +1,62 @@
-module OLORD1();
+// TK		CADR	OVERLORD
+
+module OLORD1(clk, reset, ldmode, ldscratch1, ldscratch2, ldclk, boot, run, step, promdisable, trapenb, stathenb, errstop, scratch, opcinh, opcclk, lpc_hold, ldstat, idebug, nop11, srun, sstep, ssdone, promdisabled, machrun, stat_ovf, stathalt, errhalt, state_fetch, statstop, spy_in, ldopc, set_promdisable, waiting);
+
+   input clk;
+   input reset;
+
+   input [15:0] spy_in;
+   input	boot;
+   input	errhalt;
+   input	ldclk;
+   input	ldmode;
+   input	ldopc;
+   input	ldscratch1;
+   input	ldscratch2;
+   input	set_promdisable;
+   input	state_fetch;
+   input	statstop;
+   input	waiting;
+   output [15:0] scratch;
+   output	 errstop;
+   output	 idebug;
+   output	 ldstat;
+   output	 lpc_hold;
+   output	 machrun;
+   output	 nop11;
+   output	 opcclk;
+   output	 opcinh;
+   output	 promdisable;
+   output	 promdisabled;
+   output	 run;
+   output	 srun;
+   output	 ssdone;
+   output	 sstep;
+   output	 stat_ovf;
+   output	 stathalt;
+   output	 stathenb;
+   output	 step;
+   output	 trapenb;
+
+   ////////////////////////////////////////////////////////////////////////////////
+
+   reg [15:0]	 scratch;
+   reg		 errstop;
+   reg		 ldstat;
+   reg		 opcinh;
+   reg		 promdisable;
+   reg		 run;
+   reg		 srun;
+   reg		 stathenb;
+   reg		 trapenb;
+   reg		 opcclk;
+   reg		 lpc_hold;
+   reg		 idebug;
+   reg		 nop11;
+   reg		 step;
+   reg		 sstep;
+   reg		 ssdone;
+   reg		 promdisabled;
 
    always @(posedge clk)
      if (reset)

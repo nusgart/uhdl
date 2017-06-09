@@ -1,15 +1,22 @@
-module VMEM0( clk, reset, vmem0_adr, mapi, vmap, vm0rp, vma, use_map, srcmap, memstart, vm0wp);
-   
-   input clk,reset;
-   input vm0wp;
-   output [10:0] 	vmem0_adr;
-   input [23:8] 	mapi;   
-   output [4:0] 	vmap;
-   input 	vm0rp;
-   input [31:0] 	vma;   
-   output 	use_map;
-   input 	srcmap,memstart;
-   
+// TK	CADR	VIRTUAL MEMORY MAP STAGE 0
+
+module VMEM0(clk, reset, vmem0_adr, mapi, vmap, vm0rp, vma, use_map, srcmap, memstart, vm0wp);
+
+   input clk;
+   input reset;
+
+   input [23:8] mapi;
+   input [31:0] vma;
+   input	memstart;
+   input	srcmap;
+   input	vm0rp;
+   input	vm0wp;
+   output [10:0] vmem0_adr;
+   output [4:0]  vmap;
+   output	 use_map;
+
+   ////////////////////////////////////////////////////////////////////////////////
+
    assign vmem0_adr = mapi[23:13];
 
    part_2kx5dpram i_VMEM0(

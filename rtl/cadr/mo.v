@@ -1,13 +1,15 @@
-module MO (msk, r, a, mo, alu, q, osel, ob);
+module MO(msk, r, a, mo, alu, q, osel, ob);
 
-   input [31:0] msk;
-   input [31:0] r;
+   input [1:0] osel;
    input [31:0] a;
+   input [31:0] msk;
+   input [31:0] q;
+   input [31:0] r;
+   input [32:0] alu;
    output [31:0] mo;
-   input [32:0]  alu;
-   input [31:0]  q;
-   input [1:0]	 osel;
    output [31:0] ob;
+
+   ////////////////////////////////////////////////////////////////////////////////
 
    //for (i = 0; i < 31; i++)
    //  assign mo[i] =

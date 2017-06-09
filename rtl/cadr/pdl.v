@@ -1,12 +1,15 @@
-module PDL (clk, reset, prp, pdla, l, pwp, pdl);
+module PDL(clk, reset, prp, pdla, l, pwp, pdl);
 
    input clk;
    input reset;
-   input prp;
-   input [9:0] pdla;
+
    input [31:0] l;
+   input [9:0]	pdla;
+   input	prp;
    input	pwp;
    output [31:0] pdl;
+
+   ////////////////////////////////////////////////////////////////////////////////
 
    part_1kx32dpram_p i_PDL(
 			   .reset(reset),

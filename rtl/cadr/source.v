@@ -1,4 +1,50 @@
-module SOURCE();
+// TK	CADR	SOURCE, DEST, OP DECODE
+
+module SOURCE(ir, iralu, irbyte, destimod0, destimod1, iwrited, idebug, specalu, nop, irdisp, irjump, funct, div, mul, srcq, srcopc, srcpdltop, srcpdlpop, srcpdlidx, srcpdlptr, srcspc, srcdc, srcspcpop, srclc, srcmd, srcmap, srcvma, imod, destmem, destvma, destmdr, dest, destm, destintctl, destlc, destspc, destpdlp, destpdlx, destpdl_x, destpdl_p, destpdltop);
+
+   input [48:0] ir;
+   input	idebug;
+   input	iwrited;
+   input	nop;
+   output [3:0] funct;
+   output	dest;
+   output	destimod0;
+   output	destimod1;
+   output	destintctl;
+   output	destlc;
+   output	destm;
+   output	destmdr;
+   output	destmem;
+   output	destpdl_p;
+   output	destpdl_x;
+   output	destpdlp;
+   output	destpdltop;
+   output	destpdlx;
+   output	destspc;
+   output	destvma;
+   output	div;
+   output	imod;
+   output	iralu;
+   output	irbyte;
+   output	irdisp;
+   output	irjump;
+   output	mul;
+   output	specalu;
+   output	srcdc;
+   output	srclc;
+   output	srcmap;
+   output	srcmd;
+   output	srcopc;
+   output	srcpdlidx;
+   output	srcpdlpop;
+   output	srcpdlptr;
+   output	srcpdltop;
+   output	srcq;
+   output	srcspc;
+   output	srcspcpop;
+   output	srcvma;
+
+   ////////////////////////////////////////////////////////////////////////////////
 
    assign {irbyte,irdisp,irjump,iralu} =
 					nop ? 4'b0000 :

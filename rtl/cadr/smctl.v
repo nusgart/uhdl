@@ -1,17 +1,22 @@
-module SMCTL (mr, sr, mskr, s0, s1, s2, s3, s4, sh3, sh4, mskl, irbyte, ir);
+// TK	CONS	SHIFT/MASK CONTROL
 
-   input irbyte;
+module SMCTL(mr, sr, mskr, s0, s1, s2, s3, s4, sh3, sh4, mskl, irbyte, ir);
+
    input [48:0] ir;
-   input	sh4, sh3;
-   output	mr;
-   output	sr;
+   input	irbyte;
+   input	sh3;
+   input	sh4;
+   output [4:0] mskl;
    output [4:0] mskr;
+   output	mr;
    output	s0;
    output	s1;
    output	s2;
    output	s3;
    output	s4;
-   output [4:0] mskl;
+   output	sr;
+
+   ////////////////////////////////////////////////////////////////////////////////
 
    assign mr = ~irbyte | ir[13];
    assign sr = ~irbyte | ir[12];

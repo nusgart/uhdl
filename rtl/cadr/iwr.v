@@ -1,11 +1,18 @@
-module IWR (clk, reset, state_fetch, iwr, a, m);
+// TK		CADR	INSTRUCTION WRITE REGISTER
+
+module IWR(clk, reset, state_fetch, iwr, a, m);
 
    input clk;
    input reset;
-   input state_fetch;
-   output reg [48:0] iwr;
-   input [31:0]      a;
-   input [31:0]      m;
+
+   input [31:0] a;
+   input [31:0] m;
+   input	state_fetch;
+   output [48:0] iwr;
+
+   ////////////////////////////////////////////////////////////////////////////////
+
+   reg [48:0]	 iwr;
 
    always @(posedge clk)
      if (reset)

@@ -1,4 +1,34 @@
-module VCTRL2();
+module VCTRL2(loadmd, nopa, ir, wrcyc, destmdr, srcmd, destmem, srcmap, irdisp, memprepare, memstart, destvma, ifetch, state_decode, state_write, state_read, state_mmu, mapwr0, mapwr1, vm0wp, vm1wp, wmap, memwr, memrd, vma, dmapbenb, dispwr);
+
+   input [31:0] vma;
+   input [48:0] ir;
+   input	destmdr;
+   input	destmem;
+   input	destvma;
+   input	dispwr;
+   input	dmapbenb;
+   input	ifetch;
+   input	irdisp;
+   input	loadmd;
+   input	memprepare;
+   input	memstart;
+   input	nopa;
+   input	srcmap;
+   input	srcmd;
+   input	state_decode;
+   input	state_mmu;
+   input	state_read;
+   input	state_write;
+   input	wrcyc;
+   output	mapwr0;
+   output	mapwr1;
+   output	memrd;
+   output	memwr;
+   output	vm0wp;
+   output	vm1wp;
+   output	wmap;
+
+   ////////////////////////////////////////////////////////////////////////////////
 
    /*
     * for memory cycle, we run mmu state and map vma during state_write & state_mmu

@@ -1,7 +1,11 @@
-module ALATCH (a, amem);
+// TK		CADR	A MEMORY LATCH
 
-   input [31:0]		amem;
-   output [31:0]	a;
+module ALATCH(a, amem);
+
+   input [31:0] amem;
+   output [31:0] a;
+
+   ////////////////////////////////////////////////////////////////////////////////
 
    assign a = amem;
 

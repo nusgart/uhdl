@@ -1,4 +1,30 @@
-module PDLPTR();
+// TK	CADR	PDL INDEX AND POINTER
+
+module PDLPTR(clk, reset, pidrive, ppdrive, pdlidx, pdlptr, state_alu, state_write, state_fetch, state_read, destpdlx, srcpdlidx, srcpdlptr, ob, destpdlp, pdlcnt, srcpdlpop);
+
+   input clk;
+   input reset;
+
+   input [31:0] ob;
+   input	destpdlp;
+   input	destpdlx;
+   input	pdlcnt;
+   input	srcpdlidx;
+   input	srcpdlpop;
+   input	srcpdlptr;
+   input	state_alu;
+   input	state_fetch;
+   input	state_read;
+   input	state_write;
+   output [9:0] pdlidx;
+   output [9:0] pdlptr;
+   output	pidrive;
+   output	ppdrive;
+
+   ////////////////////////////////////////////////////////////////////////////////
+
+   reg [9:0]	pdlidx;
+   reg [9:0]	pdlptr;
 
    assign pidrive = srcpdlidx & (state_alu || state_write || state_fetch);
 

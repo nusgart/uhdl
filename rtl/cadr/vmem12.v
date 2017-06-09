@@ -1,15 +1,20 @@
-module VMEM12( clk, reset, vmem1_adr, vmap, mapi, vm1rp, vma, vmo,vm1wp);
-   
-   input clk,reset;
-   output [9:0] vmem1_adr;
-   input [4:0] 	vmap;
+module VMEM12(clk, reset, vmem1_adr, vmap, mapi, vm1rp, vma, vmo,vm1wp);
+
+   input clk;
+   input reset;
+
    input [23:8] mapi;
-   input 	vm1rp,vm1wp;
    input [31:0] vma;
+   input [4:0]	vmap;
+   input	vm1rp;
+   input	vm1wp;
    output [23:0] vmo;
+   output [9:0]  vmem1_adr;
+
+   ////////////////////////////////////////////////////////////////////////////////
 
    assign vmem1_adr = {vmap[4:0], mapi[12:8]};
-   
+
    part_1kx24dpram i_VMEM1(
 			   .reset(reset),
 

@@ -1,13 +1,23 @@
-module ACTL(clk, reset,state_decode, state_write,wadr,destm,awp,arp,aadr,ir,dest);
+// TK		CADR	A CONTROL
 
-   input clk, reset;
-   input state_decode, state_write;
-   output reg [9:0] wadr;
-   input 	    destm;
-   output 	    awp,arp;
-   output [9:0] 	  aadr;
-   input [48:0] 	  ir;
-   input  dest;
+module ACTL(clk, reset, state_decode, state_write, wadr, destm, awp, arp, aadr, ir, dest);
+
+   input clk;
+   input reset;
+
+   input [48:0] ir;
+   input	dest;
+   input	destm;
+   input	state_decode;
+   input	state_write;
+   output [9:0] aadr;
+   output [9:0] wadr;
+   output	arp;
+   output	awp;
+
+   ////////////////////////////////////////////////////////////////////////////////
+
+   reg [9:0]	wadr;
 
    always @(posedge clk)
      if (reset)

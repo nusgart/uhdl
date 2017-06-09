@@ -1,14 +1,22 @@
-module DSPCTL( clk, reset, state_fetch, irdisp, 	funct, 	ir, 	dmask, 	dmapbenb, dispwr, 	dc);
+// TK		CADR	DISPATCH CONTROL
 
-   input clk, reset;
-   input state_fetch;
-   input irdisp;
-      input [3:0] 	funct;
-      input [48:0] 	ir;
-      input [6:0] 	dmask;
-output 	dmapbenb, dispwr;
-output   reg [9:0] 	dc;
+module DSPCTL(clk, reset, state_fetch, irdisp, funct, ir, dmask, dmapbenb, dispwr, dc);
 
+   input clk;
+   input reset;
+
+   input [3:0] funct;
+   input [48:0] ir;
+   input [6:0]	dmask;
+   input	irdisp;
+   input	state_fetch;
+   output [9:0] dc;
+   output	dispwr;
+   output	dmapbenb;
+
+   ////////////////////////////////////////////////////////////////////////////////
+
+   reg [9:0]	dc;
 
    assign dmapbenb  = ir[8] | ir[9];
 

@@ -1,13 +1,26 @@
+// TK	CADR	VMA REGISTER
+
 module VMA(clk, reset, state_alu, state_write, state_fetch, vmaenb, vmas, spy_in, srcvma, ldvmal, ldvmah, vma, vmadrive);
 
-   input clk, reset, state_alu, state_write, state_fetch, vmaenb ;
-   input [31:0] vmas;
+   input clk;
+   input reset;
+
    input [15:0] spy_in;
-   input srcvma;
-   input ldvmal, ldvmah;
-   output reg [31:0] vma;;
-   output vmadrive;
-   
+   input [31:0] vmas;
+   input	ldvmah;
+   input	ldvmal;
+   input	srcvma;
+   input	state_alu;
+   input	state_fetch;
+   input	state_write;
+   input	vmaenb;
+   output [31:0] vma;;
+   output	 vmadrive;
+
+   ////////////////////////////////////////////////////////////////////////////////
+
+   reg [31:0]	 vma;;
+
    always @(posedge clk)
      if (reset)
        vma <= 0;

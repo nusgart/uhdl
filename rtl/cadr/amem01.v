@@ -1,11 +1,15 @@
-module AMEM01 (amem, clk, reset, aadr, awp, arp, l);
+module AMEM01(amem, clk, reset, aadr, awp, arp, l);
 
    input clk;
    input reset;
-   input [9:0] aadr;
+
+   input [31:0] l;
+   input [9:0]	aadr;
+   input	arp;
+   input	awp;
    output [31:0] amem;
-   input	 awp, arp;
-   input [31:0]  l;
+
+   ////////////////////////////////////////////////////////////////////////////////
 
    part_1kx32dpram_a i_AMEM(
 			    .reset(reset),

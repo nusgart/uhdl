@@ -1,13 +1,18 @@
-module MMEM (clk, reset, mrp, mwp, madr, l, b, mmem);
+// TK		CADR	M MEMORY
 
-   input reset;
+module MMEM(clk, reset, mrp, mwp, madr, l, b, mmem);
+
    input clk;
-   input mrp;
-   input [4:0] madr;
+   input reset;
+
    input [31:0] l;
+   input [4:0]	madr;
    input	b;
+   input	mrp;
+   input	mwp;
    output [31:0] mmem;
-   input	 mwp;
+
+   ////////////////////////////////////////////////////////////////////////////////
 
    part_32x32dpram i_MMEM(
 			  .reset(reset),

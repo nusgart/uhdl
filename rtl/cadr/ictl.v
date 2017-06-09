@@ -1,9 +1,15 @@
-module ICTL (ramdisable, idebug, promdisabled, iwrited, state_write, iwe);
+// TK		CADR	I RAM CONTROL
 
-   output ramdisable;
-   input  idebug, promdisabled, iwrited;
-   input  state_write;
+module ICTL(ramdisable, idebug, promdisabled, iwrited, state_write, iwe);
+
+   input idebug;
+   input iwrited;
+   input promdisabled;
+   input state_write;
    output iwe;
+   output ramdisable;
+
+   ////////////////////////////////////////////////////////////////////////////////
 
    assign ramdisable = idebug | ~(promdisabled | iwrited);
 

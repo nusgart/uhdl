@@ -238,7 +238,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    wire 	swp, srp, spcenb, spcdrive, spcnt;
 
-   reg 		inop, iwrited; 
+   wire 		inop, iwrited; 
    wire 	n, pcs1, pcs0;
 
    wire 	nopa, nop;
@@ -262,7 +262,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    wire [2:0] 	conds;
    wire 	jcond;
-   reg 		lc_byte_mode, prog_unibus_reset, int_enable, sequence_break;
+   wire 		lc_byte_mode, prog_unibus_reset, int_enable, sequence_break;
 
    // page IOR
    wire [47:0] 	iob;
@@ -271,7 +271,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    // page IPAR
 
    // page LC
-   reg [25:0] 	lc;
+   wire [25:0] 	lc;
    wire [3:0] 	lca;
    wire 	lcry3;
 
@@ -285,7 +285,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    wire 	needfetch, ifetch, spcmung, spc1a;
    wire 	lcinc;
 
-   reg 		newlc, sintr, next_instrd;
+   wire 		newlc, sintr, next_instrd;
 
    wire 	lc_modifies_mrot;
    wire 	inst_in_left_half;
@@ -301,12 +301,12 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    wire [4:0] 	madr;
 
    // page MD
-   reg [31:0] 	md;
+   wire [31:0] 	md;
    wire 	mddrive;	/* drive md on to mf bus */
    wire 	mdclk;		/* enable - clock md in? */
    wire 	loadmd;		/* data available from busint */
 
-   reg 		mdhaspar, mdpar;
+   wire 		mdhaspar, mdpar;
    wire 	mdgetspar;
 
    wire 	ignpar;
@@ -343,11 +343,11 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    wire [9:0] 	pdla;
    wire 	pdlp, pdlwrite;
    wire 	pwp, prp, pdlenb, pdldrive, pdlcnt;
-   reg 		pwidx;
+   wire 		pwidx;
 
    // page PDLPTR
    wire 	pidrive, ppdrive;
-   reg [9:0] 	pdlidx;
+   wire [9:0] 	pdlidx;
 
    // page Q
    wire [31:0] 	q;
@@ -411,7 +411,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    // page SPC
 
-   reg [4:0] 	spcptr;
+   wire [4:0] 	spcptr;
 
    wire [18:0] 	spcw;
    wire [18:0] 	spco;
@@ -419,25 +419,25 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    // page SPCPAR
 
    wire 	trap;
-   reg 		boot_trap;
+   wire 		boot_trap;
 
 
    // page VCTRL1
 
    wire 	memop;
-   reg 		memprepare;
-   reg 		memstart;
-   reg 		memcheck;
+   wire 		memprepare;
+   wire 		memstart;
+   wire 		memcheck;
    
-   reg 		rdcyc;
-   reg 		mbusy;
+   wire 		rdcyc;
+   wire 		mbusy;
 
    wire 	memrq;
-   reg 		wrcyc;
+   wire 		wrcyc;
 
    wire 	pfw;			/* vma permissions */
    wire 	pfr;
-   reg 		vmaok;			/* vma access ok */
+   wire 		vmaok;			/* vma access ok */
 
    wire 	mfinish;
 
@@ -490,11 +490,11 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    wire 	ramdisable;
 
-   reg 		opcinh, opcclk, lpc_hold;
+   wire 		opcinh, opcclk, lpc_hold;
 
-   reg 		ldstat, idebug, nop11, step;
+   wire 		ldstat, idebug, nop11, step;
 
-   reg 		run;
+   wire 		run;
 
    wire 	machrun, stat_ovf, stathalt;
 
@@ -515,18 +515,18 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    wire 	promenable, promce, bottom_1k;
 
    // page OLORD1 
-   reg 		promdisable;
-   reg 		trapenb;
-   reg 		stathenb;
-   reg 		errstop;
+   wire 		promdisable;
+   wire 		trapenb;
+   wire 		stathenb;
+   wire 		errstop;
 
-   reg 		srun, sstep, ssdone, promdisabled;
+   wire 		srun, sstep, ssdone, promdisabled;
 
    // page OLORD2
 
-   reg 		higherr;
-   reg 		statstop;
-   reg 		halted;
+   wire 		higherr;
+   wire 		statstop;
+   wire 		halted;
 
    // page L
    wire [31:0] 	l;
@@ -538,7 +538,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    wire [13:0] 	opc;
 
    // page PDLPTR
-   reg [9:0] 	pdlptr;
+   wire [9:0] 	pdlptr;
 
    // page SPCW
 //   reg [13:0] 	reta;
@@ -569,7 +569,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    wire   ldmdh, ldmdl, ldvmah, ldvmal;
    wire   set_promdisable;
 
-   reg [15:0] scratch;
+   wire [15:0] scratch;
    
 `ifdef debug
    integer 	  debug;
@@ -631,18 +631,9 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    ACTL cadr_actl(.clk(clk), .reset(reset), .state_decode(state_decode), .state_write(state_write), .wadr(wadr), .destm(destm), .awp(awp), .arp(arp), .aadr(aadr), .ir(ir), .dest(dest));
 
-   ALATCH cadr_alatch (.amem(amem), .a(a));
+   ALATCH cadr_alatch(.amem(amem), .a(a));
 
    // page ALU0-1
-
-   // 74181 pulls down AEB if not equal
-   // aeqm is the simulated open collector
-   assign aeqm = aeqm_bits == { 8'b11111111 } ? 1'b1 : 1'b0;
-//  always @(posedge clk)
-//     if (reset)
-//       aeqm <= 0;
-//     else
-//       aeqm <= aeqm_bits == { 8'b11111111 } ? 1'b1 : 1'b0;
 
    wire[2:0] nc_alu;
    wire      cin32_n, cin28_n, cin24_n, cin20_n;
@@ -653,7 +644,21 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    wire      xout3, xout7, xout11, xout15, xout19, xout23, xout27, xout31;
    wire      yout3, yout7, yout11, yout15, yout19, yout23, yout27, yout31;
-   
+
+//`define _alu01
+`ifdef _alu01
+   ALU01 cadr_alu01(.aeqm_bits(aeqm_bits), .a(a), .m(m), .aluf(aluf), .alumode(alumode), .aeqm(aeqm), .alu(alu), .cin12_n(cin12_n), .cin16_n(cin16_n), .cin20_n(cin20_n), .cin24_n(cin24_n), .cin28_n(cin28_n), .cin32_n(cin32_n), .cin4_n(cin4_n), .cin8_n(cin8_n), .cin0(cin0), .xout11(xout11), .xout15(xout15), .xout19(xout19), .xout23(xout23), .xout27(xout27), .xout3(xout3), .xout31(xout31), .xout7(xout7), .yout11(yout11), .yout15(yout15), .yout19(yout19), .yout23(yout23), .yout27(yout27), .yout3(yout3), .yout31(yout31), .yout7(yout7));
+`else
+
+   // 74181 pulls down AEB if not equal
+   // aeqm is the simulated open collector
+   assign aeqm = aeqm_bits == { 8'b11111111 } ? 1'b1 : 1'b0;
+//  always @(posedge clk)
+//     if (reset)
+//       aeqm <= 0;
+//     else
+//       aeqm <= aeqm_bits == { 8'b11111111 } ? 1'b1 : 1'b0;
+
    ic_74S181  i_ALU1_2A03 (
 			   .B({3'b0,a[31]}),
 			   .A({3'b0,m[31]}),
@@ -770,7 +775,12 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 			   .Y(yout3),
 			   .COUT_N()
 			   );
+`endif
 
+`define _aluc4
+`ifdef _aluc4
+   ALUC4 cadr_aluc4(.yout15(yout15), .yout11(yout11), .yout7(yout7), .yout3(yout3), .xout15(xout15), .xout11(xout11), .xout7(xout7), .xout3(xout3), .yout31(yout31), .yout27(yout27), .yout23(yout23), .yout19(yout19), .xout31(xout31), .xout27(xout27), .xout23(xout23), .xout19(xout19), .a(a), .ir(ir), .iralu(iralu), .irjump(irjump), .mul(mul), .div(div), .q(q), .osel(osel), .divposlasttime(divposlasttime), .divsubcond(divsubcond), .divaddcond(divaddcond), .mulnop(mulnop ), .aluadd(aluadd ), .alusub(alusub ), .aluf(aluf ), .alumode(alumode ), .cin12_n(cin12_n), .cin8_n(cin8_n), .cin4_n(cin4_n), .cin0(cin0), .xx0(xx0), .yy0(yy0), .cin28_n(cin28_n), .cin24_n(cin24_n), .cin20_n(cin20_n), .cin16_n(cin16_n), .xx1(xx1), .yy1(yy1), .cin32_n(cin32_n));
+`else
    // page ALUC4
 
    ic_74S182  i_ALUC4_2A20 (
@@ -844,9 +854,14 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 		  {alusub,aluadd} == 2'b01 ? 1'b0 :
 		  {alusub,aluadd} == 2'b10 ? ~irjump :
                   1'b1;
+`endif
 
    AMEM01 cadr_amem01(.clk(clk), .reset(reset), .aadr(aadr), .amem(amem), .awp(awp), .arp(arp), .l(l));
 
+`define _contrl
+`ifdef _contrl
+   CONTRL cadr_contrl(.clk(clk), .reset(reset), .destspc(destspc), .dfall(dfall), .dispenb(dispenb), .dn(dn), .dp(dp), .dr(dr), .funct(funct), .ignpopj(ignpopj), .inop(inop), .ipopj(ipopj), .ir(ir), .irdisp(irdisp), .irjump(irjump), .iwrite(iwrite), .iwrited(iwrited), .jcalf(jcalf), .jcond(jcond), .jfalse(jfalse), .jret(jret), .jretf(jretf), .n(n), .nop(nop), .nop11(nop11), .nopa(nopa), .pcs0(pcs0), .pcs1(pcs1), .popj(popj), .spcdrive(spcdrive), .spcenb(spcenb), .spcnt(spcnt), .spop(spop), .spush(spush), .srcspc(srcspc), .srcspcpop(srcspcpop), .srcspcpopreal(srcspcpopreal), .srp(srp), .state_alu(state_alu), .state_fetch(state_fetch), .state_write(state_write), .swp(swp), .trap(trap));
+`else
    // page CONTRL
 
    assign dfall  = dr & dp;			/* push-pop fall through */
@@ -951,7 +966,12 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
      else
        if (state_fetch)
 	 inop <= n;
+`endif
    
+`define _dram02
+`ifdef _dram02
+   DRAM02 cadr_dram02(.clk(clk), .reset(reset), .daddr0(daddr0), .dadr(dadr), .dwe(dwe), .a(a), .ir(ir), .vmo(vmo), .dmask(dmask), .r(r), .dr(dr), .dp(dp), .dn(dn), .dpc(dpc), .dispwr(dispwr), .state_write(state_write), .state_prefetch(state_prefetch));
+`else
    // page DRAM0-2
 
    // dadr  10 9  8  7  6  5  4  3  2  1  0
@@ -993,10 +1013,15 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 			  .wren_b(dwe),
 			  .rden_b(1'b0)
 			  );
+`endif
 
- DSPCTL cadr_dspctl(.clk(clk), .reset(reset), .state_fetch(state_fetch), .irdisp(irdisp), .funct(funct), .ir(ir), .dmask(dmask), .dmapbenb(dmapbenb), .dispwr(dispwr), .dc(dc));
+   DSPCTL cadr_dspctl(.clk(clk), .reset(reset), .state_fetch(state_fetch), .irdisp(irdisp), .funct(funct), .ir(ir), .dmask(dmask), .dmapbenb(dmapbenb), .dispwr(dispwr), .dc(dc));
 
 
+`define _flag
+`ifdef _flag
+   FLAG cadr_flag(.clk(clk), .reset(reset), .ir(ir), .nopa(nopa), .aeqm(aeqm), .sintr(sintr), .int_enable(int_enable), .vmaok(vmaok), .sequence_break(sequence_break), .alu(alu), .conds(conds), .pgf_or_int(pgf_or_int), .pgf_or_int_or_sb(pgf_or_int_or_sb), .sint(sint), .lc_byte_mode(lc_byte_mode), .prog_unibus_reset(prog_unibus_reset), .ob(ob), .r(r), .state_fetch(state_fetch), .destintctl(destintctl));
+`else     
    // page FLAG
 
    assign statbit = ~nopa & ir[46];
@@ -1037,17 +1062,47 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
             int_enable <= ob[27];
             sequence_break <= ob[26];
 	 end
+`endif
 
-   IOR cadr_ior (.iob(iob), .i(i), .ob(ob));
+   IOR cadr_ior(.iob(iob), .i(i), .ob(ob));
 
    // page IPAR -- empty
 
-   IREG cadr_ireg (.clk(clk), .reset(reset), .i(i), .iob(iob), .ir(ir), .state_fetch(state_fetch), .destimod1(destimod1), .destimod0(destimod0));
+   IREG cadr_ireg(.clk(clk), .reset(reset), .i(i), .iob(iob), .ir(ir), .state_fetch(state_fetch), .destimod1(destimod1), .destimod0(destimod0));
 
-   IWR cadr_iwr (.clk(clk), .reset(reset), .state_fetch(state_fetch), .iwr(iwr), .a(a), .m(m));
+   IWR cadr_iwr(.clk(clk), .reset(reset), .state_fetch(state_fetch), .iwr(iwr), .a(a), .m(m));
 
-   L cadr_l (.clk(clk), .reset(reset), .vmaenb(vmaenb), .state_write(state_write), .state_alu(state_alu), .ob(ob), .l(l));
+   L cadr_l(.clk(clk), .reset(reset), .vmaenb(vmaenb), .state_write(state_write), .state_alu(state_alu), .ob(ob), .l(l));
 
+`define _lc
+`ifdef _lc
+   LC cadr_lc(.clk(clk), .reset(reset), .destlc(destlc), .lcry3(lcry3), .lca(lca), .lcinc(lcinc), .lc_byte_mode(lc_byte_mode), .lc(lc), .srclc(srclc), .state_alu(state_alu), .state_write(state_write), .state_mmu(state_mmu), .state_fetch(state_fetch), .ob(ob));   
+
+   // mux MF -- move to mf.v
+   assign mf =
+	      lcdrive ?
+	      { needfetch, 1'b0, lc_byte_mode, prog_unibus_reset,
+		int_enable, sequence_break, lc[25:1], lc0b } :
+	      opcdrive ?
+	      { 16'b0, 2'b0, opc[13:0] } :
+	      dcdrive ?
+	      { 16'b0, 4'b0, 2'b0, dc[9:0] } :
+	      ppdrive ?
+	      { 16'b0, 4'b0, 2'b0, pdlptr[9:0] } :
+	      pidrive ?
+	      { 16'b0, 4'b0, 2'b0, pdlidx[9:0] } :
+	      qdrive ?
+	      q :
+	      mddrive ?
+	      md :
+	      //	mpassl ?
+	      //	      l :
+	      vmadrive ?
+	      vma :
+	      mapdrive ?
+	      { ~pfw, ~pfr, 1'b1, vmap[4:0], vmo[23:0] } :
+	      32'b0;
+`else
    // page LC
 
    always @(posedge clk)
@@ -1108,8 +1163,13 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 	mapdrive ?
 	      { ~pfw, ~pfr, 1'b1, vmap[4:0], vmo[23:0] } :
 	      32'b0;
+`endif
 
 
+`define _lcc
+`ifdef _lcc
+   LCC cadr_lcc(.clk(clk), .reset(reset), .state_fetch(state_fetch), .lc0b(lc0b), .next_instr(next_instr), .newlc_in(newlc_in), .have_wrong_word(have_wrong_word), .last_byte_in_word(last_byte_in_word), .needfetch(needfetch), .ifetch(ifetch), .spcmung(spcmung), .spc1a(spc1a), .lc_modifies_mrot(lc_modifies_mrot), .inst_in_left_half(inst_in_left_half), .inst_in_2nd_or_4th_quarter(inst_in_2nd_or_4th_quarter), .sh4(sh4), .sh3(sh3), .newlc(newlc), .sintr(sintr), .next_instrd(next_instrd), .lc(lc), .lc_byte_mode(lc_byte_mode), .spop(spop), .srcspcpopreal(srcspcpopreal), .spc(spc), .lcinc(lcinc), .destlc(destlc));
+`else
    // page LCC
 
    assign lc0b = lc[0] & lc_byte_mode;
@@ -1160,11 +1220,16 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 	      !(lc[0] | ~lc_modifies_mrot) & lc_byte_mode;
 
    assign sh3  = ~(~ir[3] ^ inst_in_2nd_or_4th_quarter);
+`endif
 
-   LPC cadr_lpc (.clk(clk), .reset(reset), .lpc(lpc), .lpc_hold(lpc_hold), .pc(pc), .wpc(wpc), .irdisp(irdisp), .ir(ir), .state_fetch(state_fetch));
+   LPC cadr_lpc(.clk(clk), .reset(reset), .lpc(lpc), .lpc_hold(lpc_hold), .pc(pc), .wpc(wpc), .irdisp(irdisp), .ir(ir), .state_fetch(state_fetch));
 
-   MCTL cadr_mctl (.mpassm(mpassm), .srcm(srcm), .mrp(mrp), .mwp(mwp), .madr(madr), .ir(ir), .destm(destm), .wadr(wadr), .state_decode(state_decode), .state_write(state_write));
+   MCTL cadr_mctl(.mpassm(mpassm), .srcm(srcm), .mrp(mrp), .mwp(mwp), .madr(madr), .ir(ir), .destm(destm), .wadr(wadr), .state_decode(state_decode), .state_write(state_write));
 
+`define _md
+`ifdef _md
+   MD cadr_md(.clk(clk), .reset(reset), .md(md), .mdhaspar(mdhaspar), .mdpar(mdpar), .mddrive(mddrive), .ignpar(ignpar), .mdclk(mdclk), .spy_in(spy_in), .loadmd(loadmd), .memrq(memrq), .destmdr(destmdr), .mds(mds), .mdgetspar(mdgetspar), .srcmd(srcmd), .state_alu(state_alu), .state_write(state_write), .state_mmu(state_mmu), .state_fetch(state_fetch), .ldmdh(ldmdh), .ldmdl(ldmdl));
+`else
    // page MD
 
    always @(posedge clk) 
@@ -1194,25 +1259,30 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    assign ignpar = 1'b0;
 
    assign mdclk = loadmd | destmdr;
+`endif
 
    MDS cadr_mds(.mds(mds), .mdsel(mdsel), .ob(ob), .memdrive(memdrive), .loadmd(loadmd), .busint_bus(busint_bus), .md(md));
 
-   MF cadr_mf (.mfenb(mfenb), .mfdrive(mfdrive), .srcm(srcm), .spcenb(spcenb), .pdlenb(pdlenb), .state_alu(state_alu), .state_write(state_write), .state_mmu(state_mmu), .state_fetch(state_fetch));
+   MF cadr_mf(.mfenb(mfenb), .mfdrive(mfdrive), .srcm(srcm), .spcenb(spcenb), .pdlenb(pdlenb), .state_alu(state_alu), .state_write(state_write), .state_mmu(state_mmu), .state_fetch(state_fetch));
 
    MLATCH cadr_mlatch(.pdldrive(pdldrive), .mpassm(mpassm), .spcdrive(spcdrive), .mfdrive(mfdrive), .mmem(mmem), .pdl(pdl), .spcptr(spcptr), .spco(spco), .mf(mf), .m(m));
 
-   MMEM cadr_mmem (.clk(clk), .reset(reset), .mwp(mwp), .mrp(mrp), .madr(madr), .l(l), .b(b), .mmem(mmem));
+   MMEM cadr_mmem(.clk(clk), .reset(reset), .mwp(mwp), .mrp(mrp), .madr(madr), .l(l), .b(b), .mmem(mmem));
 
    MO cadr_mo(.msk(msk), .r(r), .a(a), .mo(mo), .alu(alu), .q(q), .osel(osel), .ob(ob));
 
-   MSKG4 cadr_mskg4 (.clk(clk), .msk(msk), .mskl(mskl), .mskr(mskr));
+   MSKG4 cadr_mskg4(.clk(clk), .msk(msk), .mskl(mskl), .mskr(mskr));
 
    NPC cadr_npc(.clk(clk), .reset(reset), .state_fetch(state_fetch), .ipc(ipc), .npc(npc), .trap(trap), .pcs1(pcs1), .pcs0(pcs0), .ir(ir), .spc(spc), .spc1a(spc1a), .dpc(dpc), .pc(pc));
 	
-   OPCD cadr_opcd (.dcdrive(dcdrive), .opcdrive(opcdrive), .srcdc(srcdc), .srcopc(srcopc), .state_alu(state_alu), .state_write(state_write), .state_mmu(state_mmu), .state_fetch(state_fetch));
+   OPCD cadr_opcd(.dcdrive(dcdrive), .opcdrive(opcdrive), .srcdc(srcdc), .srcopc(srcopc), .state_alu(state_alu), .state_write(state_write), .state_mmu(state_mmu), .state_fetch(state_fetch));
 
-   PDL cadr_pdl (.clk(clk), .reset(reset), .prp(prp), .pdla(pdla), .l(l), .pwp(pwp), .pdl(pdl));
+   PDL cadr_pdl(.clk(clk), .reset(reset), .prp(prp), .pdla(pdla), .l(l), .pwp(pwp), .pdl(pdl));
 
+`define _pdlctl
+`ifdef _pdlctl
+   PDCTL cadr_pdctl( .clk(clk), .reset(reset), .pdlidx(pdlidx), .pdla(pdla), .pdlp(pdlp), .pdlwrite(pdlwrite), .state_alu(state_alu), .state_write(state_write), .state_read(state_read), .ir(ir), .pwidx(pwidx), .pwp(pwp), .prp(prp), .pdlenb(pdlenb), .pdldrive(pdldrive), .pdlcnt(pdlcnt), .pdlptr(pdlptr), .destpdltop(destpdltop), .destpdl_x(destpdl_x), .destpdl_p(destpdl_p), .srcpdlpop(srcpdlpop), .state_mmu(state_mmu), .nop(nop), .srcpdltop(srcpdltop), .state_fetch(state_fetch));
+`else
    // page PDLCTL
 
    /* m-src = pdl buffer, or index based write */
@@ -1242,8 +1312,13 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 		     (state_alu || state_write || state_mmu || state_fetch);
    
    assign pdlcnt = (~nop & srcpdlpop) | destpdl_p;
+`endif
 
    
+`define _pdlptr
+`ifdef _pdlptr
+   PDLPTR cadr_pdlptr( .clk(clk), .reset(reset), .pidrive(pidrive), .ppdrive(ppdrive), .pdlidx(pdlidx), .pdlptr(pdlptr), .state_alu(state_alu), .state_write(state_write), .state_fetch(state_fetch), .state_read(state_read), .destpdlx(destpdlx), .srcpdlidx(srcpdlidx), .srcpdlptr(srcpdlptr), .ob(ob), .destpdlp(destpdlp), .pdlcnt(pdlcnt), .srcpdlpop(srcpdlpop));
+`else
    // page PDLPTR
 
    assign pidrive = srcpdlidx & (state_alu || state_write || state_fetch);
@@ -1292,15 +1367,20 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 //		     pdlptr <= pdlptr + 10'd1;
 //		end
 //	 end
+`endif
 
    // page PLATCH -- empty
 
-   Q cadr_q(.clk(clk), .reset(reset), .state_alu(state_alu), .state_write(state_write), .state_mmu(state_mmu), .state_fetch(state_fetch), .alu(alu), .srcq(srcq), .qs1(qs1), .qs0(qs0), .qdrive(qdrive), .q(q),.ir(ir),.iralu(iralu));
+   Q cadr_q(.clk(clk), .reset(reset), .state_alu(state_alu), .state_write(state_write), .state_mmu(state_mmu), .state_fetch(state_fetch), .alu(alu), .srcq(srcq), .qs1(qs1), .qs0(qs0), .qdrive(qdrive), .q(q), .ir(ir), .iralu(iralu));
 
-   SHIFT01 cadr_shift01 (.sa(sa), .r(r), .s0(s0), .s1(s1), .s2(s2), .s3(s3), .s4(s4), .m(m));
+   SHIFT01 cadr_shift01(.sa(sa), .r(r), .s0(s0), .s1(s1), .s2(s2), .s3(s3), .s4(s4), .m(m));
 
-   SMCTL cadr_smctl (.mr(mr), .sr(sr), .mskr(mskr), .s0(s0), .s1(s1), .s2(s2), .s3(s3), .s4(s4), .mskl(mskl), .irbyte(irbyte), .ir(ir), .sh3(sh3), .sh4(sh4));
+   SMCTL cadr_smctl(.mr(mr), .sr(sr), .mskr(mskr), .s0(s0), .s1(s1), .s2(s2), .s3(s3), .s4(s4), .mskl(mskl), .irbyte(irbyte), .ir(ir), .sh3(sh3), .sh4(sh4));
 
+`define _source
+`ifdef _source
+   SOURCE cadr_source(.ir(ir), .iralu(iralu), .irbyte(irbyte), .destimod0(destimod0), .iwrited(iwrited), .idebug(idebug), .specalu(specalu), .nop(nop), .irdisp(irdisp), .irjump(irjump), .funct(funct), .div(div), .mul(mul), .srcq(srcq), .srcopc(srcopc), .srcpdltop(srcpdltop), .srcpdlpop(srcpdlpop), .srcpdlidx(srcpdlidx), .srcpdlptr(srcpdlptr), .srcspc(srcspc), .srcdc(srcdc), .srcspcpop(srcspcpop), .srclc(srclc), .srcmd(srcmd), .srcmap(srcmap), .srcvma(srcvma), .imod(imod), .destmem(destmem), .destvma(destvma), .destmdr(destmdr), .dest(dest), .destm(destm), .destintctl(destintctl), .destlc(destlc), .destimod1(destimod1), .destspc(destspc), .destpdlp(destpdlp), .destpdlx(destpdlx), .destpdl_x(destpdl_x), .destpdl_p(destpdl_p), .destpdltop(destpdltop));
+`else
    // page SOURCE
 
    assign {irbyte,irdisp,irjump,iralu} =
@@ -1372,6 +1452,12 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 		({ir[21],ir[20],ir[19]} == 3'b111) ? 8'b10000000 :
 		                                     8'b00000000;
 
+`endif
+
+`define _spc
+`ifdef _spc
+   SPC cadr_spc(.clk(clk), .reset(reset), .spcnt(spcnt), .state_fetch(state_fetch), .spush(spush), .spcptr(spcptr));
+`else   
    // page SPC
 
    // orig rtl:
@@ -1432,8 +1518,9 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 		   spcptr <= spcptr - 5'd1;
 	      end
 	 end
+`endif
 
-   SPCLCH cadr_spclch (.spc(spc), .spco(spco));
+   SPCLCH cadr_spclch(.spc(spc), .spco(spco));
 
    // page SPCPAR -- empty
    
@@ -1441,8 +1528,13 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    SPY12 cadr_spy12(.clk(clk), .reset(reset), .spy_out(spy_out), .ir(ir), .state_write(state_write), .spy_mdh(spy_mdh), .spy_vmah(spy_vmah), .spy_vmal(spy_vmal), .spy_obh_(spy_obh_), .spy_obl_(spy_obl_), .md(md), .vma(vma), .ob(ob), .opc(opc), .waiting(waiting), .boot(boot), .promdisable(promdisable), .stathalt(stathalt), .dbread(dbread), .nop(nop), .spy_obh(spy_obh), .spy_obl(spy_obl), .spy_pc(spy_pc), .spy_opc(spy_opc), .spy_scratch(spy_scratch), .spy_irh(spy_irh), .spy_irm(spy_irm), .spy_irl(spy_irl), .spy_disk(spy_disk), .spy_bd(spy_bd), .pc(pc), .err(err), .scratch(scratch), .spy_sth(spy_sth), .spy_stl(spy_stl), .spy_ah(spy_ah), .spy_al(spy_al), .spy_mh(spy_mh), .spy_ml(spy_ml), .spy_flag2(spy_flag2), .spy_flag1(spy_flag1), .m(m), .a(a), .bd_state_in(bd_state_in), .wmap(wmap), .ssdone(ssdone), .vmaok(vmaok), .destspc(destspc), .jcond(jcond), .srun(srun), .pcs1(pcs1), .pcs0(pcs0), .iwrited(iwrited), .imod(imod), .pdlwrite(pdlwrite), .spush(spush));
 
-   TRAP cadr_trap (.trap(trap), .boot_trap(boot_trap));
+   TRAP cadr_trap(.trap(trap), .boot_trap(boot_trap));
 
+`define _vctrl1
+`ifdef _vctrl1
+   VCTRL1 cadr_vctrl1(.clk(clk), .reset(reset), .lcinc(lcinc), .memrq(memrq), .ifetch(ifetch), .lvmo_22(lvmo_22), .lvmo_23(lvmo_23), .mbusy(mbusy), .memack(memack), .memcheck(memcheck), .memprepare(memprepare), .memrd(memrd), .memstart(memstart), .memwr(memwr), .needfetch(needfetch), .pfr(pfr), .pfw(pfw), .srcyc(srcyc), .state_alu(state_alu), .state_fetch(state_fetch), .state_prefetch(state_prefetch), .state_write(state_write), .vmaok(vmaok), .rdcyc(rdcyc), .wrcyc(wrcyc), .mfinish(mfinish), .waiting(waiting));
+   
+`else
    // page VCTRL1
 
    assign memop  = memrd | memwr | ifetch;
@@ -1536,7 +1628,12 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    assign waiting =
 		(memrq & mbusy) |
 		(lcinc & needfetch & mbusy);		/* ifetch */
+`endif
 
+`define _vctrl2
+`ifdef _vctrl2
+   VCTRL2 cadr_vctrl2(.loadmd(loadmd), .nopa(nopa), .ir(ir), .wrcyc(wrcyc), .destmdr(destmdr), .srcmd(srcmd), .destmem(destmem), .srcmap(srcmap), .irdisp(irdisp), .memprepare(memprepare), .memstart(memstart), .destvma(destvma), .ifetch(ifetch), .state_decode(state_decode), .state_write(state_write), .state_read(state_read), .state_mmu(state_mmu), .mapwr0(mapwr0), .mapwr1( mapwr1), .vm0wp(vm0wp), .vm1wp(vm1wp), .wmap(wmap), .memwr(memwr), .memrd(memrd), .vma(vma), .dmapbenb(dmapbenb), .dispwr(dispwr));
+`else
    // page VCTRL2
 
    /*
@@ -1594,6 +1691,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 			      (ir[20:19] == 2'b10) ? 3'b010 :
 			      (ir[20:19] == 2'b11) ? 3'b100 :
 	                      3'b000 ;
+`endif
 
    VMA cadr_vma(.clk(clk), .reset(reset), .state_alu(state_alu), .state_write(state_write), .state_fetch(state_fetch), .vmaenb(vmaenb), .vmas(vmas), .spy_in(spy_in), .srcvma(srcvma), .ldvmal(ldvmal), .ldvmah(ldvmah), .vma(vma), .vmadrive(vmadrive));
 
@@ -1608,8 +1706,12 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    DEBUG cadr_debug(.clk(clk), .reset(reset), .spy_ir(spy_ir), .spy_in(spy_in), .i(i), .idebug(idebug), .promenable(promenable), .iprom(iprom), .iram(iram), .lddbirh(lddbirh), .lddbirm(lddbirm), .lddbirl(lddbirl));
 
    wire   iwe;
-   ICTL cadr_ictl (.ramdisable(ramdisable), .idebug(idebug), .promdisabled(promdisabled), .iwrited(iwrited), .state_write(state_write), .iwe(iwe));
+   ICTL cadr_ictl(.ramdisable(ramdisable), .idebug(idebug), .promdisabled(promdisabled), .iwrited(iwrited), .state_write(state_write), .iwe(iwe));
 
+`define _olord1
+`ifdef _olord1
+   OLORD1 cadr_olord1(.clk(clk), .reset(reset), .ldmode(ldmode), .ldscratch1(ldscratch1), .ldscratch2(ldscratch2), .ldclk(ldclk), .boot(boot), .run(run), .step(step), .promdisable(promdisable), .trapenb(trapenb), .stathenb(stathenb), .errstop(errstop), .scratch(scratch), .opcinh(opcinh), .opcclk(opcclk), .lpc_hold(lpc_hold), .ldstat(ldstat), .idebug(idebug), .nop11(nop11), .srun( srun), .sstep(sstep), .ssdone(ssdone), .promdisabled(promdisabled), .machrun(machrun), .stat_ovf(stat_ovf), .stathalt(stathalt), .errhalt(errhalt), .state_fetch(state_fetch), .statstop(statstop), .spy_in(spy_in), .ldopc(ldopc), .set_promdisable(set_promdisable), .waiting(waiting));
+`else
    // page OLORD1 
 
    always @(posedge clk)
@@ -1715,8 +1817,13 @@ if (state_fetch) ssdone <= sstep;
 
    assign stat_ovf = 1'b0;
    assign stathalt = statstop & stathenb;
+`endif
 
 
+`define _olord2
+`ifdef _olord2
+   OLORD2 cadr_olord2(.clk(clk), .reset(reset), .statstop(statstop), .halted(halted), .prog_reset(prog_reset), .err(err), .errhalt(errhalt), .prog_bus_reset(prog_bus_reset), .bus_reset(bus_reset), .prog_boot(prog_boot), .boot(boot), .boot_trap(boot_trap), .ldmode(ldmode), .spy_in(spy_in), .errstop(errstop), .ext_reset(ext_reset), .ext_boot(ext_boot), .srun(srun), .ext_halt(ext_halt), .stat_ovf(stat_ovf));
+`else
    // page OLORD2
 
    always @(posedge clk)
@@ -1759,8 +1866,9 @@ if (state_fetch) ssdone <= sstep;
        else
 	 if (srun)
            boot_trap <= 1'b0;
+`endif
 
-   OPCS cadr_opcs (.clk(clk), .reset(reset), .state_fetch(state_fetch), .opcclk(opcclk), .opcinh(opcinh), .opc(opc), .pc(pc));
+   OPCS cadr_opcs(.clk(clk), .reset(reset), .state_fetch(state_fetch), .opcclk(opcclk), .opcinh(opcinh), .opc(opc), .pc(pc));
 
    // With the machine stopped, taking OPCCLK high then low will
    // generate a clock to just the OPCS.
@@ -1772,6 +1880,10 @@ if (state_fetch) ssdone <= sstep;
 
    PROM0 cadr_prom0(.clk(clk), .promaddr(promaddr), .iprom(iprom));
 
+`define _iram
+`ifdef _iram
+   IRAM cadr_iram(.clk(clk), .reset(reset), .pc(pc), .pc_out(pc_out), .state_out(state_out), .iwr(iwr), .iwe(iwe), .iram(iram), .fetch_out(fetch_out), .prefetch_out(prefetch_out), .machrun_out(machrun_out), .mcr_data_in(mcr_data_in), .state_fetch(state_fetch), .machrun(machrun), .state(state));
+`else
    // page IRAM
 `ifdef use_ucode_ram
    part_16kx49ram i_IRAM(
@@ -1802,6 +1914,7 @@ if (state_fetch) ssdone <= sstep;
    assign pc_out = pc;
    assign state_out = state;
    assign machrun_out = machrun;
+`endif
    
    SPY0 cadr_spy0(.spy_obh(spy_obh), .spy_obl(spy_obl), .spy_pc(spy_pc), .spy_opc(spy_opc), .spy_scratch(spy_scratch), .spy_irh(spy_irh), .spy_irm(spy_irm), .spy_irl(spy_irl), .spy_sth(spy_sth), .spy_stl(spy_stl), .spy_ah(spy_ah), .spy_al(spy_al), .spy_mh(spy_mh), .spy_ml(spy_ml), .spy_flag2(spy_flag2), .spy_flag1(spy_flag1), .ldscratch2(dscratch2), .ldscratch1(ldscratch1), .ldmode(ldmode), .ldopc(ldopc), .ldclk(ldclk), .lddbirh(lddbirh), .lddbirm(lddbirm), .lddbirl(lddbirl), .eadr(eadr), .dbread(dbread), .dbwrite(dbwrite), .spy_mdl(spy_mdl), .spy_vmal(spy_vmal), .spy_vmah(spy_vmah), .spy_mdh(spy_mdh), .spy_disk(spy_disk), .spy_bd(spy_bd));
    
