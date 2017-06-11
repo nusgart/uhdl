@@ -2,8 +2,8 @@ module ALU01(aeqm_bits, a, m, aluf, alumode, aeqm, alu, cin12_n, cin16_n, cin20_
 
    input [31:0] a;
    input [31:0] m;
-   input [3:0]	aluf;
-   input [7:0]	aeqm_bits;
+   input [3:0] 	aluf;
+   output [7:0] aeqm_bits;
    output [32:0] alu;
    output	 aeqm;
    output	 alumode;
