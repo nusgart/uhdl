@@ -1,6 +1,6 @@
 // TK		CONS	FLAGS,CONDITIONALS
 
-module FLAG(clk, reset, ir, nopa, aeqm, sintr, int_enable, vmaok, sequence_break, alu, conds, pgf_or_int, pgf_or_int_or_sb, sint, lc_byte_mode, prog_unibus_reset, ob, r, state_fetch, destintctl);
+module FLAG(clk, reset, ir, nopa, aeqm, sintr, int_enable, vmaok, sequence_break, alu, conds, pgf_or_int, pgf_or_int_or_sb, sint, lc_byte_mode, prog_unibus_reset, ob, r, state_fetch, destintctl, statbit, ilong, jcond);
 
    input clk;
    input reset;
@@ -23,7 +23,10 @@ module FLAG(clk, reset, ir, nopa, aeqm, sintr, int_enable, vmaok, sequence_break
    output	prog_unibus_reset;
    output	sequence_break;
    output	sint;
-
+   output 	statbit;
+   output 	ilong;
+   output 	jcond;
+   
    ////////////////////////////////////////////////////////////////////////////////
 
    reg		int_enable;

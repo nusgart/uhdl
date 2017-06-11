@@ -1,6 +1,6 @@
 // TK		CADR	LOCATION COUNTER
 
-module LC(clk, reset, destlc, lcry3, lca, lcinc, lc_byte_mode, lc, srclc, state_alu, state_write, state_mmu, state_fetch, ob);
+module LC(clk, reset, destlc, lcry3, lca, lcinc, lc_byte_mode, lc, srclc, state_alu, state_write, state_mmu, state_fetch, ob,lcdrive);
 
    input clk;
    input reset;
@@ -17,6 +17,7 @@ module LC(clk, reset, destlc, lcry3, lca, lcinc, lc_byte_mode, lc, srclc, state_
    output [25:0] lc;
    output [3:0]  lca;
    output	 lcry3;
+   output lcdrive;
 
    ////////////////////////////////////////////////////////////////////////////////
 

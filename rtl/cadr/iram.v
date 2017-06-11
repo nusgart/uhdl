@@ -6,9 +6,9 @@ module IRAM(clk, reset, pc, pc_out, state_out, iwr, iwe, iram, fetch_out, prefet
    input [13:0] pc;
    input [5:0]	state;
    input	iwe;
-   input	iwr;
+   input [48:0] 	iwr;
    input	machrun;
-   input	mcr_data_in;
+   input [48:0]  mcr_data_in;
    input	state_fetch;
    output [13:0] pc_out;
    output [48:0] iram;
