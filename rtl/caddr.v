@@ -109,6 +109,61 @@
  *      update pdlptr
  */
 
+`define _actl
+// `define _alatch
+// `define _alu01
+// `define _aluc4
+// `define _amem01
+// `define _contrl
+// `define _dram02
+// `define _dspctl
+// `define _flag
+// `define _ireg
+// `define _ior
+// `define _iwr
+// `define _l
+// `define _lc
+// `define _lcc
+// `define _lpc
+// `define _mctl
+// `define _md
+// `define _mds
+// `define _mf
+// `define _mlatch
+// `define _mmem
+// `define _mo
+// `define _mskg4
+// `define _npc
+// `define _opcd
+// `define _pdl
+// `define _pdlctl
+// `define _pdlptr
+// `define _q
+// `define _shift01
+// `define _smctl
+// `define _source
+// `define _spc
+// `define _spclch
+// `define _spcw
+// `define _spy12
+// `define _trap
+// `define _vctrl1
+// `define _vctrl2
+// `define _vma
+// `define _vmas
+// `define _vmem0
+// `define _vmem12
+// `define _vmemdr
+// `define _debug
+// `define _ictl
+// `define _olord1
+// `define _olord2
+// `define _opcs
+// `define _pctl
+// `define _prom0
+// `define _iram
+// `define _spy0
+
 module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
 	       spy_in, spy_out,
@@ -206,7 +261,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    wire [13:0] 	ipc;
    wire [18:0] 	spc;
 
-   wire [48:0] 	ir;
+   reg [48:0] 	ir;
 
    wire [31:0] 	a;
    wire [9:0] 	aadr;
@@ -252,7 +307,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    // page DSPCTL
    wire 	dmapbenb, dispwr;
-   wire [9:0] 	dc;
+   reg [9:0] 	dc;
    wire [11:0] 	prompc;
    wire [8:0] 	promaddr;
 
@@ -350,7 +405,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    reg [9:0] 	pdlidx;
 
    // page Q
-   wire [31:0] 	q;
+   reg [31:0] 	q;
    wire 	qs1, qs0, qdrive;
 
    // page SHIFT0-1
@@ -459,7 +514,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    // page VMA
 
-   wire [31:0] 	vma;
+   reg [31:0] 	vma;
    wire 	vmadrive;
 
    // page VMAS
@@ -486,7 +541,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    wire [48:0] 	i;
    wire [48:0] 	iprom;
    wire [48:0] 	iram;
-   wire [47:0] 	spy_ir;
+   reg [47:0] 	spy_ir;
 
    wire 	ramdisable;
 
@@ -529,13 +584,13 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    reg 		halted;
 
    // page L
-   wire [31:0] 	l;
+   reg [31:0] 	l;
 
    // page NPC
-   wire [13:0] 	pc;
+   reg [13:0] 	pc;
 
    // page OPCS
-   wire [13:0] 	opc;
+   reg [13:0] 	opc;
 
    // page PDLPTR
    reg [9:0] 	pdlptr;
@@ -545,9 +600,9 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    wire [13:0] 	reta;
 
    // page IWR
-   wire [48:0] 	iwr;
+   reg [48:0] 	iwr;
 
-   wire [13:0] 	lpc;
+   reg [13:0] 	lpc;
 
    wire 	lvmo_23;
    wire 	lvmo_22;
@@ -629,26 +684,44 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    assign state_prefetch = state[5] & mcr_hold;
    assign state_fetch = state[5] & ~mcr_hold;
 
-   ACTL cadr_actl(.clk(clk), .reset(reset), .state_decode(state_decode), .state_write(state_write), .wadr(wadr), .destm(destm), .awp(awp), .arp(arp), .aadr(aadr), .ir(ir), .dest(dest));
-
-   ALATCH cadr_alatch(.amem(amem), .a(a));
-
-   // page ALU0-1
-
-   wire[2:0] nc_alu;
-   wire      cin32_n, cin28_n, cin24_n, cin20_n;
-   wire      cin16_n, cin12_n, cin8_n, cin4_n;
-
-   wire      xx0, xx1;
-   wire      yy0, yy1;
-
-   wire      xout3, xout7, xout11, xout15, xout19, xout23, xout27, xout31;
-   wire      yout3, yout7, yout11, yout15, yout19, yout23, yout27, yout31;
-
-//`define _alu01//ok
-`ifdef _alu01
-   ALU01 cadr_alu01(.aeqm_bits(aeqm_bits), .a(a), .m(m), .aluf(aluf), .alumode(alumode), .aeqm(aeqm), .alu(alu), .cin12_n(cin12_n), .cin16_n(cin16_n), .cin20_n(cin20_n), .cin24_n(cin24_n), .cin28_n(cin28_n), .cin32_n(cin32_n), .cin4_n(cin4_n), .cin8_n(cin8_n), .cin0(cin0), .xout11(xout11), .xout15(xout15), .xout19(xout19), .xout23(xout23), .xout27(xout27), .xout3(xout3), .xout31(xout31), .xout7(xout7), .yout11(yout11), .yout15(yout15), .yout19(yout19), .yout23(yout23), .yout27(yout27), .yout3(yout3), .yout31(yout31), .yout7(yout7));
+`ifdef _actl
+   ACTL(.clk, .reset, .state_decode, .state_write, .wadr, .destm, .awp, .arp, .aadr, .ir, .dest);
 `else
+   // page actl
+
+   always @(posedge clk)
+     if (reset)
+       begin
+	  wadr <= 0;
+       end
+     else
+       if (state_decode)
+	 begin
+	    // wadr 9  8  7  6  5  4  3  2  1  0
+	    //      0  0  0  0  0  18 17 16 15 14
+	    // ir   23 22 21 20 19 18 17 16 15 14
+	    wadr <= destm ? { 5'b0, ir[18:14] } : { ir[23:14] };
+	 end
+
+   assign awp = dest & state_write;
+   assign arp = state_decode;
+
+   // use wadr during state_write
+   assign aadr = ~state_write ? { ir[41:32] } : wadr;
+`endif
+   
+`ifdef _alatch
+   ALATCH(.a, .amem);
+`else
+   // page ALATCH
+
+   assign a = amem;
+`endif
+
+`ifdef _alu01
+   ALU01(.aeqm_bits, .a, .m, .aluf, .alumode, .aeqm, .alu, .cin12_n, .cin16_n, .cin20_n, .cin24_n, .cin28_n, .cin32_n, .cin4_n, .cin8_n, .cin0, .xout11, .xout15, .xout19, .xout23, .xout27, .xout3, .xout31, .xout7, .yout11, .yout15, .yout19, .yout23, .yout27, .yout3, .yout31, .yout7);
+`else
+   // page ALU0-1
 
    // 74181 pulls down AEB if not equal
    // aeqm is the simulated open collector
@@ -659,6 +732,16 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 //     else
 //       aeqm <= aeqm_bits == { 8'b11111111 } ? 1'b1 : 1'b0;
 
+   wire[2:0] nc_alu;
+   wire      cin32_n, cin28_n, cin24_n, cin20_n;
+   wire      cin16_n, cin12_n, cin8_n, cin4_n;
+
+   wire      xx0, xx1;
+   wire      yy0, yy1;
+
+   wire      xout3, xout7, xout11, xout15, xout19, xout23, xout27, xout31;
+   wire      yout3, yout7, yout11, yout15, yout19, yout23, yout27, yout31;
+   
    ic_74S181  i_ALU1_2A03 (
 			   .B({3'b0,a[31]}),
 			   .A({3'b0,m[31]}),
@@ -777,9 +860,8 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 			   );
 `endif
 
-//`define _aluc4 //ok
 `ifdef _aluc4
-   ALUC4 cadr_aluc4(.yout15(yout15), .yout11(yout11), .yout7(yout7), .yout3(yout3), .xout15(xout15), .xout11(xout11), .xout7(xout7), .xout3(xout3), .yout31(yout31), .yout27(yout27), .yout23(yout23), .yout19(yout19), .xout31(xout31), .xout27(xout27), .xout23(xout23), .xout19(xout19), .a(a), .ir(ir), .iralu(iralu), .irjump(irjump), .mul(mul), .div(div), .q(q), .osel(osel), .divposlasttime(divposlasttime), .divsubcond(divsubcond), .divaddcond(divaddcond), .mulnop(mulnop ), .aluadd(aluadd ), .alusub(alusub ), .aluf(aluf ), .alumode(alumode ), .cin12_n(cin12_n), .cin8_n(cin8_n), .cin4_n(cin4_n), .cin0(cin0), .xx0(xx0), .yy0(yy0), .cin28_n(cin28_n), .cin24_n(cin24_n), .cin20_n(cin20_n), .cin16_n(cin16_n), .xx1(xx1), .yy1(yy1), .cin32_n(cin32_n));
+   ALUC4(.yout15, .yout11, .yout7, .yout3, .xout15, .xout11, .xout7, .xout3, .yout31, .yout27, .yout23, .yout19, .xout31, .xout27, .xout23, .xout19, .a, .ir, .iralu, .irjump, .mul, .div, .q, .osel, .divposlasttime, .divsubcond, .divaddcond, .mulnop, .aluadd, .alusub, .aluf, .alumode, .cin12_n, .cin8_n, .cin4_n, .cin0, .xx0, .yy0, .cin28_n, .cin24_n, .cin20_n, .cin16_n, .xx1, .yy1, .cin32_n);
 `else
    // page ALUC4
 
@@ -856,11 +938,32 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
                   1'b1;
 `endif
 
-   AMEM01 cadr_amem01(.clk(clk), .reset(reset), .aadr(aadr), .amem(amem), .awp(awp), .arp(arp), .l(l));
+`ifdef _amem01
+   AMEM01(.amem, .clk, .reset, .aadr, .awp, .arp, .l);
+`else
+   // page AMEM0-1
 
-//`define _contrl //ok
+   part_1kx32dpram_a i_AMEM(
+			    .reset(reset),
+
+			    .clk_a(clk),
+			    .address_a(aadr),
+			    .data_a(32'b0),
+			    .q_a(amem),
+			    .wren_a(1'b0),
+			    .rden_a(arp),
+			    
+			    .clk_b(clk),
+			    .address_b(aadr),
+			    .data_b(l),
+			    .q_b(),
+			    .wren_b(awp),
+			    .rden_b(1'b0)
+			    );
+`endif
+
 `ifdef _contrl
-   CONTRL cadr_contrl(.clk(clk), .reset(reset), .destspc(destspc), .dfall(dfall), .dispenb(dispenb), .dn(dn), .dp(dp), .dr(dr), .funct(funct), .ignpopj(ignpopj), .inop(inop), .ipopj(ipopj), .ir(ir), .irdisp(irdisp), .irjump(irjump), .iwrite(iwrite), .iwrited(iwrited), .jcalf(jcalf), .jcond(jcond), .jfalse(jfalse), .jret(jret), .jretf(jretf), .n(n), .nop(nop), .nop11(nop11), .nopa(nopa), .pcs0(pcs0), .pcs1(pcs1), .popj(popj), .spcdrive(spcdrive), .spcenb(spcenb), .spcnt(spcnt), .spop(spop), .spush(spush), .srcspc(srcspc), .srcspcpop(srcspcpop), .srcspcpopreal(srcspcpopreal), .srp(srp), .state_alu(state_alu), .state_fetch(state_fetch), .state_write(state_write), .swp(swp), .trap(trap));
+   CONTRL(.clk, .reset, .dfall, .dispenb, .ignpopj, .inop, .ipopj, .iwrite, .iwrited, .jcalf, .jfalse, .jret, .jretf, .n, .nop, .nopa, .pcs0, .pcs1, .popj, .spcdrive, .spcenb, .spcnt, .spop, .spush, .srcspcpopreal, .srp, .swp, .dr, .dp, .irdisp, .funct, .irjump, .ir, .srcspcpop, .jcond, .destspc, .state_write, .srcspc, .state_alu, .state_fetch, .trap, .dn, .nop11);
 `else
    // page CONTRL
 
@@ -968,9 +1071,8 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 	 inop <= n;
 `endif
    
-//`define _dram02 //ok
 `ifdef _dram02
-   DRAM02 cadr_dram02(.clk(clk), .reset(reset), .daddr0(daddr0), .dadr(dadr), .dwe(dwe), .a(a), .ir(ir), .vmo(vmo), .dmask(dmask), .r(r), .dr(dr), .dp(dp), .dn(dn), .dpc(dpc), .dispwr(dispwr), .state_write(state_write), .state_prefetch(state_prefetch));
+   DRAM02(.clk, .reset, .daddr0, .dadr, .dwe, .a, .ir, .vmo, .dmask, .r, .dr, .dp, .dn, .dpc, .dispwr, .state_write, .state_prefetch);
 `else
    // page DRAM0-2
 
@@ -1015,13 +1117,34 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 			  );
 `endif
 
-   DSPCTL cadr_dspctl(.clk(clk), .reset(reset), .state_fetch(state_fetch), .irdisp(irdisp), .funct(funct), .ir(ir), .dmask(dmask), .dmapbenb(dmapbenb), .dispwr(dispwr), .dc(dc));
+`ifdef _dspctl
+   DSPCTL(.clk, .reset, .state_fetch, .irdisp, .funct, .ir, .dmask, .dmapbenb, .dispwr, .dc);
+`else
+   // page DSPCTL
 
+   assign dmapbenb  = ir[8] | ir[9];
 
-//`define _flag//ok
+   assign dispwr = irdisp & funct[2];
+
+   always @(posedge clk)
+     if (reset)
+       dc <= 0;
+     else
+       if (state_fetch && irdisp)
+	 dc <= ir[41:32];
+
+   wire   nc_dmask;
+   
+   part_32x8prom i_DMASK(
+			 .clk(~clk),
+			 .addr( {1'b0, 1'b0, ir[7], ir[6], ir[5]} ),
+			 .q( {nc_dmask, dmask[6:0]} )
+			 );
+`endif
+
 `ifdef _flag
-   FLAG cadr_flag(.clk(clk), .reset(reset), .ir(ir), .nopa(nopa), .aeqm(aeqm), .sintr(sintr), .int_enable(int_enable), .vmaok(vmaok), .sequence_break(sequence_break), .alu(alu), .conds(conds), .pgf_or_int(pgf_or_int), .pgf_or_int_or_sb(pgf_or_int_or_sb), .sint(sint), .lc_byte_mode(lc_byte_mode), .prog_unibus_reset(prog_unibus_reset), .ob(ob), .r(r), .state_fetch(state_fetch), .destintctl(destintctl), .statbit(statbit), .ilong(ilong), .jcond(jcond));
-`else     
+   FLAG(.clk, .reset, .ir, .nopa, .aeqm, .sintr, .int_enable, .vmaok, .sequence_break, .alu, .conds, .pgf_or_int, .pgf_or_int_or_sb, .sint, .lc_byte_mode, .prog_unibus_reset, .ob, .r, .state_fetch, .destintctl, .statbit, .ilong, .jcond);
+`else
    // page FLAG
 
    assign statbit = ~nopa & ir[46];
@@ -1063,45 +1186,75 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
             sequence_break <= ob[26];
 	 end
 `endif
+   
+`ifdef _ior
+   IOR(.iob, .i, .ob);
+`else
+   // page IOR
 
-   IOR cadr_ior(.iob(iob), .i(i), .ob(ob));
+   // iob 47 46 45 44 43 42 41 40 39 38 37 36 35 34 33 32 31 30 29 28 27 26
+   // i   47 46 45 44 43 42 41 40 39 38 37 36 35 34 33 32 31 30 29 28 27 26
+   // ob  21 20 19 18 17 16 15 14 13 12 11 10 9  8  7  6  5  4  3  2  1  0  
+
+   // iob 25 24 ... 1  0
+   // i   25 24 ... 1  0
+   // ob  25 24 ... 1  0
+
+   assign iob = i[47:0] | { ob[21:0], ob[25:0] };
+`endif
 
    // page IPAR -- empty
 
-   IREG cadr_ireg(.clk(clk), .reset(reset), .i(i), .iob(iob), .ir(ir), .state_fetch(state_fetch), .destimod1(destimod1), .destimod0(destimod0));
+`ifdef _ireg
+   IREG(.clk, .reset, .i, .iob, .ir, .state_fetch, .destimod1, .destimod0);
+`else
+   // page IREG
 
-   IWR cadr_iwr(.clk(clk), .reset(reset), .state_fetch(state_fetch), .iwr(iwr), .a(a), .m(m));
+   always @(posedge clk)
+     if (reset)
+       ir <= 49'b0;
+     else
+       if (state_fetch)
+	 begin
+	    ir[48] <= ~destimod1 ? i[48] : 1'b0;
+	    ir[47:26] <= ~destimod1 ? i[47:26] : iob[47:26]; 
+	    ir[25:0] <= ~destimod0 ? i[25:0] : iob[25:0];
+	 end
+`endif
 
-   L cadr_l(.clk(clk), .reset(reset), .vmaenb(vmaenb), .state_write(state_write), .state_alu(state_alu), .ob(ob), .l(l));
+`ifdef _iwr
+   IWR(.clk, .reset, .state_fetch, .iwr, .a, .m);
+`else
+   // page IWR
 
-//`define _lc//ok
+   always @(posedge clk)
+     if (reset)
+       iwr <= 0;
+     else
+       if (state_fetch)
+	 begin
+	    iwr[48] <= 0;
+	    iwr[47:32] <= a[15:0];
+	    iwr[31:0] <= m[31:0];
+	 end
+`endif
+
+`ifdef _l
+   L(.clk, .reset, .vmaenb, .state_write, .state_alu, .ob, .l);
+`else
+   // page L
+
+   always @(posedge clk)
+     if (reset)
+       l <= 0;
+     else
+       // vma is latched during alu, so this must be too
+       if ((vmaenb && (state_write||state_alu)) || (~vmaenb && state_alu))
+	 l <= ob;
+`endif
+
 `ifdef _lc
-   LC cadr_lc(.clk(clk), .reset(reset), .destlc(destlc), .lcry3(lcry3), .lca(lca), .lcinc(lcinc), .lc_byte_mode(lc_byte_mode), .lc(lc), .srclc(srclc), .state_alu(state_alu), .state_write(state_write), .state_mmu(state_mmu), .state_fetch(state_fetch), .ob(ob));   
-
-   // mux MF -- move to mf.v
-   assign mf =
-	      lcdrive ?
-	      { needfetch, 1'b0, lc_byte_mode, prog_unibus_reset,
-		int_enable, sequence_break, lc[25:1], lc0b } :
-	      opcdrive ?
-	      { 16'b0, 2'b0, opc[13:0] } :
-	      dcdrive ?
-	      { 16'b0, 4'b0, 2'b0, dc[9:0] } :
-	      ppdrive ?
-	      { 16'b0, 4'b0, 2'b0, pdlptr[9:0] } :
-	      pidrive ?
-	      { 16'b0, 4'b0, 2'b0, pdlidx[9:0] } :
-	      qdrive ?
-	      q :
-	      mddrive ?
-	      md :
-	      //	mpassl ?
-	      //	      l :
-	      vmadrive ?
-	      vma :
-	      mapdrive ?
-	      { ~pfw, ~pfr, 1'b1, vmap[4:0], vmo[23:0] } :
-	      32'b0;
+   LC(.clk, .reset, .destlc, .lcry3, .lca, .lcinc, .lc_byte_mode, .lc, .srclc, .state_alu, .state_write, .state_mmu, .state_fetch, .ob, .lcdrive);
 `else
    // page LC
 
@@ -1165,10 +1318,8 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 	      32'b0;
 `endif
 
-
-//`define _lcc//fail
 `ifdef _lcc
-   LCC cadr_lcc(.clk(clk), .reset(reset), .state_fetch(state_fetch), .lc0b(lc0b), .next_instr(next_instr), .newlc_in(newlc_in), .have_wrong_word(have_wrong_word), .last_byte_in_word(last_byte_in_word), .needfetch(needfetch), .ifetch(ifetch), .spcmung(spcmung), .spc1a(spc1a), .lc_modifies_mrot(lc_modifies_mrot), .inst_in_left_half(inst_in_left_half), .inst_in_2nd_or_4th_quarter(inst_in_2nd_or_4th_quarter), .sh4(sh4), .sh3(sh3), .newlc(newlc), .sintr(sintr), .next_instrd(next_instrd), .lc(lc), .lc_byte_mode(lc_byte_mode), .spop(spop), .srcspcpopreal(srcspcpopreal), .spc(spc), .lcinc(lcinc), .destlc(destlc));
+   LCC(.clk, .reset, .state_fetch, .lc0b, .next_instr, .newlc_in, .have_wrong_word, .last_byte_in_word, .needfetch, .ifetch, .spcmung, .spc1a, .lc_modifies_mrot, .inst_in_left_half, .inst_in_2nd_or_4th_quarter, .sh4, .sh3, .newlc, .sintr, .next_instrd, .lc, .lc_byte_mode, .spop, .srcspcpopreal, .spc, .lcinc, .destlc, .irdisp, .ir, .ext_int, .bus_int);
 `else
    // page LCC
 
@@ -1222,13 +1373,45 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    assign sh3  = ~(~ir[3] ^ inst_in_2nd_or_4th_quarter);
 `endif
 
-   LPC cadr_lpc(.clk(clk), .reset(reset), .lpc(lpc), .lpc_hold(lpc_hold), .pc(pc), .wpc(wpc), .irdisp(irdisp), .ir(ir), .state_fetch(state_fetch));
+`ifdef _lpc
+   LPC(.clk, .reset, .lpc, .lpc_hold, .pc, .wpc, .irdisp, .ir, .state_fetch);
+`else
+   //page LPC
 
-   MCTL cadr_mctl(.mpassm(mpassm), .srcm(srcm), .mrp(mrp), .mwp(mwp), .madr(madr), .ir(ir), .destm(destm), .wadr(wadr), .state_decode(state_decode), .state_write(state_write));
+   always @(posedge clk)
+     if (reset)
+       lpc <= 0;
+     else
+       if (state_fetch)
+	 begin
+	    if (~lpc_hold)
+	      lpc <= pc;
+	 end
 
-//`define _md//ok
+   /* dispatch and instruction as N set */
+   assign wpc = (irdisp & ir[25]) ? lpc : pc;
+`endif
+
+`ifdef _mctl
+   MCTL(.mpassm, .srcm, .mrp, .mwp, .madr, .ir, .destm, .wadr, .state_decode, .state_write);
+`else
+   // page MCTL
+
+//   assign mpass = { 1'b1, ir[30:26] } == { destm, wadr[4:0] };
+//   assign mpassl = mpass & phase1 & ~ir[31];
+   assign mpassm  = /*~mpass & phase1 &*/ ~ir[31];
+
+   assign srcm = ~ir[31]/* & ~mpass*/;	/* srcm = m-src is m-memory */
+
+   assign mrp = state_decode;
+   assign mwp = destm & state_write;
+   
+   // use wadr during state_write
+   assign madr = ~state_write ? ir[30:26] : wadr[4:0];
+`endif
+
 `ifdef _md
-   MD cadr_md(.clk(clk), .reset(reset), .md(md), .mdhaspar(mdhaspar), .mdpar(mdpar), .mddrive(mddrive), .ignpar(ignpar), .mdclk(mdclk), .spy_in(spy_in), .loadmd(loadmd), .memrq(memrq), .destmdr(destmdr), .mds(mds), .mdgetspar(mdgetspar), .srcmd(srcmd), .state_alu(state_alu), .state_write(state_write), .state_mmu(state_mmu), .state_fetch(state_fetch), .ldmdh(ldmdh), .ldmdl(ldmdl));
+   MD(.clk, .reset, .md, .mdhaspar, .mdpar, .mddrive, .mdgetspar, .ignpar, .mdclk, .spy_in, .loadmd, .memrq, .destmdr, .mds, .srcmd, .state_alu, .state_write, .state_mmu, .state_fetch, .ldmdh, .ldmdl);
 `else
    // page MD
 
@@ -1260,28 +1443,187 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    assign mdclk = loadmd | destmdr;
 `endif
+   
+`ifdef _mds
+   MDS(.mds, .mdsel, .ob, .memdrive, .loadmd, .busint_bus, .md);
+`else
+   // page MDS
 
-   MDS cadr_mds(.mds(mds), .mdsel(mdsel), .ob(ob), .memdrive(memdrive), .loadmd(loadmd), .busint_bus(busint_bus), .md(md));
+   assign mds = mdsel ? ob : mem;
 
-   MF cadr_mf(.mfenb(mfenb), .mfdrive(mfdrive), .srcm(srcm), .spcenb(spcenb), .pdlenb(pdlenb), .state_alu(state_alu), .state_write(state_write), .state_mmu(state_mmu), .state_fetch(state_fetch));
+   // mux MEM
+   assign mem =
+	       memdrive ? md :
+	       loadmd ? busint_bus :
+	       32'b0;
+`endif
 
-   MLATCH cadr_mlatch(.pdldrive(pdldrive), .mpassm(mpassm), .spcdrive(spcdrive), .mfdrive(mfdrive), .mmem(mmem), .pdl(pdl), .spcptr(spcptr), .spco(spco), .mf(mf), .m(m));
+`ifdef _mf
+   MF(.mfenb, .mfdrive, .srcm, .spcenb, .pdlenb, .state_alu, .state_write, .state_mmu, .state_fetch);
+`else
+   // page MF
 
-   MMEM cadr_mmem(.clk(clk), .reset(reset), .mwp(mwp), .mrp(mrp), .madr(madr), .l(l), .b(b), .mmem(mmem));
+   assign mfenb = ~srcm & !(spcenb | pdlenb);
+   assign mfdrive = mfenb &
+		    (state_alu || state_write || state_mmu || state_fetch);
+`endif
 
-   MO cadr_mo(.msk(msk), .r(r), .a(a), .mo(mo), .alu(alu), .q(q), .osel(osel), .ob(ob));
+`ifdef _mlatch
+   MLATCH(.pdldrive, .spcdrive, .mfdrive, .mmem, .pdl, .spcptr, .spco, .mf, .m, .mpassm);
+`else
+   // page MLATCH
 
-   MSKG4 cadr_mskg4(.clk(clk), .msk(msk), .mskl(mskl), .mskr(mskr));
+`ifdef debug_with_usim
+   // tell disk controller when each fetch passes to force sync with usim
+   always @(posedge clk)
+	if (state_fetch)
+	  busint.disk.fetch = 1;
+	else
+	  busint.disk.fetch = 0;
+`endif
+       
+   // mux M
+   assign m =
+/*same as srcm*/mpassm ? mmem :
+	     pdldrive ? pdl :
+	     spcdrive ? {3'b0, spcptr, 5'b0, spco} :
+	     mfdrive ? mf :
+	     32'b0;
+`endif
 
-   NPC cadr_npc(.clk(clk), .reset(reset), .state_fetch(state_fetch), .ipc(ipc), .npc(npc), .trap(trap), .pcs1(pcs1), .pcs0(pcs0), .ir(ir), .spc(spc), .spc1a(spc1a), .dpc(dpc), .pc(pc));
-	
-   OPCD cadr_opcd(.dcdrive(dcdrive), .opcdrive(opcdrive), .srcdc(srcdc), .srcopc(srcopc), .state_alu(state_alu), .state_write(state_write), .state_mmu(state_mmu), .state_fetch(state_fetch));
+`ifdef _mmem
+   MMEM(.clk, .reset, .mrp, .mwp, .madr, .l, .b, .mmem);
+`else
+   // page MMEM
 
-   PDL cadr_pdl(.clk(clk), .reset(reset), .prp(prp), .pdla(pdla), .l(l), .pwp(pwp), .pdl(pdl));
+   part_32x32dpram i_MMEM(
+			  .reset(reset),
 
-//`define _pdlctl//ok
+			  .clk_a(clk),
+			  .address_a(madr),
+			  .data_a(32'b0),
+			  .q_a(mmem),
+			  .wren_a(1'b0),
+			  .rden_a(mrp),
+
+			  .clk_b(clk),
+			  .address_b(madr),
+			  .data_b(l),
+			  .q_b(),
+			  .wren_b(mwp),
+			  .rden_b(1'b0)
+			);
+`endif
+
+`ifdef _mo
+   MO(.msk, .r, .a, .mo, .alu, .q, .osel, .ob);
+`else
+   // page MO
+
+   //for (i = 0; i < 31; i++)
+   //  assign mo[i] =
+   //	osel == 2'b00 ? (msk[i] ? r[i] : a[i]) : a[i];
+
+   // msk r  a       (msk&r)|(~msk&a)
+   //  0  0  0   0      0 0  0
+   //  0  0  1   1      0 1  1
+   //  0  1  0   0      0 0  0
+   //  0  1  1   1      0 1  1
+   //  1  0  0   0      0 0  0 
+   //  1  0  1   0      0 0  0
+   //  1  1  0   1      1 0  1 
+   //  1  1  1   1      1 0  1
+
+   // masker output 
+   assign mo = (msk & r) | (~msk & a);
+
+   assign ob =
+	      osel == 2'b00 ? mo :
+	      osel == 2'b01 ? alu[31:0] :
+	      osel == 2'b10 ? alu[32:1] :
+	      /*2'b11*/ {alu[30:0],q[31]};
+`endif
+
+`ifdef _mskg4
+   MSKG4(.clk, .mskl, .mskr, .msk);
+`else
+   // page MSKG4
+
+   part_32x32prom_maskleft i_MSKR(
+				  .clk(~clk),
+				  .q(msk_left_out),
+				  .addr(mskl)
+				  );
+
+   part_32x32prom_maskright i_MSKL(
+				   .clk(~clk),
+				   .q(msk_right_out),
+				   .addr(mskr)
+				   );
+
+   assign msk = msk_right_out & msk_left_out;
+`endif
+
+`ifdef _npc
+   NPC(.clk, .reset, .state_fetch, .ipc, .npc, .trap, .pcs1, .pcs0, .ir, .spc, .spc1a, .dpc, .pc);
+`else
+   // page NPC
+
+   assign npc = 
+		trap ? 14'b0 :
+		{pcs1,pcs0} == 2'b00 ? { spc[13:2], spc1a, spc[0] } :
+		{pcs1,pcs0} == 2'b01 ? { ir[25:12] } :
+		{pcs1,pcs0} == 2'b10 ? dpc :
+                 /*2'b11*/ ipc;
+
+   always @(posedge clk)
+     if (reset)
+       pc <= 0;
+     else
+       if (state_fetch)
+	 pc <= npc;
+
+   assign ipc = pc + 14'd1;
+`endif
+
+`ifdef _opcd
+   OPCD(.dcdrive, .opcdrive, .srcdc, .srcopc, .state_alu, .state_write, .state_mmu, .state_fetch);
+`else
+   // page OPCD
+
+   assign dcdrive = srcdc &  	/* dispatch constant */
+		    (state_alu || state_write || state_mmu || state_fetch);
+
+   assign opcdrive  = srcopc &
+		      (state_alu | state_write);
+`endif
+
+`ifdef _pdl
+   PDL(.clk, .reset, .prp, .pdla, .l, .pwp, .pdl);
+`else
+   // page PDL
+
+   part_1kx32dpram_p i_PDL(
+			 .reset(reset),
+
+			 .clk_a(clk),
+			 .address_a(pdla),
+			 .q_a(pdl),
+			 .data_a(32'b0),
+			 .rden_a(prp),
+			 .wren_a(1'b0),
+
+			 .clk_b(clk),
+			 .address_b(pdla),
+			 .q_b(),
+			 .data_b(l),
+			 .rden_b(1'b0),
+			 .wren_b(pwp)
+			 );
+`endif
+
 `ifdef _pdlctl
-   PDCTL cadr_pdctl( .clk(clk), .reset(reset), .pdlidx(pdlidx), .pdla(pdla), .pdlp(pdlp), .pdlwrite(pdlwrite), .state_alu(state_alu), .state_write(state_write), .state_read(state_read), .ir(ir), .pwidx(pwidx), .pwp(pwp), .prp(prp), .pdlenb(pdlenb), .pdldrive(pdldrive), .pdlcnt(pdlcnt), .pdlptr(pdlptr), .destpdltop(destpdltop), .destpdl_x(destpdl_x), .destpdl_p(destpdl_p), .srcpdlpop(srcpdlpop), .state_mmu(state_mmu), .nop(nop), .srcpdltop(srcpdltop), .state_fetch(state_fetch));
+   PDlCTL(.clk, .reset, .pdlidx, .pdla, .pdlp, .pdlwrite, .state_alu, .state_write, .state_read, .ir, .pwidx, .pwp, .prp, .pdlenb, .pdldrive, .pdlcnt, .pdlptr, .destpdltop, .destpdl_x, .destpdl_p, .srcpdlpop, .state_mmu, .nop, .srcpdltop, .state_fetch);
 `else
    // page PDLCTL
 
@@ -1313,11 +1655,9 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    
    assign pdlcnt = (~nop & srcpdlpop) | destpdl_p;
 `endif
-
    
-//`define _pdlptr//ok
 `ifdef _pdlptr
-   PDLPTR cadr_pdlptr( .clk(clk), .reset(reset), .pidrive(pidrive), .ppdrive(ppdrive), .pdlidx(pdlidx), .pdlptr(pdlptr), .state_alu(state_alu), .state_write(state_write), .state_fetch(state_fetch), .state_read(state_read), .destpdlx(destpdlx), .srcpdlidx(srcpdlidx), .srcpdlptr(srcpdlptr), .ob(ob), .destpdlp(destpdlp), .pdlcnt(pdlcnt), .srcpdlpop(srcpdlpop));
+   PDLPTR(.clk, .reset, .pidrive, .ppdrive, .pdlidx, .pdlptr, .state_alu, .state_write, .state_fetch, .state_read, .destpdlx, .srcpdlidx, .srcpdlptr, .ob, .destpdlp, .pdlcnt, .srcpdlpop);
 `else
    // page PDLPTR
 
@@ -1371,15 +1711,151 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    // page PLATCH -- empty
 
-   Q cadr_q(.clk(clk), .reset(reset), .state_alu(state_alu), .state_write(state_write), .state_mmu(state_mmu), .state_fetch(state_fetch), .alu(alu), .srcq(srcq), .qs1(qs1), .qs0(qs0), .qdrive(qdrive), .q(q), .ir(ir), .iralu(iralu));
+`ifdef _q
+   Q(.clk, .reset, .state_alu, .state_write, .state_mmu, .state_fetch, .alu, .srcq, .qs1, .qs0, .qdrive, .q, .ir, .iralu);
+`else
+   // page Q
 
-   SHIFT01 cadr_shift01(.sa(sa), .r(r), .s0(s0), .s1(s1), .s2(s2), .s3(s3), .s4(s4), .m(m));
+   assign qs1 = ir[1] & iralu;
+   assign qs0 = ir[0] & iralu;
 
-   SMCTL cadr_smctl(.mr(mr), .sr(sr), .mskr(mskr), .s0(s0), .s1(s1), .s2(s2), .s3(s3), .s4(s4), .mskl(mskl), .irbyte(irbyte), .ir(ir), .sh3(sh3), .sh4(sh4));
+   assign qdrive = srcq &
+		   (state_alu || state_write || state_mmu || state_fetch);
 
-//`define _source//ok
+   always @(posedge clk)
+     if (reset)
+       q <= 0;
+     else
+       if (state_fetch && (qs1 | qs0))
+	 begin
+            case ( {qs1,qs0} )
+              2'b00: q <= q;
+	      2'b01: q <= { q[30:0], ~alu[31] };
+              2'b10: q <= { alu[0], q[31:1] };
+              2'b11: q <= alu[31:0];
+            endcase
+	 end
+`endif
+
+`ifdef _shift01
+   SHIFT01(.sa, .r, .s0, .s1, .s2, .s3, .s4, .m);
+`else
+   // page SHIFT0-1
+
+   assign sa =
+	      {s1,s0} == 2'b00 ? m :
+	      {s1,s0} == 2'b01 ? { m[30:0], m[31] } : 
+	      {s1,s0} == 2'b10 ? { m[29:0], m[31], m[30] } : 
+	      { m[28:0], m[31], m[30], m[29] };
+
+   assign {r[12],r[8],r[4],r[0]} =
+		{s4,s3,s2} == 3'b000 ? { sa[12],sa[8], sa[4], sa[0] } :
+		{s4,s3,s2} == 3'b001 ? { sa[8], sa[4], sa[0], sa[28] } :
+		{s4,s3,s2} == 3'b010 ? { sa[4], sa[0], sa[28],sa[24] } :
+		{s4,s3,s2} == 3'b011 ? { sa[0], sa[28],sa[24],sa[20] } :
+		{s4,s3,s2} == 3'b100 ? { sa[28],sa[24],sa[20],sa[16] } :
+		{s4,s3,s2} == 3'b101 ? { sa[24],sa[20],sa[16],sa[12] } :
+		{s4,s3,s2} == 3'b110 ? { sa[20],sa[16],sa[12],sa[8] } :
+		{ sa[16],sa[12],sa[8], sa[4] };
+
+   assign {r[13],r[9],r[5],r[1]} =
+		{s4,s3,s2} == 3'b000 ? { sa[13],sa[9], sa[5], sa[1] } :
+		{s4,s3,s2} == 3'b001 ? { sa[9], sa[5], sa[1], sa[29] } :
+		{s4,s3,s2} == 3'b010 ? { sa[5], sa[1], sa[29],sa[25] } :
+		{s4,s3,s2} == 3'b011 ? { sa[1], sa[29],sa[25],sa[21] } :
+		{s4,s3,s2} == 3'b100 ? { sa[29],sa[25],sa[21],sa[17] } :
+		{s4,s3,s2} == 3'b101 ? { sa[25],sa[21],sa[17],sa[13] } :
+		{s4,s3,s2} == 3'b110 ? { sa[21],sa[17],sa[13],sa[9] } :
+		{ sa[17],sa[13],sa[9], sa[5] };
+
+   assign {r[14],r[10],r[6],r[2]} =
+		{s4,s3,s2} == 3'b000 ? { sa[14],sa[10],sa[6], sa[2] } :
+		{s4,s3,s2} == 3'b001 ? { sa[10],sa[6], sa[2], sa[30] } :
+		{s4,s3,s2} == 3'b010 ? { sa[6], sa[2], sa[30],sa[26] } :
+		{s4,s3,s2} == 3'b011 ? { sa[2], sa[30],sa[26],sa[22] } :
+		{s4,s3,s2} == 3'b100 ? { sa[30],sa[26],sa[22],sa[18] } :
+		{s4,s3,s2} == 3'b101 ? { sa[26],sa[22],sa[18],sa[14] } :
+		{s4,s3,s2} == 3'b110 ? { sa[22],sa[18],sa[14],sa[10] } :
+		{ sa[18],sa[14],sa[10], sa[6] };
+
+   assign {r[15],r[11],r[7],r[3]} =
+		{s4,s3,s2} == 3'b000 ? { sa[15],sa[11],sa[7], sa[3] } :
+		{s4,s3,s2} == 3'b001 ? { sa[11],sa[7], sa[3], sa[31] } :
+		{s4,s3,s2} == 3'b010 ? { sa[7], sa[3], sa[31],sa[27] } :
+		{s4,s3,s2} == 3'b011 ? { sa[3], sa[31],sa[27],sa[23] } :
+		{s4,s3,s2} == 3'b100 ? { sa[31],sa[27],sa[23],sa[19] } :
+		{s4,s3,s2} == 3'b101 ? { sa[27],sa[23],sa[19],sa[15] } :
+		{s4,s3,s2} == 3'b110 ? { sa[23],sa[19],sa[15],sa[11] } :
+		{ sa[19],sa[15],sa[11], sa[7] };
+
+   //
+
+   assign {r[28],r[24],r[20],r[16]} =
+		{s4,s3,s2} == 3'b000 ? { sa[28],sa[24],sa[20],sa[16] } :
+		{s4,s3,s2} == 3'b001 ? { sa[24],sa[20],sa[16],sa[12] } :
+		{s4,s3,s2} == 3'b010 ? { sa[20],sa[16],sa[12],sa[8] } :
+		{s4,s3,s2} == 3'b011 ? { sa[16],sa[12],sa[8], sa[4] } :
+		{s4,s3,s2} == 3'b100 ? { sa[12],sa[8],sa[4], sa[0] } :
+		{s4,s3,s2} == 3'b101 ? { sa[8], sa[4],sa[0], sa[28] } :
+		{s4,s3,s2} == 3'b110 ? { sa[4], sa[0],sa[28],sa[24] } :
+		{ sa[0],sa[28],sa[24],sa[20] };
+
+   assign {r[29],r[25],r[21],r[17]} =
+		{s4,s3,s2} == 3'b000 ? { sa[29],sa[25],sa[21],sa[17] } :
+		{s4,s3,s2} == 3'b001 ? { sa[25],sa[21],sa[17],sa[13] } :
+		{s4,s3,s2} == 3'b010 ? { sa[21],sa[17],sa[13],sa[9] } :
+		{s4,s3,s2} == 3'b011 ? { sa[17],sa[13],sa[9], sa[5] } :
+		{s4,s3,s2} == 3'b100 ? { sa[13],sa[9],sa[5], sa[1] } :
+		{s4,s3,s2} == 3'b101 ? { sa[9], sa[5],sa[1], sa[29] } :
+		{s4,s3,s2} == 3'b110 ? { sa[5], sa[1],sa[29],sa[25] } :
+		{ sa[1],sa[29],sa[25],sa[21] };
+
+   assign {r[30],r[26],r[22],r[18]} =
+		{s4,s3,s2} == 3'b000 ? { sa[30],sa[26],sa[22],sa[18] } :
+		{s4,s3,s2} == 3'b001 ? { sa[26],sa[22],sa[18],sa[14] } :
+		{s4,s3,s2} == 3'b010 ? { sa[22],sa[18],sa[14],sa[10] } :
+		{s4,s3,s2} == 3'b011 ? { sa[18],sa[14],sa[10], sa[6] } :
+		{s4,s3,s2} == 3'b100 ? { sa[14],sa[10],sa[6], sa[2] } :
+		{s4,s3,s2} == 3'b101 ? { sa[10],sa[6], sa[2], sa[30] } :
+		{s4,s3,s2} == 3'b110 ? { sa[6], sa[2], sa[30],sa[26] } :
+		                       { sa[2], sa[30],sa[26],sa[22] };
+	
+   assign {r[31],r[27],r[23],r[19]} =
+		{s4,s3,s2} == 3'b000 ? { sa[31],sa[27],sa[23],sa[19] } :
+		{s4,s3,s2} == 3'b001 ? { sa[27],sa[23],sa[19],sa[15] } :
+		{s4,s3,s2} == 3'b010 ? { sa[23],sa[19],sa[15],sa[11] } :
+		{s4,s3,s2} == 3'b011 ? { sa[19],sa[15],sa[11],sa[7] } :
+		{s4,s3,s2} == 3'b100 ? { sa[15],sa[11],sa[7], sa[3] } :
+		{s4,s3,s2} == 3'b101 ? { sa[11],sa[7], sa[3], sa[31] } :
+		{s4,s3,s2} == 3'b110 ? { sa[7], sa[3], sa[31],sa[27] } :
+		                       { sa[3], sa[31],sa[27],sa[23] };
+`endif
+
+`ifdef _smctl
+   SMCTL(.mr, .sr, .mskr, .s0, .s1, .s2, .s3, .s4, .sh3, .sh4, .mskl, .irbyte, .ir);
+`else
+   // page SMCTL
+
+   assign mr = ~irbyte | ir[13];
+   assign sr = ~irbyte | ir[12];
+
+   assign mskr[4] = mr & sh4;
+   assign mskr[3] = mr & sh3;
+   assign mskr[2] = mr & ir[2];
+   assign mskr[1] = mr & ir[1];
+   assign mskr[0] = mr & ir[0];
+
+   assign s4 = sr & sh4;
+   assign s3 = sr & sh3;
+   assign s2 = sr & ir[2];
+   assign s1 = sr & ir[1];
+   assign s0 = sr & ir[0];
+
+   assign mskl = mskr + ir[9:5];
+`endif
+
 `ifdef _source
-   SOURCE cadr_source(.ir(ir), .iralu(iralu), .irbyte(irbyte), .destimod0(destimod0), .iwrited(iwrited), .idebug(idebug), .specalu(specalu), .nop(nop), .irdisp(irdisp), .irjump(irjump), .funct(funct), .div(div), .mul(mul), .srcq(srcq), .srcopc(srcopc), .srcpdltop(srcpdltop), .srcpdlpop(srcpdlpop), .srcpdlidx(srcpdlidx), .srcpdlptr(srcpdlptr), .srcspc(srcspc), .srcdc(srcdc), .srcspcpop(srcspcpop), .srclc(srclc), .srcmd(srcmd), .srcmap(srcmap), .srcvma(srcvma), .imod(imod), .destmem(destmem), .destvma(destvma), .destmdr(destmdr), .dest(dest), .destm(destm), .destintctl(destintctl), .destlc(destlc), .destimod1(destimod1), .destspc(destspc), .destpdlp(destpdlp), .destpdlx(destpdlx), .destpdl_x(destpdl_x), .destpdl_p(destpdl_p), .destpdltop(destpdltop));
+   SOURCE(.ir, .iralu, .irbyte, .destimod0, .destimod1, .iwrited, .idebug, .specalu, .nop, .irdisp, .irjump, .funct, .div, .mul, .srcq, .srcopc, .srcpdltop, .srcpdlpop, .srcpdlidx, .srcpdlptr, .srcspc, .srcdc, .srcspcpop, .srclc, .srcmd, .srcmap, .srcvma, .imod, .destmem, .destvma, .destmdr, .dest, .destm, .destintctl, .destlc, .destspc, .destpdlp, .destpdlx, .destpdl_x, .destpdl_p, .destpdltop);
 `else
    // page SOURCE
 
@@ -1451,13 +1927,11 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 		({ir[21],ir[20],ir[19]} == 3'b110) ? 8'b01000000 :
 		({ir[21],ir[20],ir[19]} == 3'b111) ? 8'b10000000 :
 		                                     8'b00000000;
-
 `endif
 
-//`define _spc//ok
 `ifdef _spc
-   SPC cadr_spc(.clk(clk), .reset(reset), .spcnt(spcnt), .state_fetch(state_fetch), .spush(spush), .spcptr(spcptr), .spco(spco), .spcw(spcw), .srp(srp), .swp(swp));
-`else   
+   SPC(.clk, .reset, .spcnt, .state_fetch, .spush, .spcptr, .spco, .spcw,.srp,.swp);
+`else
    // page SPC
 
    // orig rtl:
@@ -1519,21 +1993,101 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 	      end
 	 end
 `endif
+   
+`ifdef _spclch
+   SPCLCH(.spc, .spco);
+`else
+   // page SPCLCH
 
-   SPCLCH cadr_spclch(.spc(spc), .spco(spco));
+   // mux SPC
+   assign spc = spco;
+`endif
 
    // page SPCPAR -- empty
+
+`ifdef _spcw
+   SPCW(.destspc, .l, .reta, .spcw, .n, .wpc, .ipc);
+`else
+   // page SPCW
+
+   assign spcw = destspc ? l[18:0] : { 5'b0, reta };
+
+//   always @(posedge clk)
+//     if (reset)
+//       reta <= 0;
+//     else
+//       /* n is not valid until after decode */
+//       if (state_alu)
+//	 reta <= n ? wpc : ipc;
+
+   assign reta = n ? wpc : ipc;
+`endif
+
+`ifdef _spy12
+   SPY12(.clk, .reset, .spy_out, .ir, .spy_mdh, .spy_mdl, .state_write, .spy_vmah, .spy_vmal, .spy_obh_, .spy_obl_, .md, .vma, .ob, .opc, .waiting, .boot, .promdisable, .stathalt, .dbread, .nop, .spy_obh, .spy_obl, .spy_pc, .spy_opc, .spy_scratch, .spy_irh, .spy_irm, .spy_irl, .spy_disk, .spy_bd, .pc, .err, .scratch, .spy_sth, .spy_stl, .spy_ah, .spy_al, .spy_mh, .spy_ml, .spy_flag2, .spy_flag1, .m, .a, .bd_state_in, .wmap, .ssdone, .vmaok, .destspc, .jcond, .srun, .pcs1, .pcs0, .iwrited, .imod, .pdlwrite, .spush );
+`else
+   // page SPY1-2
+
+   reg [31:0] ob_last;
+
+   /* grab ob from last cycle for spy */
+   always @(posedge clk)
+     if (reset)
+       ob_last <= 0;
+     else
+       if (/*state_fetch*/state_write)
+	 ob_last <= ob;
    
-   SPCW cadr_spcw(.destspc(destspc), .l(l), .reta(reta), .spcw(spcw), .n(n), .ipc(ipc), .wpc(wpc));
+   wire[15:0] spy_mux;
 
-   SPY12 cadr_spy12(.clk(clk), .reset(reset), .spy_out(spy_out), .ir(ir), .state_write(state_write), .spy_mdh(spy_mdh), .spy_vmah(spy_vmah), .spy_vmal(spy_vmal), .spy_obh_(spy_obh_), .spy_obl_(spy_obl_), .md(md), .vma(vma), .ob(ob), .opc(opc), .waiting(waiting), .boot(boot), .promdisable(promdisable), .stathalt(stathalt), .dbread(dbread), .nop(nop), .spy_obh(spy_obh), .spy_obl(spy_obl), .spy_pc(spy_pc), .spy_opc(spy_opc), .spy_scratch(spy_scratch), .spy_irh(spy_irh), .spy_irm(spy_irm), .spy_irl(spy_irl), .spy_disk(spy_disk), .spy_bd(spy_bd), .pc(pc), .err(err), .scratch(scratch), .spy_sth(spy_sth), .spy_stl(spy_stl), .spy_ah(spy_ah), .spy_al(spy_al), .spy_mh(spy_mh), .spy_ml(spy_ml), .spy_flag2(spy_flag2), .spy_flag1(spy_flag1), .m(m), .a(a), .bd_state_in(bd_state_in), .wmap(wmap), .ssdone(ssdone), .vmaok(vmaok), .destspc(destspc), .jcond(jcond), .srun(srun), .pcs1(pcs1), .pcs0(pcs0), .iwrited(iwrited), .imod(imod), .pdlwrite(pdlwrite), .spush(spush));
+   assign spy_out = dbread ? spy_mux : 16'b1111111111111111;
 
-   TRAP cadr_trap(.trap(trap), .boot_trap(boot_trap));
+   wire [4:0] disk_state_in;
+   
+   assign spy_mux =
+	spy_irh ? ir[47:32] :
+	spy_irm ? ir[31:16] :
+	spy_irl ? ir[15:0] :
+	spy_obh ? ob_last[31:16] :
+	spy_obl ? ob_last[15:0] :
+spy_obh_ ? ob[31:16] :
+spy_obl_ ? ob[15:0] :
+        spy_disk ? { 11'b0, disk_state_in } :
+        spy_bd ? { 4'b0, bd_state_in } :
+	spy_ah  ? a[31:16] :
+	spy_al  ? a[15:0] :
+	spy_mh  ? m[31:16] :
+	spy_ml  ? m[15:0] :
+	spy_mdh ? md[31:16] :
+        spy_mdl ? md[15:0] :
+	spy_vmah ? vma[31:16] :
+        spy_vmal ? vma[15:0] :
+	spy_flag2 ?
+			{ 2'b0,wmap,destspc,iwrited,imod,pdlwrite,spush,
+			  2'b0,ir[48],nop,vmaok,jcond,pcs1,pcs0 } :
+	spy_opc ?
+			{ 2'b0,opc } :
+	spy_flag1 ?
+			{ waiting, 1'b0, boot, promdisable,
+			  stathalt, err, ssdone, srun,
+			  1'b0, 1'b0, 1'b0, 1'b0,
+			  1'b0, 1'b0, 1'b0, 1'b0 } :
+	spy_pc ?
+			{ 2'b0,pc } :
+        spy_scratch ?   scratch :
+        16'b1111111111111111;
+`endif
 
-//`define _vctrl1 //ok
+`ifdef _trap
+   TRAP(.trap, .boot_trap);
+`else
+   // page TRAP
+
+   assign trap = boot_trap;
+`endif
+
 `ifdef _vctrl1
-   VCTRL1 cadr_vctrl1(.clk(clk), .reset(reset), .lcinc(lcinc), .memrq(memrq), .ifetch(ifetch), .lvmo_22(lvmo_22), .lvmo_23(lvmo_23), .mbusy(mbusy), .memack(memack), .memcheck(memcheck), .memprepare(memprepare), .memrd(memrd), .memstart(memstart), .memwr(memwr), .needfetch(needfetch), .pfr(pfr), .pfw(pfw), .srcyc(srcyc), .state_alu(state_alu), .state_fetch(state_fetch), .state_prefetch(state_prefetch), .state_write(state_write), .vmaok(vmaok), .rdcyc(rdcyc), .wrcyc(wrcyc), .mfinish(mfinish), .waiting(waiting));
-   
+   VCTRL1(.clk, .reset, .lcinc, .memrq, .ifetch, .lvmo_22, .lvmo_23, .mbusy, .memack, .memcheck, .memprepare, .memrd, .memstart, .memwr, .needfetch, .pfr, .pfw, .srcyc, .state_alu, .state_fetch, .state_prefetch, .state_write, .vmaok, .rdcyc, .wrcyc, .mfinish, .waiting);
 `else
    // page VCTRL1
 
@@ -1630,9 +2184,8 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 		(lcinc & needfetch & mbusy);		/* ifetch */
 `endif
 
-//`define _vctrl2//ok
 `ifdef _vctrl2
-   VCTRL2 cadr_vctrl2(.loadmd(loadmd), .nopa(nopa), .ir(ir), .wrcyc(wrcyc), .destmdr(destmdr), .srcmd(srcmd), .destmem(destmem), .srcmap(srcmap), .irdisp(irdisp), .memprepare(memprepare), .memstart(memstart), .destvma(destvma), .ifetch(ifetch), .state_decode(state_decode), .state_write(state_write), .state_read(state_read), .state_mmu(state_mmu), .mapwr0(mapwr0), .mapwr1( mapwr1), .vm0wp(vm0wp), .vm1wp(vm1wp), .wmap(wmap), .memwr(memwr), .memrd(memrd), .vma(vma), .dmapbenb(dmapbenb), .dispwr(dispwr), .vm0rp(vm0rp), .vm1rp(vm1rp), .vmaenb(vmaenb), .vmasel(vmasel), .memdrive(memdrive), .mdsel(mdsel), .use_md(use_md));
+   VCTRL2(.loadmd, .nopa, .ir, .wrcyc, .destmdr, .srcmd, .destmem, .srcmap, .irdisp, .memprepare, .memstart, .destvma, .ifetch, .state_decode, .state_write, .state_read, .state_mmu, .mapwr0, .mapwr1, .vm0wp, .vm1wp, .wmap, .memwr, .memrd, .vma, .dmapbenb, .dispwr, .vm0rp, .vm1rp, .vmaenb, .vmasel, .memdrive, .mdsel, .use_md);
 `else
    // page VCTRL2
 
@@ -1693,24 +2246,153 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 	                      3'b000 ;
 `endif
 
-   VMA cadr_vma(.clk(clk), .reset(reset), .state_alu(state_alu), .state_write(state_write), .state_fetch(state_fetch), .vmaenb(vmaenb), .vmas(vmas), .spy_in(spy_in), .srcvma(srcvma), .ldvmal(ldvmal), .ldvmah(ldvmah), .vma(vma), .vmadrive(vmadrive));
+`ifdef _vma
+   VMA(.clk, .reset, .state_alu, .state_write, .state_fetch, .vmaenb, .vmas, .spy_in, .srcvma, .ldvmal, .ldvmah, .vma, .vmadrive);
+`else
+   // page VMA
 
-   VMAS cadr_vmas(.vmas(vmas), .mapi(mapi), .vmasel(vmasel), .ob(ob), .memprepare(memprepare), .md(md), .vma(vma), .lc(lc));
+   always @(posedge clk)
+     if (reset)
+       vma <= 0;
+     else
+       if (state_alu && vmaenb)
+	 vma <= vmas;
+       else
+	 if (ldvmah)
+	   vma[31:16] <= spy_in;
+	 else
+	   if (ldvmal)
+	     vma[15:0] <= spy_in;
+   
+   assign vmadrive = srcvma &
+		     (state_alu || state_write || state_fetch);
+`endif
 
-   VMEM0 cadr_vmem0(.clk(clk), .reset(reset), .vmem0_adr(vmem0_adr), .mapi(mapi), .vmap(vmap), .vm0rp(vm0rp), .vma(vma), .use_map(use_map), .srcmap(srcmap), .memstart(memstart), .vm0wp(vm0wp));
+`ifdef _vmas
+   VMAS(.vmas, .mapi, .vmasel, .ob, .memprepare, .md, .vma, .lc);
+`else
+   // page VMAS
 
-   VMEM12 cadr_vmem12(.clk(clk), .reset(reset), .vmem1_adr(vmem1_adr), .vmap(vmap), .mapi(mapi), .vma(vma), .vmo(vmo), .vm1rp(vm1rp), .vm1wp(vm1wp));
+   assign vmas = vmasel ? ob : { 8'b0, lc[25:2] };
 
-   VMEMDR cadr_vmemdr(.vmo(vmo), .srcmap(srcmap), .state_alu(state_alu), .state_write(state_write), .state_mmu(state_mmu), .state_fetch(state_fetch), .lvmo_23(lvmo_23), .lvmo_22(lvmo_22), .mapdrive(mapdrive), .pma(pma));
+   assign mapi = ~memprepare ? md[23:8] : vma[23:8];
+`endif
 
-   DEBUG cadr_debug(.clk(clk), .reset(reset), .spy_ir(spy_ir), .spy_in(spy_in), .i(i), .idebug(idebug), .promenable(promenable), .iprom(iprom), .iram(iram), .lddbirh(lddbirh), .lddbirm(lddbirm), .lddbirl(lddbirl));
+`ifdef _vmem0
+   VMEM0(.clk, .reset, .vmem0_adr, .mapi, .vmap, .vm0rp, .vma, .use_map, .srcmap, .memstart, .vm0wp);
+`else
+   // page VMEM0 - virtual memory map stage 0
 
+   assign vmem0_adr = mapi[23:13];
+   
+   part_2kx5dpram i_VMEM0(
+			  .reset(reset),
+
+			  .clk_a(clk),
+			  .address_a(vmem0_adr),
+			  .q_a(vmap),
+			  .data_a(5'b0),
+			  .wren_a(1'b0),
+			  .rden_a(vm0rp && ~vm0wp),
+
+			  .clk_b(clk),
+			  .address_b(vmem0_adr),
+			  .q_b(),
+			  .data_b(vma[31:27]),
+			  .wren_b(vm0wp),
+			  .rden_b(1'b0)
+			  );
+
+   assign use_map = srcmap | memstart;
+`endif
+
+`ifdef _vmem12
+   VMEM12(.clk, .reset, .vmem1_adr, .vmap, .mapi, .vm1rp, .vma, .vmo,.vm1wp);
+`else
+   // page VMEM1&2
+
+   assign vmem1_adr = {vmap[4:0], mapi[12:8]};
+
+   part_1kx24dpram i_VMEM1(
+			   .reset(reset),
+
+			   .clk_a(clk),
+			   .address_a(vmem1_adr),
+			   .q_a(vmo),
+			   .data_a(24'b0),
+			   .wren_a(1'b0),
+			   .rden_a(vm1rp && ~vm1wp),
+
+			   .clk_b(clk),
+			   .address_b(vmem1_adr),
+			   .q_b(),
+			   .data_b(vma[23:0]),
+			   .wren_b(vm1wp),
+			   .rden_b(1'b0)
+			   );
+`endif
+
+`ifdef _vmemdr
+   VMEMDR(.vmo, .srcmap, .state_alu, .state_write, .state_mmu, .state_fetch, .lvmo_23, .lvmo_22, .mapdrive, .pma);
+`else
+   // page VMEMDR - map output drive
+
+   // output of vmem1 is registered
+   assign lvmo_23 = vmo[23];
+   assign lvmo_22 = vmo[22];
+   assign pma = vmo[13:0];
+
+   assign mapdrive = srcmap &
+		     (state_alu || state_write || state_mmu || state_fetch);
+`endif
+
+`ifdef _debug
+   DEBUG(.clk, .reset, .spy_ir, .spy_in, .i, .idebug, .promenable, .iprom, .iram, .lddbirh, .lddbirm, .lddbirl);
+`else
+   // page DEBUG
+
+   always @(posedge clk)
+     if (reset)
+       spy_ir[47:32] <= 16'b0;
+     else
+       if (lddbirh)
+	 spy_ir[47:32] <= spy_in;
+
+   always @(posedge clk)
+     if (reset)
+       spy_ir[31:16] <= 16'b0;
+     else
+       if (lddbirm)
+	 spy_ir[31:16] <= spy_in;
+
+   always @(posedge clk)
+     if (reset)
+       spy_ir[15:0] <= 16'b0;
+     else
+       if (lddbirl)
+	 spy_ir[15:0] <= spy_in;
+
+   // put latched value on I bus when idebug asserted
+   assign i =
+	     idebug ? {1'b0, spy_ir} :
+	     promenable ? iprom :
+	     iram;
+`endif
+   
+`ifdef _ictl
+   ICTL(.ramdisable, .idebug, .promdisabled, .iwrited, .state_write, .iwe);
+`else
+   // page ICTL - I RAM control
+
+   assign ramdisable = idebug | ~(promdisabled | iwrited);
+
+   // see clocks below
    wire   iwe;
-   ICTL cadr_ictl(.ramdisable(ramdisable), .idebug(idebug), .promdisabled(promdisabled), .iwrited(iwrited), .state_write(state_write), .iwe(iwe));
+   assign iwe = iwrited & state_write;
+`endif
 
-//`define _olord1//ok
 `ifdef _olord1
-   OLORD1 cadr_olord1(.clk(clk), .reset(reset), .ldmode(ldmode), .ldscratch1(ldscratch1), .ldscratch2(ldscratch2), .ldclk(ldclk), .boot(boot), .run(run), .step(step), .promdisable(promdisable), .trapenb(trapenb), .stathenb(stathenb), .errstop(errstop), .scratch(scratch), .opcinh(opcinh), .opcclk(opcclk), .lpc_hold(lpc_hold), .ldstat(ldstat), .idebug(idebug), .nop11(nop11), .srun( srun), .sstep(sstep), .ssdone(ssdone), .promdisabled(promdisabled), .machrun(machrun), .stat_ovf(stat_ovf), .stathalt(stathalt), .errhalt(errhalt), .state_fetch(state_fetch), .statstop(statstop), .spy_in(spy_in), .ldopc(ldopc), .set_promdisable(set_promdisable), .waiting(waiting));
+   OLORD1(.clk, .reset, .ldmode, .ldscratch1, .ldscratch2, .ldclk, .boot, .run, .step, .promdisable, .trapenb, .stathenb, .errstop, .scratch, .opcinh, .opcclk, .lpc_hold, .ldstat, .idebug, .nop11, .srun, .sstep, .ssdone, .promdisabled, .machrun, .stat_ovf, .stathalt, .errhalt, .state_fetch, .statstop, .spy_in, .ldopc, .set_promdisable, .waiting);
 `else
    // page OLORD1 
 
@@ -1819,10 +2501,8 @@ if (state_fetch) ssdone <= sstep;
    assign stathalt = statstop & stathenb;
 `endif
 
-
-//`define _olord2//ok??
 `ifdef _olord2
-   OLORD2 cadr_olord2(.clk(clk), .reset(reset), .statstop(statstop), .halted(halted), .prog_reset(prog_reset), .err(err), .errhalt(errhalt), .prog_bus_reset(prog_bus_reset), .bus_reset(bus_reset), .prog_boot(prog_boot), .boot(boot), .boot_trap(boot_trap), .ldmode(ldmode), .spy_in(spy_in), .errstop(errstop), .ext_reset(ext_reset), .ext_boot(ext_boot), .srun(srun), .ext_halt(ext_halt), .stat_ovf(stat_ovf));
+   OLORD2(.clk, .reset, .statstop, .halted, .prog_reset, .err, .errhalt, .prog_bus_reset, .bus_reset, .prog_boot, .boot, .boot_trap, .ldmode, .spy_in, .errstop, .ext_reset, .ext_boot, .srun, .ext_halt, .stat_ovf);
 `else
    // page OLORD2
 
@@ -1868,21 +2548,56 @@ if (state_fetch) ssdone <= sstep;
            boot_trap <= 1'b0;
 `endif
 
-   OPCS cadr_opcs(.clk(clk), .reset(reset), .state_fetch(state_fetch), .opcclk(opcclk), .opcinh(opcinh), .opc(opc), .pc(pc));
+`ifdef _opcs
+   OPCS(.clk, .reset, .opcclk, .opcinh, .pc, .opc, .state_fetch);
+`else
+   // page OPCS
+
+   assign opcclka = (state_fetch | opcclk) & ~opcinh;
+
+   always @(posedge clk)
+     if (reset)
+       opc <= 0;
+     else
+       if (opcclka)
+	 opc <= pc;
 
    // With the machine stopped, taking OPCCLK high then low will
    // generate a clock to just the OPCS.
    // Setting OPCINH high will prevent the OPCS from clocking when
    // the machine runs.  Only change OPCINH when CLK is high 
    // (e.g. machine stopped).
+`endif
 
-   PCTL cadr_pctl(.pc(pc), .idebug(idebug), .promdisabled(promdisabled), .iwrited(iwrited), .prompc(prompc), .bottom_1k(bottom_1k), .promenable(promenable), .promce(promce), .promaddr(promaddr));
+`ifdef _pctl
+   PCTL(.pc, .idebug, .promdisabled, .iwrited, .prompc, .bottom_1k, .promenable, .promce, .promaddr);
+`else
+   // page PCTL
 
-   PROM0 cadr_prom0(.clk(clk), .promaddr(promaddr), .iprom(iprom));
+   assign bottom_1k = ~(pc[13] | pc[12] | pc[11] | pc[10]);
+   assign promenable = bottom_1k & ~idebug & ~promdisabled & ~iwrited;
 
-//`define _iram //ok
+   assign promce = promenable & ~pc[9];
+
+   assign prompc = pc[11:0];
+
+   assign promaddr = prompc[8:0];
+`endif
+
+`ifdef _prom0
+   PROM0(.clk, .promaddr, .iprom);
+`else
+   // page PROM0
+
+   part_512x49prom i_PROM(
+			  .clk(clk),
+			  .addr(~promaddr),
+			  .q(iprom)
+			  );
+`endif
+
 `ifdef _iram
-   IRAM cadr_iram(.clk(clk), .reset(reset), .pc(pc), .pc_out(pc_out), .state_out(state_out), .iwr(iwr), .iwe(iwe), .iram(iram), .fetch_out(fetch_out), .prefetch_out(prefetch_out), .machrun_out(machrun_out), .mcr_data_in(mcr_data_in), .state_fetch(state_fetch), .machrun(machrun), .state(state));
+   IRAM(.clk, .reset, .pc, .pc_out, .state_out, .iwr, .iwe, .iram, .fetch_out, .prefetch_out, .machrun_out, .mcr_data_in, .state_fetch, .machrun, .state);
 `else
    // page IRAM
 `ifdef use_ucode_ram
@@ -1910,13 +2625,122 @@ if (state_fetch) ssdone <= sstep;
    assign prefetch_out = ((need_mmu_state ? state_mmu : state_write) || state_prefetch) &&
 			 promdisabled;
 `endif
+`endif
 
    assign pc_out = pc;
    assign state_out = state;
    assign machrun_out = machrun;
-`endif
    
-   SPY0 cadr_spy0(.spy_obh(spy_obh), .spy_obl(spy_obl), .spy_pc(spy_pc), .spy_opc(spy_opc), .spy_scratch(spy_scratch), .spy_irh(spy_irh), .spy_irm(spy_irm), .spy_irl(spy_irl), .spy_sth(spy_sth), .spy_stl(spy_stl), .spy_ah(spy_ah), .spy_al(spy_al), .spy_mh(spy_mh), .spy_ml(spy_ml), .spy_flag2(spy_flag2), .spy_flag1(spy_flag1), .ldscratch2(dscratch2), .ldscratch1(ldscratch1), .ldmode(ldmode), .ldopc(ldopc), .ldclk(ldclk), .lddbirh(lddbirh), .lddbirm(lddbirm), .lddbirl(lddbirl), .eadr(eadr), .dbread(dbread), .dbwrite(dbwrite), .spy_mdl(spy_mdl), .spy_vmal(spy_vmal), .spy_vmah(spy_vmah), .spy_mdh(spy_mdh), .spy_disk(spy_disk), .spy_bd(spy_bd));
+   // *************
+   // Spy Interface
+   // *************
+
+`ifdef _spy0
+   SPY0(.spy_obh, .spy_obl, .spy_pc, .spy_opc, .spy_scratch, .spy_irh, .spy_irm, .spy_irl, .spy_stl, .spy_ah, .spy_al, .spy_mh, .spy_ml, .spy_flag2, .spy_flag1, .ldscratch2, .ldscratch1, .ldmode, .ldopc, .ldclk, .lddbirh, .lddbirm, .lddbirl, .eadr, .dbread, .dbwrite, .spy_mdl, .spy_vmal, .spy_vmah, .spy_sth, .spy_mdh, .spy_disk, .spy_bd);
+`else
+   // page SPY0
+
+`ifdef old_spy
+   /* read registers */
+   assign {spy_obh, spy_obl, spy_pc, spy_opc,
+	   spy_scratch, spy_irh, spy_irm, spy_irl} =
+	  (eadr[3] | ~dbread) ? 8'b0000000 :
+		({eadr[2],eadr[1],eadr[0]} == 3'b000) ? 8'b00000001 :
+		({eadr[2],eadr[1],eadr[0]} == 3'b001) ? 8'b00000010 :
+		({eadr[2],eadr[1],eadr[0]} == 3'b010) ? 8'b00000100 :
+		({eadr[2],eadr[1],eadr[0]} == 3'b011) ? 8'b00001000 :
+		({eadr[2],eadr[1],eadr[0]} == 3'b100) ? 8'b00010000 :
+		({eadr[2],eadr[1],eadr[0]} == 3'b101) ? 8'b00100000 :
+		({eadr[2],eadr[1],eadr[0]} == 3'b110) ? 8'b01000000 :
+		({eadr[2],eadr[1],eadr[0]} == 3'b111) ? 8'b10000000 :
+		                                        8'b00000000;
+
+   /* read registers */
+   assign {spy_sth, spy_stl, spy_ah, spy_al,
+	   spy_mh, spy_ml, spy_flag2, spy_flag1} =
+	  (~eadr[3] | ~dbread) ? 8'b00000000 :
+		({eadr[2],eadr[1],eadr[0]} == 3'b000) ? 8'b00000001 :
+		({eadr[2],eadr[1],eadr[0]} == 3'b001) ? 8'b00000010 :
+		({eadr[2],eadr[1],eadr[0]} == 3'b010) ? 8'b00000100 :
+		({eadr[2],eadr[1],eadr[0]} == 3'b011) ? 8'b00001000 :
+		({eadr[2],eadr[1],eadr[0]} == 3'b100) ? 8'b00010000 :
+		({eadr[2],eadr[1],eadr[0]} == 3'b101) ? 8'b00100000 :
+		({eadr[2],eadr[1],eadr[0]} == 3'b110) ? 8'b01000000 :
+		({eadr[2],eadr[1],eadr[0]} == 3'b111) ? 8'b10000000 :
+		                                        8'b00000000;
+
+   /* load registers */
+   assign {ldscratch2, ldscratch1, ldmode, ldopc, ldclk, lddbirh, lddbirm, lddbirl} =
+	  (~dbwrite) ? 8'b00000000 :
+		({eadr[2],eadr[1],eadr[0]} == 3'b000) ? 8'b00000001 :
+		({eadr[2],eadr[1],eadr[0]} == 3'b001) ? 8'b00000010 :
+		({eadr[2],eadr[1],eadr[0]} == 3'b010) ? 8'b00000100 :
+		({eadr[2],eadr[1],eadr[0]} == 3'b011) ? 8'b00001000 :
+		({eadr[2],eadr[1],eadr[0]} == 3'b100) ? 8'b00010000 :
+		({eadr[2],eadr[1],eadr[0]} == 3'b101) ? 8'b00100000 :
+		({eadr[2],eadr[1],eadr[0]} == 3'b110) ? 8'b01000000 :
+                ({eadr[2],eadr[1],eadr[0]} == 3'b111) ? 8'b10000000 :
+		                                        8'b00000000;
+`else
+   /* read registers */
+   assign {spy_obh, spy_obl, spy_pc, spy_opc,
+	   spy_scratch, spy_irh, spy_irm, spy_irl} =
+          ({dbread, eadr} == 6'b10_0000) ? 8'b00000001 :
+          ({dbread, eadr} == 6'b10_0001) ? 8'b00000010 :
+          ({dbread, eadr} == 6'b10_0010) ? 8'b00000100 :
+          ({dbread, eadr} == 6'b10_0011) ? 8'b00001000 :
+          ({dbread, eadr} == 6'b10_0100) ? 8'b00010000 :
+          ({dbread, eadr} == 6'b10_0101) ? 8'b00100000 :
+          ({dbread, eadr} == 6'b10_0110) ? 8'b01000000 :
+          ({dbread, eadr} == 6'b10_0111) ? 8'b10000000 :
+		                           8'b00000000;
+
+   /* read registers */
+   assign {spy_sth, spy_stl, spy_ah, spy_al,
+	   spy_mh, spy_ml, spy_flag2, spy_flag1} =
+          ({dbread, eadr} == 6'b10_1000) ? 8'b00000001 :
+          ({dbread, eadr} == 6'b10_1001) ? 8'b00000010 :
+          ({dbread, eadr} == 6'b10_1010) ? 8'b00000100 :
+          ({dbread, eadr} == 6'b10_1011) ? 8'b00001000 :
+          ({dbread, eadr} == 6'b10_1100) ? 8'b00010000 :
+          ({dbread, eadr} == 6'b10_1101) ? 8'b00100000 :
+          ({dbread, eadr} == 6'b10_1110) ? 8'b01000000 :
+          ({dbread, eadr} == 6'b10_1111) ? 8'b10000000 :
+		                           8'b00000000;
+
+   /* read registers */
+   assign {spy_bd, spy_disk, spy_obh_, spy_obl_, spy_vmah, spy_vmal, spy_mdh, spy_mdl} =
+          ({dbread, eadr} == 6'b11_0000) ? 8'b00000001 :
+          ({dbread, eadr} == 6'b11_0001) ? 8'b00000010 :
+          ({dbread, eadr} == 6'b11_0010) ? 8'b00000100 :
+          ({dbread, eadr} == 6'b11_0011) ? 8'b00001000 :
+          ({dbread, eadr} == 6'b11_0100) ? 8'b00010000 :
+          ({dbread, eadr} == 6'b11_0101) ? 8'b00100000 :
+          ({dbread, eadr} == 6'b11_0110) ? 8'b01000000 :
+          ({dbread, eadr} == 6'b11_0111) ? 8'b10000000 :
+                                           8'b00000000;
+
+   /* load registers */
+   assign {ldscratch2, ldscratch1, ldmode,
+	   ldopc, ldclk, lddbirh, lddbirm, lddbirl} =
+          ({dbwrite, eadr} == 6'b10_0000) ? 8'b00000001 :
+          ({dbwrite, eadr} == 6'b10_0001) ? 8'b00000010 :
+          ({dbwrite, eadr} == 6'b10_0010) ? 8'b00000100 :
+          ({dbwrite, eadr} == 6'b10_0011) ? 8'b00001000 :
+          ({dbwrite, eadr} == 6'b10_0100) ? 8'b00010000 :
+          ({dbwrite, eadr} == 6'b10_0101) ? 8'b00100000 :
+          ({dbwrite, eadr} == 6'b10_0110) ? 8'b01000000 :
+          ({dbwrite, eadr} == 6'b10_0111) ? 8'b10000000 :
+		                            8'b00000000;
+
+   assign {ldvmah, ldvmal, ldmdh, ldmdl} =
+          ({dbwrite, eadr} == 6'b10_1000) ? 4'b0001 :
+          ({dbwrite, eadr} == 6'b10_1001) ? 4'b0010 :
+          ({dbwrite, eadr} == 6'b10_1010) ? 4'b0100 :
+          ({dbwrite, eadr} == 6'b10_1011) ? 4'b1000 :
+		                            4'b0000;
+`endif
+`endif
    
    // *************
    // Bus Interface
@@ -2191,13 +3015,13 @@ if (state_fetch) ssdone <= sstep;
    wire        mclk;
 	
    assign trig0 = {
-		   busint.disk.state, //5  127
+		   busint.disk.state, //5
 		   bd_state_in,       //12
 		   state_decode,      //1
 		   lpc,		      //14
 		   a,		      //32
 		   m,		      //32
-		   md		      //32 0
+		   md		      //32
 		   };
 
    chipscope_icon_caddr icon1 (.CONTROL0(control0));
@@ -2205,4 +3029,3 @@ if (state_fetch) ssdone <= sstep;
 `endif
    
 endmodule
-
