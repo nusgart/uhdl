@@ -2761,63 +2761,63 @@ if (state_fetch) ssdone <= sstep;
    assign busint_addr = {pma, vma[7:0]};
 
    busint busint(
-		 .mclk(clk),
-		 .reset(reset),
-		 .addr(busint_addr),
-		 .busin(md),
-		 .busout(busint_bus),
-		 .spyin(spy_in),
-		 .spyout(busint_spyout),
-		 .spyreg(spy_reg),
-		 .spyrd(spy_rd),
-		 .spywr(spy_wr),
+		 .mclk(clk),		 // input	CADR
+		 .reset(reset),		 // input	CADR
+		 .addr(busint_addr),	 // input [21:0]
+		 .busin(md),		 // input [31:0]	CADR
+		 .busout(busint_bus),	 // output [31:0]	CADR
+		 .spyin(spy_in),	 // input [15:0]	CADR
+		 .spyout(busint_spyout), // output [15:0]	
+		 .spyreg(spy_reg),	 // output [3:0] 	
+		 .spyrd(spy_rd),	 // output 	
+		 .spywr(spy_wr),	 // output 	
 
-		 .req(memrq),
-		 .ack(memack),
-		 .write(wrcyc),
-		 .load(loadmd),
+		 .req(memrq),	// input	CADR
+		 .ack(memack),	// output	CADR
+		 .write(wrcyc),	// input	CADR
+		 .load(loadmd),	// output	CADR
 
-		 .interrupt(bus_int),
+		 .interrupt(bus_int), // output	CADR
 
-		 .sdram_addr(sdram_addr),
-		 .sdram_data_in(sdram_data_in),
-		 .sdram_data_out(sdram_data_out),
-		 .sdram_req(sdram_req),
-		 .sdram_ready(sdram_ready),
-		 .sdram_write(sdram_write),
-		 .sdram_done(sdram_done),
+		 .sdram_addr(sdram_addr),	  // output [21:0] 	
+		 .sdram_data_in(sdram_data_in),	  // input [31:0] 	
+		 .sdram_data_out(sdram_data_out), // output [31:0] 	
+		 .sdram_req(sdram_req),		  // output 	
+		 .sdram_ready(sdram_ready),	  // input 	
+		 .sdram_write(sdram_write),	  // output 	
+		 .sdram_done(sdram_done),	  // input 	
 
-		 .vram_addr(vram_addr),
-		 .vram_data_in(vram_data_in),
-		 .vram_data_out(vram_data_out),
-		 .vram_req(vram_req),
-		 .vram_ready(vram_ready),
-		 .vram_write(vram_write),
-		 .vram_done(vram_done),
+		 .vram_addr(vram_addr),		// output [14:0] 	
+		 .vram_data_in(vram_data_in),	// input [31:0] 	
+		 .vram_data_out(vram_data_out), // output [31:0] 	
+		 .vram_req(vram_req),		// output 	
+		 .vram_ready(vram_ready),	// input 	
+		 .vram_write(vram_write),	// output 	
+		 .vram_done(vram_done),		// input 	
 
-		 .bd_cmd(bd_cmd),
-		 .bd_start(bd_start),
-		 .bd_bsy(bd_bsy),
-		 .bd_rdy(bd_rdy),
-		 .bd_err(bd_err),
-		 .bd_addr(bd_addr),
-		 .bd_data_in(bd_data_in),
-		 .bd_data_out(bd_data_out),
-		 .bd_rd(bd_rd),
-		 .bd_wr(bd_wr),
-		 .bd_iordy(bd_iordy),
-		 .bd_state_in(bd_state_in),
+		 .bd_cmd(bd_cmd),	    // output [1:0] 	
+		 .bd_start(bd_start),	    // output 	
+		 .bd_bsy(bd_bsy),	    // input 	
+		 .bd_rdy(bd_rdy),	    // input 	
+		 .bd_err(bd_err),	    // input 	
+		 .bd_addr(bd_addr),	    // output [23:0] 	
+		 .bd_data_in(bd_data_in),   // input [15:0] 	
+		 .bd_data_out(bd_data_out), // output [15:0] 	
+		 .bd_rd(bd_rd),		    // output 	
+		 .bd_wr(bd_wr),		    // output 	
+		 .bd_iordy(bd_iordy),	    // input 	
+		 .bd_state_in(bd_state_in), // input [11:0]	CADR
 
-		 .kb_data(kb_data),
-		 .kb_ready(kb_ready),
-		 .ms_x(ms_x),
-		 .ms_y(ms_y),
-		 .ms_button(ms_button),
-		 .ms_ready(ms_ready),
+		 .kb_data(kb_data),	// input [15:0] 	
+		 .kb_ready(kb_ready),	// input 	
+		 .ms_x(ms_x),		// input [11:0] 	
+		 .ms_y(ms_y),		// input [11:0] 	
+		 .ms_button(ms_button),	// input [2:0] 	
+		 .ms_ready(ms_ready),   // input 	
 
-		 .promdisable(set_promdisable),
-		 .disk_state(disk_state_out),
-		 .bus_state(bus_state_out)
+		 .promdisable(set_promdisable),	// output	CADR
+		 .disk_state(disk_state_out),   // output [4:0] 	
+		 .bus_state(bus_state_out)	// output [3:0] 	
 		 );
 
 
