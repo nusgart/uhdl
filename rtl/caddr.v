@@ -2036,7 +2036,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 `ifdef _spy124
    SPY124(.clk, .reset, .spy_out, .ir, .spy_mdh, .spy_mdl, .state_write, .spy_vmah, .spy_vmal, .spy_obh_, .spy_obl_, .md, .vma, .ob, .opc, .waiting, .boot, .promdisable, .stathalt, .dbread, .nop, .spy_obh, .spy_obl, .spy_pc, .spy_opc, .spy_scratch, .spy_irh, .spy_irm, .spy_irl, .spy_disk, .spy_bd, .pc, .err, .scratch, .spy_sth, .spy_stl, .spy_ah, .spy_al, .spy_mh, .spy_ml, .spy_flag2, .spy_flag1, .m, .a, .bd_state_in, .wmap, .ssdone, .vmaok, .destspc, .jcond, .srun, .pcs1, .pcs0, .iwrited, .imod, .pdlwrite, .spush );
 `else
-   // page SPY124
+   // page SPY124 -- SPY4 is in IRAML
 
    reg [31:0] ob_last;
 
@@ -2359,7 +2359,7 @@ spy_obl_ ? ob[15:0] :
 `ifdef _debug
    DEBUG(.clk, .reset, .spy_ir, .spy_in, .i, .idebug, .promenable, .iprom, .iram, .lddbirh, .lddbirm, .lddbirl);
 `else
-   // page DEBUG
+   // page DEBUG (IRAML)
 
    always @(posedge clk)
      if (reset)
@@ -2393,7 +2393,7 @@ spy_obl_ ? ob[15:0] :
    wire   iwe;
    ICTL(.ramdisable, .idebug, .promdisabled, .iwrited, .state_write, .iwe);
 `else
-   // page ICTL - I RAM control
+   // page ICTL - I RAM control (IRAML)
 
    assign ramdisable = idebug | ~(promdisabled | iwrited);
 
@@ -2405,7 +2405,7 @@ spy_obl_ ? ob[15:0] :
 `ifdef _olord1
    OLORD1(.clk, .reset, .ldmode, .ldscratch1, .ldscratch2, .ldclk, .boot, .run, .step, .promdisable, .trapenb, .stathenb, .errstop, .scratch, .opcinh, .opcclk, .lpc_hold, .ldstat, .idebug, .nop11, .srun, .sstep, .ssdone, .promdisabled, .machrun, .stat_ovf, .stathalt, .errhalt, .state_fetch, .statstop, .spy_in, .ldopc, .set_promdisable, .waiting);
 `else
-   // page OLORD1
+   // page OLORD1 (IRAML)
 
    always @(posedge clk)
      if (reset)
@@ -2515,7 +2515,7 @@ if (state_fetch) ssdone <= sstep;
 `ifdef _olord2
    OLORD2(.clk, .reset, .statstop, .halted, .prog_reset, .err, .errhalt, .prog_bus_reset, .bus_reset, .prog_boot, .boot, .boot_trap, .ldmode, .spy_in, .errstop, .ext_reset, .ext_boot, .srun, .ext_halt, .stat_ovf);
 `else
-   // page OLORD2
+   // page OLORD2 (IRAML)
 
    always @(posedge clk)
      if (reset)
@@ -2562,7 +2562,7 @@ if (state_fetch) ssdone <= sstep;
 `ifdef _opcs
    OPCS(.clk, .reset, .opcclk, .opcinh, .pc, .opc, .state_fetch);
 `else
-   // page OPCS
+   // page OPCS (IRAML)
 
    assign opcclka = (state_fetch | opcclk) & ~opcinh;
 
@@ -2583,7 +2583,7 @@ if (state_fetch) ssdone <= sstep;
 `ifdef _pctl
    PCTL(.pc, .idebug, .promdisabled, .iwrited, .prompc, .bottom_1k, .promenable, .promce, .promaddr);
 `else
-   // page PCTL
+   // page PCTL (IRAML)
 
    assign bottom_1k = ~(pc[13] | pc[12] | pc[11] | pc[10]);
    assign promenable = bottom_1k & ~idebug & ~promdisabled & ~iwrited;
@@ -2598,7 +2598,7 @@ if (state_fetch) ssdone <= sstep;
 `ifdef _prom01
    PROM01(.clk, .promaddr, .iprom);
 `else
-   // page PROM01
+   // page PROM01 (IRAML)
 
    part_512x49prom i_PROM(
 			  .clk(clk),
@@ -2610,7 +2610,7 @@ if (state_fetch) ssdone <= sstep;
 `ifdef _iram
    IRAM(.clk, .reset, .pc, .pc_out, .state_out, .iwr, .iwe, .iram, .fetch_out, .prefetch_out, .machrun_out, .mcr_data_in, .state_fetch, .machrun, .state);
 `else
-   // page IRAM
+   // page IRAM (IRAML)
 `ifdef use_ucode_ram
    part_16kx49ram i_IRAM(
 			 .clk_a(clk),
@@ -2649,7 +2649,7 @@ if (state_fetch) ssdone <= sstep;
 `ifdef _spy0
    SPY0(.spy_obh, .spy_obl, .spy_pc, .spy_opc, .spy_scratch, .spy_irh, .spy_irm, .spy_irl, .spy_stl, .spy_ah, .spy_al, .spy_mh, .spy_ml, .spy_flag2, .spy_flag1, .ldscratch2, .ldscratch1, .ldmode, .ldopc, .ldclk, .lddbirh, .lddbirm, .lddbirl, .eadr, .dbread, .dbwrite, .spy_mdl, .spy_vmal, .spy_vmah, .spy_sth, .spy_mdh, .spy_disk, .spy_bd);
 `else
-   // page SPY0
+   // page SPY0 (IRAML)
 
 `ifdef old_spy
    /* read registers */
