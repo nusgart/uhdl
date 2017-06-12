@@ -1,13 +1,12 @@
 // TK		CADR	M MEMORY
 
-module MMEM(clk, reset, mrp, mwp, madr, l, b, mmem);
+module MMEM(clk, reset, mrp, mwp, madr, l, mmem);
 
    input clk;
    input reset;
 
    input [31:0] l;
    input [4:0]	madr;
-   input	b;
    input	mrp;
    input	mwp;
    output [31:0] mmem;

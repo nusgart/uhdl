@@ -109,19 +109,19 @@
  *      update pdlptr
  */
 
-`define _actl			// OK COLD BOOT
-`define _alatch			// OK COLD BOOT
-`define _alu01			// OK COLD BOOT
-`define _aluc4			// OK COLD BOOT
-`define _amem01			// OK COLD BOOT
-`define _contrl			// OK COLD BOOT
-`define _dram02			// OK COLD BOOT
-//`define _dspctl			// FAIL
-`define _flag
+// `define _actl			// OK COLD BOOT
+// `define _alatch			// OK COLD BOOT
+// `define _alu01			// OK COLD BOOT
+// `define _aluc4			// OK COLD BOOT
+// `define _amem01			// OK COLD BOOT
+// `define _contrl			// OK COLD BOOT
+// `define _dram02			// OK COLD BOOT
+// `define _dspctl			// FAIL
+// `define _flag
 // `define _ireg
 // `define _ior
-`define _iwr			// OK COLD BOOT
-`define _l			// OK COLD BOOT
+// `define _iwr			// OK COLD BOOT
+// `define _l			// OK COLD BOOT
 // `define _lc
 // `define _lcc
 // `define _lpc
@@ -261,14 +261,14 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    wire [13:0]	ipc;
    wire [18:0]	spc;
 
-   reg [48:0]	ir;
+   reg [48:0]	ir;		// ---!!! reg
 
    wire [31:0]	a;
    wire [9:0]	aadr;
    wire		awp;
    wire		arp;
 
-   wire [9:0]	wadr;
+   reg [9:0]	wadr;		// ---!!! reg
 
    wire [7:0]	aeqm_bits;
    wire		aeqm;
@@ -293,7 +293,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    wire		swp, srp, spcenb, spcdrive, spcnt;
 
-   wire			inop, iwrited;
+   reg		inop, iwrited;	// ---!!! reg
    wire		n, pcs1, pcs0;
 
    wire		nopa, nop;
@@ -307,7 +307,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    // page DSPCTL
    wire		dmapbenb, dispwr;
-   reg [9:0]	dc;
+   reg [9:0]	dc;		// ---!!! reg
    wire [11:0]	prompc;
    wire [8:0]	promaddr;
 
@@ -317,7 +317,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    wire [2:0]	conds;
    wire		jcond;
-   wire			lc_byte_mode, prog_unibus_reset, int_enable, sequence_break;
+   reg		lc_byte_mode, prog_unibus_reset, int_enable, sequence_break; // ---!!! reg
 
    // page IOR
    wire [47:0]	iob;
@@ -326,7 +326,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    // page IPAR
 
    // page LC
-   reg [25:0]	lc;
+   reg [25:0]	lc;		// ---!!! reg
    wire [3:0]	lca;
    wire		lcry3;
 
@@ -340,7 +340,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    wire		needfetch, ifetch, spcmung, spc1a;
    wire		lcinc;
 
-   reg		newlc, sintr, next_instrd;
+   reg		newlc, sintr, next_instrd; // ---!!! reg
 
    wire		lc_modifies_mrot;
    wire		inst_in_left_half;
@@ -356,12 +356,12 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    wire [4:0]	madr;
 
    // page MD
-   reg [31:0]	md;
+   reg [31:0]	md;		// ---!!! reg
    wire		mddrive;	/* drive md on to mf bus */
    wire		mdclk;		/* enable - clock md in? */
    wire		loadmd;		/* data available from busint */
 
-   reg		mdhaspar, mdpar;
+   reg		mdhaspar, mdpar; // ---!!! reg
    wire		mdgetspar;
 
    wire		ignpar;
@@ -398,14 +398,14 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    wire [9:0]	pdla;
    wire		pdlp, pdlwrite;
    wire		pwp, prp, pdlenb, pdldrive, pdlcnt;
-   reg		pwidx;
+   reg		pwidx;		// ---!!! reg
 
    // page PDLPTR
    wire		pidrive, ppdrive;
-   reg [9:0]	pdlidx;
+   reg [9:0]	pdlidx;		// ---!!! reg
 
    // page Q
-   reg [31:0]	q;
+   reg [31:0]	q;		// ---!!! reg
    wire		qs1, qs0, qdrive;
 
    // page SHIFT0-1
@@ -466,7 +466,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    // page SPC
 
-   reg [4:0]	spcptr;
+   reg [4:0]	spcptr;		// ---!!! reg
 
    wire [18:0]	spcw;
    wire [18:0]	spco;
@@ -474,25 +474,25 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    // page SPCPAR
 
    wire		trap;
-   reg		boot_trap;
+   reg		boot_trap;	// ---!!! reg
 
 
    // page VCTRL1
 
    wire		memop;
-   reg		memprepare;
-   reg		memstart;
-   reg		memcheck;
+   reg		memprepare;	// ---!!! reg
+   reg		memstart;	// ---!!! reg
+   reg		memcheck;	// ---!!! reg
 
-   reg		rdcyc;
-   reg		mbusy;
+   reg		rdcyc;		// ---!!! reg
+   reg		mbusy;		// ---!!! reg
 
    wire		memrq;
-   reg		wrcyc;
+   reg		wrcyc;		// ---!!! reg
 
    wire		pfw;			/* vma permissions */
    wire		pfr;
-   reg		vmaok;			/* vma access ok */
+   reg		vmaok;		/* vma access ok */ // ---!!! reg
 
    wire		mfinish;
 
@@ -514,7 +514,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    // page VMA
 
-   reg [31:0]	vma;
+   reg [31:0]	vma;		// ---!!! reg
    wire		vmadrive;
 
    // page VMAS
@@ -541,15 +541,15 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    wire [48:0]	i;
    wire [48:0]	iprom;
    wire [48:0]	iram;
-   reg [47:0]	spy_ir;
+   reg [47:0]	spy_ir;		// ---!!! reg
 
    wire		ramdisable;
 
-   reg		opcinh, opcclk, lpc_hold;
+   reg		opcinh, opcclk, lpc_hold; // ---!!! reg
 
-   reg		ldstat, idebug, nop11, step;
+   reg		ldstat, idebug, nop11, step; // ---!!! reg
 
-   reg		run;
+   reg		run;		// ---!!! reg
 
    wire		machrun, stat_ovf, stathalt;
 
@@ -570,39 +570,39 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    wire		promenable, promce, bottom_1k;
 
    // page OLORD1
-   reg		promdisable;
-   reg		trapenb;
-   reg		stathenb;
-   reg		errstop;
+   reg		promdisable;	// ---!!! reg
+   reg		trapenb;	// ---!!! reg
+   reg		stathenb;	// ---!!! reg
+   reg		errstop;	// ---!!! reg
 
-   reg		srun, sstep, ssdone, promdisabled;
+   reg		srun, sstep, ssdone, promdisabled; // ---!!! reg
 
    // page OLORD2
 
-   reg		higherr;
-   reg		statstop;
-   reg		halted;
+   reg		higherr;	// ---!!! reg
+   reg		statstop;	// ---!!! reg
+   reg		halted;		// ---!!! reg
 
    // page L
-   wire [31:0]	l;
+   reg [31:0]	l;		// ---!!! reg
 
    // page NPC
-   reg [13:0]	pc;
+   reg [13:0]	pc;		// ---!!! reg
 
    // page OPCS
-   reg [13:0]	opc;
+   reg [13:0]	opc;		// ---!!! reg
 
    // page PDLPTR
-   reg [9:0]	pdlptr;
+   reg [9:0]	pdlptr;		// ---!!! reg
 
    // page SPCW
-//   reg [13:0]		reta;
+//   wire [13:0]		reta;
    wire [13:0]	reta;
 
    // page IWR
-   wire [48:0]	iwr;
+   reg [48:0]	iwr;		// ---!!! reg
 
-   reg [13:0]	lpc;
+   reg [13:0]	lpc;		// ---!!! reg
 
    wire		lvmo_23;
    wire		lvmo_22;
@@ -624,7 +624,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    wire   ldmdh, ldmdl, ldvmah, ldvmal;
    wire   set_promdisable;
 
-   reg [15:0] scratch;
+   reg [15:0] scratch;		// ---!!! reg
 
 `ifdef debug
    integer	  debug;
@@ -1502,7 +1502,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 `endif
 
 `ifdef _mmem
-   MMEM(.clk, .reset, .mrp, .mwp, .madr, .l, .b, .mmem);
+   MMEM(.clk, .reset, .mrp, .mwp, .madr, .l, .mmem);
 `else
    // page MMEM
 
@@ -1633,7 +1633,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 `endif
 
 `ifdef _pdlctl
-   PDlCTL(.clk, .reset, .pdlidx, .pdla, .pdlp, .pdlwrite, .state_alu, .state_write, .state_read, .ir, .pwidx, .pwp, .prp, .pdlenb, .pdldrive, .pdlcnt, .pdlptr, .destpdltop, .destpdl_x, .destpdl_p, .srcpdlpop, .state_mmu, .nop, .srcpdltop, .state_fetch);
+   PDLCTL(.clk, .reset, .pdlidx, .pdla, .pdlp, .pdlwrite, .state_alu, .state_write, .state_read, .ir, .pwidx, .pwp, .prp, .pdlenb, .pdldrive, .pdlcnt, .pdlptr, .destpdltop, .destpdl_x, .destpdl_p, .srcpdlpop, .state_mmu, .nop, .srcpdltop, .state_fetch);
 `else
    // page PDLCTL
 
@@ -2097,7 +2097,7 @@ spy_obl_ ? ob[15:0] :
 `endif
 
 `ifdef _vctrl1
-   VCTRL1(.clk, .reset, .lcinc, .memrq, .ifetch, .lvmo_22, .lvmo_23, .mbusy, .memack, .memcheck, .memprepare, .memrd, .memstart, .memwr, .needfetch, .pfr, .pfw, .srcyc, .state_alu, .state_fetch, .state_prefetch, .state_write, .vmaok, .rdcyc, .wrcyc, .mfinish, .waiting);
+   VCTRL1(.clk, .reset, .lcinc, .memrq, .ifetch, .lvmo_22, .lvmo_23, .mbusy, .memack, .memcheck, .memprepare, .memrd, .memstart, .memwr, .needfetch, .pfr, .pfw, .state_alu, .state_fetch, .state_prefetch, .state_write, .vmaok, .rdcyc, .wrcyc, .mfinish, .waiting);
 `else
    // page VCTRL1
 
@@ -2390,6 +2390,7 @@ spy_obl_ ? ob[15:0] :
 `endif
 
 `ifdef _ictl
+   wire   iwe;
    ICTL(.ramdisable, .idebug, .promdisabled, .iwrited, .state_write, .iwe);
 `else
    // page ICTL - I RAM control
@@ -2635,11 +2636,11 @@ if (state_fetch) ssdone <= sstep;
    assign prefetch_out = ((need_mmu_state ? state_mmu : state_write) || state_prefetch) &&
 			 promdisabled;
 `endif
-`endif
 
    assign pc_out = pc;
    assign state_out = state;
    assign machrun_out = machrun;
+`endif
 
    // *************
    // Spy Interface

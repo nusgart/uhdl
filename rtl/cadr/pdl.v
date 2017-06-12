@@ -1,7 +1,7 @@
 // TK		CADR	PDL BUFFER LEFT
 // TK		CADR	PDL BUFFER RIGHT
 
-module PDL(clk, reset, prp, pdla, l, pwp, pdl);
+module PDL01(clk, reset, prp, pdla, l, pwp, pdl);
 
    input clk;
    input reset;
