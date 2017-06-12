@@ -109,19 +109,19 @@
  *      update pdlptr
  */
 
-`define _actl
-// `define _alatch
-// `define _alu01
-// `define _aluc4
-// `define _amem01
-// `define _contrl
-// `define _dram02
-// `define _dspctl
-// `define _flag
+`define _actl			// OK COLD BOOT
+`define _alatch			// OK COLD BOOT
+`define _alu01			// OK COLD BOOT
+`define _aluc4			// OK COLD BOOT
+`define _amem01			// OK COLD BOOT
+`define _contrl			// OK COLD BOOT
+`define _dram02			// OK COLD BOOT
+//`define _dspctl			// FAIL
+`define _flag
 // `define _ireg
 // `define _ior
-// `define _iwr
-// `define _l
+`define _iwr			// OK COLD BOOT
+`define _l			// OK COLD BOOT
 // `define _lc
 // `define _lcc
 // `define _lpc
@@ -293,7 +293,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    wire 	swp, srp, spcenb, spcdrive, spcnt;
 
-   reg 		inop, iwrited; 
+   wire 		inop, iwrited; 
    wire 	n, pcs1, pcs0;
 
    wire 	nopa, nop;
@@ -317,7 +317,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    wire [2:0] 	conds;
    wire 	jcond;
-   reg 		lc_byte_mode, prog_unibus_reset, int_enable, sequence_break;
+   wire 		lc_byte_mode, prog_unibus_reset, int_enable, sequence_break;
 
    // page IOR
    wire [47:0] 	iob;
@@ -584,7 +584,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    reg 		halted;
 
    // page L
-   reg [31:0] 	l;
+   wire [31:0] 	l;
 
    // page NPC
    reg [13:0] 	pc;
@@ -600,7 +600,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    wire [13:0] 	reta;
 
    // page IWR
-   reg [48:0] 	iwr;
+   wire [48:0] 	iwr;
 
    reg [13:0] 	lpc;
 
@@ -719,6 +719,16 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 `endif
 
 `ifdef _alu01
+   wire[2:0] nc_alu;
+   wire      cin32_n, cin28_n, cin24_n, cin20_n;
+   wire      cin16_n, cin12_n, cin8_n, cin4_n;
+
+   wire      xx0, xx1;
+   wire      yy0, yy1;
+
+   wire      xout3, xout7, xout11, xout15, xout19, xout23, xout27, xout31;
+   wire      yout3, yout7, yout11, yout15, yout19, yout23, yout27, yout31;
+
    ALU01(.aeqm_bits, .a, .m, .aluf, .alumode, .aeqm, .alu, .cin12_n, .cin16_n, .cin20_n, .cin24_n, .cin28_n, .cin32_n, .cin4_n, .cin8_n, .cin0, .xout11, .xout15, .xout19, .xout23, .xout27, .xout3, .xout31, .xout7, .yout11, .yout15, .yout19, .yout23, .yout27, .yout3, .yout31, .yout7);
 `else
    // page ALU0-1
@@ -1292,7 +1302,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    //   end
    //
 
-   // mux MF
+   // mux MF ---!!!
    assign mf =
         lcdrive ?
 	      { needfetch, 1'b0, lc_byte_mode, prog_unibus_reset,
@@ -1451,7 +1461,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    assign mds = mdsel ? ob : mem;
 
-   // mux MEM
+   // mux MEM ---???
    assign mem =
 	       memdrive ? md :
 	       loadmd ? busint_bus :
@@ -1482,7 +1492,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 	  busint.disk.fetch = 0;
 `endif
        
-   // mux M
+   // mux M ---???
    assign m =
 /*same as srcm*/mpassm ? mmem :
 	     pdldrive ? pdl :
@@ -1999,7 +2009,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 `else
    // page SPCLCH
 
-   // mux SPC
+   // mux SPC ---???
    assign spc = spco;
 `endif
 
