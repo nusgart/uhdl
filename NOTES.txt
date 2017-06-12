@@ -170,7 +170,7 @@
 // RAM 8K-12K, 36-48 (IRAM32)				---!!! ---
 // RAM 12K-16K, 36-48 (IRAM33)				---!!! ---
 
-// PDP11 EXAMINE CONTROL (SPY0)
+// PDP11 EXAMINE CONTROL (SPY0)				---!!!
 
 // PDP11 EXAMINE (OPC, FLAG1, PC) (SPY4)		---!!! --- Shared wtih SPY1, SPY2.
 
