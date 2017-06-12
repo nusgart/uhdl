@@ -167,26 +167,27 @@
 module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
 	       spy_in, spy_out,
-	       dbread, dbwrite, eadr, spy_reg, spy_rd, spy_wr,
+	       dbread, dbwrite, eadr,
 
 	       pc_out, state_out, machrun_out,
 	       prefetch_out, fetch_out,
-	       disk_state_out, bus_state_out,
 
 	       mcr_addr, mcr_data_out, mcr_data_in,
 	       mcr_ready, mcr_write, mcr_done,
 
-	       sdram_addr, sdram_data_in, sdram_data_out,
-	       sdram_req, sdram_ready, sdram_write, sdram_done,
+	       set_promdisable,
 
-	       vram_addr, vram_data_in, vram_data_out,
-	       vram_req, vram_ready, vram_write, vram_done,
+	       bd_state_in,
+	       disk_state_in,
+	       pma, vma, md,
+	       busint_bus,
 
-	       bd_cmd, bd_start, bd_bsy, bd_rdy, bd_err, bd_addr,
-	       bd_data_in, bd_data_out, bd_rd, bd_wr, bd_iordy, bd_state_in,
-
-	       kb_data, kb_ready,
-	       ms_x, ms_y, ms_button, ms_ready );
+	       memrq,
+	       memack,
+	       wrcyc,
+	       loadmd,
+	       bus_int
+	       );
 
    input clk;
    input ext_int;
@@ -199,14 +200,9 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    input	dbread;
    input	dbwrite;
    input [4:0]	eadr;
-   output [3:0]	spy_reg;
-   output	spy_rd;
-   output	spy_wr;
 
    output [13:0] pc_out;
    output [5:0]  state_out;
-   output [4:0]  disk_state_out;
-   output [3:0]  bus_state_out;
    output	 machrun_out;
    output	 prefetch_out;
    output	 fetch_out;
@@ -218,42 +214,9 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    output	 mcr_write;
    input	 mcr_done;
 
-   output [21:0]  sdram_addr;
-   output [31:0] sdram_data_out;
-   input [31:0]  sdram_data_in;
-   output	 sdram_req;
-   input	 sdram_ready;
-   output	 sdram_write;
-   input	 sdram_done;
-
-   output [14:0] vram_addr;
-   output [31:0] vram_data_out;
-   input [31:0]  vram_data_in;
-   output	 vram_req;
-   input	 vram_ready;
-   output	 vram_write;
-   input	 vram_done;
-
-   output [1:0]  bd_cmd;	/* generic block device interface */
-   output	 bd_start;
-   input	 bd_bsy;
-   input	 bd_rdy;
-   input	 bd_err;
-   output [23:0] bd_addr;
-   input [15:0]  bd_data_in;
-   output [15:0] bd_data_out;
-   output	 bd_rd;
-   output	 bd_wr;
-   input	 bd_iordy;
    input [11:0]  bd_state_in;
-
-   input [15:0]  kb_data;
-   input	 kb_ready;
-
-   input [11:0]  ms_x, ms_y;
-   input [2:0]	 ms_button;
-   input	 ms_ready;
-
+   input [4:0] 	 disk_state_in;
+   
    // ------------------------------------------------------------
 
    wire [13:0]	npc;
@@ -356,10 +319,11 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    wire [4:0]	madr;
 
    // page MD
+   output [31:0] md;
    reg [31:0] 	md;		// ---!!! reg
    wire		mddrive;	/* drive md on to mf bus */
    wire		mdclk;		/* enable - clock md in? */
-   wire		loadmd;		/* data available from busint */
+   input		loadmd;		/* data available from busint */
 
    reg 	mdhaspar, mdpar; // ---!!! reg
    wire		mdgetspar;
@@ -369,10 +333,8 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    // page MDS
    wire [31:0]	mds;
    wire [31:0]	mem;
-   wire [31:0]	busint_bus;
-   wire [15:0]	busint_spyout;
-
-   wire		bus_int;
+   input [31:0]	busint_bus;
+   input		bus_int;
 
 
    // page MF
@@ -487,8 +449,9 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    reg 	rdcyc;		// ---!!! reg
    reg 	mbusy;		// ---!!! reg
 
-   wire		memrq;
+   output		memrq;
    reg 	wrcyc;		// ---!!! reg
+   output wrcyc;
 
    wire		pfw;			/* vma permissions */
    wire		pfr;
@@ -496,7 +459,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    wire		mfinish;
 
-   wire		memack;
+   input		memack;
 
    wire		waiting;
 
@@ -514,6 +477,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    // page VMA
 
+   output [31:0] vma;
    reg [31:0] 	vma;		// ---!!! reg
    wire		vmadrive;
 
@@ -606,7 +570,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    wire		lvmo_23;
    wire		lvmo_22;
-   wire [21:8]	pma;
+   output [21:8]	pma;
 
 
    // SPY 0
@@ -622,7 +586,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    wire   ldmode, ldopc, ldclk, lddbirh, lddbirm, lddbirl, ldscratch1, ldscratch2;
    wire   ldmdh, ldmdl, ldvmah, ldvmal;
-   wire   set_promdisable;
+   input   set_promdisable;
 
    reg [15:0] scratch;		// ---!!! reg
 
@@ -2034,6 +1998,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 `endif
 
 `ifdef _spy124
+   // ---!!! Add port for [4:0] disk_state_in
    SPY124(.clk, .reset, .spy_out, .ir, .spy_mdh, .spy_mdl, .state_write, .spy_vmah, .spy_vmal, .spy_obh_, .spy_obl_, .md, .vma, .ob, .opc, .waiting, .boot, .promdisable, .stathalt, .dbread, .nop, .spy_obh, .spy_obl, .spy_pc, .spy_opc, .spy_scratch, .spy_irh, .spy_irm, .spy_irl, .spy_disk, .spy_bd, .pc, .err, .scratch, .spy_sth, .spy_stl, .spy_ah, .spy_al, .spy_mh, .spy_ml, .spy_flag2, .spy_flag1, .m, .a, .bd_state_in, .wmap, .ssdone, .vmaok, .destspc, .jcond, .srun, .pcs1, .pcs0, .iwrited, .imod, .pdlwrite, .spush );
 `else
    // page SPY124 -- SPY4 is in IRAML
@@ -2051,8 +2016,6 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    wire[15:0] spy_mux;
 
    assign spy_out = dbread ? spy_mux : 16'b1111111111111111;
-
-   wire [4:0] disk_state_in;
 
    assign spy_mux =
 	spy_irh ? ir[47:32] :
@@ -2752,76 +2715,6 @@ if (state_fetch) ssdone <= sstep;
 					    4'b0000;
 `endif
 `endif
-
-   // *************
-   // Bus Interface
-   // *************
-
-   wire [21:0] busint_addr;
-   assign busint_addr = {pma, vma[7:0]};
-
-   busint busint(
-		 .mclk(clk),		 // input	CADR
-		 .reset(reset),		 // input	CADR
-		 .addr(busint_addr),	 // input [21:0]
-		 .busin(md),		 // input [31:0]	CADR
-		 .busout(busint_bus),	 // output [31:0]	CADR
-		 .spyin(spy_in),	 // input [15:0]	CADR
-		 .spyout(busint_spyout), // output [15:0]	
-		 .spyreg(spy_reg),	 // output [3:0] 	
-		 .spyrd(spy_rd),	 // output 	
-		 .spywr(spy_wr),	 // output 	
-
-		 .req(memrq),	// input	CADR
-		 .ack(memack),	// output	CADR
-		 .write(wrcyc),	// input	CADR
-		 .load(loadmd),	// output	CADR
-
-		 .interrupt(bus_int), // output	CADR
-
-		 .sdram_addr(sdram_addr),	  // output [21:0] 	
-		 .sdram_data_in(sdram_data_in),	  // input [31:0] 	
-		 .sdram_data_out(sdram_data_out), // output [31:0] 	
-		 .sdram_req(sdram_req),		  // output 	
-		 .sdram_ready(sdram_ready),	  // input 	
-		 .sdram_write(sdram_write),	  // output 	
-		 .sdram_done(sdram_done),	  // input 	
-
-		 .vram_addr(vram_addr),		// output [14:0] 	
-		 .vram_data_in(vram_data_in),	// input [31:0] 	
-		 .vram_data_out(vram_data_out), // output [31:0] 	
-		 .vram_req(vram_req),		// output 	
-		 .vram_ready(vram_ready),	// input 	
-		 .vram_write(vram_write),	// output 	
-		 .vram_done(vram_done),		// input 	
-
-		 .bd_cmd(bd_cmd),	    // output [1:0] 	
-		 .bd_start(bd_start),	    // output 	
-		 .bd_bsy(bd_bsy),	    // input 	
-		 .bd_rdy(bd_rdy),	    // input 	
-		 .bd_err(bd_err),	    // input 	
-		 .bd_addr(bd_addr),	    // output [23:0] 	
-		 .bd_data_in(bd_data_in),   // input [15:0] 	
-		 .bd_data_out(bd_data_out), // output [15:0] 	
-		 .bd_rd(bd_rd),		    // output 	
-		 .bd_wr(bd_wr),		    // output 	
-		 .bd_iordy(bd_iordy),	    // input 	
-		 .bd_state_in(bd_state_in), // input [11:0]	CADR
-
-		 .kb_data(kb_data),	// input [15:0] 	
-		 .kb_ready(kb_ready),	// input 	
-		 .ms_x(ms_x),		// input [11:0] 	
-		 .ms_y(ms_y),		// input [11:0] 	
-		 .ms_button(ms_button),	// input [2:0] 	
-		 .ms_ready(ms_ready),   // input 	
-
-		 .promdisable(set_promdisable),	// output	CADR
-		 .disk_state(disk_state_out),   // output [4:0] 	
-		 .bus_state(bus_state_out)	// output [3:0] 	
-		 );
-
-
-   assign disk_state_in = busint.disk.state;
 
 `ifdef debug
    // ======================================================================================

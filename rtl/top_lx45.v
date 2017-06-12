@@ -181,6 +181,89 @@ module top(usb_txd, usb_rxd,
    assign usb_txd = rs232_txd;
 
 `ifdef use_cpu
+   // *************
+   // Bus Interface
+   // *************
+
+   wire [21:8]	pma;
+   wire [31:0] vma;
+   wire [31:0] md;
+
+   wire [21:0] busint_addr;
+   assign busint_addr = {pma, vma[7:0]};
+
+   wire [31:0]	busint_bus;
+
+   wire   memrq;
+   wire   memack;
+   wire   wrcyc;
+   wire   loadmd;
+   wire   bus_int;
+   wire [15:0] busint_spyout;
+
+   busint busint(
+		 .mclk(cpuclk),		 // input	OK
+		 .reset(reset),		 // input	OK?
+		 .addr(busint_addr),	 // input [21:0] OK
+		 .busin(md),		 // input [31:0] OK
+		 .busout(busint_bus),	 // output [31:0] OK
+		 .spyin(spy_in),	 // input [15:0]	OK
+		 .spyout(busint_spyout), // output [15:0] OK
+		 .spyreg(spy_reg),	 // output [3:0] OK
+		 .spyrd(spy_rd),	 // output	OK
+		 .spywr(spy_wr),	 // output	OK
+
+		 .req(memrq),	// input OK
+		 .ack(memack),	// output OK
+		 .write(wrcyc),	// input OK
+		 .load(loadmd),	// output OK
+
+		 .interrupt(bus_int), // output OK
+
+		 .sdram_addr(sdram_addr), // output [21:0]	OK
+		 .sdram_data_in(sdram_data_rc2cpu), // input [31:0]	OK
+		 .sdram_data_out(sdram_data_cpu2rc), // output [31:0]	OK
+		 .sdram_req(sdram_req),	    // output	OK
+		 .sdram_ready(sdram_ready), // input	OK
+		 .sdram_write(sdram_write), // output	OK
+		 .sdram_done(sdram_done),   // input	OK
+      		 
+		 .vram_addr(vram_cpu_addr), // output [14:0]	OK
+		 .vram_data_in(vram_cpu_data_in), // input [31:0]	OK
+		 .vram_data_out(vram_cpu_data_out), // output [31:0]	OK
+		 .vram_req(vram_cpu_req),	    // output	OK
+		 .vram_ready(vram_cpu_ready),	    // input	OK
+		 .vram_write(vram_cpu_write),	    // output	OK
+		 .vram_done(vram_cpu_done),	    // input	OK
+		 
+		 .bd_cmd(bd_cmd),     // output [1:0]	OK
+		 .bd_start(bd_start), // output	OK	
+		 .bd_bsy(bd_bsy),     // input	OK	
+		 .bd_rdy(bd_rdy),     // input	OK	
+		 .bd_err(bd_err),     // input	OK	
+		 .bd_addr(bd_addr),   // output [23:0]	OK	
+		 .bd_data_in(bd_data_bd2cpu), // input [15:0]	OK
+		 .bd_data_out(bd_data_cpu2bd), // output [15:0]	OK	
+		 .bd_rd(bd_rd),		 // output	OK	
+		 .bd_wr(bd_wr),		 // output	OK	
+		 .bd_iordy(bd_iordy),	 // input	OK	
+		 .bd_state_in(bd_state), // input [11:0]	OK
+		 
+		 .kb_data(kb_data),	// input [15:0]	OK
+		 .kb_ready(kb_ready),	// input	OK
+		 .ms_x(ms_x),		// input [11:0]	OK
+		 .ms_y(ms_y),		// input [11:0]	OK
+		 .ms_button(ms_button),	// input [2:0]	OK
+		 .ms_ready(ms_ready),	// input	OK
+
+		 .promdisable(set_promdisable),	// output
+		 .disk_state(disk_state),   // output [4:0]	OK?
+		 .bus_state(bus_state)	// output [3:0]	..
+		 );
+
+   wire [4:0] 	 disk_state_in;
+   assign disk_state_in = busint.disk.state;
+
    caddr cpu (
 	      .clk(cpuclk),
 	      .ext_int(interrupt),
@@ -193,14 +276,9 @@ module top(usb_txd, usb_rxd,
 	      .dbread(dbread),
 	      .dbwrite(dbwrite),
 	      .eadr(eadr),
-	      .spy_reg(spy_reg),
-	      .spy_rd(spy_rd),
-	      .spy_wr(spy_wr),
 
 	      .pc_out(pc),
 	      .state_out(cpu_state),
-	      .disk_state_out(disk_state),
-	      .bus_state_out(bus_state),
 	      .machrun_out(machrun),
 	      .prefetch_out(prefetch),
 	      .fetch_out(fetch),
@@ -212,41 +290,23 @@ module top(usb_txd, usb_rxd,
 	      .mcr_write(mcr_write),
 	      .mcr_done(mcr_done),
 
-	      .sdram_addr(sdram_addr),
-	      .sdram_data_in(sdram_data_rc2cpu),
-	      .sdram_data_out(sdram_data_cpu2rc),
-	      .sdram_req(sdram_req),
-	      .sdram_ready(sdram_ready),
-	      .sdram_write(sdram_write),
-	      .sdram_done(sdram_done),
-      
-	      .vram_addr(vram_cpu_addr),
-	      .vram_data_in(vram_cpu_data_in),
-	      .vram_data_out(vram_cpu_data_out),
-	      .vram_req(vram_cpu_req),
-	      .vram_ready(vram_cpu_ready),
-	      .vram_write(vram_cpu_write),
-	      .vram_done(vram_cpu_done),
+	      .set_promdisable(set_promdisable),
 
-	      .bd_cmd(bd_cmd),
-	      .bd_start(bd_start),
-	      .bd_bsy(bd_bsy),
-	      .bd_rdy(bd_rdy),
-	      .bd_err(bd_err),
-	      .bd_addr(bd_addr),
-	      .bd_data_in(bd_data_bd2cpu),
-	      .bd_data_out(bd_data_cpu2bd),
-	      .bd_rd(bd_rd),
-	      .bd_wr(bd_wr),
-	      .bd_iordy(bd_iordy),
 	      .bd_state_in(bd_state),
+	      .disk_state_in(disk_state_in),
 
-	      .kb_data(kb_data),
-	      .kb_ready(kb_ready),
-	      .ms_x(ms_x),
-	      .ms_y(ms_y),
-	      .ms_button(ms_button),
-	      .ms_ready(ms_ready));
+	      .pma(pma),
+	      .vma(vma),
+	      .md(md),
+
+	      .busint_bus(busint_bus),
+	      
+	      .memrq(memrq),
+	      .memack(memack),
+	      .wrcyc(wrcyc),
+	      .loadmd(loadmd),
+	      .bus_int(bus_int)
+	      );
    
 `ifdef use_spyport
    wire [1:0] 	 spy_bd_cmd;
