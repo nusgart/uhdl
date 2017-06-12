@@ -1,4 +1,181 @@
 
+//////////////////////////////////////////////////////////////////////
+
+//////// CADR4
+
+// A CONTROL (ACTL)					---!!!
+
+// A MEMORY LATCH (ALATCH)				---!!!
+
+// ALU0 (ALU0)						---!!!  ---
+// ALU1 (ALU1)						---!!!  ---
+
+// ALU CARRY AND FUNCTION (ALUC4)			---!!!
+
+// A MEMORY LEFT (AMEM0)				---!!!  ---
+// A MEMORY RIGHT (AMEM1)				---!!!  ---
+
+// A&M PARITY (APAR)
+
+// BUS INTERFACE CABLES (BCPINS)
+
+// BUSINT CABLE TERMINATION (BCTERM)
+
+// BYPASS CAPACITORS (CAPS)
+
+// CLOCK DISTRIBUTION (CLOCKD)
+
+// PC, SPC CONTROL (CONTRL)				---!!!
+
+// CONNECTOR PINS (CPINS)
+
+// DISPATCH RAM (DRAM0)					---!!!  ---
+// DISPATCH RAM (DRAM1)					---!!!  ---
+// DISPATCH RAM (DRAM2)					---!!!  ---
+
+// DISPATCH CONTROL (DSPCTL)				---!!!
+
+// FLAGS,CONDITIONALS (FLAG)				---!!!
+
+// INST. MODIFY OR (IOR)				---!!!
+
+// IR PARITY (IPAR)
+
+// INSTRUCTION REGISTER (IREG)				---!!!
+
+// INSTRUCTION WRITE REGISTER (IWR)			---!!!
+
+// L REGISTER (L)					---!!!
+
+// LOCATION COUNTER (LC)				---!!!
+
+// LC CONTROL (LCC)					---!!!
+
+// LAST PC (LPC)					---!!!
+
+// M CONTROL (MCTL)					---!!!
+
+// MEMORY DATA REGISTER (MD)				---!!!
+
+// MEMORY DATA SELECTOR (MDS)				---!!!
+
+// DRIVE MF ONTO M (MF)					---!!!
+
+// M MEMORY LATCH (MLATCH)				---!!!
+
+// M MEMORY (MMEM)					---!!!
+
+// MASKER/OUTPUT SELECT (MO0)				---!!!  ---
+// MASKER/OUTPUT SELECT (MO1)				---!!!  ---
+
+// MASK GENERATION (MSKG4)				---!!!
+
+// NPC,IPC,PC (NPC)					---!!!
+
+// OPC, DC, ZERO DRIVE (OPCD)				---!!!
+
+// PDL BUFFER LEFT (PDL0)				---!!!  ---
+
+// PDL BUFFER RIGHT (PDL1)				---!!!  ---
+
+// PDL BUFFER CONTROL (PDLCTL)				---!!!
+
+// PDL INDEX AND POINTER (PDLPTR)			---!!!
+
+// PDL BUFFER LATCH (PLATCH)
+
+// Q REGISTER (Q)					---!!!
+
+// Q REGISTER CONTROL (QCTL)
+
+// SHIFTER RIGHT (SHIFT0)				---!!!  ---
+// SHIFTER LEFT (SHIFT1)				---!!!  ---
+
+// SHIFT/MASK CONTROL (SMCTL)				---!!!
+
+// SOURCE, DEST, OP DECODE (SOURCE)			---!!!
+
+// SPC MEMORY AND POINTER (SPC)				---!!!
+
+// SPC MEMORY LATCH (SPCLCH)				---!!!
+
+// SPC MEMORY PARITY (SPCPAR)
+
+// SPC WRITE DATA SEL (SPCW)				---!!!
+
+// PDP11 EXAMINE (IR, OB) (SPY1)
+// PDP11 EXAMINE (A, M, FLAG2) (SPY2)
+
+// PARITY ERROR TRAP (TRAP)				---!!!
+
+// VMEMORY CONTROL (VCTL1)				---!!!
+
+// VMA/MD CONTROL (VCTL2)				---!!!
+
+// VMA REGISTER (VMA)					---!!!
+
+// VMA INPUT SELECTOR (VMAS)				---!!!
+
+// VIRTUAL MEMORY MAP STAGE 0 (VMEM0)			---!!!
+
+// VIRTUAL MEMORY MAP STAGE 1 (VMEM1)			---!!!  ---
+// VIRTUAL MEMORY MAP STAGE 1 (VMEM2)			---!!!  ---
+
+// MAP OUTPUT DRIVE (VMEMDR)				---!!!
+
+//////// IRAML
+
+
+// MASTER CLOCK (CLOCK1)
+
+// MASTER CLOCK (CLOCK2)
+
+// PDP11 DEBUG INSTRUCTION (DEBUG)			---!!!
+
+// BYPASS CAPACITORS (ICAPS)
+
+// I RAM CONTROL (ICTL)					---!!!				
+
+// IWR PARITY (IWRPAR)
+
+// (CMEM) BUS INTERFACE CABLES (MBCPIN)
+
+// (CMEM) CONNECTOR PINS (MCPINS)
+
+// OVERLORD (OLORD1)					---!!!
+
+// OVERLORD (OLORD2)					---!!!
+
+// OLD PC SAVE SHIFTER (OPCS)				---!!!
+
+// DISPATCH CONTROL (PCTL)				---!!!
+
+// PROM 0-511 (PROM0)					---!!! ---
+// PROM 512-1023 (PROM1)				---!!! ---
+
+// RAM 0K-4K, 0-11 (IRAM00)				---!!! ---
+// RAM 4K-8K, 0-11 (IRAM01)				---!!! ---
+// RAM 8K-12K, 0-11 (IRAM02)				---!!! ---
+// RAM 12K-16K, 0-11 (IRAM03)				---!!! ---
+// RAM 0K-4K, 12-24 (IRAM10)				---!!! ---
+// RAM 4K-8K 12-23 (IRAM11)				---!!! ---
+// RAM 8K-12K, 12-23 (IRAM12)				---!!! ---
+// (IRAM13)						---!!! ---
+// RAM 0K-4K, 24-35 (IRAM20)				---!!! ---
+// RAM 4K-8K, 24-35 (IRAM21)				---!!! ---
+// RAM8K-12K, 24-35 (IRAM22)				---!!! ---
+// RAM 12K-16K, 24-35 (IRAM23)				---!!! ---
+// RAM 0K-4K, 36-48 (IRAM30)				---!!! ---
+// RAM 4K-8K, 36-48 (IRAM31)				---!!! ---
+// RAM 8K-12K, 36-48 (IRAM32)				---!!! ---
+// RAM 12K-16K, 36-48 (IRAM33)				---!!! ---
+
+// PDP11 EXAMINE CONTROL (SPY0)
+
+// PDP11 EXAMINE (OPC, FLAG1, PC) (SPY4)		---!!! --- Shared wtih SPY1, SPY2.
+
+// STATISTICS COUNTER (STAT)
+
     Xilinx - All Programmable Support AR# 12281: ChipScope Analyzer - How do I import signal names without having a Core Inserter project? 
 
 AR# 12281
