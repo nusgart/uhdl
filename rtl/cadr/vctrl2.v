@@ -1,3 +1,5 @@
+// TK	CADR	VMA/MD CONTROL
+
 module VCTRL2(loadmd, nopa, ir, wrcyc, destmdr, srcmd, destmem, srcmap, irdisp, memprepare, memstart, destvma, ifetch, state_decode, state_write, state_read, state_mmu, mapwr0, mapwr1, vm0wp, vm1wp, wmap, memwr, memrd, vma, dmapbenb, dispwr, vm0rp, vm1rp, vmaenb, vmasel, memdrive, mdsel, use_md);
 
    input [31:0] vma;
@@ -27,13 +29,13 @@ module VCTRL2(loadmd, nopa, ir, wrcyc, destmdr, srcmd, destmem, srcmap, irdisp, 
    output	vm0wp;
    output	vm1wp;
    output	wmap;
-   output 	vm0rp;
-   output 	vm1rp;
-   output 	vmaenb;
-   output 	vmasel;
-   output 	memdrive;
-   output 	mdsel;
-   output 	use_md;
+   output	vm0rp;
+   output	vm1rp;
+   output	vmaenb;
+   output	vmasel;
+   output	memdrive;
+   output	mdsel;
+   output	use_md;
 
    ////////////////////////////////////////////////////////////////////////////////
 

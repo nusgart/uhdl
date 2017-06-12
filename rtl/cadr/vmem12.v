@@ -1,4 +1,6 @@
-module VMEM12(clk, reset, vmem1_adr, vmap, mapi, vm1rp, vma, vmo,vm1wp);
+// TK	CADR	VIRTUAL MEMORY MAP STAGE 1
+
+module VMEM12(clk, reset, vmem1_adr, vmap, mapi, vm1rp, vma, vmo, vm1wp);
 
    input clk;
    input reset;

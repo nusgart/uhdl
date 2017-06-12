@@ -1,8 +1,11 @@
+// TK		CADR	ALU0
+// TK		CADR	ALU1
+
 module ALU01(aeqm_bits, a, m, aluf, alumode, aeqm, alu, cin12_n, cin16_n, cin20_n, cin24_n, cin28_n, cin32_n, cin4_n, cin8_n, cin0, xout11, xout15, xout19, xout23, xout27, xout3, xout31, xout7, yout11, yout15, yout19, yout23, yout27, yout3, yout31, yout7);
 
    input [31:0] a;
    input [31:0] m;
-   input [3:0] 	aluf;
+   input [3:0]	aluf;
    output [7:0] aeqm_bits;
    output [32:0] alu;
    output	 aeqm;

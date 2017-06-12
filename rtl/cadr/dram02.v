@@ -1,3 +1,5 @@
+// TK		CADR	DISPATCH RAM
+
 module DRAM02(clk, reset, daddr0, dadr, dwe, a, ir, vmo, dmask, r, dr, dp, dn, dpc, dispwr, state_write, state_prefetch);
 
    input clk;
@@ -14,7 +16,8 @@ module DRAM02(clk, reset, daddr0, dadr, dwe, a, ir, vmo, dmask, r, dr, dp, dn, d
    output [10:0] dadr;
    output [13:0] dpc;
    output	 daddr0;
-   output	 dp, dn;
+   output	 dp;
+   output	 dn;
    output	 dr;
    output	 dwe;
 

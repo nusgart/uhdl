@@ -23,10 +23,10 @@ module FLAG(clk, reset, ir, nopa, aeqm, sintr, int_enable, vmaok, sequence_break
    output	prog_unibus_reset;
    output	sequence_break;
    output	sint;
-   output 	statbit;
-   output 	ilong;
-   output 	jcond;
-   
+   output	statbit;
+   output	ilong;
+   output	jcond;
+
    ////////////////////////////////////////////////////////////////////////////////
 
    reg		int_enable;

@@ -1,4 +1,8 @@
-module SPY12(clk, reset, spy_out, ir, spy_mdh, spy_mdl, state_write, spy_vmah, spy_vmal, spy_obh_, spy_obl_, md, vma, ob, opc, waiting, boot, promdisable, stathalt, dbread, nop, spy_obh, spy_obl, spy_pc, spy_opc, spy_scratch, spy_irh, spy_irm, spy_irl, spy_disk, spy_bd, pc, err, scratch, spy_sth, spy_stl, spy_ah, spy_al, spy_mh, spy_ml, spy_flag2, spy_flag1, m, a, bd_state_in, wmap, ssdone, vmaok, destspc, jcond, srun, pcs1, pcs0, iwrited, imod, pdlwrite, spush );
+// TK	CADR	PDP11 EXAMINE (IR, OB)
+// TK	CADR	PDP11 EXAMINE (A, M, FLAG2)
+// TK	CADR	PDP11 EXAMINE (OPC, FLAG1, PC)
+
+module SPY124(clk, reset, spy_out, ir, spy_mdh, spy_mdl, state_write, spy_vmah, spy_vmal, spy_obh_, spy_obl_, md, vma, ob, opc, waiting, boot, promdisable, stathalt, dbread, nop, spy_obh, spy_obl, spy_pc, spy_opc, spy_scratch, spy_irh, spy_irm, spy_irl, spy_disk, spy_bd, pc, err, scratch, spy_sth, spy_stl, spy_ah, spy_al, spy_mh, spy_ml, spy_flag2, spy_flag1, m, a, bd_state_in, wmap, ssdone, vmaok, destspc, jcond, srun, pcs1, pcs0, iwrited, imod, pdlwrite, spush );
 
    input clk;
    input reset;

@@ -1,3 +1,6 @@
+// TK	CADR	SHIFTER RIGHT
+// TK	CADR	SHIFTER LEFT
+
 module SHIFT01(sa, r, s0, s1, s2, s3, s4, m);
 
    input [31:0] m;

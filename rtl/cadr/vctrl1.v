@@ -1,3 +1,5 @@
+// TK	CADR	VMEMORY CONTROL
+
 module VCTRL1(clk, reset, lcinc, memrq, ifetch, lvmo_22, lvmo_23, mbusy, memack, memcheck, memprepare, memrd, memstart, memwr, needfetch, pfr, pfw, srcyc, state_alu, state_fetch, state_prefetch, state_write, vmaok, rdcyc, wrcyc, mfinish, waiting);
 
    input clk;

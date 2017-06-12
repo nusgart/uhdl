@@ -1,4 +1,7 @@
-module PROM0(clk, promaddr, iprom);
+// TK	CADR	PROM 0-511
+// TK	CADR	PROM 512-1023
+
+module PROM01(clk, promaddr, iprom);
 
    input clk;
 

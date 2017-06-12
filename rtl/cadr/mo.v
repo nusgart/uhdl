@@ -1,4 +1,6 @@
-module MO(msk, r, a, mo, alu, q, osel, ob);
+// TK		CADR	MASKER/OUTPUT SELECT
+
+module MO01(msk, r, a, mo, alu, q, osel, ob);
 
    input [1:0] osel;
    input [31:0] a;

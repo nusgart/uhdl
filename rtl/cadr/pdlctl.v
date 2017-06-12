@@ -1,3 +1,5 @@
+// TK	CADR	PDL BUFFER CONTROL
+
 module PDCTL(clk, reset, pdlidx, pdla, pdlp, pdlwrite, state_alu, state_write, state_read, ir, pwidx, pwp, prp, pdlenb, pdldrive, pdlcnt, pdlptr, destpdltop, destpdl_x, destpdl_p, srcpdlpop, state_mmu, nop, srcpdltop, state_fetch);
 
    input clk;
