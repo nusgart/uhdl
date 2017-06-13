@@ -33,133 +33,133 @@ module top(usb_txd, usb_rxd,
    output	usb_txd;
 
    output [3:0] led;
-   input 	sysclk;
+   input	sysclk;
 
    input	ps2_clk;
-   input 	ps2_data;
-   
+   input	ps2_data;
+
    inout	ms_ps2_clk;
-   inout 	ms_ps2_data;
-   
-   output 	vga_hsync;
-   output 	vga_vsync;
-   output 	vga_r;
-   output 	vga_g;
-   output 	vga_b;
+   inout	ms_ps2_data;
 
-   output 	mmc_cs;
-   output 	mmc_do;
-   output 	mmc_sclk;
-   input 	mmc_di;
+   output	vga_hsync;
+   output	vga_vsync;
+   output	vga_r;
+   output	vga_g;
+   output	vga_b;
 
-   input 	switch;
-   
+   output	mmc_cs;
+   output	mmc_do;
+   output	mmc_sclk;
+   input	mmc_di;
+
+   input	switch;
+
    inout [15:0]  mcb3_dram_dq;
    output [12:0] mcb3_dram_a;
    output [1:0]  mcb3_dram_ba;
-   output 	 mcb3_dram_cke;
-   output 	 mcb3_dram_ras_n;
-   output 	 mcb3_dram_cas_n;
-   output 	 mcb3_dram_we_n;
-   output 	 mcb3_dram_dm;
-   inout 	 mcb3_dram_udqs;
-   inout 	 mcb3_rzq;
-   output 	 mcb3_dram_udm;
-   inout 	 mcb3_dram_dqs;
-   output 	 mcb3_dram_ck;
-   output 	 mcb3_dram_ck_n;
+   output	 mcb3_dram_cke;
+   output	 mcb3_dram_ras_n;
+   output	 mcb3_dram_cas_n;
+   output	 mcb3_dram_we_n;
+   output	 mcb3_dram_dm;
+   inout	 mcb3_dram_udqs;
+   inout	 mcb3_rzq;
+   output	 mcb3_dram_udm;
+   inout	 mcb3_dram_dqs;
+   output	 mcb3_dram_ck;
+   output	 mcb3_dram_ck_n;
 
    output [3:0]  tmds;
    output [3:0]  tmdsb;
 
    // -----------------------------------------------------------------
 
-   wire 	 sysclk_buf; // synthesis attribute period clk50 "50 MHz";
-   wire 	 clk50;      // synthesis attribute period clk50 "50 MHz";
-   wire 	 pixclk;     // synthesis attribute period pixclk "108 MHz";
-   wire 	 cpuclk;     // synthesis attribute period cpuclk "25 MHz";
+   wire		 sysclk_buf; // synthesis attribute period clk50 "50 MHz";
+   wire		 clk50;      // synthesis attribute period clk50 "50 MHz";
+   wire		 pixclk;     // synthesis attribute period pixclk "108 MHz";
+   wire		 cpuclk;     // synthesis attribute period cpuclk "25 MHz";
 
-   wire 	 rs232_rxd, rs232_txd;
+   wire		 rs232_rxd, rs232_txd;
 
-   wire 	 reset;
-   wire 	 vga_reset;
-   wire 	 dcm_reset;
-   wire 	 lpddr_reset;
-   wire 	 interrupt;
+   wire		 reset;
+   wire		 vga_reset;
+   wire		 dcm_reset;
+   wire		 lpddr_reset;
+   wire		 interrupt;
    wire		 boot;
 
-   wire [15:0] 	 spy_in;
-   wire [15:0] 	 spy_out;
-   wire [3:0] 	 spy_reg;
-   wire 	 spy_rd;
-   wire 	 spy_wr;
-   wire 	 dbread, dbwrite;
-   wire [4:0] 	 eadr;
-   wire 	 halt;
-   
-   wire [13:0] 	 mcr_addr;
-   wire [48:0] 	 mcr_data_out;
-   wire [48:0] 	 mcr_data_in;
-   wire 	 mcr_ready;
-   wire 	 mcr_write;
-   wire 	 mcr_done;
+   wire [15:0]	 spy_in;
+   wire [15:0]	 spy_out;
+   wire [3:0]	 spy_reg;
+   wire		 spy_rd;
+   wire		 spy_wr;
+   wire		 dbread, dbwrite;
+   wire [4:0]	 eadr;
+   wire		 halt;
 
-   wire [21:0] 	 sdram_addr;
-   wire [31:0] 	 sdram_data_cpu2rc;
-   wire [31:0] 	 sdram_data_rc2cpu;
-   wire 	 sdram_ready; // synthesis attribute keep sdram_ready true;
-   wire 	 sdram_req; // synthesis attribute keep sdram_req true;
-   wire 	 sdram_write; // synthesis attribute keep sdram_write true;
-   wire 	 sdram_done; // synthesis attribute keep sdram_done true;
+   wire [13:0]	 mcr_addr;
+   wire [48:0]	 mcr_data_out;
+   wire [48:0]	 mcr_data_in;
+   wire		 mcr_ready;
+   wire		 mcr_write;
+   wire		 mcr_done;
 
-   wire [14:0] 	 vram_cpu_addr;
-   wire [31:0] 	 vram_cpu_data_out;
-   wire [31:0] 	 vram_cpu_data_in;
-   wire 	 vram_cpu_req;
-   wire 	 vram_cpu_ready;
-   wire 	 vram_cpu_write;
-   wire 	 vram_cpu_done;
+   wire [21:0]	 sdram_addr;
+   wire [31:0]	 sdram_data_cpu2rc;
+   wire [31:0]	 sdram_data_rc2cpu;
+   wire		 sdram_ready; // synthesis attribute keep sdram_ready true;
+   wire		 sdram_req; // synthesis attribute keep sdram_req true;
+   wire		 sdram_write; // synthesis attribute keep sdram_write true;
+   wire		 sdram_done; // synthesis attribute keep sdram_done true;
 
-   wire [14:0] 	 vram_vga_addr;
-   wire [31:0] 	 vram_vga_data_out;
-   wire 	 vram_vga_req;
-   wire 	 vram_vga_ready;
+   wire [14:0]	 vram_cpu_addr;
+   wire [31:0]	 vram_cpu_data_out;
+   wire [31:0]	 vram_cpu_data_in;
+   wire		 vram_cpu_req;
+   wire		 vram_cpu_ready;
+   wire		 vram_cpu_write;
+   wire		 vram_cpu_done;
 
-   wire [1:0] 	 bd_cmd;	/* generic block device interface */
-   wire 	 bd_start;
-   wire 	 bd_bsy;
-   wire 	 bd_rdy;
-   wire 	 bd_err;
-   wire [23:0] 	 bd_addr;
-   wire [15:0] 	 bd_data_bd2cpu;
-   wire [15:0] 	 bd_data_cpu2bd;
-   wire 	 bd_rd;
-   wire 	 bd_wr;
-   wire 	 bd_iordy;
-   wire [11:0] 	 bd_state;
+   wire [14:0]	 vram_vga_addr;
+   wire [31:0]	 vram_vga_data_out;
+   wire		 vram_vga_req;
+   wire		 vram_vga_ready;
 
-   wire [13:0] 	 pc;
-   wire [5:0] 	 cpu_state; // synthesis attribute keep cpu_state true;
-   wire [4:0] 	 disk_state; // synthesis attribute keep disk_state true;
-   wire [3:0] 	 bus_state; // synthesis attribute keep bus_state true;
-   wire [3:0] 	 rc_state; // synthesis attribute keep rc_state true;
-   wire 	 machrun;
-   wire 	 prefetch;
-   wire 	 fetch;
+   wire [1:0]	 bd_cmd;	/* generic block device interface */
+   wire		 bd_start;
+   wire		 bd_bsy;
+   wire		 bd_rdy;
+   wire		 bd_err;
+   wire [23:0]	 bd_addr;
+   wire [15:0]	 bd_data_bd2cpu;
+   wire [15:0]	 bd_data_cpu2bd;
+   wire		 bd_rd;
+   wire		 bd_wr;
+   wire		 bd_iordy;
+   wire [11:0]	 bd_state;
 
-   wire [3:0] 	 dots;
+   wire [13:0]	 pc;
+   wire [5:0]	 cpu_state; // synthesis attribute keep cpu_state true;
+   wire [4:0]	 disk_state; // synthesis attribute keep disk_state true;
+   wire [3:0]	 bus_state; // synthesis attribute keep bus_state true;
+   wire [3:0]	 rc_state; // synthesis attribute keep rc_state true;
+   wire		 machrun;
+   wire		 prefetch;
+   wire		 fetch;
 
-   wire [15:0] 	 sram1_in;
-   wire [15:0] 	 sram1_out;
-   wire [15:0] 	 sram2_in;
-   wire [15:0] 	 sram2_out;
+   wire [3:0]	 dots;
 
-   wire [15:0] 	 kb_data;
-   wire 	 kb_ready;
-   
-   wire [11:0] 	 ms_x, ms_y;
-   wire [2:0] 	 ms_button;
-   wire 	 ms_ready;
+   wire [15:0]	 sram1_in;
+   wire [15:0]	 sram1_out;
+   wire [15:0]	 sram2_in;
+   wire [15:0]	 sram2_out;
+
+   wire [15:0]	 kb_data;
+   wire		 kb_ready;
+
+   wire [11:0]	 ms_x, ms_y;
+   wire [2:0]	 ms_button;
+   wire		 ms_ready;
 
    BUFG sysclk_bufg (.I(sysclk), .O(sysclk_buf));
 
@@ -202,66 +202,66 @@ module top(usb_txd, usb_rxd,
    wire [15:0] busint_spyout;
 
    busint busint(
-		 .mclk(cpuclk),		 // input	OK
-		 .reset(reset),		 // input	OK?
-		 .addr(busint_addr),	 // input [21:0] OK
-		 .busin(md),		 // input [31:0] OK
-		 .busout(busint_bus),	 // output [31:0] OK
-		 .spyin(spy_in),	 // input [15:0]	OK
-		 .spyout(busint_spyout), // output [15:0] OK
-		 .spyreg(spy_reg),	 // output [3:0] OK
-		 .spyrd(spy_rd),	 // output	OK
-		 .spywr(spy_wr),	 // output	OK
+		 .mclk(cpuclk),
+		 .reset(reset),
+		 .addr(busint_addr),
+		 .busin(md),
+		 .busout(busint_bus),
+		 .spyin(spy_in),
+		 .spyout(busint_spyout),
+		 .spyreg(spy_reg),
+		 .spyrd(spy_rd),
+		 .spywr(spy_wr),
 
-		 .req(memrq),	// input OK
-		 .ack(memack),	// output OK
-		 .write(wrcyc),	// input OK
-		 .load(loadmd),	// output OK
+		 .req(memrq),
+		 .ack(memack),
+		 .write(wrcyc),
+		 .load(loadmd),
 
-		 .interrupt(bus_int), // output OK
+		 .interrupt(bus_int),
 
-		 .sdram_addr(sdram_addr), // output [21:0]	OK
-		 .sdram_data_in(sdram_data_rc2cpu), // input [31:0]	OK
-		 .sdram_data_out(sdram_data_cpu2rc), // output [31:0]	OK
-		 .sdram_req(sdram_req),	    // output	OK
-		 .sdram_ready(sdram_ready), // input	OK
-		 .sdram_write(sdram_write), // output	OK
-		 .sdram_done(sdram_done),   // input	OK
-      		 
-		 .vram_addr(vram_cpu_addr), // output [14:0]	OK
-		 .vram_data_in(vram_cpu_data_in), // input [31:0]	OK
-		 .vram_data_out(vram_cpu_data_out), // output [31:0]	OK
-		 .vram_req(vram_cpu_req),	    // output	OK
-		 .vram_ready(vram_cpu_ready),	    // input	OK
-		 .vram_write(vram_cpu_write),	    // output	OK
-		 .vram_done(vram_cpu_done),	    // input	OK
-		 
-		 .bd_cmd(bd_cmd),     // output [1:0]	OK
-		 .bd_start(bd_start), // output	OK	
-		 .bd_bsy(bd_bsy),     // input	OK	
-		 .bd_rdy(bd_rdy),     // input	OK	
-		 .bd_err(bd_err),     // input	OK	
-		 .bd_addr(bd_addr),   // output [23:0]	OK	
-		 .bd_data_in(bd_data_bd2cpu), // input [15:0]	OK
-		 .bd_data_out(bd_data_cpu2bd), // output [15:0]	OK	
-		 .bd_rd(bd_rd),		 // output	OK	
-		 .bd_wr(bd_wr),		 // output	OK	
-		 .bd_iordy(bd_iordy),	 // input	OK	
-		 .bd_state_in(bd_state), // input [11:0]	OK
-		 
-		 .kb_data(kb_data),	// input [15:0]	OK
-		 .kb_ready(kb_ready),	// input	OK
-		 .ms_x(ms_x),		// input [11:0]	OK
-		 .ms_y(ms_y),		// input [11:0]	OK
-		 .ms_button(ms_button),	// input [2:0]	OK
-		 .ms_ready(ms_ready),	// input	OK
+		 .sdram_addr(sdram_addr),
+		 .sdram_data_in(sdram_data_rc2cpu),
+		 .sdram_data_out(sdram_data_cpu2rc),
+		 .sdram_req(sdram_req),
+		 .sdram_ready(sdram_ready),
+		 .sdram_write(sdram_write),
+		 .sdram_done(sdram_done),
 
-		 .promdisable(set_promdisable),	// output
-		 .disk_state(disk_state),   // output [4:0]	OK?
-		 .bus_state(bus_state)	// output [3:0]	..
+		 .vram_addr(vram_cpu_addr),
+		 .vram_data_in(vram_cpu_data_in),
+		 .vram_data_out(vram_cpu_data_out),
+		 .vram_req(vram_cpu_req),
+		 .vram_ready(vram_cpu_ready),
+		 .vram_write(vram_cpu_write),
+		 .vram_done(vram_cpu_done),
+
+		 .bd_cmd(bd_cmd),
+		 .bd_start(bd_start),
+		 .bd_bsy(bd_bsy),
+		 .bd_rdy(bd_rdy),
+		 .bd_err(bd_err),
+		 .bd_addr(bd_addr),
+		 .bd_data_in(bd_data_bd2cpu),
+		 .bd_data_out(bd_data_cpu2bd),
+		 .bd_rd(bd_rd),
+		 .bd_wr(bd_wr),
+		 .bd_iordy(bd_iordy),
+		 .bd_state_in(bd_state),
+
+		 .kb_data(kb_data),
+		 .kb_ready(kb_ready),
+		 .ms_x(ms_x),
+		 .ms_y(ms_y),
+		 .ms_button(ms_button),
+		 .ms_ready(ms_ready),
+
+		 .promdisable(set_promdisable),
+		 .disk_state(disk_state),
+		 .bus_state(bus_state)
 		 );
 
-   wire [4:0] 	 disk_state_in;
+   wire [4:0]	 disk_state_in;
    assign disk_state_in = busint.disk.state;
 
    caddr cpu (
@@ -300,27 +300,27 @@ module top(usb_txd, usb_rxd,
 	      .md(md),
 
 	      .busint_bus(busint_bus),
-	      
+
 	      .memrq(memrq),
 	      .memack(memack),
 	      .wrcyc(wrcyc),
 	      .loadmd(loadmd),
 	      .bus_int(bus_int)
 	      );
-   
+
 `ifdef use_spyport
-   wire [1:0] 	 spy_bd_cmd;
-   wire 	 spy_bd_start;
-   wire 	 spy_bd_bsy;
-   wire 	 spy_bd_rdy;
-   wire 	 spy_bd_err;
-   wire [23:0] 	 spy_bd_addr;
-   wire [15:0] 	 spy_bd_data_bd2cpu;
-   wire [15:0] 	 spy_bd_data_cpu2bd;
-   wire 	 spy_bd_rd;
-   wire 	 spy_bd_wr;
-   wire 	 spy_bd_iordy;
-   wire [15:0] 	 spy_bd_state;
+   wire [1:0]	 spy_bd_cmd;
+   wire		 spy_bd_start;
+   wire		 spy_bd_bsy;
+   wire		 spy_bd_rdy;
+   wire		 spy_bd_err;
+   wire [23:0]	 spy_bd_addr;
+   wire [15:0]	 spy_bd_data_bd2cpu;
+   wire [15:0]	 spy_bd_data_cpu2bd;
+   wire		 spy_bd_rd;
+   wire		 spy_bd_wr;
+   wire		 spy_bd_iordy;
+   wire [15:0]	 spy_bd_state;
 
    spy_port spy_port(
 		     .sysclk(clk50),
@@ -334,20 +334,20 @@ module top(usb_txd, usb_rxd,
 		     .dbwrite(dbwrite),
 		     .eadr(eadr)
 		     );
-`else   
+`else
    assign      eadr = 4'b0;
    assign      dbread = 0;
    assign      dbwrite = 0;
    assign      spyin = 0;
    assign      rs232_txd = 1'b1;
 `endif
-   
+
    lx45_ram_controller rc (
 			   .sysclk_in(sysclk/*sysclk_buf*/),
 			   .lpddr_clk_out(),
 			   .lpddr_reset(lpddr_reset),
 			   .lpddr_calib_done(lpddr_calib_done),
-			   
+
 			   .clk(clk50),
 			   .vga_clk(pixclk/*clk50*/),
 			   .cpu_clk(cpuclk),
@@ -371,7 +371,7 @@ module top(usb_txd, usb_rxd,
 			   .sdram_ready(sdram_ready),
 			   .sdram_write(sdram_write),
 			   .sdram_done(sdram_done),
-      
+
 			   .vram_cpu_addr(vram_cpu_addr),
 			   .vram_cpu_data_in(vram_cpu_data_out),
 			   .vram_cpu_data_out(vram_cpu_data_in),
@@ -379,7 +379,7 @@ module top(usb_txd, usb_rxd,
 			   .vram_cpu_ready(vram_cpu_ready),
 			   .vram_cpu_write(vram_cpu_write),
 			   .vram_cpu_done(vram_cpu_done),
-      
+
 			   .vram_vga_addr(vram_vga_addr),
 			   .vram_vga_data_out(vram_vga_data_out),
 			   .vram_vga_req(vram_vga_req),
@@ -411,9 +411,9 @@ module top(usb_txd, usb_rxd,
 `ifdef use_mmc
    mmc_block_dev mmc_bd(
 			.clk(cpuclk),
-			.mmcclk(clk50),			
+			.mmcclk(clk50),
 			.reset(reset),
-   			.bd_cmd(bd_cmd),
+			.bd_cmd(bd_cmd),
 			.bd_start(bd_start),
 			.bd_bsy(bd_bsy),
 			.bd_rdy(bd_rdy),
@@ -445,7 +445,7 @@ module top(usb_txd, usb_rxd,
    assign vga_r = vga_red;
    assign vga_g = vga_grn;
    assign vga_b = vga_blu;
-   
+
    vga_display vga (.clk(clk50),
 		    .pixclk(pixclk),
 		    .reset(vga_reset),
@@ -454,7 +454,7 @@ module top(usb_txd, usb_rxd,
 		    .vram_data(vram_vga_data_out),
 		    .vram_req(vram_vga_req),
 		    .vram_ready(vram_vga_ready),
-      
+
 		    .vga_red(vga_red),
 		    .vga_blu(vga_blu),
 		    .vga_grn(vga_grn),
@@ -477,7 +477,7 @@ module top(usb_txd, usb_rxd,
    assign red_data = vga_red ? 8'hff : 8'h00;
    assign blu_data = vga_blu ? 8'hff : 8'h00;
    assign grn_data = vga_grn ? 8'hff : 8'h00;
-   
+
    dvid_output dvid (
 		     .clk50(sysclk_buf/*clk50*/),
 		     .reset(reset),
@@ -518,7 +518,7 @@ module top(usb_txd, usb_rxd,
 `else
      assign cpuclk = clk50;
 `endif
-      
+
    // dummy drivers
    wire [3:0] tmds_dummy;
    OBUFDS obufds_0(.I(tmds_dummy[0]), .O(tmds[0]), .OB(tmdsb[0]));
@@ -526,7 +526,7 @@ module top(usb_txd, usb_rxd,
    OBUFDS obufds_2(.I(tmds_dummy[2]), .O(tmds[2]), .OB(tmdsb[2]));
    OBUFDS obufds_3(.I(tmds_dummy[3]), .O(tmds[3]), .OB(tmdsb[3]));
 `endif
-   
+
 `ifdef use_ps2
    wire   kb_ps2_clk_in;
    wire   kb_ps2_data_in;
@@ -544,7 +544,7 @@ module top(usb_txd, usb_rxd,
 
    assign ms_ps2_clk = ms_ps2_dir ? ms_ps2_clk_out : 1'bz;
    assign ms_ps2_data = ms_ps2_dir ? ms_ps2_data_out : 1'bz;
-   
+
    ps2_support ps2_support(
 			   .clk(cpuclk),
 			   .reset(reset),
@@ -568,7 +568,7 @@ module top(usb_txd, usb_rxd,
 
    assign kb_ready = 0;
    assign kb_data = 0;
-   
+
    assign ms_ready = 0;
    assign ms_x = 0;
    assign ms_y = 0;
