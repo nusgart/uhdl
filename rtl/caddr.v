@@ -669,7 +669,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    SOURCE(.ir, .iralu, .irbyte, .destimod0, .destimod1, .iwrited, .idebug, .specalu, .nop, .irdisp, .irjump, .funct, .div, .mul, .srcq, .srcopc, .srcpdltop, .srcpdlpop, .srcpdlidx, .srcpdlptr, .srcspc, .srcdc, .srcspcpop, .srclc, .srcmd, .srcmap, .srcvma, .imod, .destmem, .destvma, .destmdr, .dest, .destm, .destintctl, .destlc, .destspc, .destpdlp, .destpdlx, .destpdl_x, .destpdl_p, .destpdltop);
 
-   SPC(.clk, .reset, .spcnt, .state_fetch, .spush, .spcptr, .spco, .spcw,.srp,.swp);
+   SPC(.clk, .reset, .spcnt, .state_fetch, .spush, .spcptr, .spco, .spcw, .srp, .swp);
 
    SPCLCH(.spc, .spco);
 
@@ -689,7 +689,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    VMEM0(.clk, .reset, .vmem0_adr, .mapi, .vmap, .vm0rp, .vma, .use_map, .srcmap, .memstart, .vm0wp);
 
-   VMEM12(.clk, .reset, .vmem1_adr, .vmap, .mapi, .vm1rp, .vma, .vmo,.vm1wp);
+   VMEM12(.clk, .reset, .vmem1_adr, .vmap, .mapi, .vm1rp, .vma, .vmo, .vm1wp);
 
    VMEMDR(.vmo, .srcmap, .state_alu, .state_write, .state_mmu, .state_fetch, .lvmo_23, .lvmo_22, .mapdrive, .pma);
 
