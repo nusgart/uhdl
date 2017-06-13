@@ -7,7 +7,7 @@ module DSPCTL(clk, reset, state_fetch, irdisp, funct, ir, dmask, dmapbenb, dispw
 
    input [3:0] funct;
    input [48:0] ir;
-   input [6:0]	dmask;
+   output [6:0]	dmask;
    input	irdisp;
    input	state_fetch;
    output [9:0] dc;

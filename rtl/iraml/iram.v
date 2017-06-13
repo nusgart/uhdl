@@ -15,24 +15,29 @@
 // TK		CADR	RAM 8K-12K, 36-48
 // TK		CADR	RAM 12K-16K, 36-48
 
-module IRAM(clk, reset, pc, pc_out, state_out, iwr, iwe, iram, fetch_out, prefetch_out, machrun_out, mcr_data_in, state_fetch, machrun, state);
+module IRAM(clk, reset, pc, pc_out, state_out, iwr, iwe, iram, fetch_out, prefetch_out, machrun_out, mcr_data_in, state_fetch, machrun, state, need_mmu_state, state_mmu, state_write, state_prefetch, promdisabled);
 
    input clk;
    input reset;
 
    input [13:0] pc;
-   input [5:0]	state;
-   input	iwe;
-   input [48:0]		iwr;
-   input	machrun;
-   input [48:0]  mcr_data_in;
-   input	state_fetch;
+   input [48:0] iwr;
+   input [48:0] mcr_data_in;
+   input [5:0] 	state;
+   input 	iwe;
+   input 	machrun;
+   input 	need_mmu_state;
+   input 	promdisabled;
+   input 	state_fetch;
+   input 	state_mmu;
+   input 	state_prefetch;
+   input 	state_write;
    output [13:0] pc_out;
    output [48:0] iram;
    output [5:0]  state_out;
-   output	 fetch_out;
-   output	 machrun_out;
-   output	 prefetch_out;
+   output 	 fetch_out;
+   output 	 machrun_out;
+   output 	 prefetch_out;
 
    ////////////////////////////////////////////////////////////////////////////////
 
