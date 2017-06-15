@@ -1,3 +1,5 @@
+// LPC
+//
 // CADR	LAST PC
 
 module LPC(clk, reset, lpc_hold, pc, wpc, irdisp, ir, state_fetch);

@@ -1,3 +1,5 @@
+// ALUC4
+//
 // TK		CADR	ALU CARRY AND FUNCTION
 
 module ALUC4(yout15, yout11, yout7, yout3, xout15, xout11, xout7, xout3, yout31, yout27, yout23, yout19, xout31, xout27, xout23, xout19, a, ir, iralu, irjump, mul, div, q, osel, aluf, alumode, cin12_n, cin8_n, cin4_n, cin0, cin28_n, cin24_n, cin20_n, cin16_n, cin32_n);

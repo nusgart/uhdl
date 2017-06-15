@@ -1,3 +1,5 @@
+// VCTL2
+//
 // TK	CADR	VMA/MD CONTROL
 
 module VCTL2(loadmd, nopa, ir, wrcyc, destmdr, srcmd, destmem, srcmap, irdisp, memprepare, memstart, destvma, ifetch, state_decode, state_write, state_read, state_mmu, vm0wp, vm1wp, wmap, memwr, memrd, vma, dmapbenb, dispwr, vm0rp, vm1rp, vmaenb, vmasel, memdrive, mdsel);

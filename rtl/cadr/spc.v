@@ -1,3 +1,5 @@
+// SPC
+//
 // TK	CADR	SPC MEMORY AND POINTER
 
 module SPC(clk, reset, spcnt, state_fetch, spush, spcptr, spco, spcw, srp, swp);

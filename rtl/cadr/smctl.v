@@ -1,3 +1,5 @@
+// SMCTL
+//
 // TK	CONS	SHIFT/MASK CONTROL
 
 module SMCTL(mskr, s0, s1, s2, s3, s4, sh3, sh4, mskl, irbyte, ir);

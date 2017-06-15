@@ -1,3 +1,5 @@
+// DEBUG
+//
 // TK		CADR	PDP11 DEBUG INSTRUCTION
 
 module DEBUG(clk, reset, spy_in, i, idebug, promenable, iprom, iram, lddbirh, lddbirm, lddbirl);

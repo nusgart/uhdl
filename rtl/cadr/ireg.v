@@ -1,3 +1,5 @@
+// IREG
+//
 // TK		CADR	INSTRUCTION REGISTER
 
 module IREG(clk, reset, i, iob, ir, state_fetch, destimod1, destimod0);

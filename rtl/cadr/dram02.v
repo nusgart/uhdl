@@ -1,3 +1,5 @@
+// DRAM0, DRAM1, DRAM2
+//
 // TK		CADR	DISPATCH RAM
 
 module DRAM02(clk, reset, a, ir, vmo, dmask, r, dr, dp, dn, dpc, dispwr, state_write, state_prefetch);

@@ -1,3 +1,5 @@
+// OLORD1
+//
 // TK		CADR	OVERLORD
 
 module OLORD1(clk, reset, ldmode, ldscratch1, ldscratch2, ldclk, boot, promdisable, errstop, scratch, opcinh, opcclk, lpc_hold, idebug, nop11, srun, ssdone, promdisabled, machrun, stat_ovf, stathalt, errhalt, state_fetch, statstop, spy_in, ldopc, set_promdisable, waiting);

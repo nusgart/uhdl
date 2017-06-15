@@ -1,3 +1,5 @@
+// TRAP
+//
 // TK	CADR	PARITY ERROR TRAP
 
 module TRAP(trap, boot_trap);

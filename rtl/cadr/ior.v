@@ -1,3 +1,5 @@
+// IOR
+//
 // TK		CADR	INST. MODIFY OR
 
 module IOR(iob, i, ob);

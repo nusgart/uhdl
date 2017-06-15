@@ -1,3 +1,5 @@
+// SPCLCH
+//
 // TK	CADR	SPC MEMORY LATCH
 
 module SPCLCH(spc, spco);

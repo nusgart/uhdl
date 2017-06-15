@@ -1,3 +1,5 @@
+// Q
+//
 // TK	CADR	Q REGISTER
 
 module Q(clk, reset, state_alu, state_write, state_mmu, state_fetch, alu, srcq, qdrive, q, ir, iralu);
