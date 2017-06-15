@@ -5,11 +5,12 @@ module IREG(clk, reset, i, iob, ir, state_fetch, destimod1, destimod0);
    input clk;
    input reset;
 
+   input state_fetch;
+
    input [47:0] iob;
    input [48:0] i;
    input	destimod0;
    input	destimod1;
-   input	state_fetch;
    output [48:0] ir;
 
    ////////////////////////////////////////////////////////////////////////////////

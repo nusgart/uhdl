@@ -3,9 +3,10 @@ module L(clk, reset, vmaenb, state_write, state_alu, ob, l);
    input clk;
    input reset;
 
+   input state_alu;
+   input state_write;
+
    input [31:0] ob;
-   input	state_alu;
-   input	state_write;
    input	vmaenb;
    output [31:0] l;
 

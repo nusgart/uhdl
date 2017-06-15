@@ -1,6 +1,11 @@
 // TK	CADR	VMA/MD CONTROL
 
-module VCTL2(loadmd, nopa, ir, wrcyc, destmdr, srcmd, destmem, srcmap, irdisp, memprepare, memstart, destvma, ifetch, state_decode, state_write, state_read, state_mmu, mapwr0, mapwr1, vm0wp, vm1wp, wmap, memwr, memrd, vma, dmapbenb, dispwr, vm0rp, vm1rp, vmaenb, vmasel, memdrive, mdsel, use_md);
+module VCTL2(loadmd, nopa, ir, wrcyc, destmdr, srcmd, destmem, srcmap, irdisp, memprepare, memstart, destvma, ifetch, state_decode, state_write, state_read, state_mmu, vm0wp, vm1wp, wmap, memwr, memrd, vma, dmapbenb, dispwr, vm0rp, vm1rp, vmaenb, vmasel, memdrive, mdsel);
+
+   input state_decode;
+   input state_mmu;
+   input state_read;
+   input state_write;
 
    input [31:0] vma;
    input [48:0] ir;
@@ -17,27 +22,26 @@ module VCTL2(loadmd, nopa, ir, wrcyc, destmdr, srcmd, destmem, srcmap, irdisp, m
    input	nopa;
    input	srcmap;
    input	srcmd;
-   input	state_decode;
-   input	state_mmu;
-   input	state_read;
-   input	state_write;
    input	wrcyc;
-   output	mapwr0;
-   output	mapwr1;
+   output	mdsel;
+   output	memdrive;
    output	memrd;
    output	memwr;
-   output	vm0wp;
-   output	vm1wp;
-   output	wmap;
    output	vm0rp;
+   output	vm0wp;
    output	vm1rp;
+   output	vm1wp;
    output	vmaenb;
    output	vmasel;
-   output	memdrive;
-   output	mdsel;
-   output	use_md;
+   output	wmap;
 
    ////////////////////////////////////////////////////////////////////////////////
+
+   wire		early_vm0_rd;
+   wire		early_vm1_rd;
+   wire		normal_vm0_rd;
+   wire		normal_vm1_rd;
+   wire		use_md;
 
    /*
     * for memory cycle, we run mmu state and map vma during state_write & state_mmu
@@ -49,12 +53,6 @@ module VCTL2(loadmd, nopa, ir, wrcyc, destmdr, srcmd, destmem, srcmap, irdisp, m
 
    assign mapwr0 = wmap & vma[26];
    assign mapwr1 = wmap & vma[25];
-
-   wire   early_vm0_rd;
-   wire   early_vm1_rd;
-
-   wire   normal_vm0_rd;
-   wire   normal_vm1_rd;
 
    // for dispatch, no alu needed, so read early and skip mmu state
    // for byte,     no alu needed, so read early

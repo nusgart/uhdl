@@ -1,16 +1,17 @@
 // TK	CADR	SPC WRITE DATA SEL
 
-module SPCW(destspc, l, reta, spcw, n, wpc, ipc);
+module SPCW(destspc, l, spcw, n, wpc, ipc);
 
    input [13:0] ipc;
    input [13:0] wpc;
    input [31:0] l;
    input	destspc;
    input	n;
-   output [13:0] reta;
    output [18:0] spcw;
 
    ////////////////////////////////////////////////////////////////////////////////
+
+   wire [13:0]	 reta;
 
    assign spcw = destspc ? l[18:0] : { 5'b0, reta };
 

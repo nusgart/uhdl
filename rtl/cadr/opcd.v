@@ -2,12 +2,13 @@
 
 module OPCD(dcdrive, opcdrive, srcdc, srcopc, state_alu, state_write, state_mmu, state_fetch);
 
-   input srcdc;
-   input srcopc;
    input state_alu;
    input state_fetch;
    input state_mmu;
    input state_write;
+
+   input srcdc;
+   input srcopc;
    output dcdrive;
    output opcdrive;
 

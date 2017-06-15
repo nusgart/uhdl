@@ -6,18 +6,18 @@ module ALU01(a, m, aluf, alumode, aeqm, alu, cin12_n, cin16_n, cin20_n, cin24_n,
    input [31:0] a;
    input [31:0] m;
    input [3:0]	aluf;
+   input	alumode;
+   input	cin0;
+   input	cin12_n;
+   input	cin16_n;
+   input	cin20_n;
+   input	cin24_n;
+   input	cin28_n;
+   input	cin32_n;
+   input	cin4_n;
+   input	cin8_n;
    output [32:0] alu;
    output	 aeqm;
-   input	 alumode;
-   input	 cin0;
-   input	 cin12_n;
-   input	 cin16_n;
-   input	 cin20_n;
-   input	 cin24_n;
-   input	 cin28_n;
-   input	 cin32_n;
-   input	 cin4_n;
-   input	 cin8_n;
    output	 xout11;
    output	 xout15;
    output	 xout19;
@@ -38,7 +38,7 @@ module ALU01(a, m, aluf, alumode, aeqm, alu, cin12_n, cin16_n, cin20_n, cin24_n,
    ////////////////////////////////////////////////////////////////////////////////
 
    wire [2:0]	 nc_alu;
-   wire [7:0] 	 aeqm_bits;
+   wire [7:0]	 aeqm_bits;
 
    // 74181 pulls down AEB if not equal
    // aeqm is the simulated open collector

@@ -5,14 +5,15 @@ module VMA(clk, reset, state_alu, state_write, state_fetch, vmaenb, vmas, spy_in
    input clk;
    input reset;
 
+   input state_alu;
+   input state_fetch;
+   input state_write;
+
    input [15:0] spy_in;
    input [31:0] vmas;
    input	ldvmah;
    input	ldvmal;
    input	srcvma;
-   input	state_alu;
-   input	state_fetch;
-   input	state_write;
    input	vmaenb;
    output [31:0] vma;;
    output	 vmadrive;

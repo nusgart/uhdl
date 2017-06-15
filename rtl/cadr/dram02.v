@@ -5,24 +5,25 @@ module DRAM02(clk, reset, a, ir, vmo, dmask, r, dr, dp, dn, dpc, dispwr, state_w
    input clk;
    input reset;
 
+   input state_prefetch;
+   input state_write;
+
    input [23:0] vmo;
    input [31:0] a;;
    input [31:0] r;
    input [48:0] ir;
    input [6:0]	dmask;
    input	dispwr;
-   input	state_prefetch;
-   input	state_write;
    output [13:0] dpc;
-   output	 dp;
    output	 dn;
+   output	 dp;
    output	 dr;
 
    ////////////////////////////////////////////////////////////////////////////////
 
-   wire 	 daddr0;
-   wire [10:0] 	 dadr;
-   wire 	 dwe;
+   wire [10:0]	 dadr;
+   wire		 daddr0;
+   wire		 dwe;
 
    // dadr  10 9  8  7  6  5  4  3  2  1  0
    // -------------------------------------

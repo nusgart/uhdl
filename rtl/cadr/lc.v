@@ -1,9 +1,14 @@
 // TK		CADR	LOCATION COUNTER
 
-module LC(clk, reset, destlc, lcinc, lc_byte_mode, srclc, state_alu, state_write, state_mmu, state_fetch, ob, lcdrive, opcdrive, opc, dcdrive, dc, pdlptr, pidrive, pdlidx, qdrive, q, mddrive, md, vmadrive, vma, mapdrive, pfw, needfetch, int_enable, prog_unibus_reset, sequence_break, lc0b, ppdrive, vmap, pfr, vmo, mf);
+module LC(clk, reset, destlc, lcinc, lc_byte_mode, srclc, state_alu, state_write, state_mmu, state_fetch, ob, opcdrive, opc, dcdrive, dc, pdlptr, pidrive, pdlidx, qdrive, q, mddrive, md, vmadrive, vma, mapdrive, pfw, needfetch, int_enable, prog_unibus_reset, sequence_break, lc0b, ppdrive, vmap, pfr, vmo, mf);
 
    input clk;
    input reset;
+
+   input state_alu;
+   input state_fetch;
+   input state_mmu;
+   input state_write;
 
    input [13:0] opc;
    input [23:0] vmo;
@@ -33,19 +38,15 @@ module LC(clk, reset, destlc, lcinc, lc_byte_mode, srclc, state_alu, state_write
    input	qdrive;
    input	sequence_break;
    input	srclc;
-   input	state_alu;
-   input	state_fetch;
-   input	state_mmu;
-   input	state_write;
    input	vmadrive;
    output [31:0] mf;
-   output	 lcdrive;
 
    ////////////////////////////////////////////////////////////////////////////////
 
    reg [25:0]	 lc;
-   wire 	 lcry3;
-   wire [3:0] 	 lca;
+   wire [3:0]	 lca;
+   wire		 lcdrive;
+   wire		 lcry3;
 
    always @(posedge clk)
      if (reset)

@@ -1,9 +1,11 @@
 // TK		CADR	OVERLORD
 
-module OLORD1(clk, reset, ldmode, ldscratch1, ldscratch2, ldclk, boot, run, step, promdisable, trapenb, stathenb, errstop, scratch, opcinh, opcclk, lpc_hold, ldstat, idebug, nop11, srun, sstep, ssdone, promdisabled, machrun, stat_ovf, stathalt, errhalt, state_fetch, statstop, spy_in, ldopc, set_promdisable, waiting);
+module OLORD1(clk, reset, ldmode, ldscratch1, ldscratch2, ldclk, boot, promdisable, errstop, scratch, opcinh, opcclk, lpc_hold, idebug, nop11, srun, ssdone, promdisabled, machrun, stat_ovf, stathalt, errhalt, state_fetch, statstop, spy_in, ldopc, set_promdisable, waiting);
 
    input clk;
    input reset;
+
+   input state_fetch;
 
    input [15:0] spy_in;
    input	boot;
@@ -14,13 +16,11 @@ module OLORD1(clk, reset, ldmode, ldscratch1, ldscratch2, ldclk, boot, run, step
    input	ldscratch1;
    input	ldscratch2;
    input	set_promdisable;
-   input	state_fetch;
    input	statstop;
    input	waiting;
    output [15:0] scratch;
    output	 errstop;
    output	 idebug;
-   output	 ldstat;
    output	 lpc_hold;
    output	 machrun;
    output	 nop11;
@@ -28,35 +28,30 @@ module OLORD1(clk, reset, ldmode, ldscratch1, ldscratch2, ldclk, boot, run, step
    output	 opcinh;
    output	 promdisable;
    output	 promdisabled;
-   output	 run;
    output	 srun;
    output	 ssdone;
-   output	 sstep;
    output	 stat_ovf;
    output	 stathalt;
-   output	 stathenb;
-   output	 step;
-   output	 trapenb;
 
    ////////////////////////////////////////////////////////////////////////////////
 
    reg [15:0]	 scratch;
    reg		 errstop;
+   reg		 idebug;
    reg		 ldstat;
+   reg		 lpc_hold;
+   reg		 nop11;
+   reg		 opcclk;
    reg		 opcinh;
    reg		 promdisable;
+   reg		 promdisabled;
    reg		 run;
    reg		 srun;
-   reg		 stathenb;
-   reg		 trapenb;
-   reg		 opcclk;
-   reg		 lpc_hold;
-   reg		 idebug;
-   reg		 nop11;
-   reg		 step;
-   reg		 sstep;
    reg		 ssdone;
-   reg		 promdisabled;
+   reg		 sstep;
+   reg		 stathenb;
+   reg		 step;
+   reg		 trapenb;
 
    always @(posedge clk)
      if (reset)

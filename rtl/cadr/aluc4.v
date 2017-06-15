@@ -40,16 +40,16 @@ module ALUC4(yout15, yout11, yout7, yout3, xout15, xout11, xout7, xout3, yout31,
 
    ////////////////////////////////////////////////////////////////////////////////
 
-   wire 	divposlasttime;
-   wire 	divaddcond;
-   wire 	divsubcond;
-   wire 	mulnop;
-   wire 	aluadd;
-   wire 	alusub;
-   wire 	xx0;
-   wire 	xx1;
-   wire 	yy0;
-   wire 	yy1;
+   wire		aluadd;
+   wire		alusub;
+   wire		divaddcond;
+   wire		divposlasttime;
+   wire		divsubcond;
+   wire		mulnop;
+   wire		xx0;
+   wire		xx1;
+   wire		yy0;
+   wire		yy1;
 
    ic_74S182  i_ALUC4_2A20 (
 			    .Y( { yout15,yout11,yout7,yout3 } ),

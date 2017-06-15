@@ -1,7 +1,7 @@
 // TK	CADR	SHIFTER RIGHT
 // TK	CADR	SHIFTER LEFT
 
-module SHIFT01(sa, r, s0, s1, s2, s3, s4, m);
+module SHIFT01(r, s0, s1, s2, s3, s4, m);
 
    input [31:0] m;
    input	s0;
@@ -10,9 +10,10 @@ module SHIFT01(sa, r, s0, s1, s2, s3, s4, m);
    input	s3;
    input	s4;
    output [31:0] r;
-   output [31:0] sa;
 
    ////////////////////////////////////////////////////////////////////////////////
+
+   wire [31:0]	 sa;
 
    assign sa =
 	      {s1,s0} == 2'b00 ? m :

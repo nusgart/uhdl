@@ -5,6 +5,8 @@ module FLAG(clk, reset, ir, nopa, aeqm, sintr, int_enable, vmaok, sequence_break
    input clk;
    input reset;
 
+   input state_fetch;
+
    input [31:0] ob;
    input [31:0] r;
    input [32:0] alu;
@@ -13,13 +15,12 @@ module FLAG(clk, reset, ir, nopa, aeqm, sintr, int_enable, vmaok, sequence_break
    input	destintctl;
    input	nopa;
    input	sintr;
-   input	state_fetch;
    input	vmaok;
    output	int_enable;
+   output	jcond;
    output	lc_byte_mode;
    output	prog_unibus_reset;
    output	sequence_break;
-   output	jcond;
 
    ////////////////////////////////////////////////////////////////////////////////
 
@@ -27,11 +28,12 @@ module FLAG(clk, reset, ir, nopa, aeqm, sintr, int_enable, vmaok, sequence_break
    reg		lc_byte_mode;
    reg		prog_unibus_reset;
    reg		sequence_break;
-   wire [2:0] 	conds;
-   wire 	pgf_or_int;
-   wire 	pgf_or_int_or_sb;
-   wire 	sint;
-   wire 	statbit;
+   wire [2:0]	conds;
+   wire		ilong;
+   wire		pgf_or_int;
+   wire		pgf_or_int_or_sb;
+   wire		sint;
+   wire		statbit;
 
    assign statbit = ~nopa & ir[46];
    assign ilong  = ~nopa & ir[45];
