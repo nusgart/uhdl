@@ -1,6 +1,6 @@
 // TK	CADR	PDL BUFFER CONTROL
 
-module PDLCTL(clk, reset, pdlidx, pdla, pdlp, pdlwrite, state_alu, state_write, state_read, ir, pwidx, pwp, prp, pdlenb, pdldrive, pdlcnt, pdlptr, destpdltop, destpdl_x, destpdl_p, srcpdlpop, state_mmu, nop, srcpdltop, state_fetch);
+module PDLCTL(clk, reset, pdlidx, pdla, pdlwrite, state_alu, state_write, state_read, ir, pwidx, pwp, prp, pdlenb, pdldrive, pdlcnt, pdlptr, destpdltop, destpdl_x, destpdl_p, srcpdlpop, state_mmu, nop, srcpdltop, state_fetch);
 
    input clk;
    input reset;
@@ -23,7 +23,6 @@ module PDLCTL(clk, reset, pdlidx, pdla, pdlp, pdlwrite, state_alu, state_write, 
    output	pdlcnt;
    output	pdldrive;
    output	pdlenb;
-   output	pdlp;
    output	pdlwrite;
    output	prp;
    output	pwidx;
@@ -32,6 +31,7 @@ module PDLCTL(clk, reset, pdlidx, pdla, pdlp, pdlwrite, state_alu, state_write, 
    ////////////////////////////////////////////////////////////////////////////////
 
    reg		pwidx;
+   wire 	pdlp;
 
    /* m-src = pdl buffer, or index based write */
    assign pdlp = (state_read & ir[30]) | (~state_read & ~pwidx);

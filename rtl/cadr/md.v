@@ -1,6 +1,6 @@
 // TK		CADR	MEMORY DATA REGISTER
 
-module MD(clk, reset, md, mdhaspar, mdpar, mddrive, mdgetspar, ignpar, mdclk, spy_in, loadmd, memrq, destmdr, mds, srcmd, state_alu, state_write, state_mmu, state_fetch, ldmdh, ldmdl);
+module MD(clk, reset, md, mdpar, mddrive, mdgetspar, ignpar, mdclk, spy_in, loadmd, memrq, destmdr, mds, srcmd, state_alu, state_write, state_mmu, state_fetch, ldmdh, ldmdl);
 
    input clk;
    input reset;
@@ -22,15 +22,14 @@ module MD(clk, reset, md, mdhaspar, mdpar, mddrive, mdgetspar, ignpar, mdclk, sp
    output	 mdclk;
    output	 mddrive;
    output	 mdgetspar;
-   output	 mdhaspar;
    output	 mdpar;
 
    ////////////////////////////////////////////////////////////////////////////////
 
-   reg [31:0]	 md;
+   reg [31:0] 	 md;
    reg		 mdhaspar;
    reg		 mdpar;
-
+   
    assign mdgetspar = ~destmdr & ~ignpar;
    assign ignpar = 1'b0;
 

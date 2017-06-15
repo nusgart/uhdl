@@ -1,6 +1,6 @@
 // TK		CADR	ALU CARRY AND FUNCTION
 
-module ALUC4(yout15, yout11, yout7, yout3, xout15, xout11, xout7, xout3, yout31, yout27, yout23, yout19, xout31, xout27, xout23, xout19, a, ir, iralu, irjump, mul, div, q, osel, divposlasttime, divsubcond, divaddcond, mulnop, aluadd, alusub, aluf, alumode, cin12_n, cin8_n, cin4_n, cin0, xx0, yy0, cin28_n, cin24_n, cin20_n, cin16_n, xx1, yy1, cin32_n);
+module ALUC4(yout15, yout11, yout7, yout3, xout15, xout11, xout7, xout3, yout31, yout27, yout23, yout19, xout31, xout27, xout23, xout19, a, ir, iralu, irjump, mul, div, q, osel, aluf, alumode, cin12_n, cin8_n, cin4_n, cin0, cin28_n, cin24_n, cin20_n, cin16_n, cin32_n);
 
    input [31:0] a;
    input [31:0] q;
@@ -27,9 +27,7 @@ module ALUC4(yout15, yout11, yout7, yout3, xout15, xout11, xout7, xout3, yout31,
    input	yout7;
    output [1:0] osel;
    output [3:0] aluf;
-   output	aluadd;
    output	alumode;
-   output	alusub;
    output	cin0;
    output	cin12_n;
    output	cin16_n;
@@ -39,16 +37,19 @@ module ALUC4(yout15, yout11, yout7, yout3, xout15, xout11, xout7, xout3, yout31,
    output	cin32_n;
    output	cin4_n;
    output	cin8_n;
-   output	divaddcond;
-   output	divposlasttime;
-   output	divsubcond;
-   output	mulnop;
-   output	xx0;
-   output	xx1;
-   output	yy0;
-   output	yy1;
 
    ////////////////////////////////////////////////////////////////////////////////
+
+   wire 	divposlasttime;
+   wire 	divaddcond;
+   wire 	divsubcond;
+   wire 	mulnop;
+   wire 	aluadd;
+   wire 	alusub;
+   wire 	xx0;
+   wire 	xx1;
+   wire 	yy0;
+   wire 	yy1;
 
    ic_74S182  i_ALUC4_2A20 (
 			    .Y( { yout15,yout11,yout7,yout3 } ),
