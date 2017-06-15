@@ -9,34 +9,13 @@ module ALUC4(yout15, yout11, yout7, yout3, xout15, xout11, xout7, xout3, yout31,
    input	iralu;
    input	irjump;
    input	mul;
-   input	xout11;
-   input	xout15;
-   input	xout19;
-   input	xout23;
-   input	xout27;
-   input	xout31;
-   input	xout3;
-   input	xout7;
-   input	yout11;
-   input	yout15;
-   input	yout19;
-   input	yout23;
-   input	yout27;
-   input	yout31;
-   input	yout3;
-   input	yout7;
+   input	xout3, xout7, xout11, xout15, xout19, xout23, xout27, xout31;
+   input	yout3, yout7, yout11, yout15, yout19, yout23, yout27, yout31;
    output [1:0] osel;
    output [3:0] aluf;
    output	alumode;
    output	cin0;
-   output	cin12_n;
-   output	cin16_n;
-   output	cin20_n;
-   output	cin24_n;
-   output	cin28_n;
-   output	cin32_n;
-   output	cin4_n;
-   output	cin8_n;
+   output	cin4_n, cin8_n, cin12_n, cin16_n, cin20_n, cin24_n, cin28_n, cin32_n;
 
    ////////////////////////////////////////////////////////////////////////////////
 
@@ -46,10 +25,8 @@ module ALUC4(yout15, yout11, yout7, yout3, xout15, xout11, xout7, xout3, yout31,
    wire		divposlasttime;
    wire		divsubcond;
    wire		mulnop;
-   wire		xx0;
-   wire		xx1;
-   wire		yy0;
-   wire		yy1;
+   wire		xx0, xx1;
+   wire		yy0, yy1;
 
    ic_74S182  i_ALUC4_2A20 (
 			    .Y( { yout15,yout11,yout7,yout3 } ),
