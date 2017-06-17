@@ -2,7 +2,7 @@
 //
 // TK		CADR	OVERLORD
 
-module OLORD2(clk, reset, statstop, halted, prog_reset, err, errhalt, prog_bus_reset, bus_reset, prog_boot, boot, boot_trap, ldmode, spy_in, errstop, ext_reset, ext_boot, srun, ext_halt, stat_ovf);
+module OLORD2(clk, reset, statstop, err, errhalt, boot, boot_trap, ldmode, spy_in, errstop, ext_reset, ext_boot, srun, ext_halt, stat_ovf);
 
    input clk;
    input ext_reset;
@@ -16,13 +16,8 @@ module OLORD2(clk, reset, statstop, halted, prog_reset, err, errhalt, prog_bus_r
    input	stat_ovf;
    output	boot;
    output	boot_trap;
-   output	bus_reset;
    output	err;
    output	errhalt;
-   output	halted;
-   output	prog_boot;
-   output	prog_bus_reset;
-   output	prog_reset;
    output	reset;
    output	statstop;
 
@@ -31,6 +26,10 @@ module OLORD2(clk, reset, statstop, halted, prog_reset, err, errhalt, prog_bus_r
    reg		boot_trap;
    reg		halted;
    reg		statstop;
+   wire		bus_reset;
+   wire		prog_boot;
+   wire		prog_bus_reset;
+   wire		prog_reset;
 
    always @(posedge clk)
      if (reset)

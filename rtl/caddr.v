@@ -698,9 +698,9 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
    wire   iwe;
    ICTL(.idebug, .promdisabled, .iwrited, .state_write, .iwe);
 
-   OLORD1(.clk, .reset, .ldmode, .ldscratch1, .ldscratch2, .ldclk, .boot, .run, .step, .promdisable, .trapenb, .stathenb, .errstop, .scratch, .opcinh, .opcclk, .lpc_hold, .ldstat, .idebug, .nop11, .srun, .sstep, .ssdone, .promdisabled, .machrun, .stat_ovf, .stathalt, .errhalt, .state_fetch, .statstop, .spy_in, .ldopc, .set_promdisable, .waiting);
+   OLORD1(.clk, .reset, .ldmode, .ldscratch1, .ldscratch2, .ldclk, .boot, .promdisable, .errstop, .scratch, .opcinh, .opcclk, .lpc_hold, .idebug, .nop11, .srun, .ssdone, .promdisabled, .machrun, .stat_ovf, .stathalt, .errhalt, .state_fetch, .statstop, .spy_in, .ldopc, .set_promdisable, .waiting);
 
-   OLORD2(.clk, .reset, .statstop, .halted, .prog_reset, .err, .errhalt, .prog_bus_reset, .bus_reset, .prog_boot, .boot, .boot_trap, .ldmode, .spy_in, .errstop, .ext_reset, .ext_boot, .srun, .ext_halt, .stat_ovf);
+   OLORD2(.clk, .reset, .statstop, .err, .errhalt, .boot, .boot_trap, .ldmode, .spy_in, .errstop, .ext_reset, .ext_boot, .srun, .ext_halt, .stat_ovf);
 
    OPCS(.clk, .reset, .opcclk, .opcinh, .pc, .opc, .state_fetch);
 
