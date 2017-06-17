@@ -2,7 +2,7 @@
 //
 // TK	CADR	PDP11 EXAMINE CONTROL
 
-module SPY0(spy_obh, spy_obl, spy_pc, spy_opc, spy_scratch, spy_irh, spy_irm, spy_irl, spy_stl, spy_ah, spy_al, spy_mh, spy_ml, spy_flag2, spy_flag1, ldscratch2, ldscratch1, ldmode, ldopc, ldclk, lddbirh, lddbirm, lddbirl, eadr, dbread, dbwrite, spy_mdl, spy_vmal, spy_vmah, spy_sth, spy_mdh, spy_disk, spy_bd);
+module SPY0(spy_obh, spy_obl, spy_pc, spy_opc, spy_scratch, spy_irh, spy_irm, spy_irl, spy_stl, spy_ah, spy_al, spy_mh, spy_ml, spy_flag2, spy_flag1, ldscratch2, ldscratch1, ldmode, ldopc, ldclk, lddbirh, lddbirm, lddbirl, eadr, dbread, dbwrite, spy_mdl, spy_vmal, spy_vmah, spy_sth, spy_mdh, spy_disk, spy_bd, ldmdh, ldmdl, ldvmah, ldvmal, spy_obl_, spy_obh_);
 
    input [4:0] eadr;
    input       dbread;
@@ -11,10 +11,14 @@ module SPY0(spy_obh, spy_obl, spy_pc, spy_opc, spy_scratch, spy_irh, spy_irm, sp
    output      lddbirh;
    output      lddbirl;
    output      lddbirm;
+   output      ldmdh;
+   output      ldmdl;
    output      ldmode;
    output      ldopc;
    output      ldscratch1;
    output      ldscratch2;
+   output      ldvmah;
+   output      ldvmal;
    output      spy_ah;
    output      spy_al;
    output      spy_bd;
@@ -29,7 +33,9 @@ module SPY0(spy_obh, spy_obl, spy_pc, spy_opc, spy_scratch, spy_irh, spy_irm, sp
    output      spy_mh;
    output      spy_ml;
    output      spy_obh;
+   output      spy_obh_;
    output      spy_obl;
+   output      spy_obl_;
    output      spy_opc;
    output      spy_pc;
    output      spy_scratch;

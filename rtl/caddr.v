@@ -710,7 +710,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    IRAM(.clk, .reset, .pc, .pc_out, .state_out, .iwr, .iwe, .iram, .fetch_out, .prefetch_out, .machrun_out, .mcr_data_in, .state_fetch, .machrun, .state, .need_mmu_state, .state_mmu, .state_write, .state_prefetch, .promdisabled);
 
-   SPY0(.spy_obh, .spy_obl, .spy_pc, .spy_opc, .spy_scratch, .spy_irh, .spy_irm, .spy_irl, .spy_stl, .spy_ah, .spy_al, .spy_mh, .spy_ml, .spy_flag2, .spy_flag1, .ldscratch2, .ldscratch1, .ldmode, .ldopc, .ldclk, .lddbirh, .lddbirm, .lddbirl, .eadr, .dbread, .dbwrite, .spy_mdl, .spy_vmal, .spy_vmah, .spy_sth, .spy_mdh, .spy_disk, .spy_bd);
+   SPY0(.spy_obh, .spy_obl, .spy_pc, .spy_opc, .spy_scratch, .spy_irh, .spy_irm, .spy_irl, .spy_stl, .spy_ah, .spy_al, .spy_mh, .spy_ml, .spy_flag2, .spy_flag1, .ldscratch2, .ldscratch1, .ldmode, .ldopc, .ldclk, .lddbirh, .lddbirm, .lddbirl, .eadr, .dbread, .dbwrite, .spy_mdl, .spy_vmal, .spy_vmah, .spy_sth, .spy_mdh, .spy_disk, .spy_bd, .ldmdh, .ldmdl, .ldvmah, .ldvmal, .spy_obl_, .spy_obh_);
 
 `ifdef debug
    // ======================================================================================
