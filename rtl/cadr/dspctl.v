@@ -20,6 +20,7 @@ module DSPCTL(clk, reset, state_fetch, irdisp, funct, ir, dmask, dmapbenb, dispw
    ////////////////////////////////////////////////////////////////////////////////
 
    reg [9:0]	dc;
+   wire 	nc_dmask;
 
    assign dmapbenb  = ir[8] | ir[9];
 
@@ -31,8 +32,6 @@ module DSPCTL(clk, reset, state_fetch, irdisp, funct, ir, dmask, dmapbenb, dispw
      else
        if (state_fetch && irdisp)
 	 dc <= ir[41:32];
-
-   wire   nc_dmask;
 
    part_32x8prom i_DMASK(
 			 .clk(~clk),
