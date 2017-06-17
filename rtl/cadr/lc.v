@@ -2,7 +2,7 @@
 //
 // TK		CADR	LOCATION COUNTER
 
-module LC(clk, reset, destlc, lcry3, lca, lcinc, lc_byte_mode, lc, srclc, state_alu, state_write, state_mmu, state_fetch, ob, lcdrive, opcdrive, opc, dcdrive, dc, pdlptr, pidrive, pdlidx, qdrive, q, mddrive, md, vmadrive, vma, mapdrive, pfw, needfetch, int_enable, prog_unibus_reset, sequence_break, lc0b, ppdrive, vmap, pfr, vmo, mf);
+module LC(clk, reset, destlc, lca, lcinc, lc_byte_mode, lc, srclc, state_alu, state_write, state_mmu, state_fetch, ob, opcdrive, opc, dcdrive, dc, pdlptr, pidrive, pdlidx, qdrive, q, mddrive, md, vmadrive, vma, mapdrive, pfw, needfetch, int_enable, prog_unibus_reset, sequence_break, lc0b, ppdrive, vmap, pfr, vmo, mf);
 
    input clk;
    input reset;
@@ -43,13 +43,13 @@ module LC(clk, reset, destlc, lcry3, lca, lcinc, lc_byte_mode, lc, srclc, state_
    input	vmadrive;
    output [25:0] lc;
    output [31:0] mf;
-   output [3:0]  lca;
-   output	 lcdrive;
-   output	 lcry3;
 
    ////////////////////////////////////////////////////////////////////////////////
 
    reg [25:0]	 lc;
+   output [3:0]  lca;
+   wire	 lcdrive;
+   wire	 lcry3;
 
    always @(posedge clk)
      if (reset)

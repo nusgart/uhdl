@@ -629,7 +629,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    L(.clk, .reset, .vmaenb, .state_write, .state_alu, .ob, .l);
 
-   LC(.clk, .reset, .destlc, .lcry3, .lca, .lcinc, .lc_byte_mode, .lc, .srclc, .state_alu, .state_write, .state_mmu, .state_fetch, .ob, .lcdrive, .opcdrive, .opc, .dcdrive, .dc, .pdlptr, .pidrive, .pdlidx, .qdrive, .q, .mddrive, .md, .vmadrive, .vma, .mapdrive, .pfw, .needfetch, .int_enable, .prog_unibus_reset, .sequence_break, .lc0b, .ppdrive, .vmap, .pfr, .vmo, .mf);
+   LC(.clk, .reset, .destlc, .lca, .lcinc, .lc_byte_mode, .lc, .srclc, .state_alu, .state_write, .state_mmu, .state_fetch, .ob, .opcdrive, .opc, .dcdrive, .dc, .pdlptr, .pidrive, .pdlidx, .qdrive, .q, .mddrive, .md, .vmadrive, .vma, .mapdrive, .pfw, .needfetch, .int_enable, .prog_unibus_reset, .sequence_break, .lc0b, .ppdrive, .vmap, .pfr, .vmo, .mf);
 
    LCC(.clk, .reset, .state_fetch, .lc0b, .needfetch, .ifetch, .spc1a, .sh4, .sh3, .sintr, .lc, .lc_byte_mode, .spop, .srcspcpopreal, .spc, .lcinc, .destlc, .irdisp, .ir, .ext_int, .bus_int);
 
