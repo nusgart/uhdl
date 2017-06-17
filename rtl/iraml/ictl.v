@@ -4,10 +4,11 @@
 
 module ICTL(ramdisable, idebug, promdisabled, iwrited, state_write, iwe);
 
+   input state_write;
+
    input idebug;
    input iwrited;
    input promdisabled;
-   input state_write;
    output iwe;
    output ramdisable;
 

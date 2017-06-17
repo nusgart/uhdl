@@ -4,6 +4,11 @@
 
 module VCTL2(loadmd, nopa, ir, wrcyc, destmdr, srcmd, destmem, srcmap, irdisp, memprepare, memstart, destvma, ifetch, state_decode, state_write, state_read, state_mmu, mapwr0, mapwr1, vm0wp, vm1wp, wmap, memwr, memrd, vma, dmapbenb, dispwr, vm0rp, vm1rp, vmaenb, vmasel, memdrive, mdsel, use_md);
 
+   input	state_decode;
+   input	state_mmu;
+   input	state_read;
+   input	state_write;
+
    input [31:0] vma;
    input [48:0] ir;
    input	destmdr;
@@ -19,10 +24,6 @@ module VCTL2(loadmd, nopa, ir, wrcyc, destmdr, srcmd, destmem, srcmap, irdisp, m
    input	nopa;
    input	srcmap;
    input	srcmd;
-   input	state_decode;
-   input	state_mmu;
-   input	state_read;
-   input	state_write;
    input	wrcyc;
    output	mapwr0;
    output	mapwr1;

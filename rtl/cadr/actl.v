@@ -7,11 +7,12 @@ module ACTL(clk, reset, state_decode, state_write, wadr, destm, awp, arp, aadr, 
    input clk;
    input reset;
 
+   input	state_decode;
+   input	state_write;
+
    input [48:0] ir;
    input	dest;
    input	destm;
-   input	state_decode;
-   input	state_write;
    output [9:0] aadr;
    output [9:0] wadr;
    output	arp;

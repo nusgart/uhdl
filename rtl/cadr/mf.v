@@ -4,13 +4,14 @@
 
 module MF(mfenb, mfdrive, srcm, spcenb, pdlenb, state_alu, state_write, state_mmu, state_fetch);
 
-   input pdlenb;
-   input spcenb;
-   input srcm;
    input state_alu;
    input state_fetch;
    input state_mmu;
    input state_write;
+
+   input pdlenb;
+   input spcenb;
+   input srcm;
    output mfdrive;
    output mfenb;
 

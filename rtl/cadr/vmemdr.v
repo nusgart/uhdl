@@ -4,12 +4,13 @@
 
 module VMEMDR(vmo, srcmap, state_alu, state_write, state_mmu, state_fetch, lvmo_23, lvmo_22, mapdrive, pma);
 
-   input [23:0] vmo;
-   input	srcmap;
    input	state_alu;
    input	state_fetch;
    input	state_mmu;
    input	state_write;
+
+   input [23:0] vmo;
+   input	srcmap;
    output [21:8] pma;
    output	 lvmo_22;
    output	 lvmo_23;

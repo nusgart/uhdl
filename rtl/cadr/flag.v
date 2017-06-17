@@ -7,6 +7,8 @@ module FLAG(clk, reset, ir, nopa, aeqm, sintr, int_enable, vmaok, sequence_break
    input clk;
    input reset;
 
+   input	state_fetch;
+
    input [31:0] ob;
    input [31:0] r;
    input [32:0] alu;
@@ -15,7 +17,6 @@ module FLAG(clk, reset, ir, nopa, aeqm, sintr, int_enable, vmaok, sequence_break
    input	destintctl;
    input	nopa;
    input	sintr;
-   input	state_fetch;
    input	vmaok;
    output [2:0] conds;
    output	int_enable;

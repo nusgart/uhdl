@@ -9,6 +9,8 @@ module SPY124(clk, reset, spy_out, ir, spy_mdh, spy_mdl, state_write, spy_vmah, 
    input clk;
    input reset;
 
+   input 	state_write;
+
    input [11:0] bd_state_in;
    input [13:0] opc;
    input [13:0] pc;
@@ -59,7 +61,6 @@ module SPY124(clk, reset, spy_out, ir, spy_mdh, spy_mdl, state_write, spy_vmah, 
    input 	spy_vmal;
    input 	srun;
    input 	ssdone;
-   input 	state_write;
    input 	stathalt;
    input 	vmaok;
    input 	waiting;

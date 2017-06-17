@@ -7,6 +7,10 @@ module CONTRL(clk, reset, dfall, dispenb, ignpopj, inop, ipopj, iwrite, iwrited,
    input clk;
    input reset;
 
+   input	state_alu;
+   input	state_fetch;
+   input	state_write;
+
    input [3:0] funct;
    input [48:0] ir;
    input	destspc;
@@ -19,9 +23,6 @@ module CONTRL(clk, reset, dfall, dispenb, ignpopj, inop, ipopj, iwrite, iwrited,
    input	nop11;
    input	srcspc;
    input	srcspcpop;
-   input	state_alu;
-   input	state_fetch;
-   input	state_write;
    input	trap;
    output	dfall;
    output	dispenb;

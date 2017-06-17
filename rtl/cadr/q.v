@@ -7,14 +7,15 @@ module Q(clk, reset, state_alu, state_write, state_mmu, state_fetch, alu, srcq, 
    input clk;
    input reset;
 
-   input [32:0] alu;
-   input [48:0] ir;
-   input	iralu;
-   input	srcq;
    input	state_alu;
    input	state_fetch;
    input	state_mmu;
    input	state_write;
+
+   input [32:0] alu;
+   input [48:0] ir;
+   input	iralu;
+   input	srcq;
    output [31:0] q;
    output	 qdrive;
    output	 qs0;

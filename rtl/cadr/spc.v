@@ -7,13 +7,14 @@ module SPC(clk, reset, spcnt, state_fetch, spush, spcptr, spco, spcw, srp, swp);
    input clk;
    input reset;
 
+   input state_fetch;
+
    input spcnt;
    output [18:0] spco;
    input	srp;
    input	swp;
    input [18:0] spcw;
    input spush;
-   input state_fetch;
    output [4:0] spcptr;
 
    ////////////////////////////////////////////////////////////////////////////////

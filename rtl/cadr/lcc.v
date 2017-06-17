@@ -7,6 +7,8 @@ module LCC(clk, reset, state_fetch, lc0b, next_instr, newlc_in, have_wrong_word,
    input clk;
    input reset;
 
+   input	state_fetch;
+
    input [18:0] spc;
    input [25:0] lc;
    input [48:0] ir;
@@ -17,7 +19,6 @@ module LCC(clk, reset, state_fetch, lc0b, next_instr, newlc_in, have_wrong_word,
    input	lc_byte_mode;
    input	spop;
    input	srcspcpopreal;
-   input	state_fetch;
    output	have_wrong_word;
    output	ifetch;
    output	inst_in_2nd_or_4th_quarter;

@@ -7,6 +7,11 @@ module VCTL1(clk, reset, lcinc, memrq, ifetch, lvmo_22, lvmo_23, mbusy, memack, 
    input clk;
    input reset;
 
+   input state_alu;
+   input state_fetch;
+   input state_prefetch;
+   input state_write;
+
    input ifetch;
    input lcinc;
    input lvmo_22;
@@ -15,10 +20,6 @@ module VCTL1(clk, reset, lcinc, memrq, ifetch, lvmo_22, lvmo_23, mbusy, memack, 
    input memrd;
    input memwr;
    input needfetch;
-   input state_alu;
-   input state_fetch;
-   input state_prefetch;
-   input state_write;
    output mbusy;
    output memcheck;
    output memprepare;

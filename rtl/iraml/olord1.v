@@ -7,6 +7,8 @@ module OLORD1(clk, reset, ldmode, ldscratch1, ldscratch2, ldclk, boot, run, step
    input clk;
    input reset;
 
+   input	state_fetch;
+
    input [15:0] spy_in;
    input	boot;
    input	errhalt;
@@ -16,7 +18,6 @@ module OLORD1(clk, reset, ldmode, ldscratch1, ldscratch2, ldclk, boot, run, step
    input	ldscratch1;
    input	ldscratch2;
    input	set_promdisable;
-   input	state_fetch;
    input	statstop;
    input	waiting;
    output [15:0] scratch;

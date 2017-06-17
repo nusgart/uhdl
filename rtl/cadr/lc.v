@@ -7,6 +7,11 @@ module LC(clk, reset, destlc, lcry3, lca, lcinc, lc_byte_mode, lc, srclc, state_
    input clk;
    input reset;
 
+   input	state_alu;
+   input	state_fetch;
+   input	state_mmu;
+   input	state_write;
+
    input [13:0] opc;
    input [23:0] vmo;
    input [31:0] md;
@@ -35,10 +40,6 @@ module LC(clk, reset, destlc, lcry3, lca, lcinc, lc_byte_mode, lc, srclc, state_
    input	qdrive;
    input	sequence_break;
    input	srclc;
-   input	state_alu;
-   input	state_fetch;
-   input	state_mmu;
-   input	state_write;
    input	vmadrive;
    output [25:0] lc;
    output [31:0] mf;

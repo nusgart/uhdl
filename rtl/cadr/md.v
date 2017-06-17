@@ -7,6 +7,11 @@ module MD(clk, reset, md, mdhaspar, mdpar, mddrive, mdgetspar, ignpar, mdclk, sp
    input clk;
    input reset;
 
+   input	state_alu;
+   input	state_fetch;
+   input	state_mmu;
+   input	state_write;
+
    input [15:0] spy_in;
    input [31:0] mds;
    input	destmdr;
@@ -15,10 +20,6 @@ module MD(clk, reset, md, mdhaspar, mdpar, mddrive, mdgetspar, ignpar, mdclk, sp
    input	loadmd;
    input	memrq;
    input	srcmd;
-   input	state_alu;
-   input	state_fetch;
-   input	state_mmu;
-   input	state_write;
    output [31:0] md;
    output	 ignpar;
    output	 mdclk;

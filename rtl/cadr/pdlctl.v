@@ -7,6 +7,12 @@ module PDLCTL(clk, reset, pdlidx, pdla, pdlp, pdlwrite, state_alu, state_write, 
    input clk;
    input reset;
 
+   input	state_alu;
+   input	state_fetch;
+   input	state_mmu;
+   input	state_read;
+   input	state_write;
+
    input [48:0] ir;
    input [9:0]	pdlidx;
    input [9:0]	pdlptr;
@@ -16,11 +22,6 @@ module PDLCTL(clk, reset, pdlidx, pdla, pdlp, pdlwrite, state_alu, state_write, 
    input	nop;
    input	srcpdlpop;
    input	srcpdltop;
-   input	state_alu;
-   input	state_fetch;
-   input	state_mmu;
-   input	state_read;
-   input	state_write;
    output [9:0] pdla;
    output	pdlcnt;
    output	pdldrive;
