@@ -615,7 +615,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    CONTRL(.clk, .reset, .iwrited, .nopa, .pcs0, .pcs1, .spcdrive, .spcenb, .spcnt, .spop, .spush, .srcspcpopreal, .srp, .swp, .dr, .dp, .irdisp, .funct, .irjump, .ir, .srcspcpop, .jcond, .destspc, .state_write, .srcspc, .state_alu, .state_fetch, .trap, .dn, .nop11, .n, .nop);
 
-   DRAM02(.clk, .reset, .daddr0, .dadr, .dwe, .a, .ir, .vmo, .dmask, .r, .dr, .dp, .dn, .dpc, .dispwr, .state_write, .state_prefetch);
+   DRAM02(.clk, .reset, .a, .ir, .vmo, .dmask, .r, .dr, .dp, .dn, .dpc, .dispwr, .state_write, .state_prefetch);
 
    DSPCTL(.clk, .reset, .state_fetch, .irdisp, .funct, .ir, .dmask, .dmapbenb, .dispwr, .dc);
 
@@ -637,11 +637,11 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    MCTL(.mpassm, .srcm, .mrp, .mwp, .madr, .ir, .destm, .wadr, .state_decode, .state_write);
 
-   MD(.clk, .reset, .md, .mdhaspar, .mdpar, .mddrive, .mdgetspar, .ignpar, .mdclk, .spy_in, .loadmd, .memrq, .destmdr, .mds, .srcmd, .state_alu, .state_write, .state_mmu, .state_fetch, .ldmdh, .ldmdl);
+   MD(.clk, .reset, .md, .mddrive, .spy_in, .loadmd, .memrq, .destmdr, .mds, .srcmd, .state_alu, .state_write, .state_mmu, .state_fetch, .ldmdh, .ldmdl);
 
    MDS(.mds, .mdsel, .ob, .memdrive, .loadmd, .busint_bus, .md);
 
-   MF(.mfenb, .mfdrive, .srcm, .spcenb, .pdlenb, .state_alu, .state_write, .state_mmu, .state_fetch);
+   MF(.mfdrive, .srcm, .spcenb, .pdlenb, .state_alu, .state_write, .state_mmu, .state_fetch);
 
    MLATCH(.pdldrive, .spcdrive, .mfdrive, .mmem, .pdl, .spcptr, .spco, .mf, .m, .mpassm);
 
@@ -661,13 +661,13 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    PDLPTR(.clk, .reset, .pidrive, .ppdrive, .pdlidx, .pdlptr, .state_alu, .state_write, .state_fetch, .state_read, .destpdlx, .srcpdlidx, .srcpdlptr, .ob, .destpdlp, .pdlcnt, .srcpdlpop);
 
-   Q(.clk, .reset, .state_alu, .state_write, .state_mmu, .state_fetch, .alu, .srcq, .qs1, .qs0, .qdrive, .q, .ir, .iralu);
+   Q(.clk, .reset, .state_alu, .state_write, .state_mmu, .state_fetch, .alu, .srcq, .qdrive, .q, .ir, .iralu);
 
    SHIFT01(.r, .s0, .s1, .s2, .s3, .s4, .m);
 
    SMCTL(.mskr, .s0, .s1, .s2, .s3, .s4, .sh3, .sh4, .mskl, .irbyte, .ir);
 
-   SOURCE(.ir, .iralu, .irbyte, .destimod0, .destimod1, .iwrited, .idebug, .specalu, .nop, .irdisp, .irjump, .funct, .div, .mul, .srcq, .srcopc, .srcpdltop, .srcpdlpop, .srcpdlidx, .srcpdlptr, .srcspc, .srcdc, .srcspcpop, .srclc, .srcmd, .srcmap, .srcvma, .imod, .destmem, .destvma, .destmdr, .dest, .destm, .destintctl, .destlc, .destspc, .destpdlp, .destpdlx, .destpdl_x, .destpdl_p, .destpdltop);
+   SOURCE(.ir, .iralu, .irbyte, .destimod0, .destimod1, .iwrited, .idebug, .nop, .irdisp, .irjump, .funct, .div, .mul, .srcq, .srcopc, .srcpdltop, .srcpdlpop, .srcpdlidx, .srcpdlptr, .srcspc, .srcdc, .srcspcpop, .srclc, .srcmd, .srcmap, .srcvma, .imod, .destmem, .destvma, .destmdr, .dest, .destm, .destintctl, .destlc, .destspc, .destpdlp, .destpdlx, .destpdl_x, .destpdl_p, .destpdltop);
 
    SPC(.clk, .reset, .spcnt, .state_fetch, .spush, .spcptr, .spco, .spcw, .srp, .swp);
 
@@ -687,7 +687,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    VMAS(.vmas, .mapi, .vmasel, .ob, .memprepare, .md, .vma, .lc);
 
-   VMEM0(.clk, .reset, .vmem0_adr, .mapi, .vmap, .vm0rp, .vma, .use_map, .srcmap, .memstart, .vm0wp);
+   VMEM0(.clk, .reset, .mapi, .vmap, .vm0rp, .vma, .srcmap, .memstart, .vm0wp);
 
    VMEM12(.clk, .reset, .vmap, .mapi, .vm1rp, .vma, .vmo, .vm1wp);
 

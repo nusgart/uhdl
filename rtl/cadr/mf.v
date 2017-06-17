@@ -2,7 +2,7 @@
 //
 // TK		CADR	DRIVE MF ONTO M
 
-module MF(mfenb, mfdrive, srcm, spcenb, pdlenb, state_alu, state_write, state_mmu, state_fetch);
+module MF(mfdrive, srcm, spcenb, pdlenb, state_alu, state_write, state_mmu, state_fetch);
 
    input state_alu;
    input state_fetch;
@@ -13,9 +13,10 @@ module MF(mfenb, mfdrive, srcm, spcenb, pdlenb, state_alu, state_write, state_mm
    input spcenb;
    input srcm;
    output mfdrive;
-   output mfenb;
 
    ////////////////////////////////////////////////////////////////////////////////
+
+   wire   mfenb;
 
    assign mfenb = ~srcm & !(spcenb | pdlenb);
    assign mfdrive = mfenb &

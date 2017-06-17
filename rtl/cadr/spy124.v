@@ -70,6 +70,8 @@ module SPY124(clk, reset, spy_out, ir, spy_mdh, spy_mdl, state_write, spy_vmah, 
    ////////////////////////////////////////////////////////////////////////////////
 
    reg [31:0]	 ob_last;
+   wire [15:0]	 spy_mux;
+   wire [4:0]	 disk_state_in;
 
    /* grab ob from last cycle for spy */
    always @(posedge clk)
@@ -79,11 +81,7 @@ module SPY124(clk, reset, spy_out, ir, spy_mdh, spy_mdl, state_write, spy_vmah, 
        if (/*state_fetch*/state_write)
 	 ob_last <= ob;
 
-   wire [15:0]	 spy_mux;
-
    assign spy_out = dbread ? spy_mux : 16'b1111111111111111;
-
-   wire [4:0]	 disk_state_in;
 
    assign spy_mux =
 		   spy_irh ? ir[47:32] :
