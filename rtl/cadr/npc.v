@@ -2,7 +2,7 @@
 //
 // TK		CADR	NPC,IPC,PC
 
-module NPC(clk, reset, state_fetch, ipc, npc, trap, pcs1, pcs0, ir, spc, spc1a, dpc, pc);
+module NPC(clk, reset, state_fetch, ipc, trap, pcs1, pcs0, ir, spc, spc1a, dpc, pc);
 
    input clk;
    input reset;
@@ -17,12 +17,12 @@ module NPC(clk, reset, state_fetch, ipc, npc, trap, pcs1, pcs0, ir, spc, spc1a, 
    input	spc1a;
    input	trap;
    output [13:0] ipc;
-   output [13:0] npc;
    output [13:0] pc;
 
    ////////////////////////////////////////////////////////////////////////////////
 
    reg [13:0]	 pc;
+   wire [13:0]	 npc;
 
    assign npc =
 		trap ? 14'b0 :
