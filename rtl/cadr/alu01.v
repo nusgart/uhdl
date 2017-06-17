@@ -3,23 +3,44 @@
 // TK		CADR	ALU0
 // TK		CADR	ALU1
 
-module ALU01(a, m, aluf, alumode, aeqm, alu, cin12_n, cin16_n, cin20_n, cin24_n, cin28_n, cin32_n, cin4_n, cin8_n, cin0, xout11, xout15, xout19, xout23, xout27, xout3, xout31, xout7, yout11, yout15, yout19, yout23, yout27, yout3, yout31, yout7);
+module ALU01(aeqm_bits, a, m, aluf, alumode, aeqm, alu, cin12_n, cin16_n, cin20_n, cin24_n, cin28_n, cin32_n, cin4_n, cin8_n, cin0, xout11, xout15, xout19, xout23, xout27, xout3, xout31, xout7, yout11, yout15, yout19, yout23, yout27, yout3, yout31, yout7);
 
    input [31:0] a;
    input [31:0] m;
    input [3:0]	aluf;
-   input	alumode;
-   input	cin0;
-   input	cin4_n, cin8_n, cin12_n, cin16_n, cin20_n, cin24_n, cin28_n, cin32_n;
+   output [7:0] aeqm_bits;
    output [32:0] alu;
    output	 aeqm;
-   output	 xout3,  xout7,  xout11,  xout15,  xout19,  xout23,  xout27,  xout31;
-   output	 yout3,  yout7,  yout11,  yout15,  yout19,  yout23,  yout27,  yout31;
+   input	 alumode;
+   input	 cin0;
+   input	 cin12_n;
+   input	 cin16_n;
+   input	 cin20_n;
+   input	 cin24_n;
+   input	 cin28_n;
+   input	 cin32_n;
+   input	 cin4_n;
+   input	 cin8_n;
+   output	 xout11;
+   output	 xout15;
+   output	 xout19;
+   output	 xout23;
+   output	 xout27;
+   output	 xout31;
+   output	 xout3;
+   output	 xout7;
+   output	 yout11;
+   output	 yout15;
+   output	 yout19;
+   output	 yout23;
+   output	 yout27;
+   output	 yout31;
+   output	 yout3;
+   output	 yout7;
 
    ////////////////////////////////////////////////////////////////////////////////
 
    wire [2:0]	 nc_alu;
-   wire [7:0]	 aeqm_bits;
 
    // 74181 pulls down AEB if not equal
    // aeqm is the simulated open collector

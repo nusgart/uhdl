@@ -2,28 +2,27 @@
 //
 // TK	CADR	Q REGISTER
 
-module Q(clk, reset, state_alu, state_write, state_mmu, state_fetch, alu, srcq, qdrive, q, ir, iralu);
+module Q(clk, reset, state_alu, state_write, state_mmu, state_fetch, alu, srcq, qs1, qs0, qdrive, q, ir, iralu);
 
    input clk;
    input reset;
-
-   input state_alu;
-   input state_fetch;
-   input state_mmu;
-   input state_write;
 
    input [32:0] alu;
    input [48:0] ir;
    input	iralu;
    input	srcq;
+   input	state_alu;
+   input	state_fetch;
+   input	state_mmu;
+   input	state_write;
    output [31:0] q;
    output	 qdrive;
+   output	 qs0;
+   output	 qs1;
 
    ////////////////////////////////////////////////////////////////////////////////
 
    reg [31:0]	 q;
-   wire		 qs0;
-   wire		 qs1;
 
    assign qs1 = ir[1] & iralu;
    assign qs0 = ir[0] & iralu;

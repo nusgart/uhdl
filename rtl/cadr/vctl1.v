@@ -2,15 +2,10 @@
 //
 // TK	CADR	VMEMORY CONTROL
 
-module VCTL1(clk, reset, lcinc, memrq, ifetch, lvmo_22, lvmo_23, memack, memprepare, memrd, memstart, memwr, needfetch, pfr, pfw, state_alu, state_fetch, state_prefetch, state_write, vmaok, wrcyc,  waiting);
+module VCTL1(clk, reset, lcinc, memrq, ifetch, lvmo_22, lvmo_23, mbusy, memack, memcheck, memprepare, memrd, memstart, memwr, needfetch, pfr, pfw, state_alu, state_fetch, state_prefetch, state_write, vmaok, rdcyc, wrcyc, mfinish, waiting);
 
    input clk;
    input reset;
-
-   input state_alu;
-   input state_fetch;
-   input state_prefetch;
-   input state_write;
 
    input ifetch;
    input lcinc;
@@ -20,11 +15,19 @@ module VCTL1(clk, reset, lcinc, memrq, ifetch, lvmo_22, lvmo_23, memack, memprep
    input memrd;
    input memwr;
    input needfetch;
+   input state_alu;
+   input state_fetch;
+   input state_prefetch;
+   input state_write;
+   output mbusy;
+   output memcheck;
    output memprepare;
    output memrq;
    output memstart;
+   output mfinish;
    output pfr;
    output pfw;
+   output rdcyc;
    output vmaok;
    output waiting;
    output wrcyc;
@@ -38,7 +41,6 @@ module VCTL1(clk, reset, lcinc, memrq, ifetch, lvmo_22, lvmo_23, memack, memprep
    reg	  rdcyc;
    reg	  vmaok;
    reg	  wrcyc;
-   wire   mfinish;
 
    assign memop  = memrd | memwr | ifetch;
 

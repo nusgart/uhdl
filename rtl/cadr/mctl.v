@@ -4,12 +4,11 @@
 
 module MCTL(mpassm, srcm, mrp, mwp, madr, ir, destm, wadr, state_decode, state_write);
 
-   input state_decode;
-   input state_write;
-
    input [48:0] ir;
    input [9:0]	wadr;
    input	destm;
+   input	state_decode;
+   input	state_write;
    output [4:0] madr;
    output	mpassm;
    output	mrp;

@@ -2,12 +2,10 @@
 //
 // TK		CONS	FLAGS,CONDITIONALS
 
-module FLAG(clk, reset, ir, nopa, aeqm, sintr, int_enable, vmaok, sequence_break, alu, lc_byte_mode, prog_unibus_reset, ob, r, state_fetch, destintctl, jcond);
+module FLAG(clk, reset, ir, nopa, aeqm, sintr, int_enable, vmaok, sequence_break, alu, conds, pgf_or_int, pgf_or_int_or_sb, sint, lc_byte_mode, prog_unibus_reset, ob, r, state_fetch, destintctl, statbit, ilong, jcond);
 
    input clk;
    input reset;
-
-   input state_fetch;
 
    input [31:0] ob;
    input [31:0] r;
@@ -17,12 +15,19 @@ module FLAG(clk, reset, ir, nopa, aeqm, sintr, int_enable, vmaok, sequence_break
    input	destintctl;
    input	nopa;
    input	sintr;
+   input	state_fetch;
    input	vmaok;
+   output [2:0] conds;
    output	int_enable;
-   output	jcond;
    output	lc_byte_mode;
+   output	pgf_or_int;
+   output	pgf_or_int_or_sb;
    output	prog_unibus_reset;
    output	sequence_break;
+   output	sint;
+   output	statbit;
+   output	ilong;
+   output	jcond;
 
    ////////////////////////////////////////////////////////////////////////////////
 
@@ -30,12 +35,6 @@ module FLAG(clk, reset, ir, nopa, aeqm, sintr, int_enable, vmaok, sequence_break
    reg		lc_byte_mode;
    reg		prog_unibus_reset;
    reg		sequence_break;
-   wire [2:0]	conds;
-   wire		ilong;
-   wire		pgf_or_int;
-   wire		pgf_or_int_or_sb;
-   wire		sint;
-   wire		statbit;
 
    assign statbit = ~nopa & ir[46];
    assign ilong  = ~nopa & ir[45];

@@ -2,7 +2,7 @@
 //
 // TK		CADR	MASKER/OUTPUT SELECT
 
-module MO01(msk, r, a, alu, q, osel, ob);
+module MO01(msk, r, a, mo, alu, q, osel, ob);
 
    input [1:0] osel;
    input [31:0] a;
@@ -10,11 +10,10 @@ module MO01(msk, r, a, alu, q, osel, ob);
    input [31:0] q;
    input [31:0] r;
    input [32:0] alu;
+   output [31:0] mo;
    output [31:0] ob;
 
    ////////////////////////////////////////////////////////////////////////////////
-
-   wire [31:0]	 mo;
 
    //for (i = 0; i < 31; i++)
    //  assign mo[i] =

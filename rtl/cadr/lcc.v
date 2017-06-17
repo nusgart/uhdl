@@ -2,12 +2,10 @@
 //
 // TK		CADR	LC CONTROL
 
-module LCC(clk, reset, state_fetch, lc0b, needfetch, ifetch, spc1a, sh4, sh3, sintr, lc, lc_byte_mode, spop, srcspcpopreal, spc, lcinc, destlc, irdisp, ir, ext_int, bus_int);
+module LCC(clk, reset, state_fetch, lc0b, next_instr, newlc_in, have_wrong_word, last_byte_in_word, needfetch, ifetch, spcmung, spc1a, lc_modifies_mrot, inst_in_left_half, inst_in_2nd_or_4th_quarter, sh4, sh3, newlc, sintr, next_instrd, lc, lc_byte_mode, spop, srcspcpopreal, spc, lcinc, destlc, irdisp, ir, ext_int, bus_int);
 
    input clk;
    input reset;
-
-   input state_fetch;
 
    input [18:0] spc;
    input [25:0] lc;
@@ -19,28 +17,31 @@ module LCC(clk, reset, state_fetch, lc0b, needfetch, ifetch, spc1a, sh4, sh3, si
    input	lc_byte_mode;
    input	spop;
    input	srcspcpopreal;
+   input	state_fetch;
+   output	have_wrong_word;
    output	ifetch;
+   output	inst_in_2nd_or_4th_quarter;
+   output	inst_in_left_half;
+   output	last_byte_in_word;
    output	lc0b;
+   output	lc_modifies_mrot;
    output	lcinc;
    output	needfetch;
+   output	newlc;
+   output	newlc_in;
+   output	next_instr;
+   output	next_instrd;
    output	sh3;
    output	sh4;
    output	sintr;
    output	spc1a;
+   output	spcmung;
 
    ////////////////////////////////////////////////////////////////////////////////
 
    reg		newlc;
-   reg		next_instrd;
    reg		sintr;
-   wire		have_wrong_word;
-   wire		inst_in_2nd_or_4th_quarter;
-   wire		inst_in_left_half;
-   wire		last_byte_in_word;
-   wire		lc_modifies_mrot;
-   wire		newlc_in;
-   wire		next_instr;
-   wire		spcmung;
+   reg		next_instrd;
 
    assign lc0b = lc[0] & lc_byte_mode;
    assign next_instr  = spop & (~srcspcpopreal & spc[14]);

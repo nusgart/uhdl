@@ -2,17 +2,17 @@
 //
 // CADR	LAST PC
 
-module LPC(clk, reset, lpc_hold, pc, wpc, irdisp, ir, state_fetch);
+module LPC(clk, reset, lpc, lpc_hold, pc, wpc, irdisp, ir, state_fetch);
 
    input clk;
    input reset;
-
-   input state_fetch;
 
    input [13:0] pc;
    input [48:0] ir;
    input	irdisp;
    input	lpc_hold;
+   input	state_fetch;
+   output [13:0] lpc;
    output [13:0] wpc;
 
    ////////////////////////////////////////////////////////////////////////////////
