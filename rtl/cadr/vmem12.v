@@ -2,7 +2,7 @@
 //
 // TK	CADR	VIRTUAL MEMORY MAP STAGE 1
 
-module VMEM12(clk, reset, vmem1_adr, vmap, mapi, vm1rp, vma, vmo, vm1wp);
+module VMEM12(clk, reset, vmap, mapi, vm1rp, vma, vmo, vm1wp);
 
    input clk;
    input reset;
@@ -13,9 +13,10 @@ module VMEM12(clk, reset, vmem1_adr, vmap, mapi, vm1rp, vma, vmo, vm1wp);
    input	vm1rp;
    input	vm1wp;
    output [23:0] vmo;
-   output [9:0]  vmem1_adr;
 
    ////////////////////////////////////////////////////////////////////////////////
+
+   wire [9:0]	 vmem1_adr;
 
    assign vmem1_adr = {vmap[4:0], mapi[12:8]};
 

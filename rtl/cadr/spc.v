@@ -9,17 +9,18 @@ module SPC(clk, reset, spcnt, state_fetch, spush, spcptr, spco, spcw, srp, swp);
 
    input state_fetch;
 
+   input [18:0] spcw;
    input spcnt;
-   output [18:0] spco;
+   input	spush;
    input	srp;
    input	swp;
-   input [18:0] spcw;
-   input spush;
+   output [18:0] spco;
    output [4:0] spcptr;
 
    ////////////////////////////////////////////////////////////////////////////////
 
    reg [4:0]	spcptr;
+   wire [4:0]	 spcptr_p1;
 
    // orig rtl:
    //  pop  = read[p], decr p
@@ -27,8 +28,6 @@ module SPC(clk, reset, spcnt, state_fetch, spush, spcptr, spco, spcw, srp, swp);
 
    // spcpop = read[spcptr] (state_write), spcptr-- (state_fetch)
    // spcpush = write[spcptr+1] (state_write), spcptr++ (state_fetch)
-
-   wire [4:0] spcptr_p1;
 
    assign spcptr_p1 = spcptr + 5'b00001;
 

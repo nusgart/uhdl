@@ -657,7 +657,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    PDL01(.clk, .reset, .prp, .pdla, .l, .pwp, .pdl);
 
-   PDLCTL(.clk, .reset, .pdlidx, .pdla, .pdlp, .pdlwrite, .state_alu, .state_write, .state_read, .ir, .pwidx, .pwp, .prp, .pdlenb, .pdldrive, .pdlcnt, .pdlptr, .destpdltop, .destpdl_x, .destpdl_p, .srcpdlpop, .state_mmu, .nop, .srcpdltop, .state_fetch);
+   PDLCTL(.clk, .reset, .pdlidx, .pdla, .pdlwrite, .state_alu, .state_write, .state_read, .ir, .pwp, .prp, .pdlenb, .pdldrive, .pdlcnt, .pdlptr, .destpdltop, .destpdl_x, .destpdl_p, .srcpdlpop, .state_mmu, .nop, .srcpdltop, .state_fetch);
 
    PDLPTR(.clk, .reset, .pidrive, .ppdrive, .pdlidx, .pdlptr, .state_alu, .state_write, .state_fetch, .state_read, .destpdlx, .srcpdlidx, .srcpdlptr, .ob, .destpdlp, .pdlcnt, .srcpdlpop);
 
@@ -665,7 +665,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    SHIFT01(.r, .s0, .s1, .s2, .s3, .s4, .m);
 
-   SMCTL(.mr, .sr, .mskr, .s0, .s1, .s2, .s3, .s4, .sh3, .sh4, .mskl, .irbyte, .ir);
+   SMCTL(.mskr, .s0, .s1, .s2, .s3, .s4, .sh3, .sh4, .mskl, .irbyte, .ir);
 
    SOURCE(.ir, .iralu, .irbyte, .destimod0, .destimod1, .iwrited, .idebug, .specalu, .nop, .irdisp, .irjump, .funct, .div, .mul, .srcq, .srcopc, .srcpdltop, .srcpdlpop, .srcpdlidx, .srcpdlptr, .srcspc, .srcdc, .srcspcpop, .srclc, .srcmd, .srcmap, .srcvma, .imod, .destmem, .destvma, .destmdr, .dest, .destm, .destintctl, .destlc, .destspc, .destpdlp, .destpdlx, .destpdl_x, .destpdl_p, .destpdltop);
 
@@ -673,13 +673,13 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    SPCLCH(.spc, .spco);
 
-   SPCW(.destspc, .l, .reta, .spcw, .n, .wpc, .ipc);
+   SPCW(.destspc, .l, .spcw, .n, .wpc, .ipc);
 
    SPY124(.clk, .reset, .spy_out, .ir, .spy_mdh, .spy_mdl, .state_write, .spy_vmah, .spy_vmal, .spy_obh_, .spy_obl_, .md, .vma, .ob, .opc, .waiting, .boot, .promdisable, .stathalt, .dbread, .nop, .spy_obh, .spy_obl, .spy_pc, .spy_opc, .spy_scratch, .spy_irh, .spy_irm, .spy_irl, .spy_disk, .spy_bd, .pc, .err, .scratch, .spy_sth, .spy_stl, .spy_ah, .spy_al, .spy_mh, .spy_ml, .spy_flag2, .spy_flag1, .m, .a, .bd_state_in, .wmap, .ssdone, .vmaok, .destspc, .jcond, .srun, .pcs1, .pcs0, .iwrited, .imod, .pdlwrite, .spush, .disk_state_in);
 
    TRAP(.trap, .boot_trap);
 
-   VCTL1(.clk, .reset, .lcinc, .memrq, .ifetch, .lvmo_22, .lvmo_23, .mbusy, .memack, .memcheck, .memprepare, .memrd, .memstart, .memwr, .needfetch, .pfr, .pfw, .state_alu, .state_fetch, .state_prefetch, .state_write, .vmaok, .rdcyc, .wrcyc, .mfinish, .waiting);
+   VCTL1(.clk, .reset, .lcinc, .memrq, .ifetch, .lvmo_22, .lvmo_23, .memack, .memprepare, .memrd, .memstart, .memwr, .needfetch, .pfr, .pfw, .state_alu, .state_fetch, .state_prefetch, .state_write, .vmaok, .wrcyc, .waiting);
 
    VCTL2(.loadmd, .nopa, .ir, .wrcyc, .destmdr, .srcmd, .destmem, .srcmap, .irdisp, .memprepare, .memstart, .destvma, .ifetch, .state_decode, .state_write, .state_read, .state_mmu, .mapwr0, .mapwr1, .vm0wp, .vm1wp, .wmap, .memwr, .memrd, .vma, .dmapbenb, .dispwr, .vm0rp, .vm1rp, .vmaenb, .vmasel, .memdrive, .mdsel, .use_md);
 
@@ -689,7 +689,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    VMEM0(.clk, .reset, .vmem0_adr, .mapi, .vmap, .vm0rp, .vma, .use_map, .srcmap, .memstart, .vm0wp);
 
-   VMEM12(.clk, .reset, .vmem1_adr, .vmap, .mapi, .vm1rp, .vma, .vmo, .vm1wp);
+   VMEM12(.clk, .reset, .vmap, .mapi, .vm1rp, .vma, .vmo, .vm1wp);
 
    VMEMDR(.vmo, .srcmap, .state_alu, .state_write, .state_mmu, .state_fetch, .lvmo_23, .lvmo_22, .mapdrive, .pma);
 
