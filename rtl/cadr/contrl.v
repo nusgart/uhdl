@@ -2,7 +2,7 @@
 //
 // TK		CADR	PC, SPC CONTROL
 
-module CONTRL(clk, reset, dfall, dispenb, ignpopj, inop, ipopj, iwrite, iwrited, jcalf, jfalse, jret, jretf, n, nop, nopa, pcs0, pcs1, popj, spcdrive, spcenb, spcnt, spop, spush, srcspcpopreal, srp, swp, dr, dp, irdisp, funct, irjump, ir, srcspcpop, jcond, destspc, state_write, srcspc, state_alu, state_fetch, trap, dn, nop11);
+module CONTRL(clk, reset, iwrited, nopa, pcs0, pcs1, spcdrive, spcenb, spcnt, spop, spush, srcspcpopreal, srp, swp, dr, dp, irdisp, funct, irjump, ir, srcspcpop, jcond, destspc, state_write, srcspc, state_alu, state_fetch, trap, dn, nop11, n, nop);
 
    input clk;
    input reset;
@@ -24,23 +24,12 @@ module CONTRL(clk, reset, dfall, dispenb, ignpopj, inop, ipopj, iwrite, iwrited,
    input	srcspc;
    input	srcspcpop;
    input	trap;
-   output	dfall;
-   output	dispenb;
-   output	ignpopj;
-   output	inop;
-   output	ipopj;
-   output	iwrite;
    output	iwrited;
-   output	jcalf;
-   output	jfalse;
-   output	jret;
-   output	jretf;
    output	n;
    output	nop;
    output	nopa;
    output	pcs0;
    output	pcs1;
-   output	popj;
    output	spcdrive;
    output	spcenb;
    output	spcnt;
@@ -52,8 +41,19 @@ module CONTRL(clk, reset, dfall, dispenb, ignpopj, inop, ipopj, iwrite, iwrited,
 
    ////////////////////////////////////////////////////////////////////////////////
 
-   reg		iwrited;
    reg		inop;
+   reg		iwrited;
+   wire		dfall;
+   wire		dispenb;
+   wire		ignpopj;
+   wire		ipopj;
+   wire		iwrite;
+   wire		jcalf;
+   wire		jfalse;
+   wire		jret;
+   wire		jretf;
+   wire		popjwire;
+   wire 	popj;
 
    assign dfall  = dr & dp;			/* push-pop fall through */
 
