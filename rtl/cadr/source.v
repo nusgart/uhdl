@@ -47,6 +47,8 @@ module SOURCE(ir, iralu, irbyte, destimod0, destimod1, iwrited, idebug, nop, ird
 
    ////////////////////////////////////////////////////////////////////////////////
 
+   wire		specalu;
+
    assign {irbyte,irdisp,irjump,iralu} =
 					nop ? 4'b0000 :
 					({ir[44],ir[43]} == 2'b00) ? 4'b0001 :

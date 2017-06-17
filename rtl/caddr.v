@@ -619,7 +619,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    DSPCTL(.clk, .reset, .state_fetch, .irdisp, .funct, .ir, .dmask, .dmapbenb, .dispwr, .dc);
 
-   FLAG(.clk, .reset, .ir, .nopa, .aeqm, .sintr, .int_enable, .vmaok, .sequence_break, .alu, .conds, .pgf_or_int, .pgf_or_int_or_sb, .sint, .lc_byte_mode, .prog_unibus_reset, .ob, .r, .state_fetch, .destintctl, .statbit, .ilong, .jcond);
+   FLAG(.clk, .reset, .ir, .nopa, .aeqm, .sintr, .int_enable, .vmaok, .sequence_break, .alu, .lc_byte_mode, .prog_unibus_reset, .ob, .r, .state_fetch, .destintctl, .jcond);
 
    IOR(.iob, .i, .ob);
 

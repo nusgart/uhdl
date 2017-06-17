@@ -29,6 +29,8 @@ module MD(clk, reset, md, mddrive, mdgetspar, spy_in, loadmd, memrq, destmdr, md
    reg [31:0]	 md;
    reg		 mdhaspar;
    reg		 mdpar;
+   wire		 ignpar;
+   wire		 mdclk;
 
    assign mdgetspar = ~destmdr & ~ignpar;
    assign ignpar = 1'b0;
