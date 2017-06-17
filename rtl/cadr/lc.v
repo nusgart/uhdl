@@ -2,7 +2,7 @@
 //
 // TK		CADR	LOCATION COUNTER
 
-module LC(clk, reset, destlc, lca, lcinc, lc_byte_mode, lc, srclc, state_alu, state_write, state_mmu, state_fetch, ob, opcdrive, opc, dcdrive, dc, pdlptr, pidrive, pdlidx, qdrive, q, mddrive, md, vmadrive, vma, mapdrive, pfw, needfetch, int_enable, prog_unibus_reset, sequence_break, lc0b, ppdrive, vmap, pfr, vmo, mf);
+module LC(clk, reset, destlc, lcinc, lc_byte_mode, lc, srclc, state_alu, state_write, state_mmu, state_fetch, ob, opcdrive, opc, dcdrive, dc, pdlptr, pidrive, pdlidx, qdrive, q, mddrive, md, vmadrive, vma, mapdrive, pfw, needfetch, int_enable, prog_unibus_reset, sequence_break, lc0b, ppdrive, vmap, pfr, vmo, mf);
 
    input clk;
    input reset;
@@ -47,9 +47,9 @@ module LC(clk, reset, destlc, lca, lcinc, lc_byte_mode, lc, srclc, state_alu, st
    ////////////////////////////////////////////////////////////////////////////////
 
    reg [25:0]	 lc;
-   output [3:0]  lca;
-   wire	 lcdrive;
-   wire	 lcry3;
+   wire 	 lca;
+   wire 	 lcdrive;
+   wire 	 lcry3;
 
    always @(posedge clk)
      if (reset)
@@ -60,10 +60,10 @@ module LC(clk, reset, destlc, lca, lcinc, lc_byte_mode, lc, srclc, state_alu, st
 	    if (destlc)
 	      lc <= { ob[25:4], ob[3:0] };
 	    else
-	      lc <= { lc[25:4] + { 21'b0, lcry3 }, lca[3:0] };
+	      lc <= { lc[25:4] + { 21'b0, lcry3 }, lca };
 	 end
 
-   assign {lcry3, lca[3:0]} =
+   assign {lcry3, lca} =
 			     lc[3:0] +
 			     { 3'b0, lcinc & ~lc_byte_mode } +
 			     { 3'b0, lcinc };
