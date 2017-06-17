@@ -693,10 +693,10 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    VMEMDR(.vmo, .srcmap, .state_alu, .state_write, .state_mmu, .state_fetch, .lvmo_23, .lvmo_22, .mapdrive, .pma);
 
-   DEBUG(.clk, .reset, .spy_ir, .spy_in, .i, .idebug, .promenable, .iprom, .iram, .lddbirh, .lddbirm, .lddbirl);
+   DEBUG(.clk, .reset, .spy_in, .i, .idebug, .promenable, .iprom, .iram, .lddbirh, .lddbirm, .lddbirl);
 
    wire   iwe;
-   ICTL(.ramdisable, .idebug, .promdisabled, .iwrited, .state_write, .iwe);
+   ICTL(.idebug, .promdisabled, .iwrited, .state_write, .iwe);
 
    OLORD1(.clk, .reset, .ldmode, .ldscratch1, .ldscratch2, .ldclk, .boot, .run, .step, .promdisable, .trapenb, .stathenb, .errstop, .scratch, .opcinh, .opcclk, .lpc_hold, .ldstat, .idebug, .nop11, .srun, .sstep, .ssdone, .promdisabled, .machrun, .stat_ovf, .stathalt, .errhalt, .state_fetch, .statstop, .spy_in, .ldopc, .set_promdisable, .waiting);
 
@@ -704,7 +704,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    OPCS(.clk, .reset, .opcclk, .opcinh, .pc, .opc, .state_fetch);
 
-   PCTL(.pc, .idebug, .promdisabled, .iwrited, .prompc, .bottom_1k, .promenable, .promce, .promaddr);
+   PCTL(.pc, .idebug, .promdisabled, .iwrited, .promenable, .promaddr);
 
    PROM01(.clk, .promaddr, .iprom);
 
