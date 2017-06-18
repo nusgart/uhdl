@@ -20,9 +20,11 @@ module MCTL(mpassm, srcm, mrp, mwp, madr, ir, destm, wadr, state_decode, state_w
 
    // assign mpass = { 1'b1, ir[30:26] } == { destm, wadr[4:0] };
    // assign mpassl = mpass & phase1 & ~ir[31];
-   assign mpassm = /*~mpass & phase1 &*/ ~ir[31];
+   assign mpassm =		//~mpass & phase1 &
+		  ~ir[31];
 
-   assign srcm = ~ir[31]/* & ~mpass*/;	/* srcm = m-src is m-memory */
+   assign srcm = ~ir[31]	// & ~mpass
+		 ;		//srcm = m-src is m-memory
 
    assign mrp = state_decode;
    assign mwp = destm & state_write;

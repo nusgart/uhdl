@@ -23,9 +23,9 @@ module VCTL1(clk, reset, lcinc, memrq, ifetch, lvmo_22, lvmo_23, memack, memprep
    output memprepare;
    output memrq;
    output memstart;
-   output pfr;
-   output pfw;
-   output vmaok;
+   output pfr;			// vma permissions
+   output pfw;			// vma permissions
+   output vmaok;		// vma access ok
    output waiting;
    output wrcyc;
 
@@ -68,8 +68,8 @@ module VCTL1(clk, reset, lcinc, memrq, ifetch, lvmo_22, lvmo_23, memack, memprep
      else
        memcheck <= memstart;
 
-   assign pfw = (lvmo_23 & lvmo_22) & wrcyc;	/* write permission */
-   assign pfr = lvmo_23 & ~wrcyc;		/* read permission */
+   assign pfw = (lvmo_23 & lvmo_22) & wrcyc; // write permission
+   assign pfr = lvmo_23 & ~wrcyc;	     // read permission
 
    always @(posedge clk)
      if (reset)
@@ -130,6 +130,6 @@ module VCTL1(clk, reset, lcinc, memrq, ifetch, lvmo_22, lvmo_23, memack, memprep
 
    assign waiting =
 		   (memrq & mbusy) |
-		   (lcinc & needfetch & mbusy);		/* ifetch */
+		   (lcinc & needfetch & mbusy);	// ifetch
 
 endmodule

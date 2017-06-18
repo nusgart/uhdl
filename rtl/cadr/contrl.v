@@ -7,9 +7,9 @@ module CONTRL(clk, reset, iwrited, nopa, pcs0, pcs1, spcdrive, spcenb, spcnt, sp
    input clk;
    input reset;
 
-   input	state_alu;
-   input	state_fetch;
-   input	state_write;
+   input state_alu;
+   input state_fetch;
+   input state_write;
 
    input [3:0] funct;
    input [48:0] ir;
@@ -53,23 +53,23 @@ module CONTRL(clk, reset, iwrited, nopa, pcs0, pcs1, spcdrive, spcenb, spcnt, sp
    wire		jret;
    wire		jretf;
    wire		popjwire;
-   wire 	popj;
+   wire		popj;
 
-   assign dfall  = dr & dp;			/* push-pop fall through */
+   assign dfall  = dr & dp;	// push-pop fall through
 
    assign dispenb = irdisp & ~funct[2];
 
    assign ignpopj  = irdisp & ~dr;
 
-   assign jfalse = irjump & ir[6];		/* jump and inverted-sense */
+   assign jfalse = irjump & ir[6]; // jump and inverted-sense
 
-   assign jcalf = jfalse & ir[8];		/* call and inverted-sense */
+   assign jcalf = jfalse & ir[8]; // call and inverted-sense
 
-   assign jret = irjump & ~ir[8] & ir[9];	/* return */
+   assign jret = irjump & ~ir[8] & ir[9]; // return
 
-   assign jretf = jret & ir[6];			/* return and inverted-sense */
+   assign jretf = jret & ir[6];	// return and inverted-sense
 
-   assign iwrite = irjump & ir[8] & ir[9];	/* microcode write */
+   assign iwrite = irjump & ir[8] & ir[9]; // microcode write
 
    assign ipopj = ir[42] & ~nop;
 
@@ -84,10 +84,10 @@ module CONTRL(clk, reset, iwrited, nopa, pcs0, pcs1, spcdrive, spcenb, spcnt, sp
 		(jretf & ~jcond);
 
    assign spush =
-		  destspc |
-		  (jcalf & ~jcond) |
-		  (dispenb & dp & ~dr) |
-		  (irjump & ~ir[6] & ir[8] & jcond);
+		 destspc |
+		 (jcalf & ~jcond) |
+		 (dispenb & dp & ~dr) |
+		 (irjump & ~ir[6] & ir[8] & jcond);
 
    assign srp = state_write;
    assign swp = spush & state_write;
@@ -107,21 +107,19 @@ module CONTRL(clk, reset, iwrited, nopa, pcs0, pcs1, spcdrive, spcenb, spcnt, sp
 	    iwrited <= iwrite;
 	 end
 
-   /*
-    * select new pc
-    * {pcs1,pcs0}
-    * 00 0 spc
-    * 01 1 ir
-    * 10 2 dpc
-    * 11 3 ipc
-    */
+   // select new pc
+   // {pcs1,pcs0}
+   // 00 0 spc
+   // 01 1 ir
+   // 10 2 dpc
+   // 11 3 ipc
 
    assign pcs1 =
 		!(
-		  (popj & ~ignpopj) |		/* popj & !ignore */
-		  (jfalse & ~jcond) |		/* jump & invert & cond-not-satisfied */
-		  (irjump & ~ir[6] & jcond) |	/* jump & !invert & cond-satisfied */
-		  (dispenb & dr & ~dp)		/* dispatch + return & !push */
+		  (popj & ~ignpopj) | // popj & !ignore
+		  (jfalse & ~jcond) | // jump & invert & cond-not-satisfied
+		  (irjump & ~ir[6] & jcond) | // jump & !invert & cond-satisfied
+		  (dispenb & dr & ~dp) // dispatch + return & !push
 		  );
 
    assign pcs0 =
@@ -132,14 +130,12 @@ module CONTRL(clk, reset, iwrited, nopa, pcs0, pcs1, spcdrive, spcenb, spcnt, sp
 		  (jret & ~ir[6] & jcond)
 		  );
 
-   /*
-    * N set if:
-    *  trap						or
-    *  iwrite (microcode write)				or
-    *  dispatch & disp-N				or
-    *  jump & invert-jump-selse & cond-false & !next	or
-    *  jump & !invert-jump-sense & cond-true & !next
-    */
+   // N set if:
+   //  trap						or
+   //  iwrite (microcode write)				or
+   //  dispatch & disp-N				or
+   //  jump & invert-jump-selse & cond-false & !next	or
+   //  jump & !invert-jump-sense & cond-true & !next
    assign n =
 	     trap |
 	     iwrited |

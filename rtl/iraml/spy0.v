@@ -47,7 +47,7 @@ module SPY0(spy_obh, spy_obl, spy_pc, spy_opc, spy_scratch, spy_irh, spy_irm, sp
    ////////////////////////////////////////////////////////////////////////////////
 
 `ifdef old_spy
-   /* read registers */
+   // read registers
    assign {spy_obh, spy_obl, spy_pc, spy_opc,
 	   spy_scratch, spy_irh, spy_irm, spy_irl} =
 						    (eadr[3] | ~dbread) ? 8'b0000000 :
@@ -61,7 +61,7 @@ module SPY0(spy_obh, spy_obl, spy_pc, spy_opc, spy_scratch, spy_irh, spy_irm, sp
 						    ({eadr[2],eadr[1],eadr[0]} == 3'b111) ? 8'b10000000 :
 						    8'b00000000;
 
-   /* read registers */
+   // read registers
    assign {spy_sth, spy_stl, spy_ah, spy_al,
 	   spy_mh, spy_ml, spy_flag2, spy_flag1} =
 						  (~eadr[3] | ~dbread) ? 8'b00000000 :
@@ -75,7 +75,7 @@ module SPY0(spy_obh, spy_obl, spy_pc, spy_opc, spy_scratch, spy_irh, spy_irm, sp
 						  ({eadr[2],eadr[1],eadr[0]} == 3'b111) ? 8'b10000000 :
 						  8'b00000000;
 
-   /* load registers */
+   // load registers
    assign {ldscratch2, ldscratch1, ldmode, ldopc, ldclk, lddbirh, lddbirm, lddbirl} =
 										     (~dbwrite) ? 8'b00000000 :
 										     ({eadr[2],eadr[1],eadr[0]} == 3'b000) ? 8'b00000001 :
@@ -88,7 +88,7 @@ module SPY0(spy_obh, spy_obl, spy_pc, spy_opc, spy_scratch, spy_irh, spy_irm, sp
 										     ({eadr[2],eadr[1],eadr[0]} == 3'b111) ? 8'b10000000 :
 										     8'b00000000;
 `else
-   /* read registers */
+   // read registers
    assign {spy_obh, spy_obl, spy_pc, spy_opc,
 	   spy_scratch, spy_irh, spy_irm, spy_irl} =
 						    ({dbread, eadr} == 6'b10_0000) ? 8'b00000001 :
@@ -101,7 +101,7 @@ module SPY0(spy_obh, spy_obl, spy_pc, spy_opc, spy_scratch, spy_irh, spy_irm, sp
 						    ({dbread, eadr} == 6'b10_0111) ? 8'b10000000 :
 						    8'b00000000;
 
-   /* read registers */
+   // read registers
    assign {spy_sth, spy_stl, spy_ah, spy_al,
 	   spy_mh, spy_ml, spy_flag2, spy_flag1} =
 						  ({dbread, eadr} == 6'b10_1000) ? 8'b00000001 :
@@ -114,7 +114,7 @@ module SPY0(spy_obh, spy_obl, spy_pc, spy_opc, spy_scratch, spy_irh, spy_irm, sp
 						  ({dbread, eadr} == 6'b10_1111) ? 8'b10000000 :
 						  8'b00000000;
 
-   /* read registers */
+   // read registers
    assign {spy_bd, spy_disk, spy_obh_, spy_obl_, spy_vmah, spy_vmal, spy_mdh, spy_mdl} =
 											({dbread, eadr} == 6'b11_0000) ? 8'b00000001 :
 											({dbread, eadr} == 6'b11_0001) ? 8'b00000010 :
@@ -126,7 +126,7 @@ module SPY0(spy_obh, spy_obl, spy_pc, spy_opc, spy_scratch, spy_irh, spy_irm, sp
 											({dbread, eadr} == 6'b11_0111) ? 8'b10000000 :
 											8'b00000000;
 
-   /* load registers */
+   // load registers
    assign {ldscratch2, ldscratch1, ldmode,
 	   ldopc, ldclk, lddbirh, lddbirm, lddbirl} =
 						     ({dbwrite, eadr} == 6'b10_0000) ? 8'b00000001 :

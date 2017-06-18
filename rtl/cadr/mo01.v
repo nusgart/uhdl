@@ -37,6 +37,7 @@ module MO01(msk, r, a, alu, q, osel, ob);
 	      osel == 2'b00 ? mo :
 	      osel == 2'b01 ? alu[31:0] :
 	      osel == 2'b10 ? alu[32:1] :
-	      /*2'b11*/ {alu[30:0],q[31]};
+	      //2'b11
+	      {alu[30:0],q[31]};
 
 endmodule

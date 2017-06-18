@@ -7,7 +7,7 @@ module OPCS(clk, reset, opcclk, opcinh, pc, opc, state_fetch);
    input clk;
    input reset;
 
-   input	state_fetch;
+   input state_fetch;
 
    input [13:0] pc;
    input	opcclk;

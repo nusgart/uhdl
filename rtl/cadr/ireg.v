@@ -7,7 +7,7 @@ module IREG(clk, reset, i, iob, ir, state_fetch, destimod1, destimod0);
    input clk;
    input reset;
 
-   input	state_fetch;
+   input state_fetch;
 
    input [47:0] iob;
    input [48:0] i;

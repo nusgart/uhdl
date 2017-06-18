@@ -13,7 +13,7 @@ module VMEM0(clk, reset, mapi, vmap, vm0rp, vma, srcmap, memstart, vm0wp);
    input	srcmap;
    input	vm0rp;
    input	vm0wp;
-   output [4:0]  vmap;
+   output [4:0] vmap;
 
    ////////////////////////////////////////////////////////////////////////////////
 

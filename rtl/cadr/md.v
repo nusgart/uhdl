@@ -7,10 +7,10 @@ module MD(clk, reset, md, mddrive, mdgetspar, spy_in, loadmd, memrq, destmdr, md
    input clk;
    input reset;
 
-   input	state_alu;
-   input	state_fetch;
-   input	state_mmu;
-   input	state_write;
+   input state_alu;
+   input state_fetch;
+   input state_mmu;
+   input state_write;
 
    input [15:0] spy_in;
    input [31:0] mds;
@@ -21,7 +21,7 @@ module MD(clk, reset, md, mddrive, mdgetspar, spy_in, loadmd, memrq, destmdr, md
    input	memrq;
    input	srcmd;
    output [31:0] md;
-   output	 mddrive;
+   output	 mddrive;	// drive md on to mf bus
    output	 mdgetspar;
 
    ////////////////////////////////////////////////////////////////////////////////
@@ -30,7 +30,7 @@ module MD(clk, reset, md, mddrive, mdgetspar, spy_in, loadmd, memrq, destmdr, md
    reg		 mdhaspar;
    reg		 mdpar;
    wire		 ignpar;
-   wire		 mdclk;
+   wire		 mdclk;		// enable - clock md in?
 
    assign mdgetspar = ~destmdr & ~ignpar;
    assign ignpar = 1'b0;

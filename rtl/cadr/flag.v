@@ -7,7 +7,7 @@ module FLAG(clk, reset, ir, nopa, aeqm, sintr, int_enable, vmaok, sequence_break
    input clk;
    input reset;
 
-   input	state_fetch;
+   input state_fetch;
 
    input [31:0] ob;
    input [31:0] r;
@@ -50,14 +50,14 @@ module FLAG(clk, reset, ir, nopa, aeqm, sintr, int_enable, vmaok, sequence_break
    assign conds = ir[2:0] & {ir[5],ir[5],ir[5]};
 
    assign jcond =
-		  conds == 3'b000 ? r[0] :
-		  conds == 3'b001 ? aluneg :
-		  conds == 3'b010 ? alu[32] :
-		  conds == 3'b011 ? aeqm :
-		  conds == 3'b100 ? ~vmaok :
-		  conds == 3'b101 ? pgf_or_int :
-		  conds == 3'b110 ? pgf_or_int_or_sb :
-		  1'b1;
+		 conds == 3'b000 ? r[0] :
+		 conds == 3'b001 ? aluneg :
+		 conds == 3'b010 ? alu[32] :
+		 conds == 3'b011 ? aeqm :
+		 conds == 3'b100 ? ~vmaok :
+		 conds == 3'b101 ? pgf_or_int :
+		 conds == 3'b110 ? pgf_or_int_or_sb :
+		 1'b1;
 
    always @(posedge clk)
      if (reset)

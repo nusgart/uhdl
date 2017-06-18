@@ -10,39 +10,39 @@ module SOURCE(ir, iralu, irbyte, destimod0, destimod1, iwrited, idebug, nop, ird
    input	nop;
    output [3:0] funct;
    output	dest;
-   output	destimod0;
-   output	destimod1;
-   output	destintctl;
-   output	destlc;
+   output	destimod0;    // ir<25-14> dest oa register <25-0>
+   output	destimod1;    // ir<25-14> dest oa register <47-26>
+   output	destintctl;   // ir<25-14> dest interrupt control
+   output	destlc;	      // ir<25-14> dest lc
    output	destm;
-   output	destmdr;
-   output	destmem;
-   output	destpdl_p;
-   output	destpdl_x;
-   output	destpdlp;
-   output	destpdltop;
-   output	destpdlx;
-   output	destspc;
-   output	destvma;
+   output	destmdr;	// ir<25-14> dest MD register
+   output	destmem;	// ir<25-14> dest VMA or MD
+   output	destpdl_p; // ir<25-14> dest pdl (addressed by ptr), push
+   output	destpdl_x; // ir<25-14> dest pdl (addressed by index)
+   output	destpdlp;  // ir<25-14> dest pdl ptr
+   output	destpdltop;   // ir<25-14> dest pdl (addressed by ptr)
+   output	destpdlx;     // ir<25-14> dest pdl index
+   output	destspc;      // ir<25-14> dest spc data, push
+   output	destvma;      // ir<25-14> dest VMA register
    output	div;
-   output	imod;
+   output	imod;		// fuctional destination
    output	iralu;
    output	irbyte;
    output	irdisp;
    output	irjump;
    output	mul;
-   output	srcdc;
-   output	srclc;
-   output	srcmap;
-   output	srcmd;
-   output	srcopc;
-   output	srcpdlidx;
-   output	srcpdlpop;
-   output	srcpdlptr;
-   output	srcpdltop;
+   output	srcdc;		// ir<30-26> m src = dispatch constant
+   output	srclc;		// ir<30-26> m src = lc
+   output	srcmap;		// ir<30-26> m src = vm map[md]
+   output	srcmd;		// ir<30-26> m src = md
+   output	srcopc;		// ir<30-26> m src = vma
+   output	srcpdlidx;	// ir<30-26> m src = pdl index
+   output	srcpdlpop;   // ir<30-26> m src = PDL buffer, ptr, pop
+   output	srcpdlptr;   // ir<30-26> m src = pdl ptr
+   output	srcpdltop;   // ir<30-26> m src = PDL buffer, ptr
    output	srcq;
-   output	srcspc;
-   output	srcspcpop;
+   output	srcspc;		// ir<30-26> m src = spc ptr
+   output	srcspcpop;	// ir<30-26> m src = SPC , pop
    output	srcvma;
 
    ////////////////////////////////////////////////////////////////////////////////
@@ -57,11 +57,11 @@ module SOURCE(ir, iralu, irbyte, destimod0, destimod1, iwrited, idebug, nop, ird
 					4'b1000 ;
 
    assign funct =
-		  nop ? 4'b0000 :
-		  ({ir[11],ir[10]} == 2'b00) ? 4'b0001 :
-		  ({ir[11],ir[10]} == 2'b01) ? 4'b0010 :
-		  ({ir[11],ir[10]} == 2'b10) ? 4'b0100 :
-		  4'b1000 ;
+		 nop ? 4'b0000 :
+		 ({ir[11],ir[10]} == 2'b00) ? 4'b0001 :
+		 ({ir[11],ir[10]} == 2'b01) ? 4'b0010 :
+		 ({ir[11],ir[10]} == 2'b10) ? 4'b0100 :
+		 4'b1000 ;
 
    assign specalu  = ir[8] & iralu;
 
@@ -96,8 +96,8 @@ module SOURCE(ir, iralu, irbyte, destimod0, destimod1, iwrited, idebug, nop, ird
    assign destvma = destmem & ~ir[22];
    assign destmdr = destmem & ir[22];
 
-   assign dest = iralu | irbyte;	/* destination field is valid */
-   assign destm = dest & ~ir[25];	/* functional destination */
+   assign dest = iralu | irbyte;  // destination field is valid
+   assign destm = dest & ~ir[25]; // functional destination
 
    assign {destintctl,destlc} =
 			       !(destm & ~ir[23] & ~ir[22]) ? 2'b00 :

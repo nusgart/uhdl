@@ -21,7 +21,7 @@ module SPCW(destspc, l, spcw, n, wpc, ipc);
    //     if (reset)
    //       reta <= 0;
    //     else
-   //       /* n is not valid until after decode */
+   //       // n is not valid until after decode
    //       if (state_alu)
    //	 reta <= n ? wpc : ipc;
 

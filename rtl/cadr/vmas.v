@@ -10,6 +10,11 @@ module VMAS(vmas, mapi, vmasel, ob, memprepare, md, vma, lc);
    input [31:0] vma;
    input	memprepare;
    input	vmasel;
+   //       22221111111111
+   // mapi  32109876543210
+   //       1
+   // vmem0 09876543210
+   //
    output [23:8] mapi;
    output [31:0] vmas;
 

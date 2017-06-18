@@ -7,7 +7,7 @@ module LCC(clk, reset, state_fetch, lc0b, needfetch, ifetch, spc1a, sh4, sh3, si
    input clk;
    input reset;
 
-   input	state_fetch;
+   input state_fetch;
 
    input [18:0] spc;
    input [25:0] lc;

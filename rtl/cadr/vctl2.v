@@ -45,13 +45,11 @@ module VCTL2(loadmd, nopa, ir, wrcyc, destmdr, srcmd, destmem, srcmap, irdisp, m
    wire		normal_vm1_rd;
    wire		use_md;
 
-   /*
-    * for memory cycle, we run mmu state and map vma during state_write & state_mmu
-    * for dispatch,     we don't run mmy state and map md early
-    *                   so dispatch ram has a chance to read and register during write state
-    *
-    * dispatch ram output has to be valid during fetch cycle to get npc correct
-    */
+   // for memory cycle, we run mmu state and map vma during state_write & state_mmu
+   // for dispatch,     we don't run mmy state and map md early
+   //                   so dispatch ram has a chance to read and register during write state
+   //
+   // dispatch ram output has to be valid during fetch cycle to get npc correct
 
    assign mapwr0 = wmap & vma[26];
    assign mapwr1 = wmap & vma[25];
@@ -84,7 +82,8 @@ module VCTL2(loadmd, nopa, ir, wrcyc, destmdr, srcmd, destmem, srcmap, irdisp, m
 
    assign memdrive = wrcyc & lm_drive_enb;
 
-   assign mdsel = destmdr & ~loadmd/*& ~state_write*/;
+   assign mdsel = destmdr & ~loadmd // & ~state_write
+		  ;
 
    assign use_md  = srcmd & ~nopa;
 

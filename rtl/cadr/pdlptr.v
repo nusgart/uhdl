@@ -7,10 +7,10 @@ module PDLPTR(clk, reset, pidrive, ppdrive, pdlidx, pdlptr, state_alu, state_wri
    input clk;
    input reset;
 
-   input	state_alu;
-   input	state_fetch;
-   input	state_read;
-   input	state_write;
+   input state_alu;
+   input state_fetch;
+   input state_read;
+   input state_write;
 
    input [31:0] ob;
    input	destpdlp;

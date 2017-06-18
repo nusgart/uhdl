@@ -8,9 +8,9 @@ module ALU01(a, m, aluf, alumode, aeqm, alu, cin12_n, cin16_n, cin20_n, cin24_n,
    input [31:0] a;
    input [31:0] m;
    input [3:0]	aluf;
-   input	 alumode;
-   input	 cin0;
-   input	 cin4_n, cin8_n, cin12_n, cin16_n, cin20_n, cin24_n, cin28_n, cin32_n;
+   input	alumode;
+   input	cin0;
+   input	cin4_n, cin8_n, cin12_n, cin16_n, cin20_n, cin24_n, cin28_n, cin32_n;
    output [32:0] alu;
    output	 aeqm;
    output	 xout3, xout7, xout11, xout15, xout19, xout23, xout27, xout31;

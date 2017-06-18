@@ -9,7 +9,7 @@ module SPY124(clk, reset, spy_out, ir, spy_mdh, spy_mdl, state_write, spy_vmah, 
    input clk;
    input reset;
 
-   input 	state_write;
+   input state_write;
 
    input [11:0] bd_state_in;
    input [13:0] opc;
@@ -21,50 +21,50 @@ module SPY124(clk, reset, spy_out, ir, spy_mdh, spy_mdl, state_write, spy_vmah, 
    input [31:0] ob;
    input [31:0] vma;
    input [48:0] ir;
-   input [4:0] 	disk_state_in;
-   input 	boot;
-   input 	dbread;
-   input 	destspc;
-   input 	err;
-   input 	imod;
-   input 	iwrited;
-   input 	jcond;
-   input 	nop;
-   input 	pcs0;
-   input 	pcs1;
-   input 	pdlwrite;
-   input 	promdisable;
-   input 	spush;
-   input 	spy_ah;
-   input 	spy_al;
-   input 	spy_bd;
-   input 	spy_disk;
-   input 	spy_flag1;
-   input 	spy_flag2;
-   input 	spy_irh;
-   input 	spy_irl;
-   input 	spy_irm;
-   input 	spy_mdh;
-   input 	spy_mdl;
-   input 	spy_mh;
-   input 	spy_ml;
-   input 	spy_obh;
-   input 	spy_obh_;
-   input 	spy_obl;
-   input 	spy_obl_;
-   input 	spy_opc;
-   input 	spy_pc;
-   input 	spy_scratch;
-   input 	spy_sth;
-   input 	spy_stl;
-   input 	spy_vmah;
-   input 	spy_vmal;
-   input 	srun;
-   input 	ssdone;
-   input 	stathalt;
-   input 	vmaok;
-   input 	waiting;
-   input 	wmap;
+   input [4:0]	disk_state_in;
+   input	boot;
+   input	dbread;
+   input	destspc;
+   input	err;
+   input	imod;
+   input	iwrited;
+   input	jcond;
+   input	nop;
+   input	pcs0;
+   input	pcs1;
+   input	pdlwrite;
+   input	promdisable;
+   input	spush;
+   input	spy_ah;
+   input	spy_al;
+   input	spy_bd;
+   input	spy_disk;
+   input	spy_flag1;
+   input	spy_flag2;
+   input	spy_irh;
+   input	spy_irl;
+   input	spy_irm;
+   input	spy_mdh;
+   input	spy_mdl;
+   input	spy_mh;
+   input	spy_ml;
+   input	spy_obh;
+   input	spy_obh_;
+   input	spy_obl;
+   input	spy_obl_;
+   input	spy_opc;
+   input	spy_pc;
+   input	spy_scratch;
+   input	spy_sth;
+   input	spy_stl;
+   input	spy_vmah;
+   input	spy_vmal;
+   input	srun;
+   input	ssdone;
+   input	stathalt;
+   input	vmaok;
+   input	waiting;
+   input	wmap;
    output [15:0] spy_out;
 
    ////////////////////////////////////////////////////////////////////////////////
@@ -73,12 +73,13 @@ module SPY124(clk, reset, spy_out, ir, spy_mdh, spy_mdl, state_write, spy_vmah, 
    wire [15:0]	 spy_mux;
    wire [4:0]	 disk_state_in;
 
-   /* grab ob from last cycle for spy */
+   // grab ob from last cycle for spy
    always @(posedge clk)
      if (reset)
        ob_last <= 0;
      else
-       if (/*state_fetch*/state_write)
+       if ( //state_fetch
+	    state_write)
 	 ob_last <= ob;
 
    assign spy_out = dbread ? spy_mux : 16'b1111111111111111;

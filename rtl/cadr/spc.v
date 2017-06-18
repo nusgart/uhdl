@@ -10,16 +10,16 @@ module SPC(clk, reset, spcnt, state_fetch, spush, spcptr, spco, spcw, srp, swp);
    input state_fetch;
 
    input [18:0] spcw;
-   input spcnt;
+   input	spcnt;
    input	spush;
    input	srp;
    input	swp;
    output [18:0] spco;
-   output [4:0] spcptr;
+   output [4:0]  spcptr;
 
    ////////////////////////////////////////////////////////////////////////////////
 
-   reg [4:0]	spcptr;
+   reg [4:0]	 spcptr;
    wire [4:0]	 spcptr_p1;
 
    // orig rtl:
@@ -33,10 +33,10 @@ module SPC(clk, reset, spcnt, state_fetch, spush, spcptr, spco, spcw, srp, swp);
 
 `define old_spc
 `ifdef old_spc
-   wire [4:0] spcadr;
+   wire [4:0]	 spcadr;
    assign spcadr = (spcnt && spush) ? spcptr_p1 : spcptr;
 `else
-   reg [4:0]  spcadr;
+   reg [4:0]	 spcadr;
 
    always @(posedge clk)
      if (reset)

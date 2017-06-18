@@ -6,8 +6,8 @@ module PCTL(pc, idebug, promdisabled, iwrited, promenable, promaddr);
    input	idebug;
    input	iwrited;
    input	promdisabled;
-   output [8:0]  promaddr;
-   output	 promenable;
+   output [8:0] promaddr;
+   output	promenable;
 
    ////////////////////////////////////////////////////////////////////////////////
 

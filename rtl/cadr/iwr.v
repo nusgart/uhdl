@@ -7,7 +7,7 @@ module IWR(clk, reset, state_fetch, iwr, a, m);
    input clk;
    input reset;
 
-   input	state_fetch;
+   input state_fetch;
 
    input [31:0] a;
    input [31:0] m;

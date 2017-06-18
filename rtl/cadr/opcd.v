@@ -16,7 +16,7 @@ module OPCD(dcdrive, opcdrive, srcdc, srcopc, state_alu, state_write, state_mmu,
 
    ////////////////////////////////////////////////////////////////////////////////
 
-   assign dcdrive = srcdc &	/* dispatch constant */
+   assign dcdrive = srcdc &	// dispatch constant
 		    (state_alu || state_write || state_mmu || state_fetch);
 
    assign opcdrive = srcopc &

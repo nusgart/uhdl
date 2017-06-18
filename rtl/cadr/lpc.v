@@ -7,7 +7,7 @@ module LPC(clk, reset, lpc_hold, pc, wpc, irdisp, ir, state_fetch);
    input clk;
    input reset;
 
-   input	state_fetch;
+   input state_fetch;
 
    input [13:0] pc;
    input [48:0] ir;
@@ -29,7 +29,7 @@ module LPC(clk, reset, lpc_hold, pc, wpc, irdisp, ir, state_fetch);
 	      lpc <= pc;
 	 end
 
-   /* dispatch and instruction as N set */
+   //dispatch and instruction as N set
    assign wpc = (irdisp & ir[25]) ? lpc : pc;
 
 endmodule

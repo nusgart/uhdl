@@ -28,7 +28,8 @@ module MLATCH(pdldrive, spcdrive, mfdrive, mmem, pdl, spcptr, spco, mf, m, mpass
 
    // mux M
    assign m =
-	     /*same as srcm*/mpassm ? mmem :
+	     //same as srcm
+	     mpassm ? mmem :
 	     pdldrive ? pdl :
 	     spcdrive ? {3'b0, spcptr, 5'b0, spco} :
 	     mfdrive ? mf :

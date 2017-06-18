@@ -7,8 +7,8 @@ module DRAM02(clk, reset, a, ir, vmo, dmask, r, dr, dp, dn, dpc, dispwr, state_w
    input clk;
    input reset;
 
-   input	state_prefetch;
-   input	state_write;
+   input state_prefetch;
+   input state_write;
 
    input [23:0] vmo;
    input [31:0] a;;
@@ -34,12 +34,14 @@ module DRAM02(clk, reset, a, ir, vmo, dmask, r, dr, dp, dn, dpc, dispwr, state_w
    // r     x  x  x  x  6  5  4  3  2  1  x
 
    assign daddr0 =
-		   (ir[8] & vmo[18]) |
-		   (ir[9] & vmo[19]) |
-		   //note: the hardware shows bit 0 replaced,
-		   //	but usim or's it instead.
-		   (/*~dmapbenb &*/ dmask[0] & r[0]) |
-		   (ir[12]);
+		  (ir[8] & vmo[18]) |
+		  (ir[9] & vmo[19]) |
+		  //note: the hardware shows bit 0 replaced,
+		  //	but usim or's it instead.
+		  (
+		   //~dmapbenb &
+		   dmask[0] & r[0]) |
+		  (ir[12]);
 
    assign dadr =
 		{ ir[22:13], daddr0 } |

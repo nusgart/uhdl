@@ -64,22 +64,22 @@ module ALUC4(yout15, yout11, yout7, yout3, xout15, xout11, xout7, xout3, yout31,
 			    );
 
 
-   assign    divposlasttime  = q[0] | ir[6];
+   assign divposlasttime  = q[0] | ir[6];
 
-   assign    divsubcond = div & divposlasttime;
+   assign divsubcond = div & divposlasttime;
 
-   assign    divaddcond = div & (ir[5] | ~divposlasttime);
+   assign divaddcond = div & (ir[5] | ~divposlasttime);
 
-   assign    mulnop = mul & ~q[0];
+   assign mulnop = mul & ~q[0];
 
-   assign    aluadd = (divaddcond & ~a[31]) |
-		      (divsubcond & a[31]) |
-		      mul;
+   assign aluadd = (divaddcond & ~a[31]) |
+		   (divsubcond & a[31]) |
+		   mul;
 
-   assign    alusub = mulnop |
-		      (divsubcond & ~a[31]) |
-		      (divaddcond & a[31]) |
-		      irjump;
+   assign alusub = mulnop |
+		   (divsubcond & ~a[31]) |
+		   (divaddcond & a[31]) |
+		   irjump;
 
    assign osel[1] = ir[13] & iralu;
    assign osel[0] = ir[12] & iralu;

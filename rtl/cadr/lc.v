@@ -7,10 +7,10 @@ module LC(clk, reset, destlc, lca, lcinc, lc_byte_mode, lc, srclc, state_alu, st
    input clk;
    input reset;
 
-   input	state_alu;
-   input	state_fetch;
-   input	state_mmu;
-   input	state_write;
+   input state_alu;
+   input state_fetch;
+   input state_mmu;
+   input state_write;
 
    input [13:0] opc;
    input [23:0] vmo;
@@ -48,8 +48,8 @@ module LC(clk, reset, destlc, lca, lcinc, lc_byte_mode, lc, srclc, state_alu, st
 
    reg [25:0]	 lc;
    output [3:0]  lca;		// ---!!! This can't be a wire for whatever reason...
-   wire 	 lcdrive;
-   wire 	 lcry3;
+   wire		 lcdrive;
+   wire		 lcry3;
 
    always @(posedge clk)
      if (reset)
@@ -87,26 +87,26 @@ module LC(clk, reset, destlc, lca, lcinc, lc_byte_mode, lc, srclc, state_alu, st
 
    // mux MF
    assign mf =
-	lcdrive ?
+	      lcdrive ?
 	      { needfetch, 1'b0, lc_byte_mode, prog_unibus_reset,
 		int_enable, sequence_break, lc[25:1], lc0b } :
-	opcdrive ?
+	      opcdrive ?
 	      { 16'b0, 2'b0, opc[13:0] } :
-	dcdrive ?
+	      dcdrive ?
 	      { 16'b0, 4'b0, 2'b0, dc[9:0] } :
-	ppdrive ?
+	      ppdrive ?
 	      { 16'b0, 4'b0, 2'b0, pdlptr[9:0] } :
-	pidrive ?
+	      pidrive ?
 	      { 16'b0, 4'b0, 2'b0, pdlidx[9:0] } :
-	qdrive ?
+	      qdrive ?
 	      q :
-	mddrive ?
+	      mddrive ?
 	      md :
-//	mpassl ?
-//	      l :
-	vmadrive ?
+	      //	mpassl ?
+	      //	      l :
+	      vmadrive ?
 	      vma :
-	mapdrive ?
+	      mapdrive ?
 	      { ~pfw, ~pfr, 1'b1, vmap[4:0], vmo[23:0] } :
 	      32'b0;
 

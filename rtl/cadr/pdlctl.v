@@ -7,11 +7,11 @@ module PDLCTL(clk, reset, pdlidx, pdla, pdlwrite, state_alu, state_write, state_
    input clk;
    input reset;
 
-   input	state_alu;
-   input	state_fetch;
-   input	state_mmu;
-   input	state_read;
-   input	state_write;
+   input state_alu;
+   input state_fetch;
+   input state_mmu;
+   input state_read;
+   input state_write;
 
    input [48:0] ir;
    input [9:0]	pdlidx;
@@ -35,7 +35,7 @@ module PDLCTL(clk, reset, pdlidx, pdla, pdlwrite, state_alu, state_write, state_
    reg		pwidx;
    wire		pdlp;
 
-   /* m-src = pdl buffer, or index based write */
+   // m-src = pdl buffer, or index based write
    assign pdlp = (state_read & ir[30]) | (~state_read & ~pwidx);
 
    assign pdla = pdlp ? pdlptr : pdlidx;

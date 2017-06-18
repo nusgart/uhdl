@@ -7,7 +7,7 @@ module NPC(clk, reset, state_fetch, ipc, trap, pcs1, pcs0, ir, spc, spc1a, dpc, 
    input clk;
    input reset;
 
-   input	state_fetch;
+   input state_fetch;
 
    input [13:0] dpc;
    input [18:0] spc;
@@ -25,11 +25,12 @@ module NPC(clk, reset, state_fetch, ipc, trap, pcs1, pcs0, ir, spc, spc1a, dpc, 
    wire [13:0]	 npc;
 
    assign npc =
-		trap ? 14'b0 :
-		{pcs1,pcs0} == 2'b00 ? { spc[13:2], spc1a, spc[0] } :
-		{pcs1,pcs0} == 2'b01 ? { ir[25:12] } :
-		{pcs1,pcs0} == 2'b10 ? dpc :
-		/*2'b11*/ ipc;
+	       trap ? 14'b0 :
+	       {pcs1,pcs0} == 2'b00 ? { spc[13:2], spc1a, spc[0] } :
+	       {pcs1,pcs0} == 2'b01 ? { ir[25:12] } :
+	       {pcs1,pcs0} == 2'b10 ? dpc :
+	       //2'b11
+	       ipc;
 
    always @(posedge clk)
      if (reset)
