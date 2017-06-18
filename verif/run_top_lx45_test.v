@@ -193,9 +193,9 @@ module run_top;
 	
 	if (uut.cpu.state == 6'b000001)
 	  $display("%0o %o A=%x M=%x N%b MD=%x LC=%x",
-		   uut.cpu.lpc, uut.cpu.ir, uut.cpu.a, uut.cpu.m, uut.cpu.n, uut.cpu.md, uut.cpu.lc);
+		   uut.cpu.cadr_lpc.lpc, uut.cpu.ir, uut.cpu.a, uut.cpu.m, uut.cpu.n, uut.cpu.md, uut.cpu.lc);
 
-	if (uut.cpu.lpc == 14'o26)
+	if (uut.cpu.cadr_lpc.lpc == 14'o26)
 	  begin
 	     faults = faults + 1;
 

@@ -165,13 +165,95 @@ module top(rs232_txd, rs232_rxd,
 		   .boot(boot),
 		   .halt(halt));
 
+   // *************
+   // Bus Interface
+   // *************
+
+   wire [21:8]	pma;
+   wire [31:0] vma;
+   wire [31:0] md;
+
+   wire [21:0] busint_addr;
+   assign busint_addr = {pma, vma[7:0]};
+
+   wire [31:0]	busint_bus;
+
+   wire   memrq;
+   wire   memack;
+   wire   wrcyc;
+   wire   loadmd;
+   wire   bus_int;
+   wire [15:0] busint_spyout;
+
+   busint busint(
+		 .mclk(cpuclk),
+		 .reset(reset),
+		 .addr(busint_addr),
+		 .busin(md),
+		 .busout(busint_bus),
+		 .spyin(spy_in),
+		 .spyout(busint_spyout),
+		 .spyreg(spy_reg),
+		 .spyrd(spy_rd),
+		 .spywr(spy_wr),
+
+		 .req(memrq),
+		 .ack(memack),
+		 .write(wrcyc),
+		 .load(loadmd),
+
+		 .interrupt(bus_int),
+
+		 .sdram_addr(sdram_addr),
+		 .sdram_data_in(sdram_data_rc2cpu),
+		 .sdram_data_out(sdram_data_cpu2rc),
+		 .sdram_req(sdram_req),
+		 .sdram_ready(sdram_ready),
+		 .sdram_write(sdram_write),
+		 .sdram_done(sdram_done),
+
+		 .vram_addr(vram_cpu_addr),
+		 .vram_data_in(vram_cpu_data_in),
+		 .vram_data_out(vram_cpu_data_out),
+		 .vram_req(vram_cpu_req),
+		 .vram_ready(vram_cpu_ready),
+		 .vram_write(vram_cpu_write),
+		 .vram_done(vram_cpu_done),
+
+		 .bd_cmd(bd_cmd),
+		 .bd_start(bd_start),
+		 .bd_bsy(bd_bsy),
+		 .bd_rdy(bd_rdy),
+		 .bd_err(bd_err),
+		 .bd_addr(bd_addr),
+		 .bd_data_in(bd_data_bd2cpu),
+		 .bd_data_out(bd_data_cpu2bd),
+		 .bd_rd(bd_rd),
+		 .bd_wr(bd_wr),
+		 .bd_iordy(bd_iordy),
+		 .bd_state_in(bd_state),
+
+		 .kb_data(kb_data),
+		 .kb_ready(kb_ready),
+		 .ms_x(ms_x),
+		 .ms_y(ms_y),
+		 .ms_button(ms_button),
+		 .ms_ready(ms_ready),
+
+		 .promdisable(set_promdisable),
+		 .disk_state(disk_state),
+		 .bus_state(bus_state)
+		 );
+
+   wire [4:0]	 disk_state_in;
+   assign disk_state_in = busint.disk.state;
+
    cpu_test cpu (
 	      .clk(cpuclk),
 	      .ext_int(interrupt),
 	      .ext_reset(reset),
 	      .ext_boot(boot),
 	      .ext_halt(halt),
-	      .ext_switches(switches),
 
 	      .spy_in(spy_in),
 	      .spy_out(spy_out),
@@ -181,11 +263,10 @@ module top(rs232_txd, rs232_rxd,
 
 	      .pc_out(pc),
 	      .state_out(cpu_state),
-	      .disk_state_out(disk_state),
-	      .bus_state_out(bus_state),
 	      .machrun_out(machrun),
 	      .prefetch_out(prefetch),
 	      .fetch_out(fetch),
+
 	      .mcr_addr(mcr_addr),
 	      .mcr_data_out(mcr_data_out),
 	      .mcr_data_in(mcr_data_in),
@@ -193,35 +274,23 @@ module top(rs232_txd, rs232_rxd,
 	      .mcr_write(mcr_write),
 	      .mcr_done(mcr_done),
 
-	      .sdram_addr(sdram_addr),
-	      .sdram_data_in(sdram_data_in),
-	      .sdram_data_out(sdram_data_out),
-	      .sdram_req(sdram_req),
-	      .sdram_ready(sdram_ready),
-	      .sdram_write(sdram_write),
-	      .sdram_done(sdram_done),
-      
-	      .vram_addr(vram_cpu_addr),
-	      .vram_data_in(vram_cpu_data_in),
-	      .vram_data_out(vram_cpu_data_out),
-	      .vram_req(vram_cpu_req),
-	      .vram_ready(vram_cpu_ready),
-	      .vram_write(vram_cpu_write),
-	      .vram_done(vram_cpu_done),
+	      .set_promdisable(set_promdisable),
 
-	      .ide_data_in(ide_data_in),
-	      .ide_data_out(ide_data_out),
-	      .ide_dior(ide_dior),
-	      .ide_diow(ide_diow),
-	      .ide_cs(ide_cs),
-	      .ide_da(ide_da),
+	      .bd_state_in(bd_state),
+	      .disk_state_in(disk_state_in),
 
-	      .kb_data(kb_data),
-	      .kb_ready(kb_ready),
-	      .ms_x(ms_x),
-	      .ms_y(ms_y),
-	      .ms_button(ms_button),
-	      .ms_ready(ms_ready));
+	      .pma(pma),
+	      .vma(vma),
+	      .md(md),
+
+	      .busint_bus(busint_bus),
+
+	      .memrq(memrq),
+	      .memack(memack),
+	      .wrcyc(wrcyc),
+	      .loadmd(loadmd),
+	      .bus_int(bus_int)
+	      );
    
    assign ide_data_bus = ~ide_diow ? ide_data_out : 16'bz;
    assign ide_data_in = ide_data_bus;
