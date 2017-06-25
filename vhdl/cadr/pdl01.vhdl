@@ -8,11 +8,11 @@ entity PDL01 is
     clk   : in std_logic;
     reset : in std_logic;
 
-    l    : in  std_logic_vector(31 downto 0);
-    pdla : in  std_logic_vector(9 downto 0);
+    l    : in  std_logic_vector (31 downto 0);
+    pdla : in  std_logic_vector (9 downto 0);
     prp  : in  std_logic;
     pwp  : in  std_logic;
-    pdl  : out std_logic_vector(31 downto 0);
+    pdl  : out std_logic_vector (31 downto 0);
     );
 end entity;
 

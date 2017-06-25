@@ -2,7 +2,7 @@
 //
 // TK		CADR	ALU CARRY AND FUNCTION
 
-module ALUC4(yout15, yout11, yout7, yout3, xout15, xout11, xout7, xout3, yout31, yout27, yout23, yout19, xout31, xout27, xout23, xout19, a, ir, iralu, irjump, mul, div, q, osel, aluf, alumode, cin12_n, cin8_n, cin4_n, cin0, cin28_n, cin24_n, cin20_n, cin16_n, cin32_n);
+module ALUC4(a, q, ir, div, iralu, irjump, mul, xout3, xout7, xout11, xout15, xout19, xout23, xout27, xout31, yout3, yout7, yout11, yout15, yout19, yout23, yout27, yout31, osel, aluf, alumode, cin0, cin4_n, cin8_n, cin12_n, cin16_n, cin20_n, cin24_n, cin28_n, cin32_n);
 
    input [31:0] a;
    input [31:0] q;
@@ -29,6 +29,8 @@ module ALUC4(yout15, yout11, yout7, yout3, xout15, xout11, xout7, xout3, yout31,
    wire		mulnop;
    wire		xx0, xx1;
    wire		yy0, yy1;
+
+   ////////////////////////////////////////////////////////////////////////////////
 
    ic_74S182  i_ALUC4_2A20 (
 			    .Y( { yout15,yout11,yout7,yout3 } ),

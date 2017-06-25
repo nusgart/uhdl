@@ -9,10 +9,10 @@ entity FLAG is
 
     state_fetch : in std_logic;
 
-    ob                : in  std_logic_vector(31 downto 0);
-    r                 : in  std_logic_vector(31 downto 0);
-    alu               : in  std_logic_vector(32 downto 0);
-    ir                : in  std_logic_vector(48 downto 0);
+    ob                : in  std_logic_vector (31 downto 0);
+    r                 : in  std_logic_vector (31 downto 0);
+    alu               : in  std_logic_vector (32 downto 0);
+    ir                : in  std_logic_vector (48 downto 0);
     aeqm              : in  std_logic;
     destintctl        : in  std_logic;
     nopa              : in  std_logic;
@@ -27,16 +27,16 @@ entity FLAG is
 end entity;
 
 architecture behavioral of FLAG is
-   reg		int_enable;
-   reg		lc_byte_mode;
-   reg		prog_unibus_reset;
-   reg		sequence_break;
-signal conds:std_logic_vector(2 downto 0);
-   signal ilong:std_logic;
-   signal pgf_or_int:std_logic;
-   signal pgf_or_int_or_sb:std_logic;
-   signal sint:std_logic;
-   signal statbit:std_logic;
+  signal int_enable        : std_logic_vector (1 downto 0);
+  signal lc_byte_mode      : std_logic_vector (1 downto 0);
+  signal prog_unibus_reset : std_logic_vector (1 downto 0);
+  signal sequence_break    : std_logic_vector (1 downto 0);
+  signal conds             : std_logic_vector (2 downto 0);
+  signal ilong             : std_logic;
+  signal pgf_or_int        : std_logic;
+  signal pgf_or_int_or_sb  : std_logic;
+  signal sint              : std_logic;
+  signal statbit           : std_logic;
 begin
 
    assign statbit = ~nopa & ir[46];

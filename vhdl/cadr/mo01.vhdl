@@ -4,18 +4,18 @@
 
 entity MO01 is
   port (
-    osel : in  std_logic_vector(1 downto 0);
-    a    : in  std_logic_vector(31 downto 0);
-    msk  : in  std_logic_vector(31 downto 0);
-    q    : in  std_logic_vector(31 downto 0);
-    r    : in  std_logic_vector(31 downto 0);
-    alu  : in  std_logic_vector(32 downto 0);
-    ob   : out std_logic_vector(31 downto 0);
+    osel : in  std_logic_vector (1 downto 0);
+    a    : in  std_logic_vector (31 downto 0);
+    msk  : in  std_logic_vector (31 downto 0);
+    q    : in  std_logic_vector (31 downto 0);
+    r    : in  std_logic_vector (31 downto 0);
+    alu  : in  std_logic_vector (32 downto 0);
+    ob   : out std_logic_vector (31 downto 0);
     );
 end entity;
 
 architecture behavioral of MO01 is
-signal mo:std_logic_vector(31 downto 0);
+  signal mo : std_logic_vector (31 downto 0);
 begin
 
    --for (i = 0; i < 31; i++)

@@ -15,6 +15,8 @@ module ICTL(idebug, promdisabled, iwrited, state_write, iwe);
 
    wire   ramdisable;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    assign ramdisable = idebug | ~(promdisabled | iwrited);
 
    // see clocks below

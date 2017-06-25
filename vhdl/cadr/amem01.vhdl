@@ -8,11 +8,11 @@ entity AMEM01 is
     clk   : in std_logic;
     reset : in std_logic;
 
-    l    : in  std_logic_vector(31 downto 0);
-    aadr : in  std_logic_vector(9 downto 0);
+    l    : in  std_logic_vector (31 downto 0);
+    aadr : in  std_logic_vector (9 downto 0);
     arp  : in  std_logic;
     awp  : in  std_logic;
-    amem : out std_logic_vector(31 downto 0);
+    amem : out std_logic_vector (31 downto 0);
     );
 end entity;
 

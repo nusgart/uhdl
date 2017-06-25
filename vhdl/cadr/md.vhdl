@@ -12,26 +12,26 @@ entity MD is
     state_mmu   : in std_logic;
     state_write : in std_logic;
 
-    spy_in    : in  std_logic_vector(15 downto 0);
-    mds       : in  std_logic_vector(31 downto 0);
+    spy_in    : in  std_logic_vector (15 downto 0);
+    mds       : in  std_logic_vector (31 downto 0);
     destmdr   : in  std_logic;
     ldmdh     : in  std_logic;
     ldmdl     : in  std_logic;
     loadmd    : in  std_logic;
     memrq     : in  std_logic;
     srcmd     : in  std_logic;
-    md        : out std_logic_vector(31 downto 0);
+    md        : out std_logic_vector (31 downto 0);
     mddrive   : out std_logic;
     mdgetspar : out std_logic;
     );
 end entity;
 
 architecture behavioral of MD is
-signal md : std_logic_vector(31 downto 0);
-   reg		 mdhaspar;
-   reg		 mdpar;
-   signal ignpar:std_logic;
-   signal mdclk:std_logic;
+  signal md       : std_logic_vector (31 downto 0);
+  signal mdhaspar : std_logic_vector (1 downto 0);
+  signal mdpar    : std_logic_vector (1 downto 0);
+  signal ignpar   : std_logic;
+  signal mdclk    : std_logic;
 begin
 
    assign mdgetspar = ~destmdr & ~ignpar;

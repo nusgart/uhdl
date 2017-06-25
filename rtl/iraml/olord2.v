@@ -31,6 +31,8 @@ module OLORD2(clk, reset, statstop, err, errhalt, boot, boot_trap, ldmode, spy_i
    wire		prog_bus_reset;
    wire		prog_reset;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    always @(posedge clk)
      if (reset)
        begin

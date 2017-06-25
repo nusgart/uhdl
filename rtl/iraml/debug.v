@@ -21,6 +21,8 @@ module DEBUG(clk, reset, spy_in, i, idebug, promenable, iprom, iram, lddbirh, ld
 
    reg [47:0]	 spy_ir;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    always @(posedge clk)
      if (reset)
        spy_ir[47:32] <= 16'b0;

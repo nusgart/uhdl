@@ -5,18 +5,18 @@
 
 entity SHIFT01 is
   port (
-    m  : in std_logic_vector(31 downto 0);
-    s0 : in std_logic;
-    s1 : in std_logic;
-    s2 : in std_logic;
-    s3 : in std_logic;
-    s4 : in std_logic;
-    r  :out std_logic_vector(31 downto 0);
+    m  : in  std_logic_vector (31 downto 0);
+    s0 : in  std_logic;
+    s1 : in  std_logic;
+    s2 : in  std_logic;
+    s3 : in  std_logic;
+    s4 : in  std_logic;
+    r  : out std_logic_vector (31 downto 0);
     );
 end entity;
 
 architecture behavioral of SHIFT01 is
-signal sa:std_logic_vector(31 downto 0);
+  signal sa : std_logic_vector (31 downto 0);
 begin
 
    assign sa =

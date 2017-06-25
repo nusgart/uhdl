@@ -22,6 +22,8 @@ module SPC(clk, reset, spcnt, state_fetch, spush, spcptr, spco, spcw, srp, swp);
    reg [4:0]	 spcptr;
    wire [4:0]	 spcptr_p1;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    // orig rtl:
    //  pop  = read[p], decr p
    //  push = incr p, write[p]

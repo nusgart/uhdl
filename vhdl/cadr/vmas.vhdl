@@ -4,14 +4,14 @@
 
 entity VMAS is
   port (
-    lc         : in  std_logic_vector(25 downto 0);
-    md         : in  std_logic_vector(31 downto 0);
-    ob         : in  std_logic_vector(31 downto 0);
-    vma        : in  std_logic_vector(31 downto 0);
+    lc         : in  std_logic_vector (25 downto 0);
+    md         : in  std_logic_vector (31 downto 0);
+    ob         : in  std_logic_vector (31 downto 0);
+    vma        : in  std_logic_vector (31 downto 0);
     memprepare : in  std_logic;
     vmasel     : in  std_logic;
-    mapi       : out std_logic_vector(23 downto 8);
-    vmas       : out std_logic_vector(31 downto 0);
+    mapi       : out std_logic_vector (23 downto 8);
+    vmas       : out std_logic_vector (31 downto 0);
     );
 end entity;
 

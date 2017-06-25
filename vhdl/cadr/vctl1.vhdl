@@ -32,14 +32,14 @@ entity VCTL1 is
 end entity;
 
 architecture behavioral of VCTL1 is
-   reg	  mbusy;
-   reg	  memcheck;
-   reg	  memprepare;
-   reg	  memstart;
-   reg	  rdcyc;
-   reg	  vmaok;
-   reg	  wrcyc;
-   signal mfinish:std_logic;
+  signal mbusy      : std_logic_vector (1 downto 0);
+  signal memcheck   : std_logic_vector (1 downto 0);
+  signal memprepare : std_logic_vector (1 downto 0);
+  signal memstart   : std_logic_vector (1 downto 0);
+  signal rdcyc      : std_logic_vector (1 downto 0);
+  signal vmaok      : std_logic_vector (1 downto 0);
+  signal wrcyc      : std_logic_vector (1 downto 0);
+  signal mfinish    : std_logic;
 begin
 
    assign memop  = memrd | memwr | ifetch;

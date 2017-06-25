@@ -51,6 +51,8 @@ module LC(clk, reset, destlc, lca, lcinc, lc_byte_mode, lc, srclc, state_alu, st
    wire		 lcdrive;
    wire		 lcry3;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    always @(posedge clk)
      if (reset)
        lc <= 0;

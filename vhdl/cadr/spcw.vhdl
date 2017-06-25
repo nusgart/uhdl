@@ -4,17 +4,17 @@
 
 entity SPCW is
   port (
-    ipc     : in  std_logic_vector(13 downto 0);
-    wpc     : in  std_logic_vector(13 downto 0);
-    l       : in  std_logic_vector(31 downto 0);
+    ipc     : in  std_logic_vector (13 downto 0);
+    wpc     : in  std_logic_vector (13 downto 0);
+    l       : in  std_logic_vector (31 downto 0);
     destspc : in  std_logic;
     n       : in  std_logic;
-    spcw    : out std_logic_vector(18 downto 0);
+    spcw    : out std_logic_vector (18 downto 0);
     );
 end entity;
 
 architecture behavioral of SPCW is
-signal reta:std_logic_vector(13 downto 0);
+  signal reta : std_logic_vector (13 downto 0);
 begin
 
    assign spcw = destspc ? l[18:0] : { 5'b0, reta };

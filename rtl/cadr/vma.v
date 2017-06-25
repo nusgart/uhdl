@@ -24,6 +24,8 @@ module VMA(clk, reset, state_alu, state_write, state_fetch, vmaenb, vmas, spy_in
 
    reg [31:0]	 vma;;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    always @(posedge clk)
      if (reset)
        vma <= 0;

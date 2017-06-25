@@ -18,6 +18,8 @@ module MF(mfdrive, srcm, spcenb, pdlenb, state_alu, state_write, state_mmu, stat
 
    wire   mfenb;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    assign mfenb = ~srcm & !(spcenb | pdlenb);
    assign mfdrive = mfenb &
 		    (state_alu || state_write || state_mmu || state_fetch);

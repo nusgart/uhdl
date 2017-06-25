@@ -4,18 +4,18 @@
 
 entity MDS is
   port (
-    busint_bus : in  std_logic_vector(31 downto 0);
-    md         : in  std_logic_vector(31 downto 0);
-    ob         : in  std_logic_vector(31 downto 0);
+    busint_bus : in  std_logic_vector (31 downto 0);
+    md         : in  std_logic_vector (31 downto 0);
+    ob         : in  std_logic_vector (31 downto 0);
     loadmd     : in  std_logic;
     mdsel      : in  std_logic;
     memdrive   : in  std_logic;
-    mds        : out std_logic_vector(31 downto 0);
+    mds        : out std_logic_vector (31 downto 0);
     );
 end entity;
 
 architecture behavioral of MDS is
-signal mem:std_logic_vector(31 downto 0);
+  signal mem : std_logic_vector (31 downto 0);
 begin
 
    assign mds = mdsel ? ob : mem;

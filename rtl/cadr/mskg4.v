@@ -15,6 +15,8 @@ module MSKG4(clk, mskl, mskr, msk);
    wire [31:0]	 msk_left_out;
    wire [31:0]	 msk_right_out;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    part_32x32prom_maskleft i_MSKR(
 				  .clk(~clk),
 				  .q(msk_left_out),

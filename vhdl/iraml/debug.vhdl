@@ -7,20 +7,20 @@ entity DEBUG is
     clk   : in std_logic;
     reset : in std_logic;
 
-    spy_in     : in std_logic_vector(15 downto 0);
-    iprom      : in std_logic_vector(48 downto 0);
-    iram       : in std_logic_vector(48 downto 0);
-    idebug     : in std_logic;
-    lddbirh    : in std_logic;
-    lddbirl    : in std_logic;
-    lddbirm    : in std_logic;
-    promenable : in std_logic;
-    i          :out std_logic_vector(48 downto 0);
+    spy_in     : in  std_logic_vector (15 downto 0);
+    iprom      : in  std_logic_vector (48 downto 0);
+    iram       : in  std_logic_vector (48 downto 0);
+    idebug     : in  std_logic;
+    lddbirh    : in  std_logic;
+    lddbirl    : in  std_logic;
+    lddbirm    : in  std_logic;
+    promenable : in  std_logic;
+    i          : out std_logic_vector (48 downto 0);
     );
 end entity;
 
 architecture behavioral of DEBUG is
-   reg [47:0]	 spy_ir;
+  signal spy_ir : std_logic_vector (47 downto 0);
 begin
 
    always @(posedge clk)

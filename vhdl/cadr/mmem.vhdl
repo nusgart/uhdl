@@ -7,11 +7,11 @@ entity MMEM is
     clk   : in std_logic;
     reset : in std_logic;
 
-    l    : in  std_logic_vector(31 downto 0);
-    madr : in  std_logic_vector(4 downto 0);
+    l    : in  std_logic_vector (31 downto 0);
+    madr : in  std_logic_vector (4 downto 0);
     mrp  : in  std_logic;
     mwp  : in  std_logic;
-    mmem : out std_logic_vector(31 downto 0);
+    mmem : out std_logic_vector (31 downto 0);
     );
 end entity;
 

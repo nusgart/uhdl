@@ -4,8 +4,8 @@
 
 entity SPCLCH is
   port (
-    spco : in  std_logic_vector(18 downto 0);
-    spc  : out std_logic_vector(18 downto 0);
+    spco : in  std_logic_vector (18 downto 0);
+    spc  : out std_logic_vector (18 downto 0);
     );
 end entity;
 

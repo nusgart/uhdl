@@ -45,6 +45,8 @@ module VCTL2(loadmd, nopa, ir, wrcyc, destmdr, srcmd, destmem, srcmap, irdisp, m
    wire		normal_vm1_rd;
    wire		use_md;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    // for memory cycle, we run mmu state and map vma during state_write & state_mmu
    // for dispatch,     we don't run mmy state and map md early
    //                   so dispatch ram has a chance to read and register during write state

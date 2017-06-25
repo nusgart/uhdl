@@ -40,6 +40,8 @@ module VCTL1(clk, reset, lcinc, memrq, ifetch, lvmo_22, lvmo_23, memack, memprep
    reg	  wrcyc;
    wire   mfinish;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    assign memop  = memrd | memwr | ifetch;
 
    always @(posedge clk)

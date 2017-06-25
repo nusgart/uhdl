@@ -9,8 +9,8 @@ entity VCTL2 is
     state_read   : in std_logic;
     state_write  : in std_logic;
 
-    vma        : in  std_logic_vector(31 downto 0);
-    ir         : in  std_logic_vector(48 downto 0);
+    vma        : in  std_logic_vector (31 downto 0);
+    ir         : in  std_logic_vector (48 downto 0);
     destmdr    : in  std_logic;
     destmem    : in  std_logic;
     destvma    : in  std_logic;
@@ -40,11 +40,11 @@ entity VCTL2 is
 end entity;
 
 architecture behavioral of VCTL2 is
-   signal early_vm0_rd:std_logic;
-   signal early_vm1_rd:std_logic;
-   signal normal_vm0_rd:std_logic;
-   signal normal_vm1_rd:std_logic;
-   signal use_md:std_logic;
+  signal early_vm0_rd  : std_logic;
+  signal early_vm1_rd  : std_logic;
+  signal normal_vm0_rd : std_logic;
+  signal normal_vm1_rd : std_logic;
+  signal use_md        : std_logic;
 begin
 
    /*

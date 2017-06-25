@@ -9,16 +9,16 @@ entity IREG is
 
     state_fetch : in std_logic;
 
-    iob       : in  std_logic_vector(47 downto 0);
-    i         : in  std_logic_vector(48 downto 0);
+    iob       : in  std_logic_vector (47 downto 0);
+    i         : in  std_logic_vector (48 downto 0);
     destimod0 : in  std_logic;
     destimod1 : in  std_logic;
-    ir        : out std_logic_vector(48 downto 0);
+    ir        : out std_logic_vector (48 downto 0);
     );
 end entity;
 
 architecture behavioral of IREG is
-signal ir : std_logic_vector(48 downto 0);
+  signal ir : std_logic_vector (48 downto 0);
 begin
 
    always @(posedge clk)

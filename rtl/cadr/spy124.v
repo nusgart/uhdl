@@ -73,6 +73,8 @@ module SPY124(clk, reset, spy_out, ir, spy_mdh, spy_mdl, state_write, spy_vmah, 
    wire [15:0]	 spy_mux;
    wire [4:0]	 disk_state_in;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    // grab ob from last cycle for spy
    always @(posedge clk)
      if (reset)

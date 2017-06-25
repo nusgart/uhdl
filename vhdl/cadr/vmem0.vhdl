@@ -7,19 +7,19 @@ entity VMEM0 is
     clk   : in std_logic;
     reset : in std_logic;
 
-    mapi     : in  std_logic_vector(23 downto 8);
-    vma      : in  std_logic_vector(31 downto 0);
+    mapi     : in  std_logic_vector (23 downto 8);
+    vma      : in  std_logic_vector (31 downto 0);
     memstart : in  std_logic;
     srcmap   : in  std_logic;
     vm0rp    : in  std_logic;
     vm0wp    : in  std_logic;
-    vmap     : out std_logic_vector(4 downto 0);
+    vmap     : out std_logic_vector (4 downto 0);
     );
 end entity;
 
 architecture behavioral of VMEM0 is
-signal vmem0_adr:std_logic_vector(10 downto 0);
-   signal use_map:std_logic;
+  signal vmem0_adr : std_logic_vector (10 downto 0);
+  signal use_map   : std_logic;
 begin
 
    assign vmem0_adr = mapi[23:13];

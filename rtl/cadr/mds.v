@@ -16,6 +16,8 @@ module MDS(mds, mdsel, ob, memdrive, loadmd, busint_bus, md);
 
    wire [31:0]	 mem;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    assign mds = mdsel ? ob : mem;
 
    // mux MEM

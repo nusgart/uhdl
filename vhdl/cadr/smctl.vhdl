@@ -4,12 +4,12 @@
 
 entity SMCTL is
   port (
-    ir     : in  std_logic_vector(48 downto 0);
+    ir     : in  std_logic_vector (48 downto 0);
     irbyte : in  std_logic;
     sh3    : in  std_logic;
     sh4    : in  std_logic;
-    mskl   : out std_logic_vector(4 downto 0);
-    mskr   : out std_logic_vector(4 downto 0);
+    mskl   : out std_logic_vector (4 downto 0);
+    mskr   : out std_logic_vector (4 downto 0);
     s0     : out std_logic;
     s1     : out std_logic;
     s2     : out std_logic;
@@ -19,8 +19,8 @@ entity SMCTL is
 end entity;
 
 architecture behavioral of SMCTL is
-   signal mr:std_logic;
-   signal sr:std_logic;
+  signal mr : std_logic;
+  signal sr : std_logic;
 begin
 
    assign mr = ~irbyte | ir[13];

@@ -12,16 +12,16 @@ entity LC is
     state_mmu   : in std_logic;
     state_write : in std_logic;
 
-    opc               : in  std_logic_vector(13 downto 0);
-    vmo               : in  std_logic_vector(23 downto 0);
-    md                : in  std_logic_vector(31 downto 0);
-    ob                : in  std_logic_vector(31 downto 0);
-    q                 : in  std_logic_vector(31 downto 0);
-    vma               : in  std_logic_vector(31 downto 0);
-    vmap              : in  std_logic_vector(4 downto 0);
-    dc                : in  std_logic_vector(9 downto 0);
-    pdlidx            : in  std_logic_vector(9 downto 0);
-    pdlptr            : in  std_logic_vector(9 downto 0);
+    opc               : in  std_logic_vector (13 downto 0);
+    vmo               : in  std_logic_vector (23 downto 0);
+    md                : in  std_logic_vector (31 downto 0);
+    ob                : in  std_logic_vector (31 downto 0);
+    q                 : in  std_logic_vector (31 downto 0);
+    vma               : in  std_logic_vector (31 downto 0);
+    vmap              : in  std_logic_vector (4 downto 0);
+    dc                : in  std_logic_vector (9 downto 0);
+    pdlidx            : in  std_logic_vector (9 downto 0);
+    pdlptr            : in  std_logic_vector (9 downto 0);
     dcdrive           : in  std_logic;
     destlc            : in  std_logic;
     int_enable        : in  std_logic;
@@ -41,16 +41,16 @@ entity LC is
     sequence_break    : in  std_logic;
     srclc             : in  std_logic;
     vmadrive          : in  std_logic;
-    lc                : out std_logic_vector(25 downto 0);
-    mf                : out std_logic_vector(31 downto 0);
+    lc                : out std_logic_vector (25 downto 0);
+    mf                : out std_logic_vector (31 downto 0);
     );
 end entity;
 
 architecture behavioral of LC is
-signal lc : std_logic_vector(25 downto 0);
-signal lca:std_logic_vector(3 downto 0);		-- ---!!! This can't be a wire for whatever reason...
-   signal lcdrive:std_logic;
-   signal lcry3:std_logic;
+  signal lc      : std_logic_vector (25 downto 0);
+  signal lca     : std_logic_vector (3 downto 0);  -- ---!!! This can't be a wire for whatever reason...
+  signal lcdrive : std_logic;
+  signal lcry3   : std_logic;
 begin
 
    always @(posedge clk)

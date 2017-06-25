@@ -2,7 +2,7 @@
 //
 // TK		CADR	PC, SPC CONTROL
 
-module CONTRL(clk, reset, iwrited, nopa, pcs0, pcs1, spcdrive, spcenb, spcnt, spop, spush, srcspcpopreal, srp, swp, dr, dp, irdisp, funct, irjump, ir, srcspcpop, jcond, destspc, state_write, srcspc, state_alu, state_fetch, trap, dn, nop11, n, nop);
+module CONTRL(clk, reset, state_alu, state_fetch, state_write, funct, ir, destspc, dn, dp, dr, irdisp, irjump, jcond, nop11, srcspc, srcspcpop, trap, iwrited, n, nop, nopa, pcs0, pcs1, spcdrive, spcenb, spcnt, spop, spush, srcspcpopreal, srp, swp);
 
    input clk;
    input reset;
@@ -54,6 +54,8 @@ module CONTRL(clk, reset, iwrited, nopa, pcs0, pcs1, spcdrive, spcenb, spcnt, sp
    wire		jretf;
    wire		popjwire;
    wire		popj;
+
+   ////////////////////////////////////////////////////////////////////////////////
 
    assign dfall  = dr & dp;	// push-pop fall through
 

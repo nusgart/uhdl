@@ -4,16 +4,16 @@
 
 entity MLATCH is
   port (
-    spco     : in std_logic_vector(18 downto 0);
-    mf       : in std_logic_vector(31 downto 0);
-    mmem     : in std_logic_vector(31 downto 0);
-    pdl      : in std_logic_vector(31 downto 0);
-    spcptr   : in std_logic_vector(4 downto 0);
-    mfdrive  : in std_logic;
-    mpassm   : in std_logic;
-    pdldrive : in std_logic;
-    spcdrive : in std_logic;
-    m        :out std_logic_vector(31 downto 0);
+    spco     : in  std_logic_vector (18 downto 0);
+    mf       : in  std_logic_vector (31 downto 0);
+    mmem     : in  std_logic_vector (31 downto 0);
+    pdl      : in  std_logic_vector (31 downto 0);
+    spcptr   : in  std_logic_vector (4 downto 0);
+    mfdrive  : in  std_logic;
+    mpassm   : in  std_logic;
+    pdldrive : in  std_logic;
+    spcdrive : in  std_logic;
+    m        : out std_logic_vector (31 downto 0);
 
     );
 end entity;

@@ -20,6 +20,8 @@ module VMEM0(clk, reset, mapi, vmap, vm0rp, vma, srcmap, memstart, vm0wp);
    wire [10:0]	vmem0_adr;
    wire		use_map;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    assign vmem0_adr = mapi[23:13];
 
    part_2kx5dpram i_VMEM0(

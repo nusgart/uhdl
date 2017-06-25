@@ -21,6 +21,8 @@ module SMCTL(mskr, s0, s1, s2, s3, s4, sh3, sh4, mskl, irbyte, ir);
    wire		mr;
    wire		sr;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    assign mr = ~irbyte | ir[13];
    assign sr = ~irbyte | ir[12];
 

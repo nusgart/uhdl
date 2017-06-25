@@ -42,6 +42,8 @@ module LCC(clk, reset, state_fetch, lc0b, needfetch, ifetch, spc1a, sh4, sh3, si
    wire		next_instr;
    wire		spcmung;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    assign lc0b = lc[0] & lc_byte_mode;
    assign next_instr  = spop & (~srcspcpopreal & spc[14]);
 

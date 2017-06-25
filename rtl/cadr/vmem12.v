@@ -18,6 +18,8 @@ module VMEM12(clk, reset, vmap, mapi, vm1rp, vma, vmo, vm1wp);
 
    wire [9:0]	 vmem1_adr;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    assign vmem1_adr = {vmap[4:0], mapi[12:8]};
 
    part_1kx24dpram i_VMEM1(

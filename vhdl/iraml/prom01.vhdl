@@ -7,8 +7,8 @@ entity PROM01 is
   port (
     clk : in std_logic;
 
-    promaddr : in  std_logic_vector(8 downto 0);
-    iprom    : out std_logic_vector(48 downto 0);
+    promaddr : in  std_logic_vector (8 downto 0);
+    iprom    : out std_logic_vector (48 downto 0);
     );
 end entity;
 

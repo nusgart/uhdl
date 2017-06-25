@@ -25,6 +25,8 @@ module Q(clk, reset, state_alu, state_write, state_mmu, state_fetch, alu, srcq, 
    wire		 qs0;
    wire		 qs1;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    assign qs1 = ir[1] & iralu;
    assign qs0 = ir[0] & iralu;
 

@@ -35,6 +35,8 @@ module PDLCTL(clk, reset, pdlidx, pdla, pdlwrite, state_alu, state_write, state_
    reg		pwidx;
    wire		pdlp;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    // m-src = pdl buffer, or index based write
    assign pdlp = (state_read & ir[30]) | (~state_read & ~pwidx);
 

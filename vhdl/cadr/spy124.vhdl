@@ -11,17 +11,17 @@ entity SPY124 is
 
     state_write : in std_logic;
 
-    bd_state_in   : in  std_logic_vector(11 downto 0);
-    opc           : in  std_logic_vector(13 downto 0);
-    pc            : in  std_logic_vector(13 downto 0);
-    scratch       : in  std_logic_vector(15 downto 0);
-    a             : in  std_logic_vector(31 downto 0);
-    m             : in  std_logic_vector(31 downto 0);
-    md            : in  std_logic_vector(31 downto 0);
-    ob            : in  std_logic_vector(31 downto 0);
-    vma           : in  std_logic_vector(31 downto 0);
-    ir            : in  std_logic_vector(48 downto 0);
-    disk_state_in : in  std_logic_vector(4 downto 0);
+    bd_state_in   : in  std_logic_vector (11 downto 0);
+    opc           : in  std_logic_vector (13 downto 0);
+    pc            : in  std_logic_vector (13 downto 0);
+    scratch       : in  std_logic_vector (15 downto 0);
+    a             : in  std_logic_vector (31 downto 0);
+    m             : in  std_logic_vector (31 downto 0);
+    md            : in  std_logic_vector (31 downto 0);
+    ob            : in  std_logic_vector (31 downto 0);
+    vma           : in  std_logic_vector (31 downto 0);
+    ir            : in  std_logic_vector (48 downto 0);
+    disk_state_in : in  std_logic_vector (4 downto 0);
     boot          : in  std_logic;
     dbread        : in  std_logic;
     destspc       : in  std_logic;
@@ -65,14 +65,14 @@ entity SPY124 is
     vmaok         : in  std_logic;
     waiting       : in  std_logic;
     wmap          : in  std_logic;
-    spy_out       : out std_logic_vector(15 downto 0);
+    spy_out       : out std_logic_vector (15 downto 0);
     );
 end entity;
 
 architecture behavioral of SPY124 is
-signal ob_last : std_logic_vector(31 downto 0);
-signal spy_mux:std_logic_vector(15 downto 0);
-signal disk_state_in:std_logic_vector(4 downto 0);
+  signal ob_last       : std_logic_vector (31 downto 0);
+  signal spy_mux       : std_logic_vector (15 downto 0);
+  signal disk_state_in : std_logic_vector (4 downto 0);
 begin
 
    /* grab ob from last cycle for spy */

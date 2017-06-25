@@ -9,9 +9,9 @@ entity VMEMDR is
     state_mmu   : in std_logic;
     state_write : in std_logic;
 
-    vmo      : in  std_logic_vector(23 downto 0);
+    vmo      : in  std_logic_vector (23 downto 0);
     srcmap   : in  std_logic;
-    pma      : out std_logic_vector(21 downto 8);
+    pma      : out std_logic_vector (21 downto 8);
     lvmo_22  : out std_logic;
     lvmo_23  : out std_logic;
     mapdrive : out std_logic;

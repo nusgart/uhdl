@@ -29,6 +29,8 @@ module PDLPTR(clk, reset, pidrive, ppdrive, pdlidx, pdlptr, state_alu, state_wri
    reg [9:0]	pdlidx;
    reg [9:0]	pdlptr;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    assign pidrive = srcpdlidx & (state_alu || state_write || state_fetch);
 
    assign ppdrive  = srcpdlptr & (state_alu || state_write || state_fetch);

@@ -9,19 +9,19 @@ entity DSPCTL is
 
     state_fetch : in std_logic;
 
-    funct    : in  std_logic_vector(3 downto 0);
-    ir       : in  std_logic_vector(48 downto 0);
+    funct    : in  std_logic_vector (3 downto 0);
+    ir       : in  std_logic_vector (48 downto 0);
     irdisp   : in  std_logic;
-    dmask    : out std_logic_vector(6 downto 0);
-    dc       : out std_logic_vector(9 downto 0);
+    dmask    : out std_logic_vector (6 downto 0);
+    dc       : out std_logic_vector (9 downto 0);
     dispwr   : out std_logic;
     dmapbenb : out std_logic;
     );
 end entity;
 
 architecture behavioral of DSPCTL is
-signal dc : std_logic_vector(9 downto 0);
-   signal nc_dmask:std_logic;
+  signal dc       : std_logic_vector (9 downto 0);
+  signal nc_dmask : std_logic;
 begin
 
    assign dmapbenb  = ir[8] | ir[9];

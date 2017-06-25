@@ -18,6 +18,8 @@ module OPCS(clk, reset, opcclk, opcinh, pc, opc, state_fetch);
 
    reg [13:0]	 opc;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    assign opcclka = (state_fetch | opcclk) & ~opcinh;
 
    always @(posedge clk)

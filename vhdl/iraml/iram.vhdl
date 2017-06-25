@@ -27,17 +27,17 @@ entity IRAM is
     state_prefetch : in std_logic;
     state_write    : in std_logic;
 
-    pc             : in  std_logic_vector(13 downto 0);
-    iwr            : in  std_logic_vector(48 downto 0);
-    mcr_data_in    : in  std_logic_vector(48 downto 0);
-    state          : in  std_logic_vector(5 downto 0);
+    pc             : in  std_logic_vector (13 downto 0);
+    iwr            : in  std_logic_vector (48 downto 0);
+    mcr_data_in    : in  std_logic_vector (48 downto 0);
+    state          : in  std_logic_vector (5 downto 0);
     iwe            : in  std_logic;
     machrun        : in  std_logic;
     need_mmu_state : in  std_logic;
     promdisabled   : in  std_logic;
-    pc_out         : out std_logic_vector(13 downto 0);
-    iram           : out std_logic_vector(48 downto 0);
-    state_out      : out std_logic_vector(5 downto 0);
+    pc_out         : out std_logic_vector (13 downto 0);
+    iram           : out std_logic_vector (48 downto 0);
+    state_out      : out std_logic_vector (5 downto 0);
     fetch_out      : out std_logic;
     machrun_out    : out std_logic;
     prefetch_out   : out std_logic;

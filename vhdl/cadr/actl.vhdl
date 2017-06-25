@@ -10,18 +10,18 @@ entity ACTL is
     state_decode : in std_logic;
     state_write  : in std_logic;
 
-    ir    : in  std_logic_vector(48 downto 0);
+    ir    : in  std_logic_vector (48 downto 0);
     dest  : in  std_logic;
     destm : in  std_logic;
-    aadr  : out std_logic_vector(9 downto 0);
-    wadr  : out std_logic_vector(9 downto 0);
+    aadr  : out std_logic_vector (9 downto 0);
+    wadr  : out std_logic_vector (9 downto 0);
     arp   : out std_logic;
     awp   : out std_logic;
     );
 end entity;
 
 architecture behavioral of ACTL is
-signal wadr : std_logic_vector(9 downto 0);
+  signal wadr : std_logic_vector (9 downto 0);
 begin
 
    always @(posedge clk)

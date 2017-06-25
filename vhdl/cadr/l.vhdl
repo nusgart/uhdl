@@ -8,14 +8,14 @@ entity L is
     state_alu   : in std_logic;
     state_write : in std_logic;
 
-    ob     : in std_logic_vector(31 downto 0);
-    vmaenb : in std_logic;
-    l      :out std_logic_vector(31 downto 0);
+    ob     : in  std_logic_vector (31 downto 0);
+    vmaenb : in  std_logic;
+    l      : out std_logic_vector (31 downto 0);
     );
 end entity;
 
 architecture behavioral of L is
-signal l : std_logic_vector(31 downto 0);
+  signal l : std_logic_vector (31 downto 0);
 begin
 
    always @(posedge clk)

@@ -9,21 +9,21 @@ entity SPC is
 
     state_fetch : in std_logic;
 
-    spcw   : in  std_logic_vector(18 downto 0);
+    spcw   : in  std_logic_vector (18 downto 0);
     spcnt  : in  std_logic;
     spush  : in  std_logic;
     srp    : in  std_logic;
     swp    : in  std_logic;
-    spco   : out std_logic_vector(18 downto 0);
-    spcptr : out std_logic_vector(4 downto 0);
+    spco   : out std_logic_vector (18 downto 0);
+    spcptr : out std_logic_vector (4 downto 0);
     );
 end entity;
 
 architecture behavioral of SPC is
-signal spcptr : std_logic_vector(4 downto 0);
-signal spcadr : std_logic_vector(4 downto 0);
-signal spcptr_p1:std_logic_vector(4 downto 0);
-signal  spcadr:std_logic_vector(4 downto 0);
+  signal spcptr    : std_logic_vector (4 downto 0);
+  signal spcadr    : std_logic_vector (4 downto 0);
+  signal spcptr_p1 : std_logic_vector (4 downto 0);
+  signal spcadr    : std_logic_vector (4 downto 0);
 begin
 
    -- orig rtl:

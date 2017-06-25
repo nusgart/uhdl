@@ -55,6 +55,8 @@ module OLORD1(clk, reset, ldmode, ldscratch1, ldscratch2, ldclk, boot, promdisab
    reg		 step;
    reg		 trapenb;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    always @(posedge clk)
      if (reset)
        begin

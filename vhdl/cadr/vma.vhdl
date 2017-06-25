@@ -11,19 +11,19 @@ entity VMA is
     state_fetch : in std_logic;
     state_write : in std_logic;
 
-    spy_in   : in  std_logic_vector(15 downto 0);
-    vmas     : in  std_logic_vector(31 downto 0);
+    spy_in   : in  std_logic_vector (15 downto 0);
+    vmas     : in  std_logic_vector (31 downto 0);
     ldvmah   : in  std_logic;
     ldvmal   : in  std_logic;
     srcvma   : in  std_logic;
     vmaenb   : in  std_logic;
-    vma;     : out std_logic_vector(31 downto 0);
+    vma;     : out std_logic_vector (31 downto 0);
     vmadrive : out std_logic;
     );
 end entity;
 
 architecture behavioral of VMA is
-signal vma; : std_logic_vector(31 downto 0);
+  signal vma; : std_logic_vector (31 downto 0);
 
 begin
 

@@ -636,6 +636,8 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    PDL01 cadr_pdl01(.clk, .reset, .prp, .pdla, .l, .pwp, .pdl);
 
+//   PLATCH cadr_platch( );
+
    PDLCTL cadr_pdlctl(.clk, .reset, .pdlidx, .pdla, .pdlwrite, .state_alu, .state_write, .state_read, .ir, .pwp, .prp, .pdlenb, .pdldrive, .pdlcnt, .pdlptr, .destpdltop, .destpdl_x, .destpdl_p, .srcpdlpop, .state_mmu, .nop, .srcpdltop, .state_fetch);
 
    PDLPTR cadr_pdlptr(.clk, .reset, .pidrive, .ppdrive, .pdlidx, .pdlptr, .state_alu, .state_write, .state_fetch, .state_read, .destpdlx, .srcpdlidx, .srcpdlptr, .ob, .destpdlp, .pdlcnt, .srcpdlpop);
@@ -644,7 +646,7 @@ module caddr ( clk, ext_int, ext_reset, ext_boot, ext_halt,
 
    SHIFT01 cadr_shift01(.r, .s0, .s1, .s2, .s3, .s4, .m);
 
-   SMCTL cadr_smctl(.mskr, .s0, .s1, .s2, .s3, .s4, .sh3, .sh4, .mskl, .irbyte, .ir);
+   SMCTL cadr_smctl(.mskl, .mskr, .s0, .s1, .s2, .s3, .s4, .sh3, .sh4, .irbyte, .ir);
 
    SOURCE cadr_source(.ir, .iralu, .irbyte, .destimod0, .destimod1, .iwrited, .idebug, .nop, .irdisp, .irjump, .funct, .div, .mul, .srcq, .srcopc, .srcpdltop, .srcpdlpop, .srcpdlidx, .srcpdlptr, .srcspc, .srcdc, .srcspcpop, .srclc, .srcmd, .srcmap, .srcvma, .imod, .destmem, .destvma, .destmdr, .dest, .destm, .destintctl, .destlc, .destspc, .destpdlp, .destpdlx, .destpdl_x, .destpdl_p, .destpdltop);
 

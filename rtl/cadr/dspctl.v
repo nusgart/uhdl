@@ -22,6 +22,8 @@ module DSPCTL(clk, reset, state_fetch, irdisp, funct, ir, dmask, dmapbenb, dispw
    reg [9:0]	dc;
    wire		nc_dmask;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    assign dmapbenb  = ir[8] | ir[9];
 
    assign dispwr = irdisp & funct[2];

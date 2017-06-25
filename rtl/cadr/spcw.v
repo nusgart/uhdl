@@ -15,6 +15,8 @@ module SPCW(destspc, l, spcw, n, wpc, ipc);
 
    wire [13:0]	 reta;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    assign spcw = destspc ? l[18:0] : { 5'b0, reta };
 
    //   always @(posedge clk)

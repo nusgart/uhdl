@@ -32,6 +32,8 @@ module MD(clk, reset, md, mddrive, mdgetspar, spy_in, loadmd, memrq, destmdr, md
    wire		 ignpar;
    wire		 mdclk;		// enable - clock md in?
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    assign mdgetspar = ~destmdr & ~ignpar;
    assign ignpar = 1'b0;
 

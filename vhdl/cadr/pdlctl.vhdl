@@ -13,16 +13,16 @@ entity PDLCTL is
     state_read  : in std_logic;
     state_write : in std_logic;
 
-    ir         : in  std_logic_vector(48 downto 0);
-    pdlidx     : in  std_logic_vector(9 downto 0);
-    pdlptr     : in  std_logic_vector(9 downto 0);
+    ir         : in  std_logic_vector (48 downto 0);
+    pdlidx     : in  std_logic_vector (9 downto 0);
+    pdlptr     : in  std_logic_vector (9 downto 0);
     destpdl_p  : in  std_logic;
     destpdl_x  : in  std_logic;
     destpdltop : in  std_logic;
     nop        : in  std_logic;
     srcpdlpop  : in  std_logic;
     srcpdltop  : in  std_logic;
-    pdla       : out std_logic_vector(9 downto 0);
+    pdla       : out std_logic_vector (9 downto 0);
     pdlcnt     : out std_logic;
     pdldrive   : out std_logic;
     pdlenb     : out std_logic;
@@ -33,8 +33,8 @@ entity PDLCTL is
 end entity;
 
 architecture behavioral of PDLCTL is
-   reg		pwidx;
-   signal pdlp:std_logic;
+  signal pwidx : std_logic_vector (1 downto 0);
+  signal pdlp  : std_logic;
 begin
 
    /* m-src = pdl buffer, or index based write */

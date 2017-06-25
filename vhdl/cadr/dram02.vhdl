@@ -10,13 +10,13 @@ entity DRAM02 is
     state_prefetch : in std_logic;
     state_write    : in std_logic;
 
-    vmo    : in  std_logic_vector(23 downto 0);
-    a;     : in  std_logic_vector(31 downto 0);
-    r      : in  std_logic_vector(31 downto 0);
-    ir     : in  std_logic_vector(48 downto 0);
-    dmask  : in  std_logic_vector(6 downto 0);
+    vmo    : in  std_logic_vector (23 downto 0);
+    a;     : in  std_logic_vector (31 downto 0);
+    r      : in  std_logic_vector (31 downto 0);
+    ir     : in  std_logic_vector (48 downto 0);
+    dmask  : in  std_logic_vector (6 downto 0);
     dispwr : in  std_logic;
-    dpc    : out std_logic_vector(13 downto 0);
+    dpc    : out std_logic_vector (13 downto 0);
     dn     : out std_logic;
     dp     : out std_logic;
     dr     : out std_logic;
@@ -24,9 +24,9 @@ entity DRAM02 is
 end entity;
 
 architecture behavioral of DRAM02 is
-signal dadr:std_logic_vector(10 downto 0);
-   signal daddr0:std_logic;
-   signal dwe:std_logic;
+  signal dadr   : std_logic_vector (10 downto 0);
+  signal daddr0 : std_logic;
+  signal dwe    : std_logic;
 begin
 
    -- dadr  10 9  8  7  6  5  4  3  2  1  0

@@ -4,11 +4,11 @@
 
 entity SOURCE is
   port (
-    ir         : in  std_logic_vector(48 downto 0);
+    ir         : in  std_logic_vector (48 downto 0);
     idebug     : in  std_logic;
     iwrited    : in  std_logic;
     nop        : in  std_logic;
-    funct      : out std_logic_vector(3 downto 0);
+    funct      : out std_logic_vector (3 downto 0);
     dest       : out std_logic;
     destimod0  : out std_logic;
     destimod1  : out std_logic;
@@ -48,7 +48,7 @@ entity SOURCE is
 end entity;
 
 architecture behavioral of SOURCE is
-   signal specalu:std_logic;
+  signal specalu : std_logic;
 begin
 
    assign {irbyte,irdisp,irjump,iralu} =

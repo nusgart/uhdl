@@ -15,6 +15,8 @@ module PCTL(pc, idebug, promdisabled, iwrited, promenable, promaddr);
    wire		bottom_1k;
    wire		promce;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    assign bottom_1k = ~(pc[13] | pc[12] | pc[11] | pc[10]);
    assign promenable = bottom_1k & ~idebug & ~promdisabled & ~iwrited;
 

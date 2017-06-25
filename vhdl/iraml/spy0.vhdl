@@ -4,7 +4,7 @@
 
 entity SPY0 is
   port (
-    eadr        : in  std_logic_vector(4 downto 0);
+    eadr        : in  std_logic_vector (4 downto 0);
     dbread      : in  std_logic;
     dbwrite     : in  std_logic;
     ldclk       : out std_logic;

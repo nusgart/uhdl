@@ -11,8 +11,8 @@ entity CONTRL is
     state_fetch : in std_logic;
     state_write : in std_logic;
 
-    funct         : in  std_logic_vector(3 downto 0);
-    ir            : in  std_logic_vector(48 downto 0);
+    funct         : in  std_logic_vector (3 downto 0);
+    ir            : in  std_logic_vector (48 downto 0);
     destspc       : in  std_logic;
     dn            : in  std_logic;
     dp            : in  std_logic;
@@ -25,7 +25,7 @@ entity CONTRL is
     srcspcpop     : in  std_logic;
     trap          : in  std_logic;
     iwrited       : out std_logic;
-    n             :out  std_logic;
+    n             : out std_logic;
     nop           : out std_logic;
     nopa          : out std_logic;
     pcs0          : out std_logic;
@@ -42,19 +42,19 @@ entity CONTRL is
 end entity;
 
 architecture behavioral of CONTRL is
-   reg		inop;
-   reg		iwrited;
-   signal dfall:std_logic;
-   signal dispenb:std_logic;
-   signal ignpopj:std_logic;
-   signal ipopj:std_logic;
-   signal iwrite:std_logic;
-   signal jcalf:std_logic;
-   signal jfalse:std_logic;
-   signal jret:std_logic;
-   signal jretf:std_logic;
-   signal popjwire:std_logic;
-   signal popj:std_logic;
+  signal inop     : std_logic_vector (1 downto 0);
+  signal iwrited  : std_logic_vector (1 downto 0);
+  signal dfall    : std_logic;
+  signal dispenb  : std_logic;
+  signal ignpopj  : std_logic;
+  signal ipopj    : std_logic;
+  signal iwrite   : std_logic;
+  signal jcalf    : std_logic;
+  signal jfalse   : std_logic;
+  signal jret     : std_logic;
+  signal jretf    : std_logic;
+  signal popjwire : std_logic;
+  signal popj     : std_logic;
 begin
 
    assign dfall  = dr & dp;			/* push-pop fall through */

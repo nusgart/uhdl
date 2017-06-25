@@ -3,7 +3,7 @@
 // TK		CADR	A MEMORY LEFT
 // TK		CADR	A MEMORY RIGHT
 
-module AMEM01(amem, clk, reset, aadr, awp, arp, l);
+module AMEM01(clk, reset, l, aadr, arp, awp, amem);
 
    input clk;
    input reset;

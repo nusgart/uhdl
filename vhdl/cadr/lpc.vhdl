@@ -9,16 +9,16 @@ entity LPC is
 
     state_fetch : in std_logic;
 
-    pc       : in  std_logic_vector(13 downto 0);
-    ir       : in  std_logic_vector(48 downto 0);
+    pc       : in  std_logic_vector (13 downto 0);
+    ir       : in  std_logic_vector (48 downto 0);
     irdisp   : in  std_logic;
     lpc_hold : in  std_logic;
-    wpc      : out std_logic_vector(13 downto 0);
+    wpc      : out std_logic_vector (13 downto 0);
     );
 end entity;
 
 architecture behavioral of LPC is
-signal lpc : std_logic_vector(13 downto 0);
+  signal lpc : std_logic_vector (13 downto 0);
 begin
 
    always @(posedge clk)

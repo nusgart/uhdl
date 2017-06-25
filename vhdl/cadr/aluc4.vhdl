@@ -4,17 +4,17 @@
 
 entity ALUC4 is
   port (
-    a                                                                    : in  std_logic_vector(31 downto 0);
-    q                                                                    : in  std_logic_vector(31 downto 0);
-    ir                                                                   : in  std_logic_vector(48 downto 0);
+    a                                                                    : in  std_logic_vector (31 downto 0);
+    q                                                                    : in  std_logic_vector (31 downto 0);
+    ir                                                                   : in  std_logic_vector (48 downto 0);
     div                                                                  : in  std_logic;
     iralu                                                                : in  std_logic;
     irjump                                                               : in  std_logic;
     mul                                                                  : in  std_logic;
     xout3, xout7, xout11, xout15, xout19, xout23, xout27, xout31         : in  std_logic;
     yout3, yout7, yout11, yout15, yout19, yout23, yout27, yout31         : in  std_logic;
-    osel                                                                 : out std_logic_vector(1 downto 0);
-    aluf                                                                 : out std_logic_vector(3 downto 0);
+    osel                                                                 : out std_logic_vector (1 downto 0);
+    aluf                                                                 : out std_logic_vector (3 downto 0);
     output alumode;
     cin0                                                                 : out std_logic;
     cin4_n, cin8_n, cin12_n, cin16_n, cin20_n, cin24_n, cin28_n, cin32_n : out std_logic;
@@ -22,14 +22,14 @@ entity ALUC4 is
 end entity;
 
 architecture behavioral of ALUC4 is
-   signal aluadd:std_logic;
-   signal alusub:std_logic;
-   signal divaddcond:std_logic;
-   signal divposlasttime:std_logic;
-   signal divsubcond:std_logic;
-   signal mulnop:std_logic;
-   signal xx0, xx1:std_logic;
-   signal yy0, yy1:std_logic;
+  signal aluadd         : std_logic;
+  signal alusub         : std_logic;
+  signal divaddcond     : std_logic;
+  signal divposlasttime : std_logic;
+  signal divsubcond     : std_logic;
+  signal mulnop         : std_logic;
+  signal xx0, xx1       : std_logic;
+  signal yy0, yy1       : std_logic;
 begin
 
    ic_74S182  i_ALUC4_2A20 (

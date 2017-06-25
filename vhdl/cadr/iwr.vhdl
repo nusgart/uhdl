@@ -9,14 +9,14 @@ entity IWR is
 
     state_fetch : in std_logic;
 
-    a   : in  std_logic_vector(31 downto 0);
-    m   : in  std_logic_vector(31 downto 0);
-    iwr : out std_logic_vector(48 downto 0);
+    a   : in  std_logic_vector (31 downto 0);
+    m   : in  std_logic_vector (31 downto 0);
+    iwr : out std_logic_vector (48 downto 0);
     );
 end entity;
 
 architecture behavioral of IWR is
-signal iwr : std_logic_vector(48 downto 0);
+  signal iwr : std_logic_vector (48 downto 0);
 begin
 
    always @(posedge clk)

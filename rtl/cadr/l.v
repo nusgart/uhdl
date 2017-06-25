@@ -16,6 +16,8 @@ module L(clk, reset, vmaenb, state_write, state_alu, ob, l);
 
    reg [31:0]	 l;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    always @(posedge clk)
      if (reset)
        l <= 0;

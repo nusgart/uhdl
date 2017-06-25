@@ -7,7 +7,7 @@ entity OLORD2 is
     clk       : in std_logic;
     ext_reset : in std_logic;
 
-    spy_in    : in  std_logic_vector(15 downto 0);
+    spy_in    : in  std_logic_vector (15 downto 0);
     errstop   : in  std_logic;
     ext_boot  : in  std_logic;
     ext_halt  : in  std_logic;
@@ -24,13 +24,13 @@ entity OLORD2 is
 end entity;
 
 architecture behavioral of OLORD2 is
-   reg		boot_trap;
-   reg		halted;
-   reg		statstop;
-   signal bus_reset:std_logic;
-   signal prog_boot:std_logic;
-   signal prog_bus_reset:std_logic;
-   signal prog_reset:std_logic;
+  signal boot_trap      : std_logic_vector (1 downto 0);
+  signal halted         : std_logic_vector (1 downto 0);
+  signal statstop       : std_logic_vector (1 downto 0);
+  signal bus_reset      : std_logic;
+  signal prog_boot      : std_logic;
+  signal prog_bus_reset : std_logic;
+  signal prog_reset     : std_logic;
 begin
 
    always @(posedge clk)

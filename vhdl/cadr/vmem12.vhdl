@@ -7,17 +7,17 @@ entity VMEM12 is
     clk   : in std_logic;
     reset : in std_logic;
 
-    mapi  : in  std_logic_vector(23 downto 8);
-    vma   : in  std_logic_vector(31 downto 0);
-    vmap  : in  std_logic_vector(4 downto 0);
+    mapi  : in  std_logic_vector (23 downto 8);
+    vma   : in  std_logic_vector (31 downto 0);
+    vmap  : in  std_logic_vector (4 downto 0);
     vm1rp : in  std_logic;
     vm1wp : in  std_logic;
-    vmo   : out std_logic_vector(23 downto 0);
+    vmo   : out std_logic_vector (23 downto 0);
     );
 end entity;
 
 architecture behavioral of VMEM12 is
-signal vmem1_adr:std_logic_vector(9 downto 0);
+  signal vmem1_adr : std_logic_vector (9 downto 0);
 begin
 
 

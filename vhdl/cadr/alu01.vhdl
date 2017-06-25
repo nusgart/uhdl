@@ -5,13 +5,13 @@
 
 entity ALU01 is
   port (
-    a                                                                    : in  std_logic_vector(31 downto 0);
-    m                                                                    : in  std_logic_vector(31 downto 0);
-    aluf                                                                 : in  std_logic_vector(3 downto 0);
+    a                                                                    : in  std_logic_vector (31 downto 0);
+    m                                                                    : in  std_logic_vector (31 downto 0);
+    aluf                                                                 : in  std_logic_vector (3 downto 0);
     alumode                                                              : in  std_logic;
     cin0                                                                 : in  std_logic;
     cin4_n, cin8_n, cin12_n, cin16_n, cin20_n, cin24_n, cin28_n, cin32_n : in  std_logic;
-    alu                                                                  : out std_logic_vector(32 downto 0);
+    alu                                                                  : out std_logic_vector (32 downto 0);
     aeqm                                                                 : out std_logic;
     xout3, xout7, xout11, xout15, xout19, xout23, xout27, xout31         : out std_logic;
     yout3, yout7, yout11, yout15, yout19, yout23, yout27, yout31         : out std_logic;
@@ -19,8 +19,8 @@ entity ALU01 is
 end entity;
 
 architecture behavioral of ALU01 is
-signal nc_alu:std_logic_vector(2 downto 0);
-signal aeqm_bits:std_logic_vector(7 downto 0);
+  signal nc_alu    : std_logic_vector (2 downto 0);
+  signal aeqm_bits : std_logic_vector (7 downto 0);
 begin
 
    -- 74181 pulls down AEB if not equal

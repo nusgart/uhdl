@@ -19,6 +19,8 @@ module IREG(clk, reset, i, iob, ir, state_fetch, destimod1, destimod0);
 
    reg [48:0]	 ir;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    always @(posedge clk)
      if (reset)
        ir <= 49'b0;

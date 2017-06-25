@@ -4,9 +4,9 @@
 
 entity IOR is
   port (
-    ob  : in  std_logic_vector(31 downto 0);
-    i   : in  std_logic_vector(48 downto 0);
-    iob : out std_logic_vector(47 downto 0);
+    ob  : in  std_logic_vector (31 downto 0);
+    i   : in  std_logic_vector (48 downto 0);
+    iob : out std_logic_vector (47 downto 0);
     );
 end entity;
 

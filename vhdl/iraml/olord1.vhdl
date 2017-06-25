@@ -9,7 +9,7 @@ entity OLORD1 is
 
     state_fetch : in std_logic;
 
-    spy_in          : in  std_logic_vector(15 downto 0);
+    spy_in          : in  std_logic_vector (15 downto 0);
     boot            : in  std_logic;
     errhalt         : in  std_logic;
     ldclk           : in  std_logic;
@@ -20,7 +20,7 @@ entity OLORD1 is
     set_promdisable : in  std_logic;
     statstop        : in  std_logic;
     waiting         : in  std_logic;
-    scratch         : out std_logic_vector(15 downto 0);
+    scratch         : out std_logic_vector (15 downto 0);
     errstop         : out std_logic;
     idebug          : out std_logic;
     lpc_hold        : out std_logic;
@@ -38,23 +38,23 @@ entity OLORD1 is
 end entity;
 
 architecture behavioral of OLORD1 is
-   reg [15:0]	 scratch;
-   reg		 errstop;
-   reg		 idebug;
-   reg		 ldstat;
-   reg		 lpc_hold;
-   reg		 nop11;
-   reg		 opcclk;
-   reg		 opcinh;
-   reg		 promdisable;
-   reg		 promdisabled;
-   reg		 run;
-   reg		 srun;
-   reg		 ssdone;
-   reg		 sstep;
-   reg		 stathenb;
-   reg		 step;
-   reg		 trapenb;
+  signal scratch      : std_logic_vector (15 downto 0);
+  signal errstop      : std_logic_vector (1 downto 0);
+  signal idebug       : std_logic_vector (1 downto 0);
+  signal ldstat       : std_logic_vector (1 downto 0);
+  signal lpc_hold     : std_logic_vector (1 downto 0);
+  signal nop11        : std_logic_vector (1 downto 0);
+  signal opcclk       : std_logic_vector (1 downto 0);
+  signal opcinh       : std_logic_vector (1 downto 0);
+  signal promdisable  : std_logic_vector (1 downto 0);
+  signal promdisabled : std_logic_vector (1 downto 0);
+  signal run          : std_logic_vector (1 downto 0);
+  signal srun         : std_logic_vector (1 downto 0);
+  signal ssdone       : std_logic_vector (1 downto 0);
+  signal sstep        : std_logic_vector (1 downto 0);
+  signal stathenb     : std_logic_vector (1 downto 0);
+  signal step         : std_logic_vector (1 downto 0);
+  signal trapenb      : std_logic_vector (1 downto 0);
 begin
 
    always @(posedge clk)

@@ -12,19 +12,19 @@ entity Q is
     state_mmu   : in std_logic;
     state_write : in std_logic;
 
-    alu    : in  std_logic_vector(32 downto 0);
-    ir     : in  std_logic_vector(48 downto 0);
+    alu    : in  std_logic_vector (32 downto 0);
+    ir     : in  std_logic_vector (48 downto 0);
     iralu  : in  std_logic;
     srcq   : in  std_logic;
-    q      :out  std_logic_vector(31 downto 0);
+    q      : out std_logic_vector (31 downto 0);
     qdrive : out std_logic;
     );
 end entity;
 
 architecture behavioral of Q is
-signal q : std_logic_vector(31 downto 0);
-   signal qs0:std_logic;
-   signal qs1:std_logic;
+  signal q   : std_logic_vector (31 downto 0);
+  signal qs0 : std_logic;
+  signal qs1 : std_logic;
 begin
 
    assign qs1 = ir[1] & iralu;

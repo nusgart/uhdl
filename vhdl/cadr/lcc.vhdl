@@ -9,9 +9,9 @@ entity LCC is
 
     state_fetch : in std_logic;
 
-    spc           : in  std_logic_vector(18 downto 0);
-    lc            : in  std_logic_vector(25 downto 0);
-    ir            : in  std_logic_vector(48 downto 0);
+    spc           : in  std_logic_vector (18 downto 0);
+    lc            : in  std_logic_vector (25 downto 0);
+    ir            : in  std_logic_vector (48 downto 0);
     bus_int       : in  std_logic;
     destlc        : in  std_logic;
     ext_int       : in  std_logic;
@@ -31,17 +31,17 @@ entity LCC is
 end entity;
 
 architecture behavioral of LCC is
-   reg		newlc;
-   reg		next_instrd;
-   reg		sintr;
-   signal have_wrong_word:std_logic;
-   signal inst_in_2nd_or_4th_quarter:std_logic;
-   signal inst_in_left_half:std_logic;
-   signal last_byte_in_word:std_logic;
-   signal lc_modifies_mrot:std_logic;
-   signal newlc_in:std_logic;
-   signal next_instr:std_logic;
-   signal spcmung:std_logic;
+  signal newlc                      : std_logic_vector (1 downto 0);
+  signal next_instrd                : std_logic_vector (1 downto 0);
+  signal sintr                      : std_logic_vector (1 downto 0);
+  signal have_wrong_word            : std_logic;
+  signal inst_in_2nd_or_4th_quarter : std_logic;
+  signal inst_in_left_half          : std_logic;
+  signal last_byte_in_word          : std_logic;
+  signal lc_modifies_mrot           : std_logic;
+  signal newlc_in                   : std_logic;
+  signal next_instr                 : std_logic;
+  signal spcmung                    : std_logic;
 begin
 
    assign lc0b = lc[0] & lc_byte_mode;

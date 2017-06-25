@@ -17,7 +17,7 @@ entity MF is
 end entity;
 
 architecture behavioral of MF is
-   signal mfenb:std_logic;
+  signal mfenb : std_logic;
 begin
 
    assign mfenb = ~srcm & !(spcenb | pdlenb);

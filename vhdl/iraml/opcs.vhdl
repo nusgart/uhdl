@@ -9,15 +9,15 @@ entity OPCS is
 
     state_fetch : in std_logic;
 
-    pc     : in  std_logic_vector(13 downto 0);
+    pc     : in  std_logic_vector (13 downto 0);
     opcclk : in  std_logic;
     opcinh : in  std_logic;
-    opc    : out std_logic_vector(13 downto 0);
+    opc    : out std_logic_vector (13 downto 0);
     );
 end entity;
 
 architecture behavioral of OPCS is
-   reg [13:0]	 opc;
+  signal opc : std_logic_vector (13 downto 0);
 begin
 
    assign opcclka = (state_fetch | opcclk) & ~opcinh;

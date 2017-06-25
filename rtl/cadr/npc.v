@@ -24,6 +24,8 @@ module NPC(clk, reset, state_fetch, ipc, trap, pcs1, pcs0, ir, spc, spc1a, dpc, 
    reg [13:0]	 pc;
    wire [13:0]	 npc;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    assign npc =
 	       trap ? 14'b0 :
 	       {pcs1,pcs0} == 2'b00 ? { spc[13:2], spc1a, spc[0] } :

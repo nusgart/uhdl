@@ -37,6 +37,8 @@ module FLAG(clk, reset, ir, nopa, aeqm, sintr, int_enable, vmaok, sequence_break
    wire		sint;
    wire		statbit;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    assign statbit = ~nopa & ir[46];
    assign ilong  = ~nopa & ir[45];
 

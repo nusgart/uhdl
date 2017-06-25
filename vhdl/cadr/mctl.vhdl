@@ -7,10 +7,10 @@ entity MCTL is
     state_decode : in std_logic;
     state_write  : in std_logic;
 
-    ir     : in  std_logic_vector(48 downto 0);
-    wadr   : in  std_logic_vector(9 downto 0);
+    ir     : in  std_logic_vector (48 downto 0);
+    wadr   : in  std_logic_vector (9 downto 0);
     destm  : in  std_logic;
-    madr   : out std_logic_vector(4 downto 0);
+    madr   : out std_logic_vector (4 downto 0);
     mpassm : out std_logic;
     mrp    : out std_logic;
     mwp    : out std_logic;

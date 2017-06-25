@@ -9,21 +9,21 @@ entity NPC is
 
     state_fetch : in std_logic;
 
-    dpc   : in  std_logic_vector(13 downto 0);
-    spc   : in  std_logic_vector(18 downto 0);
-    ir    : in  std_logic_vector(48 downto 0);
+    dpc   : in  std_logic_vector (13 downto 0);
+    spc   : in  std_logic_vector (18 downto 0);
+    ir    : in  std_logic_vector (48 downto 0);
     pcs0  : in  std_logic;
     pcs1  : in  std_logic;
     spc1a : in  std_logic;
     trap  : in  std_logic;
-    ipc   : out std_logic_vector(13 downto 0);
-    pc    : out std_logic_vector(13 downto 0);
+    ipc   : out std_logic_vector (13 downto 0);
+    pc    : out std_logic_vector (13 downto 0);
     );
 end entity;
 
 architecture behavioral of NPC is
-  signal pc : std_logic_vector(13 downto 0);
-  signal 	 npc:std_logic_vector(13 downto 0);
+  signal pc  : std_logic_vector (13 downto 0);
+  signal npc : std_logic_vector (13 downto 0);
 begin
 
    assign npc =

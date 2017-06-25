@@ -9,15 +9,17 @@ module LPC(clk, reset, lpc_hold, pc, wpc, irdisp, ir, state_fetch);
 
    input state_fetch;
 
+   input	lpc_hold;
    input [13:0] pc;
    input [48:0] ir;
    input	irdisp;
-   input	lpc_hold;
    output [13:0] wpc;
 
    ////////////////////////////////////////////////////////////////////////////////
 
    reg [13:0]	 lpc;
+
+   ////////////////////////////////////////////////////////////////////////////////
 
    always @(posedge clk)
      if (reset)
