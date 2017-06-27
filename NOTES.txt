@@ -1,3 +1,110 @@
+NOTES -*- org -*-
+
+* TODO CADR4 [0/63]
+
+** TODO ACTL --- A CONTROL
+** TODO ALATCH --- A MEMORY LATCH
+** TODO ALU0 --- ALU0
+** TODO ALU1 --- ALU1
+** TODO ALUC4 --- ALU CARRY AND FUNCTION
+** TODO AMEM0 --- A MEMORY LEFT
+** TODO AMEM1 --- A MEMORY RIGHT
+** TODO APAR --- A&M PARITY
+** TODO BCPINS --- BUS INTERFACE CABLES
+** TODO BCTERM --- BUSINT CABLE TERMINATION
+** TODO CAPS --- BYPASS CAPACITORS
+** TODO CLOCKD --- CLOCK DISTRIBUTION
+** TODO CONTRL --- PC, SPC CONTROL
+** TODO CPINS --- CONNECTOR PINS
+** TODO DRAM0 --- DISPATCH RAM
+** TODO DRAM1 --- DISPATCH RAM
+** TODO DRAM2 --- DISPATCH RAM
+** TODO DSPCTL --- DISPATCH CONTROL
+** TODO FLAG --- FLAGS,CONDITIONALS*
+** TODO IOR --- INST. MODIFY OR
+** TODO IPAR --- IR PARITY
+** TODO IREG --- INSTRUCTION REGISTER
+** TODO IWR --- INSTRUCTION WRITE REGISTER
+** TODO L --- L REGISTER
+** TODO LC --- LOCATION COUNTER
+** TODO LCC --- LC CONTROL
+** TODO LPC --- LAST PC
+** TODO MCTL --- M CONTROL
+** TODO MD --- MEMORY DATA REGISTER
+** TODO MDS --- MEMORY DATA SELECTOR
+** TODO MF --- DRIVE MF ONTO M
+** TODO MLATCH --- M MEMORY LATCH
+** TODO MMEM --- M MEMORY
+** TODO MO0 --- MASKER/OUTPUT SELECT
+** TODO MO1 --- MASKER/OUTPUT SELECT
+** TODO MSKG4 --- MASK GENERATION
+** TODO NPC --- NPC,IPC,PC
+** TODO OPCD --- OPC, DC, ZERO DRIVE
+** TODO PDL0 --- PDL BUFFER LEFT
+** TODO PDL1 --- PDL BUFFER RIGHT
+** TODO PDLCTL --- PDL BUFFER CONTROL
+** TODO PDLPTR --- PDL INDEX AND POINTER
+** TODO PLATCH --- PDL BUFFER LATCH
+** TODO Q --- Q REGISTER
+** TODO QCTL --- Q REGISTER CONTROL
+** TODO SHIFT0 --- SHIFTER RIGHT
+** TODO SHIFT1 --- SHIFTER LEFT
+** TODO SMCTL --- SHIFT/MASK CONTROL
+** TODO SOURCE --- SOURCE, DEST, OP DECODE
+** TODO SPC --- SPC MEMORY AND POINTER
+** TODO SPCLCH --- SPC MEMORY LATCH
+** TODO SPCPAR --- SPC MEMORY PARITY
+** TODO SPCW --- SPC WRITE DATA SEL
+** TODO SPY1 --- PDP11 EXAMINE (IR, OB)
+** TODO SPY2 --- PDP11 EXAMINE (A, M, FLAG2)
+** TODO TRAP --- PARITY ERROR TRAP
+** TODO VCTL1 --- VMEMORY CONTROL
+** TODO VCTL2 --- VMA/MD CONTROL
+** TODO VMA --- VMA REGISTER
+** TODO VMAS --- VMA INPUT SELECTOR
+** TODO VMEM0 --- VIRTUAL MEMORY MAP STAGE 0
+** TODO VMEM1 --- VIRTUAL MEMORY MAP STAGE 1
+** TODO VMEM2 --- VIRTUAL MEMORY MAP STAGE 1
+** TODO VMEMDR --- MAP OUTPUT DRIVE
+
+* TODO IRAML [0/33]
+
+** TODO CLOCK1 --- MASTER CLOCK
+** TODO CLOCK2 --- MASTER CLOCK
+** TODO DEBUG --- PDP11 DEBUG INSTRUCTION
+** TODO ICAPS --- BYPASS CAPACITORS
+** TODO ICTL --- I RAM CONTROL
+** TODO IWRPAR --- IWR PARITY
+** TODO MBCPIN --- (CMEM) BUS INTERFACE CABLES
+** TODO MCPINS --- (CMEM) CONNECTOR PINS
+** TODO OLORD1 --- OVERLORD
+** TODO OLORD2 --- OVERLORD
+** TODO OPCS --- OLD PC SAVE SHIFTER
+** TODO PCTL --- DISPATCH CONTROL
+** TODO PROM0 --- PROM 0-511
+** TODO PROM1 --- PROM 512-1023
+** TODO IRAM00 --- RAM 0K-4K, 0-11
+** TODO IRAM01 --- RAM 4K-8K, 0-11
+** TODO IRAM02 --- RAM 8K-12K, 0-11
+** TODO IRAM03 --- RAM 12K-16K, 0-11
+** TODO IRAM10 --- RAM 0K-4K, 12-24
+** TODO IRAM11 --- RAM 4K-8K 12-23
+** TODO IRAM12 --- RAM 8K-12K, 12-23
+** TODO IRAM13 --- 
+** TODO IRAM20 --- RAM 0K-4K, 24-35
+** TODO IRAM21 --- RAM 4K-8K, 24-35
+** TODO IRAM22 --- RAM8K-12K, 24-35
+** TODO IRAM23 --- RAM 12K-16K, 24-35
+** TODO IRAM30 --- RAM 0K-4K, 36-48
+** TODO IRAM31 --- RAM 4K-8K, 36-48
+** TODO IRAM32 --- RAM 8K-12K, 36-48
+** TODO IRAM33 --- RAM 12K-16K, 36-48
+** TODO SPY0 --- PDP11 EXAMINE CONTROL
+** TODO SPY4 --- PDP11 EXAMINE (OPC, FLAG1, PC)
+** TODO STAT --- STATISTICS COUNTER
+
+* Chapters
+
 _1_Xspec-02
 _1_Xspec-03
 _1_Xspec-04
@@ -204,6 +311,8 @@ _6-ubchni-qubbpl
 _6-ubchni-qubint
 _6-ubchni-qubxcv
 
+* Chapters 2
+
 00_ACTL
 01_ALATCH
 02_ALU0
@@ -302,6 +411,8 @@ _6-ubchni-qubxcv
 95_SPY4
 96_STAT
 
+* Titles
+
 //////////////////////////////////////////////////////////////////////
 
 //////// CADR4
@@ -479,7 +590,9 @@ _6-ubchni-qubxcv
 
 // STATISTICS COUNTER (STAT)
 
-    Xilinx - All Programmable Support AR# 12281: ChipScope Analyzer - How do I import signal names without having a Core Inserter project? 
+* Notes
+
+Xilinx - All Programmable Support AR# 12281: ChipScope Analyzer - How do I import signal names without having a Core Inserter project? 
 
 AR# 12281
 ChipScope Analyzer - How do I import signal names without having a Core Inserter project?
@@ -608,7 +721,7 @@ Solution 3 (ISE 13.2+)
 3. Select which ILA core to apply the CDC file to.
 
 
-mmc_block_dev.v
+* mmc_block_dev.v
 
 #ChipScope Core Generator Project File Version 3.0
 #Tue Mar 04 18:44:05 EST 2014
@@ -710,7 +823,7 @@ state[4]
 state[5]
 
 
-mmc.v
+* mmc.v
 
 #ChipScope Core Generator Project File Version 3.0
 #Fri Jan 03 17:17:43 EST 2014
@@ -747,7 +860,7 @@ mmc_do
 mmc_cs
 
 
-caddr.v
+* caddr.v
 
 #ChipScope Core Generator Project File Version 3.0
 #Thu Mar 13 17:45:47 EDT 2014
@@ -1023,6 +1136,8 @@ md[29]
 md[30]
 md[31]
 
+* Command reference
+
 make sure ftdi_sio is unloaded before hooking up chipscope, otherwise
 you will get the following error:
 
