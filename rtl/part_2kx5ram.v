@@ -10,13 +10,13 @@ module part_2kx5dpram(reset,
 
    input clk_a;
    input [10:0] address_a;
-   input [4:0] 	data_a;
-   input 	wren_a, rden_a;
+   input [4:0]	data_a;
+   input	wren_a, rden_a;
 
    input clk_b;
    input [10:0] address_b;
-   input [4:0] 	data_b;
-   input 	wren_b, rden_b;
+   input [4:0]	data_b;
+   input	wren_b, rden_b;
 
    output [4:0] q_a;
    output [4:0] q_b;
@@ -38,24 +38,24 @@ module part_2kx5dpram(reset,
       );
 
   defparam ram.address_reg_b = "CLOCK0",
-           ram.maximum_depth = 0,
-           ram.numwords_a = 2048,
-           ram.numwords_b = 2048,
-           ram.operation_mode = "DUAL_PORT",
-           ram.outdata_reg_b = "UNREGISTERED",
-           ram.ram_block_type = "AUTO",
-           ram.rdcontrol_reg_b = "CLOCK0",
-           ram.read_during_write_mode_mixed_ports = "OLD_DATA",
-           ram.width_a = 5,
-           ram.width_b = 5,
-           ram.widthad_a = 11,
-           ram.widthad_b = 11;
+	   ram.maximum_depth = 0,
+	   ram.numwords_a = 2048,
+	   ram.numwords_b = 2048,
+	   ram.operation_mode = "DUAL_PORT",
+	   ram.outdata_reg_b = "UNREGISTERED",
+	   ram.ram_block_type = "AUTO",
+	   ram.rdcontrol_reg_b = "CLOCK0",
+	   ram.read_during_write_mode_mixed_ports = "OLD_DATA",
+	   ram.width_a = 5,
+	   ram.width_b = 5,
+	   ram.widthad_a = 11,
+	   ram.widthad_b = 11;
 `endif // QUARTUS
 
 `ifdef ISE
    wire ena_a = rden_a | wren_a;
    wire ena_b = rden_b | wren_b;
-   
+
    ise_2kx5_dpram inst
      (
       .clka(clk_a),
@@ -74,21 +74,21 @@ module part_2kx5dpram(reset,
 `endif
 
 `ifdef SIMULATION
-   reg [4:0] 	ram [0:2047];
-   reg [4:0] 	out_a;
-   reg [4:0] 	out_b;
+   reg [4:0]	ram [0:2047];
+   reg [4:0]	out_a;
+   reg [4:0]	out_b;
 
    assign q_a = out_a;
    assign q_b = out_b;
 
 `ifdef debug
-   integer 	 i, debug;
+   integer	 i, debug;
 
    initial
      begin
 	debug = 0;
 	for (i = 0; i < 2048; i=i+1)
-          ram[i] = 5'b0;
+	  ram[i] = 5'b0;
      end
 `endif
 

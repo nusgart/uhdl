@@ -11,12 +11,12 @@ module part_1kx32dpram_a(reset,
    input clk_a;
    input [9:0] address_a;
    input [31:0] data_a;
-   input 	wren_a, rden_a;
+   input	wren_a, rden_a;
 
-   input 	 clk_b;
+   input	 clk_b;
    input [9:0] address_b;
    input [31:0] data_b;
-   input 	wren_b, rden_b;
+   input	wren_b, rden_b;
 
    output [31:0] q_a;
    output [31:0] q_b;
@@ -38,24 +38,24 @@ module part_1kx32dpram_a(reset,
       );
 
   defparam ram.address_reg_b = "CLOCK0",
-           ram.maximum_depth = 0,
-           ram.numwords_a = 1024,
-           ram.numwords_b = 1024,
-           ram.operation_mode = "DUAL_PORT",
-           ram.outdata_reg_b = "UNREGISTERED",
-           ram.ram_block_type = "AUTO",
-           ram.rdcontrol_reg_b = "CLOCK0",
-           ram.read_during_write_mode_mixed_ports = "OLD_DATA",
-           ram.width_a = 32,
-           ram.width_b = 32,
-           ram.widthad_a = 10,
-           ram.widthad_b = 10;
+	   ram.maximum_depth = 0,
+	   ram.numwords_a = 1024,
+	   ram.numwords_b = 1024,
+	   ram.operation_mode = "DUAL_PORT",
+	   ram.outdata_reg_b = "UNREGISTERED",
+	   ram.ram_block_type = "AUTO",
+	   ram.rdcontrol_reg_b = "CLOCK0",
+	   ram.read_during_write_mode_mixed_ports = "OLD_DATA",
+	   ram.width_a = 32,
+	   ram.width_b = 32,
+	   ram.widthad_a = 10,
+	   ram.widthad_b = 10;
 `endif //  `ifdef QUARTUS
 
 `ifdef ISE
    wire ena_a = rden_a | wren_a;
    wire ena_b = rden_b | wren_b;
-   
+
    ise_1kx32_dpram inst
      (
       .clka(clk_a),
@@ -80,7 +80,7 @@ module part_1kx32dpram_a(reset,
 
    assign q_a = out_a;
    assign q_b = out_b;
-   
+
 `ifdef debug
   integer i, debug;
 
@@ -88,14 +88,14 @@ module part_1kx32dpram_a(reset,
     begin
        debug = 0;
        for (i = 0; i < 1024; i=i+1)
-         ram[i] = 32'b0;
+	 ram[i] = 32'b0;
     end
 `endif
 
    always @(posedge clk_a)
      if (wren_a)
        begin
-          ram[ address_a ] <= data_a;
+	  ram[ address_a ] <= data_a;
 `ifdef debug
 	  if (address_a != 0 && debug != 0)
 	    $display("amem: W %o <- %o; %t", address_a, data_a, $time);
@@ -103,7 +103,7 @@ module part_1kx32dpram_a(reset,
        end
      else if (wren_b)
        begin
-          ram[ address_b ] <= data_b;
+	  ram[ address_b ] <= data_b;
 `ifdef debug
 	  if (address_b != 0 && debug != 0)
 	    $display("amem: W %o <- %o; %t", address_b, data_b, $time);
@@ -137,6 +137,5 @@ module part_1kx32dpram_a(reset,
        end
 
 `endif // SIMULATION
-   
-endmodule
 
+endmodule
