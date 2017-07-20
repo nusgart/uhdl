@@ -354,5 +354,5 @@ fpgprog:
 
 fpgaprog/fpgaprog -r  -v -b fpgaprog/bscan_spi_lx45_csg324.bit -f ise/top.bit
 
-(cd niox/ise; sh run.sh); fpgaprog/fpgaprog -v -f ise/top_niox.bit
-(cd ise-lx45; sh run.sh); fpgaprog/fpgaprog -v -f ise/top.bit
+fpgaprog/fpgaprog -v -f ise/top_niox.bit
+fpgaprog/fpgaprog -v -f ise/top.bit
