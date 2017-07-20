@@ -326,132 +326,6 @@ NOTES -*- org -*-
 95_SPY4
 96_STAT
 
-* Notes
-
-Xilinx - All Programmable Support AR# 12281: ChipScope Analyzer - How do I import signal names without having a Core Inserter project?
-
-AR# 12281
-ChipScope Analyzer - How do I import signal names without having a Core Inserter project?
-
-    Description
-    Solution
-    Linked Answer Records
-
-Description
-
-ChipScope Analyzer requires a ".cdc" file (which is a ChipScope Core Inserter project file) for signal names to be imported.
-
-If I do not use Core Inserter, how do I import signal names?
-
-Solution
-
-Solution 1
-
-Write your own ".cdc" file.
-
-This CDC file requires the following five components:
-
-    As the first line of the file, a comment that identifies it as a Core Inserter project file:
-
-    #ChipScope Core Inserter Project Version 2.0
-
-    A declaration of the signal name for EVERY data signal connected to the ILA core:
-
-    Project.unit.Unit Number.data<Channel Number>=Signal Name
-
-    A declaration of the width of the data bus.
-    This must match the ILA core exactly, or ChipScope Analyzer will not accept the ".cdc" file:
-
-    Project.unit.Unit Number.dataWidth=Data Bus Width
-
-    A declaration of the signal name for EACH trigger signal that is connected to the ILA core:
-
-    Project.unit.Unit Number.trigger<Channel Number>=Signal Name
-
-    A declaration of the width of the trigger bus.
-    This must match the ILA core exactly, or ChipScope Analyzer will not accept the ".cdc" file:
-
-    Project.unit.Unit Number.triggerWidth=Trigger Bus Width
-
-An example CDC file follows; this can be used with the counter design in ChipScope.
-
-___begin file___
-
-#ChipScope Core Inserter Project Version 2.0
-
-Project.unit.0.data<0>=counter[0]
-
-Project.unit.0.data<1>=counter[1]
-
-Project.unit.0.data<2>=counter[2]
-
-Project.unit.0.data<3>=counter[3]
-
-Project.unit.0.data<4>=counter[4]
-
-Project.unit.0.data<5>=counter[5]
-
-Project.unit.0.data<6>=counter[6]
-
-Project.unit.0.data<7>=counter[7]
-
-Project.unit.0.data<8>=counter[8]
-
-Project.unit.0.data<9>=counter[9]
-
-Project.unit.0.data<10>=counter[10]
-
-Project.unit.0.data<11>=counter[11]
-
-Project.unit.0.data<12>=counter[12]
-
-Project.unit.0.data<13>=counter[13]
-
-Project.unit.0.data<14>=counter[14]
-
-Project.unit.0.data<15>=counter[15]
-
-Project.unit.0.dataWidth=16
-
-Project.unit.0.trigger<0>=counter[0]
-
-Project.unit.0.trigger<1>=counter[1]
-
-Project.unit.0.trigger<2>=counter[2]
-
-Project.unit.0.trigger<3>=counter[3]
-
-Project.unit.0.trigger<4>=counter[4]
-
-Project.unit.0.trigger<5>=counter[5]
-
-Project.unit.0.trigger<6>=counter[6]
-
-Project.unit.0.trigger<7>=counter[7]
-
-Project.unit.0.triggerWidth=8
-
-Solution 2
-
-Modify the ".cdc" file(s) generated from CORE Generator.
-
-When you generate the ILA/VIO cores, a ".cdc" file is generated along with each core.
-
-The trigger and data signal names are all defaults in these CDC files and you need to modify them to the expected names manually, according to the description above.
-
-Once this is done, import the CDC files one by one in ChipScope Pro Analyzer.
-
-You will be prompted to choose the correct ILA/VIO core in the design when you import the CDC file.
-
-Solution 3 (ISE 13.2+)
-
-1. Modify the CDC file that comes directly out of the Xilinx CORE Generator tool.
-
-2. Use the Import function in the ChipScope Pro Analyzer.
-
-3. Select which ILA core to apply the CDC file to.
-
-
 * Command reference
 
 make sure ftdi_sio is unloaded before hooking up chipscope, otherwise
@@ -478,7 +352,7 @@ xilinx_xvc host=127.0.0.1:2542 disableversioncheck=true
 
 fpgprog:
 
-fpgaprog/fpgaprog -r  -v -b fpgaprog/bscan_spi_lx45_csg324.bit -f ise-lx45/top.bit
+fpgaprog/fpgaprog -r  -v -b fpgaprog/bscan_spi_lx45_csg324.bit -f ise/top.bit
 
-(cd niox/ise; sh run.sh); fpgaprog/fpgaprog -v -f niox/ise/top_niox.bit
-(cd ise-lx45; sh run.sh); fpgaprog/fpgaprog -v -f ise-lx45/top.bit
+(cd niox/ise; sh run.sh); fpgaprog/fpgaprog -v -f ise/top_niox.bit
+(cd ise-lx45; sh run.sh); fpgaprog/fpgaprog -v -f ise/top.bit
