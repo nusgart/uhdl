@@ -136,6 +136,6 @@ endmodule
 
 `ifdef SIMULATION
 `ifdef ISE_MODEL
- `include "../ise-lx45/ipcore_dir/ise_21kx32_dpram.v"
+ `include "../ipcore_dir/ise_21kx32_dpram.v"
 `endif
 `endif

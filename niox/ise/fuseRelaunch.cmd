@@ -1,1 +1,0 @@
--d "SIMULATION=1" -timescale "1ps/1ps" -override_timeunit -override_timeprecision -i "/home/ams/cpus-caddr/niox/verif" -lib "unisims_ver" -lib "unimacro_ver" -lib "xilinxcorelib_ver" -lib "secureip" -o "/home/ams/cpus-caddr/niox/ise/top_niox_tb_isim_beh.exe" -prj "/home/ams/cpus-caddr/niox/ise/top_niox_tb_beh.prj" "work.top_niox_tb" "work.glbl" 

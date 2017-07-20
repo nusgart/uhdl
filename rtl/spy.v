@@ -9,7 +9,7 @@
  `define debug
 `endif
 
-`include "uart.v"
+// `include "uart.v"
 
 /*
  serial spy port

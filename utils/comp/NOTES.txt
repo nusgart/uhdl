@@ -1,3 +1,0 @@
-./comp -d ../../verif/x.o ../../../cadr/svn/usim/y.o 
-
-./comp -d ../../verif/xx.o ../../../cadr/svn/usim/y.o 
