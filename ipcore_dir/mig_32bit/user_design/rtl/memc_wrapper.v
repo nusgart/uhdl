@@ -64,7 +64,7 @@
 //Reference        :
 //Revision History :
 //*****************************************************************************
-//`timescale 1ns/1ps
+///---!!! `timescale 1ns/1ps
 
 module memc_wrapper  #
   (

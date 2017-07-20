@@ -1,5 +1,4 @@
 # Output products list for <chipscope_icon>
-_xmsgs/pn_parser.xmsgs
 chipscope_icon.asy
 chipscope_icon.constraints/chipscope_icon.ucf
 chipscope_icon.constraints/chipscope_icon.xdc

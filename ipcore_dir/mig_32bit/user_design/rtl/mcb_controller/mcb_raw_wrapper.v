@@ -4058,7 +4058,6 @@ if ( C_CALIB_SOFT_IP != "TRUE") begin: gen_no_term_calib
     assign selfrefresh_mode = 1'b0;
  
     if (C_SIMULATION == "FALSE") begin: init_sequence
-initial $display("XXXX NOT IN SIMULATION");
         always @ (posedge ui_clk, posedge int_sys_rst)
         begin
             if (int_sys_rst)

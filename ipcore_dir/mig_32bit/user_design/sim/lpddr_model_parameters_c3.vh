@@ -1,7 +1,3 @@
-`define x512Mb
-`define FULL_MEM
-`define sg5
-`define x16
 /****************************************************************************************
 *
 *   Disclaimer   This software code and all associated documentation, comments or other 
@@ -31,6 +27,12 @@
 
 // 07.25.08 - Added design T36N from Rev A 07/08
 // 12.10.08 - Updated T36N to Rev B 11/08
+
+
+`define x512Mb			///---!!!
+`define FULL_MEM		///---!!!
+`define sg5			///---!!!
+`define x16			///---!!!
 
     // Timing parameters based on Speed Grade
 

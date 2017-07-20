@@ -83,7 +83,7 @@
 
 // DO NOT CHANGE THE TIMESCALE
 // MAKE SURE YOUR SIMULATOR USES "PS" RESOLUTION
-//`timescale 1ns / 1ps
+///---!!! `timescale 1ns / 1ps
 
 module lpddr_model_c3(Dq, Dqs, Addr, Ba, Clk, Clk_n, Cke, Cs_n, Ras_n, Cas_n, We_n, Dm);
 
@@ -939,7 +939,7 @@ end
                 read_mem({Bank_addr, Rows_addr, Cols_addr}, Dq_out_temp);
             end
             if (Debug) begin
-                $display ("At time %t %m:READ: Bank = %d, Row = %d, Col = %d, Data = %h", $realtime, Bank_addr, Rows_addr, Cols_addr, Dq_out);
+                $display ("At time %t %m:READ: Bank = %d, Row = %d, Col = %d, Data = %d", $realtime, Bank_addr, Rows_addr, Cols_addr, Dq_out);
             end
 
         end

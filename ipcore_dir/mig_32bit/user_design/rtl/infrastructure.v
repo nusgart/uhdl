@@ -64,7 +64,7 @@
 //*****************************************************************************
 
 
-//`timescale 1ns/1ps
+///---!!! `timescale 1ns/1ps
 
 module infrastructure #
   (
@@ -123,7 +123,7 @@ module infrastructure #
 
   wire                       sys_rst;
   wire                       bufpll_mcb_locked;
-//  (* KEEP = "TRUE" *) wire sys_clk_ibufg;
+///---!!!  (* KEEP = "TRUE" *) wire sys_clk_ibufg;
 
   assign sys_rst = C_RST_ACT_LOW ? ~sys_rst_i: sys_rst_i;
   assign clk0        = clk0_bufg;
@@ -153,11 +153,11 @@ module infrastructure #
       // SINGLE_ENDED input clock input buffers
       //***********************************************************************
 
-//      IBUFG  u_ibufg_sys_clk
-//          (
-//           .I  (sys_clk),
-//           .O  (sys_clk_ibufg)
-//           );
+///---!!!      IBUFG  u_ibufg_sys_clk
+///---!!!          (
+///---!!!           .I  (sys_clk),
+///---!!!           .O  (sys_clk_ibufg)
+///---!!!           );
    end
   endgenerate
 
@@ -199,7 +199,7 @@ module infrastructure #
           (
            .CLKFBIN     (clkfbout_clkfbin),
            .CLKINSEL    (1'b1),
-           .CLKIN1      (sys_clk/*_ibufg*/),
+           .CLKIN1      (sys_clk), ///---!!! Was sys_clk_ibufg 
            .CLKIN2      (1'b0),
            .DADDR       (5'b0),
            .DCLK        (1'b0),
@@ -226,6 +226,7 @@ module infrastructure #
            .DRDY        (),
            .LOCKED      (locked)
            );
+
  
 
    BUFG U_BUFG_CLK0

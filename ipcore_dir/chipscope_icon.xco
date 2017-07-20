@@ -1,7 +1,7 @@
 ##############################################################
 #
-# Xilinx Core Generator version 14.4
-# Date: Thu Jan  2 22:42:47 2014
+# Xilinx Core Generator version 14.7
+# Date: Thu Jul 20 16:35:04 2017
 #
 ##############################################################
 #
@@ -50,7 +50,7 @@ CSET use_unused_bscan=false
 CSET user_scan_chain=USER1
 # END Parameters
 # BEGIN Extra information
-MISC pkg_timestamp=2012-12-18T02:47:25Z
+MISC pkg_timestamp=2013-10-13T14:12:40Z
 # END Extra information
 GENERATE
-# CRC: 1833d43c
+# CRC: 7a386840

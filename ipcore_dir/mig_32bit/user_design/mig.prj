@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <Project NoOfControllers="1" >
     <ModuleName>mig_32bit</ModuleName>
     <TargetFPGA>xc6slx45-csg324/-3</TargetFPGA>
@@ -9,7 +9,7 @@
         <EnableVoltageRange>0</EnableVoltageRange>
         <DataMask>1</DataMask>
         <CustomPart>FALSE</CustomPart>
-        <NewPartName></NewPartName>
+        <NewPartName/>
         <RowAddress>13</RowAddress>
         <ColAddress>10</ColAddress>
         <BankAddress>2</BankAddress>
@@ -25,9 +25,9 @@
         <Class>Class II</Class>
         <DataClass>Class II</DataClass>
         <DataTermination>25 Ohms</DataTermination>
-        <CalibrationRowAddress></CalibrationRowAddress>
-        <CalibrationColumnAddress></CalibrationColumnAddress>
-        <CalibrationBankAddress></CalibrationBankAddress>
+        <CalibrationRowAddress/>
+        <CalibrationColumnAddress/>
+        <CalibrationBankAddress/>
         <SystemClock>Single-Ended</SystemClock>
         <BypassCalibration>1</BypassCalibration>
         <DebugSignals>Disable</DebugSignals>

@@ -1,7 +1,7 @@
 ##############################################################
 #
-# Xilinx Core Generator version 14.4
-# Date: Thu Mar 13 21:40:33 2014
+# Xilinx Core Generator version 14.7
+# Date: Thu Jul 20 16:40:27 2017
 #
 ##############################################################
 #
@@ -30,7 +30,7 @@ SET foundationsym = false
 SET implementationfiletype = Ngc
 SET package = csg324
 SET removerpms = false
-SET simulationfiles = Structural
+SET simulationfiles = Behavioral
 SET speedgrade = -3
 SET verilogsim = true
 SET vhdlsim = false
@@ -135,7 +135,7 @@ CSET trigger_port_width_9=8
 CSET use_rpms=false
 # END Parameters
 # BEGIN Extra information
-MISC pkg_timestamp=2012-12-18T02:47:40Z
+MISC pkg_timestamp=2013-10-13T14:13:15Z
 # END Extra information
 GENERATE
-# CRC: 5af815ab
+# CRC: ced897d7

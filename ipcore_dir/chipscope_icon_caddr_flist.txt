@@ -1,5 +1,4 @@
 # Output products list for <chipscope_icon_caddr>
-_xmsgs/pn_parser.xmsgs
 chipscope_icon_caddr.asy
 chipscope_icon_caddr.constraints/chipscope_icon_caddr.ucf
 chipscope_icon_caddr.constraints/chipscope_icon_caddr.xdc

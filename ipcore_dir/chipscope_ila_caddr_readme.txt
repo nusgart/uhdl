@@ -1,5 +1,5 @@
 The following files were generated for 'chipscope_ila_caddr' in directory
-/home/ams/cpus-caddr/ise-lx45/ipcore_dir/
+/home/ams/cpus-caddr/ipcore_dir/
 
 XCO file generator:
    Generate an XCO file for compatibility with legacy flows.
@@ -28,7 +28,6 @@ IP Symbol Generator:
 Generate ISE subproject:
    Create an ISE subproject for use when including this core in ISE designs
 
-   * _xmsgs/pn_parser.xmsgs
    * chipscope_ila_caddr.gise
    * chipscope_ila_caddr.xise
 

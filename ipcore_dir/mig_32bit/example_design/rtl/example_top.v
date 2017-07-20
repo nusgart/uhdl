@@ -66,7 +66,7 @@
 //*****************************************************************************
 `timescale 1ns/1ps
 
-(* X_CORE_INFO = "mig_v3_92_lpddr_s6, Coregen 14.2" , CORE_GENERATION_INFO = "lpddr_s6,mig_v3_92,{component_name=mig_32bit, C3_MEM_INTERFACE_TYPE=LPDDR, C3_CLK_PERIOD=5000, C3_MEMORY_PART=mt46h32m16xxxx-5, C3_MEMORY_DEVICE_WIDTH=16, C3_PA_SR=FULL, C3_OUTPUT_DRV=FULL, C3_PORT_CONFIG=Two 32-bit bi-directional and four 32-bit unidirectional ports, C3_MEM_ADDR_ORDER=ROW_BANK_COLUMN, C3_PORT_ENABLE=Port0_Port1_Port2_Port3_Port4_Port5, C3_INPUT_PIN_TERMINATION=EXTERN_TERM, C3_DATA_TERMINATION=25 Ohms, C3_CLKFBOUT_MULT_F=4, C3_CLKOUT_DIVIDE=2, C3_DEBUG_PORT=0, C3_INPUT_CLK_TYPE=Single-Ended, LANGUAGE=Verilog, SYNTHESIS_TOOL=Foundation_ISE, NO_OF_CONTROLLERS=1}" *)
+(* X_CORE_INFO = "mig_v3_92_lpddr_s6, Coregen 14.7" , CORE_GENERATION_INFO = "lpddr_s6,mig_v3_92,{component_name=mig_32bit, C3_MEM_INTERFACE_TYPE=LPDDR, C3_CLK_PERIOD=5000, C3_MEMORY_PART=mt46h32m16xxxx-5, C3_MEMORY_DEVICE_WIDTH=16, C3_PA_SR=FULL, C3_OUTPUT_DRV=FULL, C3_PORT_CONFIG=Two 32-bit bi-directional and four 32-bit unidirectional ports, C3_MEM_ADDR_ORDER=ROW_BANK_COLUMN, C3_PORT_ENABLE=Port0_Port1_Port2_Port3_Port4_Port5, C3_INPUT_PIN_TERMINATION=, C3_DATA_TERMINATION=25 Ohms, C3_CLKFBOUT_MULT_F=4, C3_CLKOUT_DIVIDE=2, C3_DEBUG_PORT=0, C3_INPUT_CLK_TYPE=Single-Ended, LANGUAGE=Verilog, SYNTHESIS_TOOL=Foundation_ISE, NO_OF_CONTROLLERS=1}" *)
 module example_top #
 (
    parameter C3_P0_MASK_SIZE           = 4,
