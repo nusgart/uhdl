@@ -326,6 +326,33 @@ NOTES -*- org -*-
 95_SPY4
 96_STAT
 
+* ALUC4 mods
+
+   always @* begin
+      case ({alusub, aluadd}) 
+	2'b00: begin
+	   aluf = {ir[3], ir[4], ~ir[6], ~ir[5]};
+	   alumode = ~ir[7];
+	   cin0 = ir[2];
+	end
+	2'b01: begin 
+	   aluf = {1'b1, 1'b0, 1'b0, 1'b1};
+	   alumode = 1'b0;
+	   cin0 = 1'b0; 
+	end
+	2'b10: begin 
+	   aluf = {1'b0, 1'b1, 1'b1, 1'b0};
+	   alumode = 1'b0;
+	   cin0 = ~irjump;
+	end
+	2'b11: begin 
+	   aluf = {1'b1, 1'b1, 1'b1, 1'b1};
+	   alumode = 1'b1;
+	   cin0 = 1'b1;
+	end
+      endcase
+   end
+
 * Command reference
 
 make sure ftdi_sio is unloaded before hooking up chipscope, otherwise
