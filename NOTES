@@ -7,18 +7,18 @@ NOTES -*- org -*-
 ** TODO ALU0 (ALU0); ALU1 (ALU1)
 ** TODO ALU CARRY AND FUNCTION (ALUC4)
 ** TODO A MEMORY LEFT (AMEM0); A MEMORY RIGHT (AMEM1)
-** TODO A&M PARITY (APAR)						 :NA:
-** TODO BUS INTERFACE CABLES (BCPINS)					 :NA:
-** TODO BUSINT CABLE TERMINATION (BCTERM)				 :NA:
-** TODO BYPASS CAPACITORS (CAPS)					 :NA:
-** TODO CLOCK DISTRIBUTION (CLOCKD)					 :NA:
+** TODO A&M PARITY (APAR)                                                :NA:
+** TODO BUS INTERFACE CABLES (BCPINS)                                    :NA:
+** TODO BUSINT CABLE TERMINATION (BCTERM)                                :NA:
+** TODO BYPASS CAPACITORS (CAPS)                                         :NA:
+** TODO CLOCK DISTRIBUTION (CLOCKD)                                      :NA:
 ** TODO PC, SPC CONTROL (CONTRL)
-** TODO CONNECTOR PINS (CPINS)						 :NA:
+** TODO CONNECTOR PINS (CPINS)                                           :NA:
 ** TODO DISPATCH RAM (DRAM0); DISPATCH RAM (DRAM1); DISPATCH RAM (DRAM2)
 ** TODO DISPATCH CONTROL (DSPCTL)
 ** TODO FLAGS, CONDITIONALS (FLAG)
 ** TODO INST. MODIFY OR (IOR)
-** TODO IR PARITY (IPAR)						 :NA:
+** TODO IR PARITY (IPAR)                                                 :NA:
 ** TODO INSTRUCTION REGISTER (IREG)
 ** TODO INSTRUCTION WRITE REGISTER (IWR)
 ** TODO L REGISTER (L)
@@ -40,13 +40,13 @@ NOTES -*- org -*-
 ** TODO PDL INDEX AND POINTER (PDLPTR)
 ** TODO PDL BUFFER LATCH (PLATCH)
 ** TODO Q REGISTER (Q)
-** TODO Q REGISTER CONTROL (QCTL)					 :NA:
+** TODO Q REGISTER CONTROL (QCTL)                                        :NA:
 ** TODO SHIFTER RIGHT (SHIFT0); SHIFTER LEFT (SHIFT1)
 ** TODO SHIFT/MASK CONTROL (SMCTL)
 ** TODO SOURCE, DEST, OP DECODE (SOURCE)
 ** TODO SPC MEMORY AND POINTER (SPC)
 ** TODO SPC MEMORY LATCH (SPCLCH)
-** TODO SPC MEMORY PARITY (SPCPAR)					 :NA:
+** TODO SPC MEMORY PARITY (SPCPAR)                                       :NA:
 ** TODO SPC WRITE DATA SEL (SPCW)
 ** TODO PDP11 EXAMINE (IR, OB) (SPY1); PDP11 EXAMINE (A, M, FLAG2) (SPY2)
 ** TODO PARITY ERROR TRAP (TRAP)
@@ -60,14 +60,14 @@ NOTES -*- org -*-
 
 * TODO IRAML [0/16]
 
-** TODO MASTER CLOCK (CLOCK1)						 :NA:
-** TODO MASTER CLOCK (CLOCK2)						 :NA:
+** TODO MASTER CLOCK (CLOCK1)                                            :NA:
+** TODO MASTER CLOCK (CLOCK2)                                            :NA:
 ** TODO PDP11 DEBUG INSTRUCTION (DEBUG)
-** TODO BYPASS CAPACITORS (ICAPS)					 :NA:
+** TODO BYPASS CAPACITORS (ICAPS)                                        :NA:
 ** TODO I RAM CONTROL (ICTL)
-** TODO IWR PARITY (IWRPAR)						 :NA:
-** TODO BUS INTERFACE CABLES (MBCPIN) 					 :NA:
-** TODO CONNECTOR PINS (MCPINS) 					 :NA:
+** TODO IWR PARITY (IWRPAR)                                              :NA:
+** TODO BUS INTERFACE CABLES (MBCPIN)                                    :NA:
+** TODO CONNECTOR PINS (MCPINS)                                          :NA:
 ** TODO OVERLORD (OLORD1)
 ** TODO OVERLORD (OLORD2)
 ** TODO OLD PC SAVE SHIFTER (OPCS)
@@ -125,48 +125,48 @@ NOTES -*- org -*-
 ** TODO KEYBOARD, MOUSE CLOCK SYNC (IOBCLK)
 ** TODO KEYBOARD & MOUSE CSR (IOBCSR)
 ** TODO UNIBUS INTERRUPT (IOBINT)
-** TODO (IOBJPS)						    :MISSING:
+** TODO (IOBJPS)                                                    :MISSING:
 ** TODO KEYBOARD CONTROL (IOBKBD)
 ** TODO MOUSE 2 (IOBMS2)
 ** TODO MOUSE INTERFACE (IOBMSE)
 ** TODO SERIAL COMMUNICATIONS (IOBSER)
 ** TODO UNIBUS TRANSCEIVER (IOBXCV)
-** TODO (LMDATP)						    :MISSING:
-** TODO (LMDETC)						    :MISSING:
-** TODO (LMLNDR)						    :MISSING:
-** TODO (LMMODU)						    :MISSING:
-** TODO (LMMYNM)						    :MISSING:
-** TODO (LMRBUF)						    :MISSING:
-** TODO (LMRCLK)						    :MISSING:
-** TODO (LMRCTL)						    :MISSING:
-** TODO (LMTBFCT)						    :MISSING:
-** TODO (LMTBUF)						    :MISSING:
-** TODO (LMTCLK)						    :MISSING:
-** TODO (LMTURN)						    :MISSING:
-** TODO (LMUCON)						    :MISSING:
+** TODO (LMDATP)                                                    :MISSING:
+** TODO (LMDETC)                                                    :MISSING:
+** TODO (LMLNDR)                                                    :MISSING:
+** TODO (LMMODU)                                                    :MISSING:
+** TODO (LMMYNM)                                                    :MISSING:
+** TODO (LMRBUF)                                                    :MISSING:
+** TODO (LMRCLK)                                                    :MISSING:
+** TODO (LMRCTL)                                                    :MISSING:
+** TODO (LMTBFCT)                                                   :MISSING:
+** TODO (LMTBUF)                                                    :MISSING:
+** TODO (LMTCLK)                                                    :MISSING:
+** TODO (LMTURN)                                                    :MISSING:
+** TODO (LMUCON)                                                    :MISSING:
 
 * TODO TV4B [0/25]
 
-** TODO (CAPS)							    :MISSING:
-** TODO (COLOR)							    :MISSING:
+** TODO (CAPS)                                                      :MISSING:
+** TODO (COLOR)                                                     :MISSING:
 ** TODO MECL CLOCK (ECLCLK)
 ** TODO MECL SIP TERMINATORS (ECLSIP)
 ** TODO MECL VIDEO (ECLVID)
 ** TODO CUSTOMIZE FOR 4 BIT VERSION (GEN4B)
-** TODO (RAMA)							    :MISSING:
+** TODO (RAMA)                                                      :MISSING:
 ** TODO RAM ADDRESS LOGIC (RAMADR)
-** TODO (RAMB)							    :MISSING:
+** TODO (RAMB)                                                      :MISSING:
 ** TODO ADDRESS BUFFERS (RAMBUF)
-** TODO (RAMC)							    :MISSING:
+** TODO (RAMC)                                                      :MISSING:
 ** TODO RAM CAS/RAS (RAMCAS)
-** TODO (RAMD)							    :MISSING:
+** TODO (RAMD)                                                      :MISSING:
 ** TODO RAM OUTPUT REGISTERS (RAMREG)
 ** TODO 64 BIT SHIFT REGISTER (RAMSHF)
 ** TODO SYNC PROGRAM ADDRESS (SYNADR)
 ** TODO CLOCK GENERATOR (SYNCLK)
 ** TODO SYNC PROGRAM RAM (SYNRAM)
 ** TODO SYNC PROGRAM REG & REPEAT (SYNREG)
-** TODO (TVINC)							    :MISSING:
+** TODO (TVINC)                                                     :MISSING:
 ** TODO TV MA (TVMA)
 ** TODO XBUS ADDRESS LOGIC (XBADR)
 ** TODO XBUS CONTROL (XBCTL)
@@ -208,7 +208,7 @@ NOTES -*- org -*-
 
 ** TODO UNIBUS OUTPUT (LMDATP)
 ** TODO DETECTOR (LMDETC)
-** TODO (LMLNDR)						    :MISSING:
+** TODO (LMLNDR)                                                    :MISSING:
 ** TODO SERIAL MODULATOR (LMMODU)
 ** TODO FIND MSGS DESTINED FOR ME (LMMYNM)
 ** TODO RECEIVER BUFFER (LMRBUF)
@@ -222,9 +222,9 @@ NOTES -*- org -*-
 ** TODO UNIBUS ADDRESS (QADADR)
 ** TODO CONN TO TRANSCEIVER (QADJPS)
 ** TODO INTERVAL TIMER (QADTIM)
-** TODO (QUBBPL)						    :MISSING:
-** TODO (QUBINT)						    :MISSING:
-** TODO (QUBXCV)						    :MISSING:
+** TODO (QUBBPL)                                                    :MISSING:
+** TODO (QUBINT)                                                    :MISSING:
+** TODO (QUBXCV)                                                    :MISSING:
 
 * Chapters 2
 
@@ -330,26 +330,26 @@ NOTES -*- org -*-
 
    always @* begin
       case ({alusub, aluadd}) 
-	2'b00: begin
-	   aluf = {ir[3], ir[4], ~ir[6], ~ir[5]};
-	   alumode = ~ir[7];
-	   cin0 = ir[2];
-	end
-	2'b01: begin 
-	   aluf = {1'b1, 1'b0, 1'b0, 1'b1};
-	   alumode = 1'b0;
-	   cin0 = 1'b0; 
-	end
-	2'b10: begin 
-	   aluf = {1'b0, 1'b1, 1'b1, 1'b0};
-	   alumode = 1'b0;
-	   cin0 = ~irjump;
-	end
-	2'b11: begin 
-	   aluf = {1'b1, 1'b1, 1'b1, 1'b1};
-	   alumode = 1'b1;
-	   cin0 = 1'b1;
-	end
+        2'b00: begin
+           aluf = {ir[3], ir[4], ~ir[6], ~ir[5]};
+           alumode = ~ir[7];
+           cin0 = ir[2];
+        end
+        2'b01: begin 
+           aluf = {1'b1, 1'b0, 1'b0, 1'b1};
+           alumode = 1'b0;
+           cin0 = 1'b0; 
+        end
+        2'b10: begin 
+           aluf = {1'b0, 1'b1, 1'b1, 1'b0};
+           alumode = 1'b0;
+           cin0 = ~irjump;
+        end
+        2'b11: begin 
+           aluf = {1'b1, 1'b1, 1'b1, 1'b1};
+           alumode = 1'b1;
+           cin0 = 1'b1;
+        end
       endcase
    end
 
@@ -383,3 +383,721 @@ fpgaprog/fpgaprog -r  -v -b fpgaprog/bscan_spi_lx45_csg324.bit -f ise/top.bit
 
 fpgaprog/fpgaprog -v -f ise/top_niox.bit
 fpgaprog/fpgaprog -v -f ise/top.bit
+
+* caddr.v old comments
+
+The original set of clocks:
+
+  +++++++++++++++++++++++++++                    +--------
+  |                         |                    |
+  |                         |                    |  tpclk
+--+                         +--------------------+
+
+                                   ++++++++
+                                   |      |
+                                   |      |         tpwp
+-----------------------------------+      +---------------
+
+  ^                         ^
+  |                         |
+  |                      latch A&M memory output
+ latch IR
+
+===============================================================
+
+New states & clock:
+
+ ++++  ++++  ++++  ++++  ++++  ++++  ++++  ++++  ++++  ++++
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+-+  +--+  +--+  +--+  +--+  +--+  +--+  +--+  +--+  +--+  +--
+
+ +++++++
+ |     |
+-+     +---------------
+  decode
+       +++++++
+       |     |
+-------+     +---------------
+        read
+             +++++++
+             |     |
+-------------+     +---------------
+              alu
+                   +++++++
+                   |     |
+-------------------+     +---------------
+                    write
+                         +++++++
+                         |     |
+-------------------------+     +---------------
+                          mmu (optional)
+                               +++++++
+                               |     |
+-------------------------------+     +---------------
+                                fetch
+boot
+reset
+
+===================================
+
+decode
+     start a&m read
+    wadr <- ir[]
+    aadr = ir[41:32]
+     madr = ir[30:26]
+     early vmem0 read
+
+read
+     amem & mmem valid by end of cycle
+    74181 propagation
+     pdl read (optional)
+     early vmem1 read
+
+alu
+    74181 propagation
+
+write
+     a&m write
+    normal vmem0 read
+     spc read
+     spc write (optional)
+     pdl write (optional)
+     dispatch write (optional)
+
+mmu
+    normal vmem1 read (optional)
+
+fetch
+    update pc
+    ir <- i (or i|iob)
+     update spcptr
+     update pdlptr
+
+* spy_port.v old comments
+
+ serial spy port
+
+   input [15:0] spy_in;
+   output [15:0] spy_out;
+   input       dbread;
+   input       dbwrite;
+   input [4:0]         eadr;
+
+8 bits/byte, 115200 8N1
+
+top 4 bits are op, bottom 4 bits are data
+
+76543210
+oooodddd
+
+op
+
+0
+1
+2
+3 set data-3
+4 set data-2
+5 set data-1
+6 set data-0
+7
+8 read eadr, eadr 0x00-0x0f
+9 read eadr, eadr 0x10-0x1f
+a write eadr, eadr 0x00-0x0f
+b write eadr, eadr 0x10-0x1f
+c
+d
+e
+f
+
+ sending 0x8x returns 4 characters, result of reg "x", same format as set
+ sending 0x9x returns 4 characters, result of reg "x", same format as set
+ sending 0xax writes data buffer to reg "x" 
+ sending 0xbx writes data buffer to reg "x" 
+ sending 0x3x sets high nibble of data buffer
+ sending 0x4x sets medh nibble of data buffer
+ sending 0x5x sets medl nibble of data buffer
+ sending 0x6x sets low nibble of data buffer
+
+* xbus_disk.v old comments
+
+17377774
+17377770 disk
+
+       disk controller registers:
+         0 read status
+         1 read ma
+         2 read da
+         3 read ecc
+         4 load cmd
+         5 load clp (command list pointer)
+         6 load da (disk address)
+         7 start
+
+       Commands (cmd reg)
+         0000 read
+         0010 read compare
+         0011 write
+         0002 read all
+         0013 write all
+         0004 seek
+         0005 at ease
+         1005 recalibreate
+         0405 fault clear
+         0006 offset clear
+         0016 stop,reset
+
+       Command bits
+         0
+         1 cmd
+         2
+
+         3 cmd to memory
+         4 servo offset plus
+         5 servo offset
+
+         6 data strobe early
+         7 data strobe late
+         8 fault clear
+
+         9 recalibrate
+         10 attn intr enb
+         11 done intr enb
+
+       Status bits (status reg)
+         0 active-
+         1 any attention
+         2 sel unit attention
+         3 intr
+         4 multiple select
+         5 no select
+         6 sel unit fault
+         7 sel unit read only
+         8 on cyl sync-
+         9 sel unit on line-
+         10 sel unit seek error
+         11 timeout error
+         12 start block error
+         13 stopped by error
+         14 overrun
+         15 ecc.soft
+
+         16 ecc.hard
+         17 header ecc err
+         18 header compare err
+         19 mem parity err
+         20 nmx error
+         21 ccw cyc
+         22 read comp diff
+         23 internal parity err
+         
+         24-31 block.ctr
+
+       Disk address (da reg)
+         31 n/c
+         30 unit2
+         29 unit1
+         28 unit0
+
+         27 cyl11
+         ...
+         16 cyl0         
+         
+         15 head7
+         ...
+         8  head0
+
+         7  block7
+         ...
+         0  block0
+
+         ---
+
+         clp (command list pointer) points to list of CCW's
+         Each CCW is phy address to write block
+
+         clp register (22 bits)
+         [21:16][15:0]
+         fixed  counts up
+
+         clp address is used to read in new ccw
+         ccw's are read (up to 65535)
+
+         ccw is used to produce dma address
+         dma address comes from ccw + 8 bit counter
+
+         ccw
+         [21:1][1]
+          physr  |
+         addr   0 = last ccw, 1 = more ccw's
+
+         ccw   counter
+         [21:8][7:0]
+
+         ---
+
+         read ma register
+          t0  t1 CLP
+         [23][22][21:0]
+            |   |
+            |   type 1 (show how controller is strapped; i.e. what type of
+            type 0      disk drive)
+
+           (trident is type 0)
+
+
+ -----------------------------------------------------------------
+
+ we look like a Trident T-300:
+   cyls = 815
+   heads/unit = 19
+   blocks/track = 17
+
+ 17*19=323
+
+ 323 = 320 + 3 = 16 * 10 * 2 + 3
+
+ blocks are 256 * 4 = 1024 bytes
+
+ block# = (cyl * blocks/track * heads/unit) +
+ (head * blocks/track) + block
+
+    
+ Commands implemented
+ 
+ disk_cmd
+       0000 read
+       0010 read compare
+       0011 write
+       1005 recalibreate
+       0405 fault clear
+ 
+        disk_da
+        3322222222221111111111
+        10987654321098765432109876543210
+         uuucccccccccccchhhhhhhhbbbbbbbb
+        unit            head
+            cylinder            block
+ 
+ read
+       process ccw's
+         dma word from ccw address (disk_clp)
+          dma address = { word[31:8], 8'b0 }
+ 
+         read block
+            (blocks are 256 * 4 = 1024 bytes)
+             block# = (cyl * blocks/track * heads/unit) +
+                       (head * blocks/track) + block
+
+            dma 256 words to memory
+ 
+         increment da, respecting blocks/track & heads/unit
+          if word[0]==0, stop
+          increment disk_clp
+          repeat
+
+       if disk_cmd[11]
+          assert interrupt
+ 
+ read compare
+       same as read but don't dma write; dma read instead  
+ 
+ write
+       process ccw's
+         dma word from ccw address (disk_clp)
+          dma address = { word[31:8], 8'b0 }
+ 
+         write block
+            (blocks are 256 * 4 = 1024 bytes)
+             block# = (cyl * blocks/track * heads/unit) +
+                       (head * blocks/tracks) + block
+
+            dma 256 words from memory
+ 
+         increment da, respecting blocks/track & heads/unit
+          if word[0]==0, stop
+          increment disk_clp
+          repeat
+
+       if disk_cmd[11]
+          assert interrupt
+
+ recalibreate
+       does nothing
+ 
+ fault clear
+       does nothing
+ 
+ -----------------------------------------------------------------
+
+ states
+ 
+ s_idle
+       if start
+               if disk_cmd == 0000 goto s_read_ccw
+               if disk_cmd == 0010 goto s_read_ccw
+               if disk_cmd == 0011 goto s_read_ccw
+               if disk_cmd == 1005 goto s_busy
+               if disk_cmd == 0405 goto s_busy
+               else goto s_idle
+
+ s_busy
+       goto s_idle
+ 
+ s_read_ccw 
+       req_out = 1
+       addrout = disk_clp
+ 
+       if (grantin)
+               goto s_read_ccw2
+
+ s_read_ccw2 
+       disk_ccw <= datain
+ 
+* file header / conventions
+
+// @FILE@.v --- @SHORT-DESC@
+//
+// @DESCRIPTION@
+//
+// History:
+//
+//   (29-Jul-2017 AMS) Some change.
+
+
+You are free to name your modules as you please, provided that the following conditions are met:
+
+    The final top level modules should be the chip name with _top appended, e.g. unet_top.v .
+
+    When instantiating a module the instance name should be either:
+
+        - identical to the module name if the module name adequately describes the purpose. e.g. sram_output_fifo sram_output_fifo (...);
+
+        - the module name followed by a descriptive subscript. e.g. fifo fifo_sram_output (...);
+
+* Verilog coding guidelines =
+
+    Updated 16:36, 22 January 2007 (PST)
+    
+    This is a GUIDE for writing Verilog for synthesis. As such it is a list of
+    suggestions and recommendations, not rules. Some suggestions are very
+    subjective while others are almost mandatory - i.e. you should have a good
+    reason for not following them. 
+    
+    == Naming ==
+    
+    === Module/instance naming ===
+    
+    You are free to name your modules as you please, provided that the following conditions are met:
+    * The final top level modules should be the chip name with  <tt>_top</tt>  appended, e.g.  <tt>unet_top.v</tt> .
+    * When instantiating a module the instance name should be either:
+    ** identical to the module name if the module name adequately describes the purpose. e.g.  <tt>sram_output_fifo sram_output_fifo (...);</tt> 
+    ** the module name followed by a descriptive subscript. e.g.  <tt>fifo fifo_sram_output (...);</tt> 
+    
+    === Signal naming ===
+    
+    * All signals are lowercase alpha, numeric and underscore only. (Exceptions permitted for external pins and auto-generated code.)
+    * Avoid active low signals in the core.  If you must have them then append  <tt>_b</tt>  to the signal name. e.g.  <tt>active_low_b</tt> 
+    <blockquote>
+     (Active low signals at the pins are fine but invert them in the core before using them.) <br />
+    </blockquote>
+    * Buses are numbered high order to low order:  <tt>bus[31:0]</tt> 
+    * Array locations are numbered low to high. e.g. 2048x32 bit RAM:
+    <pre> reg [31:0] mem_array [0:2047];
+    </pre>
+    *  '''Don't''' try to indicate the direction of the signal in the name: e.g.  <tt>my_signal_in</tt>  or  <tt>my_signal_i</tt>  is  '''bad''' . Just use  <tt>my_signal</tt> . This makes it much easier to hook up blocks.
+    *  '''Do''' use the same name for the signal at all levels of hierarchy.
+    *  '''Do''' indicate the direction of a signal as a comment in the signal list:
+    <pre> my_module (
+         my_signal,  //I: Input from other_module
+     );
+    </pre>
+    
+    === Constant naming ===
+    
+    * Use capitals to identify constants: e.g.  <tt>DEBUG</tt> ,  <tt>IDLE</tt> 
+    
+    == Indenting ==
+    
+    * Use three spaces per indentation level. Expand tabs to spaces to prevent indentation changing based upon editor settings.
+    <blockquote>
+     Vim users can place the following modeline near the  ''top'' or  ''bottom'' of each file: <br />
+    </blockquote>
+    <pre> // vim:set shiftwidth=3 softtabstop=3 expandtab:
+    </pre>
+    <blockquote>
+     Emacs users <br />
+    </blockquote>
+    * Indent begin/end statements as follows:
+    <pre> if (this) begin
+         do something;
+     end
+     else begin
+         do something else;
+     end
+    </pre>
+    
+    == Commenting ==
+    
+    * Comment your code. Someone will be coming back to this code in 6 months time, and that person will probably be  '''you''' .
+    * When entering multi-line comments, try to use the "/*..*/" commenting rather than putting "//" in front of every line.  It makes editing much easier.
+    * Add the following header to the top of all source code written by us (change the details as necessary):
+    <pre> ///////////////////////////////////////////////////////////////////////////////
+     // vim:set shiftwidth=3 softtabstop=3 expandtab:
+     // $Id: reg_file.v 916 2006-04-20 23:23:25Z bob $
+     //
+     // Module: reg_file.v
+     // Project: CPCI (PCI Control FPGA)
+     // Description: Register file for access via PCI
+     //
+     //
+     // Change history: 8/18/04 - Implemented DWORD0 (Revision/Version ID)
+     //                 10/29/04 - Made the RESET signal last longer than
+     //                 a single clock
+     //                 01/08/05 - dma_rd_mac is now an input as round-robin
+     //                 lookup is used
+     //                 01/13/05 - split dma_intr into read and write sigs
+     //
+     ///////////////////////////////////////////////////////////////////////////////
+    </pre>
+     ''Note:'' We probably need to add copyright info to the header as well.
+    
+    == Module declaration/instantiation ==
+    
+    * Each module should be defined in a separate file.
+    * Use Verilog 2001 ANSI-C style port declarations:
+    <pre> my_module (
+        input signal_A,
+        input signal_B,
+     
+        output reg signal_C,
+     
+        input clk
+     );
+    </pre>
+    * Declare inputs and outputs one per line. It makes  <tt>grep</tt> 'ing so much easier. If I want to find who drives a signal in code written this way, I can grep for " <tt>output.*signal</tt> ". It also gives you a handy place to put a comment.
+    * Group signals logically by their function (e.g. keep DDR signals together). Place the 'miscellaneous' signals at the end of the signal list. This will include  <tt>clk</tt> ,  <tt>reset</tt>  and anything else that generally has a high fanout and goes between many modules.
+    <pre> my_module (
+         signals_to_from_block_A, // description
+     
+         signals_to_from_block_B, // description
+     
+         input reset,
+         input clk
+     );
+    </pre>
+    * Instantiate signals one per line whether as inputs or when instantiating a block&mdash;it makes it easier on the scripts!
+    *  '''Don't''' instantiate modules using positional arguments.  '''Always''' use the dot form:
+    <pre> my_module my_module(
+         .signal (signal),
+         .a_bus  (a_bus),
+         ...
+     );
+    </pre>
+    <blockquote>
+     (There are some utilities for building instantiations of modules that work if the signal names are consistent between levels.) <br />
+    </blockquote>
+    * Use  '''explicit''' in-line parameter redefinition when overriding parameters:
+    <pre> my_module my_module  '''#(.WIDTH(32))''' (
+         ...
+     );
+    </pre>
+    
+    == Clocking ==
+    
+    * Core clock signal for a module is ' <tt>clk</tt> '. 
+    * All other clocks should have a description of the clock and the frequency embedded&mdash;it makes life easier for the synthesis person. e.g.  <tt>clk_ddr_400</tt> 
+    * Keep to one clock per module if possible. (It's easier to understand and it will synthesize much faster.)
+    
+    === Synchronization/clock domain crossing ===
+    
+    * If you have signals that need to be synchronized (cross asynchronous clock boundaries) then name the synch flops as  <tt>synch_&lt;something&gt;</tt> . e.g.
+    <pre> reg synch_stage_1, synch_stage_2;
+    </pre>
+    <blockquote>
+     These can be given special treatment for simulation, and you can apply automatic checks to ensure all synch domains have synch flops. <br />
+     Corollary:  '''Don't''' use ' <tt>synch</tt> ' in any other flop names. <br />
+    </blockquote>
+    * Avoid mixing synchronization/domain crossing code with general logic. Clearly delineate the code in a large module with other logic or place in a separate module. 
+    
+    * The statements " <tt>input</tt> " and " <tt>output</tt> " will default their arguments to wires, so there is no need to put a wire statement in the code for anything that is an input or an output.  Other wires (hookup wires) need to be declared only if they are multi-bit, although some people like to declare the single-bit ones as well.
+    
+    == Reset ==
+    
+    Reset signal is:
+    * called ' <tt>reset</tt> ' 
+    * active high within the core
+    * synchronous
+    
+    == Assignment statments ==
+    
+    * Sequential elements  '''MUST''' only have non-blocking assignments (<code><=</code>)
+    * Combinatorial should only have blocking assignments (<code>=</code>)
+    * Don't mix blocking and non-blocking assignments within a code block.
+    
+    == Parameters, defines and constants ==
+    
+    * Do parameterize modules if appropriate and if readability is not degraded.
+    * Propagate parameters through the hierarchy:
+    <pre> #(parameter ADDR_WIDTH = 10,
+       parameter DATA_WIDTH = 32)
+     ( input [DATA_WIDTH-1:0] data,
+       input [ADDR_WIDTH-1:0] addr,
+       ...
+     );
+     ...
+     /* instance using the same parameters */
+     b_module b_module_0
+     #(.ADDR_WIDTH(ADDR_WIDTH),
+       .DATA_WIDTH(DATA_WIDTH))
+     ( .data(data)...);
+    </pre>
+    * Place all global  <tt>`define</tt> s in external defines files that are included in the project.
+    * Do not declare  <tt>`define</tt>  statements in individual modules.
+    * Use  <tt>localparam</tt>  for constants that should not be redefined from outside of the module. E.g. the states for a state machine:
+    <pre> localparam IDLE    = 3'd0; // Oven idle
+     localparam RAMP_UP = 3'd1; // Oven temperature ramping up
+     localparam HOLD    = 3'd2; // Hold oven at bake temperature
+     ...
+    </pre>
+    
+    == Debugging & assertions ==
+    
+    * Group your assertions at the end of the module, surrounded by  <tt>synthesis translate_off</tt>  and  <tt>synthesis translate_on</tt> :
+    <pre> ... // User code here
+     
+     // synthesis translate_off
+     always @(posedge clk)
+        // Verify that the length never exceeds 10
+        if (len > 10)
+           $display($time, " ERROR: Length exceeds 10 in %m");
+     // synthesis translate_on
+     
+     endmodule
+    </pre>
+    
+    == State machines ==
+    
+    * Simple state machines: feel free to combine flops with next-state combinational logic
+    * Long/complex state machines: separate flops from combinational/next state logic. e.g.
+    <pre> always @(posedge clk)
+     begin
+         state <= state_nxt;
+         addr <= addr_nxt;
+     end
+     
+     always @*
+     begin
+         // Default to current state
+         state_nxt = state;
+         addr_nxt = addr;
+     
+         if (reset)
+         begin
+             state_nxt = START_STATE;
+             addr_nxt = 'h0;
+         end
+         else
+         begin
+             case (state)
+                 START_STATE: begin
+                     if (ready)
+                         state_nxt = GO_STATE;
+                 end
+                 ...
+             endcase
+         end
+     end
+    </pre>
+    * Assign default values at the start of conditional statements: this tends to shorten the code (more readable) and helps to ensure that everything always gets a value.
+    <pre> always @* begin
+        a = default_a;
+        b = default_b;
+     
+        case (expr)
+           state_1 : ... // if a should be default_a then we dont put it here.
+           state_2 : ...
+        endcase
+    </pre>
+    
+    == General Verilog coding ==
+    
+    * Synthesizable logic goes in  ''leaf'' modules.
+    ** As much as possible, try to keep all synthesizable code in leaf modules, and use hierarchical modules  '''only''' to hook things up.  A single "!" at core can wreak havoc.  
+    * Use @* for the sensitivity list for combinational logic always blocks: 
+    <pre> always @*
+        a = b + c;
+    </pre>
+    * Don't try to write ultra-slick Verilog&mdash;it makes it harder to read.
+    * Avoid for loops&mdash;they are usually difficult to understand.  ''Sometimes'' they are really useful: e.g. unrolling bit expressions that involve other bits.
+    *  = '''generate''' =  blocks are encouraged for generating instances/blocks of code:
+    <pre> generate
+        genvar i;
+        for (i = 0; i < 4; i = i + 1) begin: par_gen
+           parity8 parity(
+              .data(wr_data[(i * 8) +: 8]),
+              .parity(wr_par[i])
+           );
+        end
+     endgenerate
+    </pre>
+    * Don't use the  <tt>`include</tt>  directive in synthesizable code. This is never necessary and introduces synthesis dependencies that are difficult to track.
+    ** If an include absolutely cannot be avoided then surround included file with  <tt>`ifdef</tt> ,  <tt>`define</tt>  and  <tt>`endif</tt>  directives.
+    * No  '''tri-states''' in the core!  Only tri-state I/Os! 
+    * Use small-ish modules&mdash;try to keep modules small and readable.
+    
+    == Synthesis ==
+    
+    *  '''NO LATCHES!''' Check the results of synthesis and ensure you do not have any inferred latches&mdash;it usually means you missed something in your coding.
+    *  '''No''' asynchronous logic/combinatorial feedback loops/self timed logic.
+    * Try to flop all inputs and outputs to a block&mdash;it makes it much easier to set timing constraints. This means you will have to think about how modules are grouped for synthesis.  It's fine not to have flops in a module if that module is going to be synthesized with the modules that do have the relevant source/sink flops.
+    * All non data-path flops must have a reset.
+    * All data-path flops must reset within 5 clocks. Usually this means that you only need to reset the input pipeline flops, and subsequent flops will reset within the specified number of clocks.  If you're not sure then reset them explicitly.
+    * If you do have some flops with reset and some without, then don't put them both in the same block of code:
+    <blockquote>
+     BAD: <br />
+    </blockquote>
+    <pre> always @(posedge clk) 
+         if (reset) 
+             stage_1 <= 'h0;
+         else begin
+             stage_1 <= input;
+             stage_2 <= stage_1;
+         end
+    </pre>
+    <blockquote>
+     This causes reset to be used as an enable on stage_2. Move stage_2 to a separate block or take it out of the if-then-else. <br />
+     GOOD: <br />
+    </blockquote>
+    <pre> always @(posedge clk) 
+        if (reset) 
+           stage_1 <= 'h0;
+        else
+           stage_1 <= input;
+     
+     always @(posedge clk)
+        stage_2 <= stage_1;
+    </pre>
+    * Specify  '''ALL''' cases in a case statement (use default if you don't need them all).
+    <blockquote>
+     Bear in mind that XST will prioritize in top-to-bottom order. <br />
+    </blockquote>
+    *  '''Don't''' use  <tt>casex</tt>  and  <tt>casey</tt> 
+    * Do  '''not'' use pragmas for case:  <tt>parallel_case</tt>   <tt>full_case</tt> 
+    * Keep it simple. If you cannot envisage the final synthesized logic for your code then XST will probably have a hard time.
+    * Don't mix hand-instantiated circuitry with RTL
+    
+    == Acknowledgements, further reading, and more ==
+    
+    These guidelines are based on a document written by Greg Watson. 
+    
+    Many of these recommendations are courtesy of Paul Zimmer.
+    
+    For further reading on Verilog styles, synthesis techniques, useful
+    scripts, etc I recommend the following papers:
+    
+    * "RTL Implementation Guide", Jack Marshall, Tera Systems: http://www.terasystems.com/products/Marshall_RTL_Guide.pdf
+    * Cliff Cummings' papers at: http://www.sunburst-design.com/papers/
+    * Steve Golson's papers at: http://www.trilobyte.com/papers/
+    
+    Many of the above papers appeared at SNUG:
+    http://www.snug-universal.org/papers/papers.htm
