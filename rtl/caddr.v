@@ -443,7 +443,6 @@ module caddr(
    assign need_mmu_state = memprepare | wmap | srcmap;
 
    wire mcr_hold;
-`define use_ucode_ram
 `ifdef use_ucode_ram
    assign mcr_hold = 0;
 `else
