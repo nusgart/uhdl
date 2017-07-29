@@ -17,7 +17,6 @@ module xbus_unibus(
    input [31:0] datain; // Request data.                 
    input req;           // Request.                      
    input write;         // Request read#/write.          
-   input write;
    input timeout;
 
    output [31:0] dataout;
