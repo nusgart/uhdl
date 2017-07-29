@@ -753,6 +753,64 @@ f
  s_read_ccw2 
        disk_ccw <= datain
  
+* busint.v old comments
+
+ caddr bus interface
+ interface to peripherals
+ does basic arbitration; allows disk to be a bus master
+
+ 22 bit address space
+   00000000-
+   16777777  dram
+
+   17000000-
+   17377777  xbus
+ 
+   17400000-
+   17777777  unibus
+
+ ------------------------
+
+ xbus:
+   17000000- tv frame buffer
+   17051777
+
+   17200000  tv color frame buffer
+
+   17377760 tv
+   17377770 disk
+
+   17740000 unknown
+
+   17772000 i/o board
+   17773000 unibus
+
+   17777700 unknown
+
+ unibus:
+   17400000  color?
+   17760000  tv
+
+   17764000-
+   17764077  i/o board
+   17764140 chaos
+
+   17766000-
+   17766036  spy
+
+   17766012 mode register
+
+   17766040 unibus int status
+   17766044 unibus err status
+
+   17766100-
+   17766110  two machine lashup
+
+   17766140-
+   17766176  unibus map
+ 
+ ------------------------
+
 * file header / conventions
 
 // @FILE@.v --- @SHORT-DESC@
