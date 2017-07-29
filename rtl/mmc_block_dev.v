@@ -1,9 +1,5 @@
 // mmc_block_dev.v --- generic block device interface
 
-`ifdef SIMULATION
- `define debug
-`endif
-
 module mmc_block_dev(clk, mmcclk, reset,
                      bd_cmd, bd_start, bd_bsy, bd_rdy, bd_err, bd_addr,
                      bd_data_in, bd_data_out, bd_rd, bd_wr, bd_iordy, bd_state,

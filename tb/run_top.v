@@ -1,9 +1,4 @@
 `define sim_ns
-
-`define debug
-`define DBG_DLY #0
-`define SIMULATION
-
 `define mmc_model
 
 `ifdef sim_ns
@@ -11,6 +6,7 @@
 `endif
 
 `ifdef sim_ps
+`timescale 1ps / 1ps
 `endif
 
 module run_top;

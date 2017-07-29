@@ -1,10 +1,5 @@
 // spy_port.v --- serial port spy support
 
-`ifdef SIMULATION
- `define sim_time
- `define debug
-`endif
-
 module spy_port(sysclk, clk, reset, rs232_rxd, rs232_txd,
                 spy_in, spy_out, dbread, dbwrite, eadr);
 

@@ -9,28 +9,8 @@
 //      VRAM CPU r/w, 32 bits
 //
 
-`ifdef ISE
- `define lx45_real_sdram
- `undef lx45_fake_sdram
-`endif
-
-`ifdef SIMULATION
- `undef lx45_real_sdram
- `define lx45_fake_sdram
- `define debug
-`endif
-
 `define lx45_real_sdram
 `undef lx45_fake_sdram
-
-`ifdef FAKE_SDRAM
- `undef lx45_real_sdram
- `define lx45_fake_sdram
-`endif
-
-`ifdef debug
- `define debug_sdram
-`endif
 
 module lx45_ram_controller(
                            sysclk_in,

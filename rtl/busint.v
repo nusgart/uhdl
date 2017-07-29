@@ -4,10 +4,6 @@
 // disk to be bus master. See SYS:DOC;UNADDR TEXT for how addresses
 // are mapped.
 
-`ifdef SIMULATION
- `define debug
-`endif
-
 module busint(mclk, reset,
               addr, busin, busout, spyin, spyout, spyreg, spyrd, spywr,
               req, ack, write, load,

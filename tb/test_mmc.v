@@ -1,6 +1,3 @@
-`define debug
-`define SIMULATION
-
 `define use_vlog_mmc
 
 `timescale 1ns / 1ns

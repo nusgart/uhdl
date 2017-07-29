@@ -1,9 +1,5 @@
 // part_512x49prom.v --- 512x49 ROM
 
-`ifdef SIMULATION
- `define debug_patch_rom
-`endif
-
 module part_512x49prom(clk, addr, q);
 
    input clk;
