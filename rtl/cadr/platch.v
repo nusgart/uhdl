@@ -1,6 +1,6 @@
 // PLATCH
 //
-// TK	CADR	PDL BUFFER LATCH
+// TK CADR PDL BUFFER LATCH
 
 module PLATCH(pdl, pdlo);
 
@@ -9,7 +9,6 @@ module PLATCH(pdl, pdlo);
 
    ////////////////////////////////////////////////////////////////////////////////
 
-   // mux PDL
    assign pdl = pdlo;
 
 endmodule

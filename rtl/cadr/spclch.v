@@ -1,6 +1,6 @@
 // SPCLCH
 //
-// TK	CADR	SPC MEMORY LATCH
+// TK CADR SPC MEMORY LATCH
 
 module SPCLCH(spc, spco);
 
@@ -9,7 +9,6 @@ module SPCLCH(spc, spco);
 
    ////////////////////////////////////////////////////////////////////////////////
 
-   // mux SPC
    assign spc = spco;
 
 endmodule

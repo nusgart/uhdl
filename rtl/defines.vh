@@ -1,6 +1,5 @@
 `ifndef SIMULATION
-`define ISE
-//`define SIMULATION
+ `define ISE
 `endif
 
 `ifdef ISE

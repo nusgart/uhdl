@@ -1,6 +1,6 @@
 // OPCD
 //
-// TK		CADR	OPC, DC, ZERO DRIVE
+// TK CADR OPC, DC, ZERO DRIVE
 
 module OPCD(dcdrive, opcdrive, srcdc, srcopc, state_alu, state_write, state_mmu, state_fetch);
 
@@ -16,10 +16,7 @@ module OPCD(dcdrive, opcdrive, srcdc, srcopc, state_alu, state_write, state_mmu,
 
    ////////////////////////////////////////////////////////////////////////////////
 
-   assign dcdrive = srcdc &	// dispatch constant
-		    (state_alu || state_write || state_mmu || state_fetch);
-
-   assign opcdrive = srcopc &
-		     (state_alu | state_write);
+   assign dcdrive = srcdc & (state_alu || state_write || state_mmu || state_fetch);
+   assign opcdrive = srcopc & (state_alu | state_write);
 
 endmodule

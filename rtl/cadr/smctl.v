@@ -1,25 +1,27 @@
 // SMCTL
 //
-// TK	CONS	SHIFT/MASK CONTROL
+// TK CONS SHIFT/MASK CONTROL
 
 module SMCTL(mskr, s0, s1, s2, s3, s4, sh3, sh4, mskl, irbyte, ir);
 
    input [48:0] ir;
-   input	irbyte;
-   input	sh3;
-   input	sh4;
+   input irbyte;
+   input sh3;
+   input sh4;
+
    output [4:0] mskl;
    output [4:0] mskr;
-   output	s0;
-   output	s1;
-   output	s2;
-   output	s3;
-   output	s4;
+
+   output s0;
+   output s1;
+   output s2;
+   output s3;
+   output s4;
 
    ////////////////////////////////////////////////////////////////////////////////
 
-   wire		mr;
-   wire		sr;
+   wire mr;
+   wire sr;
 
    ////////////////////////////////////////////////////////////////////////////////
 

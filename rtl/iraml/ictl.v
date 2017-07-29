@@ -1,6 +1,6 @@
 // ICTL
 //
-// TK		CADR	I RAM CONTROL
+// TK CADR I RAM CONTROL
 
 module ICTL(idebug, promdisabled, iwrited, state_write, iwe);
 
@@ -13,13 +13,11 @@ module ICTL(idebug, promdisabled, iwrited, state_write, iwe);
 
    ////////////////////////////////////////////////////////////////////////////////
 
-   wire   ramdisable;
+   wire ramdisable;
 
    ////////////////////////////////////////////////////////////////////////////////
 
    assign ramdisable = idebug | ~(promdisabled | iwrited);
-
-   // see clocks below
    assign iwe = iwrited & state_write;
 
 endmodule

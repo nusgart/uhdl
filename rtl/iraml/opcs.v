@@ -1,6 +1,6 @@
 // OPCS
 //
-// TK		CADR	OLD PC SAVE SHIFTER
+// TK CADR OLD PC SAVE SHIFTER
 
 module OPCS(clk, reset, opcclk, opcinh, pc, opc, state_fetch);
 
@@ -10,13 +10,13 @@ module OPCS(clk, reset, opcclk, opcinh, pc, opc, state_fetch);
    input state_fetch;
 
    input [13:0] pc;
-   input	opcclk;
-   input	opcinh;
+   input opcclk;
+   input opcinh;
    output [13:0] opc;
 
    ////////////////////////////////////////////////////////////////////////////////
 
-   reg [13:0]	 opc;
+   reg [13:0] opc;
 
    ////////////////////////////////////////////////////////////////////////////////
 
@@ -27,6 +27,6 @@ module OPCS(clk, reset, opcclk, opcinh, pc, opc, state_fetch);
        opc <= 0;
      else
        if (opcclka)
-	 opc <= pc;
+         opc <= pc;
 
 endmodule

@@ -9,12 +9,12 @@ module L(clk, reset, vmaenb, state_write, state_alu, ob, l);
    input state_write;
 
    input [31:0] ob;
-   input	vmaenb;
+   input vmaenb;
    output [31:0] l;
 
    ////////////////////////////////////////////////////////////////////////////////
 
-   reg [31:0]	 l;
+   reg [31:0] l;
 
    ////////////////////////////////////////////////////////////////////////////////
 
@@ -22,8 +22,8 @@ module L(clk, reset, vmaenb, state_write, state_alu, ob, l);
      if (reset)
        l <= 0;
      else
-       // vma is latched during alu, so this must be too
-       if ((vmaenb && (state_write||state_alu)) || (~vmaenb && state_alu))
-	 l <= ob;
+       // VMA is latched during STATE_ALU, so this must be too.
+       if ((vmaenb && (state_write || state_alu)) || (~vmaenb && state_alu))
+         l <= ob;
 
 endmodule

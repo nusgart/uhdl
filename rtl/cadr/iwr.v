@@ -1,6 +1,6 @@
 // IWR
 //
-// TK		CADR	INSTRUCTION WRITE REGISTER
+// TK CADR INSTRUCTION WRITE REGISTER
 
 module IWR(clk, reset, state_fetch, a, m, iwr);
 
@@ -16,7 +16,7 @@ module IWR(clk, reset, state_fetch, a, m, iwr);
 
    ////////////////////////////////////////////////////////////////////////////////
 
-   reg [48:0]	 iwr;
+   reg [48:0] iwr;
 
    ////////////////////////////////////////////////////////////////////////////////
 
@@ -25,10 +25,10 @@ module IWR(clk, reset, state_fetch, a, m, iwr);
        iwr <= 0;
      else
        if (state_fetch)
-	 begin
-	    iwr[48] <= 0;
-	    iwr[47:32] <= a[15:0];
-	    iwr[31:0] <= m[31:0];
-	 end
+         begin
+            iwr[48] <= 0;
+            iwr[47:32] <= a[15:0];
+            iwr[31:0] <= m[31:0];
+         end
 
 endmodule

@@ -1,8 +1,8 @@
 // VCTL1
 //
-// TK	CADR	VMEMORY CONTROL
+// TK CADR VMEMORY CONTROL
 
-module VCTL1(clk, reset, lcinc, memrq, ifetch, lvmo_22, lvmo_23, memack, memprepare, memrd, memstart, memwr, needfetch, pfr, pfw, state_alu, state_fetch, state_prefetch, state_write, vmaok, wrcyc,  waiting);
+module VCTL1(clk, reset, lcinc, memrq, ifetch, lvmo_22, lvmo_23, memack, memprepare, memrd, memstart, memwr, needfetch, pfr, pfw, state_alu, state_fetch, state_prefetch, state_write, vmaok, wrcyc, waiting);
 
    input clk;
    input reset;
@@ -23,89 +23,90 @@ module VCTL1(clk, reset, lcinc, memrq, ifetch, lvmo_22, lvmo_23, memack, memprep
    output memprepare;
    output memrq;
    output memstart;
-   output pfr;			// vma permissions
-   output pfw;			// vma permissions
-   output vmaok;		// vma access ok
+   output pfr;                  // VMA permissions (read).
+   output pfw;                  // VMA permissions (write).
+   output vmaok;                // VMA access OK.
    output waiting;
    output wrcyc;
 
    ////////////////////////////////////////////////////////////////////////////////
 
-   reg	  mbusy;
-   reg	  memcheck;
-   reg	  memprepare;
-   reg	  memstart;
-   reg	  rdcyc;
-   reg	  vmaok;
-   reg	  wrcyc;
-   wire   mfinish;
+   reg mbusy;
+   reg memcheck;
+   reg memprepare;
+   reg memstart;
+   reg rdcyc;
+   reg vmaok;
+   reg wrcyc;
+   wire mfinish;
 
    ////////////////////////////////////////////////////////////////////////////////
 
-   assign memop  = memrd | memwr | ifetch;
+   assign memop = memrd | memwr | ifetch;
 
    always @(posedge clk)
      if (reset)
        memprepare <= 0;
      else
        if (state_alu || state_write)
-	 memprepare <= memop;
+         memprepare <= memop;
        else
-	 memprepare <= 0;
+         memprepare <= 0;
 
-   // read vmem
+   // Read VMEM.
    always @(posedge clk)
      if (reset)
        memstart <= 0;
      else
        if (~state_alu)
-	 memstart <= memprepare;
+         memstart <= memprepare;
        else
-	 memstart <= 0;
+         memstart <= 0;
 
-   // check result of vmem
+   // Check result of VMEM.
    always @(posedge clk)
      if (reset)
        memcheck <= 0;
      else
        memcheck <= memstart;
 
-   assign pfw = (lvmo_23 & lvmo_22) & wrcyc; // write permission
-   assign pfr = lvmo_23 & ~wrcyc;	     // read permission
+   // VMA permissions.
+   assign pfw = (lvmo_23 & lvmo_22) & wrcyc;
+   assign pfr = lvmo_23 & ~wrcyc;
 
    always @(posedge clk)
      if (reset)
        vmaok <= 1'b0;
      else
        if (memcheck)
-	 vmaok <= pfr | pfw;
+         vmaok <= pfr | pfw;
 
    always @(posedge clk)
      if (reset)
        begin
-	  rdcyc <= 0;
-	  wrcyc <= 0;
+          rdcyc <= 0;
+          wrcyc <= 0;
        end
      else
        if ((state_fetch || state_prefetch) && memstart && memcheck)
-	 begin
-	    if (memwr)
-	      begin
-		 rdcyc <= 0;
-		 wrcyc <= 1;
-	      end
-	    else
-	      begin
-		 rdcyc <= 1;
-		 wrcyc <= 0;
-	      end
-	 end
+         begin
+            if (memwr)
+              begin
+                 rdcyc <= 0;
+                 wrcyc <= 1;
+              end
+            else
+              begin
+                 rdcyc <= 1;
+                 wrcyc <= 0;
+              end
+         end
        else
-	 if ((~memrq && ~memprepare && ~memstart) || mfinish)
-	   begin
-	      rdcyc <= 0;
-	      wrcyc <= 0;
-	   end
+         if ((~memrq && ~memprepare && ~memstart) || mfinish)
+           begin
+              rdcyc <= 0;
+              wrcyc <= 0;
+           end
 
    assign memrq = mbusy | (memcheck & ~memstart & (pfr | pfw));
 
@@ -113,25 +114,13 @@ module VCTL1(clk, reset, lcinc, memrq, ifetch, lvmo_22, lvmo_23, memack, memprep
      if (reset)
        mbusy <= 0;
      else
-       //       if (mfinish)
-       //	 mbusy <= 1'b0;
-       //       else
-       //	 mbusy <= memrq;
        if (mfinish)
-	 mbusy <= 1'b0;
+         mbusy <= 1'b0;
        else
-	 if (memcheck & (pfr | pfw))
-	   mbusy <= 1;
-
-   //always @(posedge clk) if (memstart) $display("memstart! %t", $time);
-
-
-   //------
+         if (memcheck & (pfr | pfw))
+           mbusy <= 1;
 
    assign mfinish = memack | reset;
-
-   assign waiting =
-		   (memrq & mbusy) |
-		   (lcinc & needfetch & mbusy);	// ifetch
+   assign waiting = (memrq & mbusy) | (lcinc & needfetch & mbusy);
 
 endmodule
