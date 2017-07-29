@@ -31,25 +31,6 @@ module vga_display(clk,
    output vga_vsync;
    output vga_blank;
 
-`define disp_1280x1024
-
-`ifdef disp_800x600
-   parameter H_DISP = 800;
-   parameter V_DISP = 600;
-
-   parameter BOX_WIDTH = 768;
-   parameter BOX_HEIGHT = 600;
-
-   parameter H_FPORCH = 40;
-   parameter H_SYNC = 128;
-   parameter H_BPORCH = 88;
-
-   parameter V_FPORCH = 1;
-   parameter V_SYNC = 4;
-   parameter V_BPORCH = 23;
-`endif
-
-`ifdef disp_1280x1024
    parameter H_DISP = 1280;
    parameter V_DISP = 1024;
 
@@ -63,7 +44,6 @@ module vga_display(clk,
    parameter V_FPORCH = 1;
    parameter V_SYNC = 3;
    parameter V_BPORCH = 38;
-`endif
 
    parameter H_BOX_OFFSET = (H_DISP - BOX_WIDTH)/2;
    parameter V_BOX_OFFSET = (V_DISP - BOX_HEIGHT)/2;
