@@ -20,26 +20,13 @@ module SPC(clk, reset, spcnt, state_fetch, spush, spcptr, spco, spcw, srp, swp);
    ////////////////////////////////////////////////////////////////////////////////
 
    reg [4:0] spcptr;
-   wire [4:0] spcptr_p1;
+   wire [4:0] spcadr;
 
    ////////////////////////////////////////////////////////////////////////////////
 
+   wire [4:0] spcptr_p1;
    assign spcptr_p1 = spcptr + 5'b00001;
-
-`define old_spc
-`ifdef old_spc
-   wire [4:0] spcadr;
-
    assign spcadr = (spcnt && spush) ? spcptr_p1 : spcptr;
-`else
-   reg [4:0] spcadr;
-
-   always @(posedge clk)
-     if (reset)
-       spcadr <= 0;
-     else
-       spcadr <= (spcnt && spush) ? spcptr_p1 : spcptr;
-`endif
 
    part_32x19dpram i_SPC(.reset(reset), .clk_a(clk), .address_a(spcptr), .data_a(19'b0), .q_a(spco), .wren_a(1'b0), .rden_a(srp && ~swp), .clk_b(clk), .address_b(spcadr), .data_b(spcw), .q_b(), .wren_b(swp), .rden_b(1'b0));
 
