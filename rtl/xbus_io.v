@@ -1,9 +1,5 @@
 // xbus_io.v --- IOB board
 
-`ifndef DBG_DLY
- `define DBG_DLY
-`endif
-
 module xbus_io(
                clk, reset,
                addr, datain, dataout,
@@ -103,7 +99,7 @@ module xbus_io(
                if (write)
                  begin
 `ifdef debug
-                    `DBG_DLY $display("io: write @%o <- %o", addr, datain);
+                    $display("io: write @%o <- %o", addr, datain);
 `endif
                     case (addr)
                       22'o17772045: // KBD CSR
@@ -115,7 +111,7 @@ module xbus_io(
                else
                  begin
 `ifdef debug
-                    `DBG_DLY $display("io: read @%o", addr);
+                    $display("io: read @%o", addr);
 `endif
                     case (addr)
                       22'o17772040: // KBD LOW
@@ -194,7 +190,7 @@ module xbus_io(
        end
 
    ////////////////////////////////////////////////////////////////////////////////
-   // Interrupts
+           // Interrupts
 
    wire ms_int, kb_int, clk_int;
 

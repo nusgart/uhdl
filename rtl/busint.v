@@ -8,10 +8,6 @@
  `define debug
 `endif
 
-`ifndef DBG_DLY
- `define DBG_DLY
-`endif
-
 module busint(mclk, reset,
               addr, busin, busout, spyin, spyout, spyreg, spyrd, spywr,
               req, ack, write, load,
@@ -312,13 +308,13 @@ module busint(mclk, reset,
         if (req && debug_xbus != 0)
           if (write)
             begin
-               `DBG_DLY $display("xbus: write @%o <- %o (0x%x); %t",
-                                 addr, busin, busin, $time);
+               $display("xbus: write @%o <- %o (0x%x); %t",
+                        addr, busin, busin, $time);
             end
           else
             begin
-               `DBG_DLY $display("xbus: read @%o -> %o (0x%x); %t",
-                                 addr, busout, busout, $time);
+               $display("xbus: read @%o -> %o (0x%x); %t",
+                        addr, busout, busout, $time);
             end
      end
 `endif
@@ -329,19 +325,19 @@ module busint(mclk, reset,
         // CPU write.
         if (req && write && state == BUS_REQ && next_state != BUS_REQ)
           begin
-             `DBG_DLY test.iologger(32'd2, addr, busin);
+             test.iologger(32'd2, addr, busin);
           end
 
         // CPU read.
         if (req & load)
           begin
-             `DBG_DLY test.iologger(32'd1, addr, busout);
+             test.iologger(32'd1, addr, busout);
           end
 
         // DMA disk to memory.
         if (disk_write2busint && state == BUS_SLAVE && next_state != BUS_SLAVE)
           begin
-             `DBG_DLY test.iologger(32'd4, addrout_disk, dataout_disk);
+             test.iologger(32'd4, addrout_disk, dataout_disk);
           end
      end
 `endif

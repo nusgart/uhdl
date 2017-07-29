@@ -1,9 +1,5 @@
 // xbus_unibus.v --- unibus board
 
-`ifndef DBG_DLY
- `define DBG_DLY
-`endif
-
 module xbus_unibus(
                    reset, clk,
                    addr, datain, dataout,
@@ -13,7 +9,7 @@ module xbus_unibus(
 
    input reset;
    input clk;
-    input [21:0] addr;   // Request address.              
+   input [21:0] addr;   // Request address.              
    input [31:0] datain; // Request data.                 
    input req;           // Request.                      
    input write;         // Request read#/write.          
@@ -105,7 +101,7 @@ module xbus_unibus(
             if (write)
               begin
 `ifdef debug
-                 `DBG_DLY $display("unibus: write @%o <- %o; %t", addr, datain, $time);
+                 $display("unibus: write @%o <- %o; %t", addr, datain, $time);
 `endif
                  case (offset)
                    6'o05:
@@ -131,7 +127,7 @@ module xbus_unibus(
             else
               begin
 `ifdef debug
-                 `DBG_DLY $display("unibus: read @%o", addr);
+                 $display("unibus: read @%o", addr);
 `endif
 
                  case (offset)
@@ -156,13 +152,13 @@ module xbus_unibus(
             if (write)
               begin
 `ifdef debug
-                 `DBG_DLY $display("unibus: other write @%o <- %o", addr, datain);
+                 $display("unibus: other write @%o <- %o", addr, datain);
 `endif
               end
             else
               begin
 `ifdef debug
-                 `DBG_DLY $display("unibus: other read @%o", addr);
+                 $display("unibus: other read @%o", addr);
 `endif
                  dataout = 0;
               end
