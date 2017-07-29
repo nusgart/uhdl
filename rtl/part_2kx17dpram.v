@@ -1,7 +1,5 @@
 // part_2kx17dpram.v --- 2kx17 dual port synchronous SRAM
 
-`include "defines.vh"
-
 module part_2kx17dpram(reset,
                        clk_a, address_a, q_a, data_a, wren_a, rden_a,
                        clk_b, address_b, q_b, data_b, wren_b, rden_b);

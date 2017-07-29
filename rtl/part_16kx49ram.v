@@ -1,7 +1,5 @@
 // part_16kx49ram.v --- 16k49 SRAM
 
-`include "defines.vh"
-
 module part_16kx49ram(clk_a, reset, address_a, q_a, data_a, wren_a, rden_a);
 
    input clk_a;

@@ -1,4 +1,4 @@
-`include "defines.vh"
+// part_1kx32dpram.v --- 1kx32 dual port synchronous SRAM
 
 module part_1kx32dpram_a(reset,
                          clk_a, address_a, q_a, data_a, wren_a, rden_a,

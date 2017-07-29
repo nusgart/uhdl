@@ -9,8 +9,6 @@
 //      VRAM CPU r/w, 32 bits
 //
 
-`include "defines.vh"
-
 `ifdef ISE
  `define lx45_real_sdram
  `undef lx45_fake_sdram
