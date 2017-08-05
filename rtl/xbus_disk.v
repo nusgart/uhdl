@@ -111,34 +111,6 @@ module xbus_disk(
    wire [31:0] disk_status;
 
    // Disk state.
-`ifdef never
-   parameter [4:0]
-     s_idle = 0,
-     s_busy = 1,
-     s_read_ccw = 2,
-     s_read_ccw_done = 3,
-     s_init0 = 4,
-     s_init1 = 5,
-
-     s_read0 = 6,
-     s_read1 = 7,
-     s_read2 = 8,
-     s_read3 = 9,
-
-     s_write0 = 10,
-     s_write1 = 11,
-     s_write1a = 21,
-     s_write2 = 12,
-     s_write2a = 22,
-
-     s_last0 = 14,
-     s_last1 = 15,
-     s_last2 = 16,
-     s_done0 = 17,
-     s_done1 = 18,
-     s_reset = 19,
-     s_reset0 = 20;
-`else
    parameter [4:0]
      s_idle = 0,
      s_busy = 1,
@@ -165,7 +137,6 @@ module xbus_disk(
      s_done1 = 19,
      s_reset = 20,
      s_reset0 = 21;
-`endif
 
    reg [4:0] state;   // synthesis attribute keep state true;
    reg [4:0] state_next;
@@ -269,7 +240,8 @@ module xbus_disk(
                           begin
                              reg_dataout = disk_status;
 `ifdef debug
-                             if (debug != 0 && disk_status != 0) $display("disk: read status %o", disk_status);
+                             if (debug != 0 && disk_status != 0)
+                               $display("disk: read status %o", disk_status);
 `endif
                           end
                         3'o1: reg_dataout = disk_ma;
@@ -279,7 +251,8 @@ module xbus_disk(
                           begin
                              reg_dataout = disk_status;
 `ifdef debug
-                             if (debug != 0 && disk_status != 0) $display("disk: read status %o", disk_status);
+                             if (debug != 0 && disk_status != 0)
+                               $display("disk: read status %o", disk_status);
 `endif
                           end
                         3'o5: reg_dataout = { 8'b0, 2'b00, disk_clp };
@@ -302,7 +275,8 @@ module xbus_disk(
                       else
                         begin
 `ifdef debug
-                           if (debug != 0) $display("disk: unknown read %o", addrin);
+                           if (debug != 0)
+                             $display("disk: unknown read %o", addrin);
 `endif
                            reg_dataout = 0;
                         end
@@ -319,7 +293,8 @@ module xbus_disk(
                         3'o4:
                           begin
 `ifdef debug
-                             if (debug != 0) $display("disk: load cmd %o", datain);
+                             if (debug != 0)
+                               $display("disk: load cmd %o", datain);
 `endif
                              disk_cmd <= datain[9:0];
 
@@ -337,7 +312,8 @@ module xbus_disk(
                         3'o7:
                           begin
 `ifdef debug
-                             if (debug != 0) $display("disk: start!");
+                             if (debug != 0)
+                               $display("disk: start!");
 `endif
                              disk_start = 1;
                           end
@@ -371,7 +347,8 @@ module xbus_disk(
                if (addrin[2:0] == 3'o5)
                  begin
 `ifdef debug
-                    if (debug != 0) $display("disk: load clp %o", datain);
+                    if (debug != 0)
+                      $display("disk: load clp %o", datain);
 `endif
                     disk_clp <= datain[21:0];
                  end
@@ -379,7 +356,8 @@ module xbus_disk(
                  if (addrin[2:0] == 3'o6)
                    begin
 `ifdef debug
-                      if (debug != 0) $display("disk: load da %o", datain);
+                      if (debug != 0)
+                        $display("disk: load da %o", datain);
 `endif
                       disk_unit <= datain[30:28];
                       disk_cyl <= datain[27:16];
@@ -495,7 +473,8 @@ module xbus_disk(
        if (assert_int)
          begin
 `ifdef debug
-            if (debug_state != 0) $display("disk: assert interrupt\n");
+            if (debug_state != 0)
+              $display("disk: assert interrupt\n");
 `endif
             disk_interrupt <= 1;
          end
@@ -504,7 +483,8 @@ module xbus_disk(
            begin
               disk_interrupt <= 0;
 `ifdef debug
-              if (debug_state != 0) $display("disk: deassert interrupt\n");
+              if (debug_state != 0)
+                $display("disk: deassert interrupt\n");
 `endif
            end
 
@@ -877,8 +857,9 @@ module xbus_disk(
             if (fetch != 0 && state != s_idle)
               begin
                  busy_cycles = busy_cycles + 1;
-                 if (0) $display("xxx: busy_cycles %d; state %d",
-                                 busy_cycles, state);
+                 if (0)
+                   $display("xxx: busy_cycles %d; state %d",
+                            busy_cycles, state);
                  if (busy_cycles == (1400 * blocks_io)-1)
                    begin
                       done_waiting = 1;
