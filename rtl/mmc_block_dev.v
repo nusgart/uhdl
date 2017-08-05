@@ -992,12 +992,6 @@ module mmc_block_dev(clk, mmcclk, reset,
      end
 `endif
 
-`ifdef __CVER__
- `ifdef CHIPSCOPE_MMC_BD
-  `undef CHIPSCOPE_MMC_BD
- `endif
-`endif
-
 `ifdef CHIPSCOPE_MMC_BD
    wire [35:0] control0;
    wire [39:0] trig0;
