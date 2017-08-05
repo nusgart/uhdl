@@ -221,9 +221,13 @@ module caddr(
    wire pidrive;
    wire ppdrive;
 
+   // QCTL
+   wire qs0;
+   wire qs1;
+   wire qdrive;
+
    // Q
    wire [31:0] q;
-   wire qdrive;
 
    // SHIFT01
    wire [31:0] r;
@@ -534,7 +538,9 @@ module caddr(
 
    PDLPTR cadr_pdlptr(.clk, .reset, .pidrive, .ppdrive, .pdlidx, .pdlptr, .state_alu, .state_write, .state_fetch, .state_read, .destpdlx, .srcpdlidx, .srcpdlptr, .ob, .destpdlp, .pdlcnt, .srcpdlpop);
 
-   Q cadr_q(.clk, .reset, .state_alu, .state_write, .state_mmu, .state_fetch, .alu, .srcq, .qdrive, .q, .ir, .iralu);
+   QCTL cadr_qctl(.state_alu, .state_write, .state_mmu, .state_fetch, .ir, .iralu, .srcq, .qs0, .qs1, .qdrive);
+
+   Q cadr_q(.clk, .reset, .state_fetch, .qs0, .qs1, .alu, .q);
 
    SHIFT01 cadr_shift01(.r, .s0, .s1, .s2, .s3, .s4, .m);
 
