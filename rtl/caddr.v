@@ -200,8 +200,11 @@ module caddr(
    wire dcdrive;
    wire opcdrive;
 
-   // PDL01
+   // PLATCH
    wire [31:0] pdl;
+
+   // PDL01
+   wire [31:0] pdlo;
 
    // PDLCTL
    wire [9:0] pdla;
@@ -511,7 +514,7 @@ module caddr(
 
    MF cadr_mf(.mfdrive, .srcm, .spcenb, .pdlenb, .state_alu, .state_write, .state_mmu, .state_fetch);
 
-   MLATCH cadr_mlatch(.pdldrive, .spcdrive, .mfdrive, .mmem, .pdl, .spcptr, .spco, .mf, .m, .mpassm);
+   MLATCH cadr_mlatch(.pdldrive, .spcdrive, .mfdrive, .mmem, .pdlo, .spcptr, .spco, .mf, .m, .mpassm);
 
    MMEM cadr_mmem(.clk, .reset, .mrp, .mwp, .madr, .l, .mmem);
 
@@ -523,9 +526,9 @@ module caddr(
 
    OPCD cadr_opcd(.dcdrive, .opcdrive, .srcdc, .srcopc, .state_alu, .state_write, .state_mmu, .state_fetch);
 
-   PDL01 cadr_pdl01(.clk, .reset, .prp, .pdla, .l, .pwp, .pdl);
+   PDL01 cadr_pdl01(.clk, .reset, .prp, .pdla, .l, .pwp, .pdlo);
 
-   // PLATCH cadr_platch( );
+   PLATCH cadr_platch(.pdl, .pdlo);
 
    PDLCTL cadr_pdlctl(.clk, .reset, .pdlidx, .pdla, .pdlwrite, .state_alu, .state_write, .state_read, .ir, .pwp, .prp, .pdlenb, .pdldrive, .pdlcnt, .pdlptr, .destpdltop, .destpdl_x, .destpdl_p, .srcpdlpop, .state_mmu, .nop, .srcpdltop, .state_fetch);
 

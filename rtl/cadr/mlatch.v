@@ -1,11 +1,11 @@
 // MLATCH --- M MEMORY LATCH
 
-module MLATCH(pdldrive, spcdrive, mfdrive, mmem, pdl, spcptr, spco, mf, m, mpassm);
+module MLATCH(pdldrive, spcdrive, mfdrive, mmem, pdlo, spcptr, spco, mf, m, mpassm);
 
    input [18:0] spco;
    input [31:0] mf;
    input [31:0] mmem;
-   input [31:0] pdl;
+   input [31:0] pdlo;
    input [4:0] spcptr;
    input mfdrive;
    input mpassm;
@@ -24,7 +24,7 @@ module MLATCH(pdldrive, spcdrive, mfdrive, mmem, pdl, spcptr, spco, mf, m, mpass
 `endif
 
    assign m = mpassm ? mmem :
-              pdldrive ? pdl :
+              pdldrive ? pdlo :
               spcdrive ? {3'b0, spcptr, 5'b0, spco} :
               mfdrive ? mf :
               32'b0;
