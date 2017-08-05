@@ -57,7 +57,7 @@ module ps2_support(clk, reset,
    ////////////////////////////////////////////////////////////////////////////////
    // Mouse
 
-   wire [11:0] m_x, [11:0] m_y;
+   wire [11:0] m_x, m_y;
    wire [2:0] m_button;
    wire m_ready;
 
