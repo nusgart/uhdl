@@ -147,8 +147,7 @@ module mmc_block_dev(clk, mmcclk, reset,
      s_write4a = 65,
      s_write5aa = 66,
      s_write5b = 67,
-     s_write6a = 68
-              ;
+     s_write6a = 68;
 
    reg [6:0] state;
    reg [6:0] state_next;
@@ -176,18 +175,18 @@ module mmc_block_dev(clk, mmcclk, reset,
    reg [15:0] mmc_hold;
 
    // Grab the DMA'd data, later used by MMC.
-     always @(posedge clk)
-       if (reset)
-         data_hold <= 0;
-       else
-         if (state == s_write0 && bd_wr)
-           begin
-              data_hold <= bd_data_in;
+   always @(posedge clk)
+     if (reset)
+       data_hold <= 0;
+     else
+       if (state == s_write0 && bd_wr)
+         begin
+            data_hold <= bd_data_in;
 `ifdef debug
-              if (debug != 0)
-                $display("mmc_block_dev: data_hold %x", bd_data_in);
+            if (debug != 0)
+              $display("mmc_block_dev: data_hold %x", bd_data_in);
 `endif
-           end
+         end
 
    // Grab the MMC data, later used by DMA.
    always @(posedge clk)
@@ -992,7 +991,7 @@ module mmc_block_dev(clk, mmcclk, reset,
      end
 `endif
 
-      ////////////////////////////////////////////////////////////////////////////////
+   ////////////////////////////////////////////////////////////////////////////////
 
 `ifdef CHIPSCOPE_MMC_BD
    wire [35:0] control0;
