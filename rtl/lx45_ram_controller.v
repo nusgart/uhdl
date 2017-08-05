@@ -102,7 +102,6 @@ module lx45_ram_controller(
    reg sdram_done;
    reg sdram_ready;
 
-
    ////////////////////////////////////////////////////////////////////////////////
    // SDRAM - internal
 
@@ -165,7 +164,7 @@ module lx45_ram_controller(
    assign i_sdram_req = sdram_state[NSD_READ];
    assign i_sdram_write = sdram_state[NSD_WRITE];
 
-   reg [31:0] sdram_out;
+   reg [31:0] sdram_out;   // synthesis attribute keep sdram_out true;
    wire [31:0] sdram_resp_in;
 
    always @(posedge clk)
@@ -349,7 +348,7 @@ module lx45_ram_controller(
                          .wren_a(vram_cpu_write),
                          .rden_a(vram_cpu_req),
 
-                         .clk_b(vga_clk ),
+                         .clk_b(vga_clk),
                          .address_b(vram_vga_addr),
                          .q_b(vram_vga_ram_out),
                          .data_b(32'b0),
