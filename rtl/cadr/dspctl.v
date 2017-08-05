@@ -1,6 +1,4 @@
-// DSPCTL
-//
-// TK CADR DISPATCH CONTROL
+// DSPCTL --- DISPATCH CONTROL
 
 module DSPCTL(clk, reset, state_fetch, irdisp, funct, ir, dmask, dmapbenb, dispwr, dc);
 

@@ -1,6 +1,4 @@
-// OLORD2
-//
-// TK CADR OVERLORD
+// OLORD2 --- OVERLORD
 
 module OLORD2(clk, reset, statstop, err, errhalt, boot, boot_trap, ldmode, spy_in, errstop, ext_reset, ext_boot, srun, ext_halt, stat_ovf);
 

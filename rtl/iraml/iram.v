@@ -1,21 +1,4 @@
-// IRAM
-//
-// TK CADR RAM 0K-4K, 0-11
-// TK CADR RAM 4K-8K, 0-11
-// TK CADR RAM 8K-12K, 0-11
-// TK CADR RAM 12K-16K, 0-11
-// TK CADR RAM 0K-4K, 12-24
-// TK CADR RAM 4K-8K 12-23
-// TK CADR RAM 8K-12K, 12-23
-// TK CADR RAM 12K-16K, 12-23
-// TK CADR RAM 0K-4K, 24-35
-// TK CADR RAM 4K-8K, 24-35
-// TK CADR RAM 8K-12K, 24-35
-// TK CADR RAM 12K-16K, 24-35
-// TK CADR RAM 0K-4K, 36-48
-// TK CADR RAM 4K-8K, 36-48
-// TK CADR RAM 8K-12K, 36-48
-// TK CADR RAM 12K-16K, 36-48
+// IRAM --- RAM
 
 module IRAM(clk, reset, pc, pc_out, state_out, iwr, iwe, iram, fetch_out, prefetch_out, machrun_out, mcr_data_in, state_fetch, machrun, state, need_mmu_state, state_mmu, state_write, state_prefetch, promdisabled);
 

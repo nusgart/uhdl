@@ -1,6 +1,4 @@
-// MMEM
-//
-// TK CADR M MEMORY
+// MMEM --- M MEMORY
 
 module MMEM(clk, reset, mrp, mwp, madr, l, mmem);
 

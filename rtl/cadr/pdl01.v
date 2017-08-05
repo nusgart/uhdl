@@ -1,7 +1,4 @@
-// PDL0, PDL1
-//
-// TK CADR PDL BUFFER LEFT
-// TK CADR PDL BUFFER RIGHT
+// PDL0, PDL1 --- PDL BUFFER (RIGHT & LEFT)
 
 module PDL01(clk, reset, prp, pdla, l, pwp, pdl);
 

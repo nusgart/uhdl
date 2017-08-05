@@ -1,6 +1,4 @@
-// VMA
-//
-// TK CADR VMA REGISTER
+// VMA --- VMA REGISTER
 
 module VMA(clk, reset, state_alu, state_write, state_fetch, vmaenb, vmas, spy_in, srcvma, ldvmal, ldvmah, vma, vmadrive);
 

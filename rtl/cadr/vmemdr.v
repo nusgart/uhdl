@@ -1,6 +1,4 @@
-// VMEMDR
-//
-// TK CADR MAP OUTPUT DRIVE
+// VMEMDR --- MAP OUTPUT DRIVE
 
 module VMEMDR(vmo, srcmap, state_alu, state_write, state_mmu, state_fetch, lvmo_23, lvmo_22, mapdrive, pma);
 

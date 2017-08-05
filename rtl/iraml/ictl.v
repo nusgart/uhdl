@@ -1,6 +1,4 @@
-// ICTL
-//
-// TK CADR I RAM CONTROL
+// ICTL --- I RAM CONTROL
 
 module ICTL(idebug, promdisabled, iwrited, state_write, iwe);
 

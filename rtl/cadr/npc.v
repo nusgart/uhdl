@@ -1,6 +1,4 @@
-// NPC
-//
-// TK CADR NPC,IPC,PC
+// NPC --- NPC,IPC,PC
 
 module NPC(clk, reset, state_fetch, ipc, trap, pcs1, pcs0, ir, spc, spc1a, dpc, pc);
 

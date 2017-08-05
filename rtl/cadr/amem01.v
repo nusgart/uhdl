@@ -1,7 +1,4 @@
-// AMEM0, AMEM1
-//
-// TK CADR A MEMORY LEFT
-// TK CADR A MEMORY RIGHT
+// AMEM0, AMEM1 --- A MEMORY (LEFT & RIGHT)
 
 module AMEM01(clk, reset, l, aadr, arp, awp, amem);
 

@@ -1,6 +1,4 @@
-// MCTL
-//
-// TK CADR M CONTROL
+// MCTL --- M CONTROL
 
 module MCTL(mpassm, srcm, mrp, mwp, madr, ir, destm, wadr, state_decode, state_write);
 

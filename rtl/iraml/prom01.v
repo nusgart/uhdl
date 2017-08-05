@@ -1,7 +1,4 @@
-// PROM0, PROM1
-//
-// TK CADR PROM 0-511
-// TK CADR PROM 512-1023
+// PROM0, PROM1 --- PROM
 
 module PROM01(clk, promaddr, iprom);
 

@@ -1,6 +1,4 @@
-// OPCD
-//
-// TK CADR OPC, DC, ZERO DRIVE
+// OPCD --- OPC, DC, ZERO DRIVE
 
 module OPCD(dcdrive, opcdrive, srcdc, srcopc, state_alu, state_write, state_mmu, state_fetch);
 

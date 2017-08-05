@@ -1,6 +1,4 @@
-// ALATCH
-//
-// TK CADR A MEMORY LATCH
+// ALATCH --- A MEMORY LATCH
 
 module ALATCH(amem, a);
 

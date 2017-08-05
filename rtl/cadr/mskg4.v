@@ -1,6 +1,4 @@
-// MSKG4
-//
-// TK CADR MASK GENERATION
+// MSKG4 --- MASK GENERATION
 
 module MSKG4(clk, mskl, mskr, msk);
 

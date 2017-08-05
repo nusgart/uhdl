@@ -1,6 +1,4 @@
-// IWR
-//
-// TK CADR INSTRUCTION WRITE REGISTER
+// IWR --- INSTRUCTION WRITE REGISTER
 
 module IWR(clk, reset, state_fetch, a, m, iwr);
 

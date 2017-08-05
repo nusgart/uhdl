@@ -1,6 +1,4 @@
-// SPCW
-//
-// TK CADR SPC WRITE DATA SEL
+// SPCW --- SPC WRITE DATA SEL
 
 module SPCW(destspc, l, spcw, n, wpc, ipc);
 

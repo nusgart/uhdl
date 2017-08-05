@@ -1,7 +1,4 @@
-// ALU0, ALU1
-//
-// TK CADR ALU0
-// TK CADR ALU1
+// ALU0, ALU1 --- ---!!!
 
 module ALU01(
              aluf, alumode,

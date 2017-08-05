@@ -1,6 +1,4 @@
-// CONTRL
-//
-// TK CADR PC, SPC CONTROL
+// CONTRL --- PC, SPC CONTROL
 
 module CONTRL(clk, reset, state_alu, state_fetch, state_write, funct, ir, destspc, dn, dp, dr, irdisp, irjump, jcond, nop11, srcspc, srcspcpop, trap, iwrited, n, nop, nopa, pcs0, pcs1, spcdrive, spcenb, spcnt, spop, spush, srcspcpopreal, srp, swp);
 

@@ -1,6 +1,4 @@
-// PLATCH
-//
-// TK CADR PDL BUFFER LATCH
+// PLATCH --- PDL BUFFER LATCH
 
 module PLATCH(pdl, pdlo);
 

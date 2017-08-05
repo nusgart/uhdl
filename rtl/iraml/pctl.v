@@ -1,4 +1,4 @@
-// PCTL
+// PCTL --- ---!!!
 
 module PCTL(pc, idebug, promdisabled, iwrited, promenable, promaddr);
 

@@ -1,6 +1,4 @@
-// MD
-//
-// TK CADR MEMORY DATA REGISTER
+// MD --- MEMORY DATA REGISTER
 
 module MD(clk, reset, md, mddrive, mdgetspar, spy_in, loadmd, memrq, destmdr, mds, srcmd, state_alu, state_write, state_mmu, state_fetch, ldmdh, ldmdl);
 

@@ -1,6 +1,4 @@
-// MDS
-//
-// TK CADR MEMORY DATA SELECTOR
+// MDS --- MEMORY DATA SELECTOR
 
 module MDS(mds, mdsel, ob, memdrive, loadmd, busint_bus, md);
 

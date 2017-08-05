@@ -1,7 +1,4 @@
-// SHIFT0, SHIFT1
-//
-// TK CADR SHIFTER RIGHT
-// TK CADR SHIFTER LEFT
+// SHIFT0, SHIFT1 --- SHIFTER (RIGHT & LEFT)
 
 module SHIFT01(r, s0, s1, s2, s3, s4, m);
 
