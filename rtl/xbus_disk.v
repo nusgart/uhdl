@@ -43,6 +43,14 @@ module xbus_disk(
    reg writeout;
    reg busreqout;
 
+   // synthesis attribute keep ackin true;
+   // synthesis attribute keep ackout true;
+   // synthesis attribute keep busgrantin true;
+   // synthesis attribute keep busreqout true;
+   // synthesis attribute keep reqin true;
+   // synthesis attribute keep reqout true;
+   // synthesis attribute keep writeout true;
+
    // Generic block device interface.
    output [1:0] bd_cmd;
    output bd_start;
@@ -159,7 +167,7 @@ module xbus_disk(
      s_reset0 = 21;
 `endif
 
-   reg [4:0] state;
+   reg [4:0] state;   // synthesis attribute keep state true;
    reg [4:0] state_next;
 
    parameter DISK_CYLS = 815,
@@ -409,7 +417,6 @@ module xbus_disk(
 
                if (inc_clp)
                  disk_clp <= disk_clp + 22'd1;
-
             end
        end
 
