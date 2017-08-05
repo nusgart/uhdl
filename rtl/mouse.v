@@ -16,9 +16,9 @@ module mouse(clk,
 
    input clk;
    input reset;
+
    input ps2_clk_in;
    input ps2_data_in;
-
    output ps2_clk_out;
    output ps2_data_out;
    output ps2_dir;
@@ -32,8 +32,7 @@ module mouse(clk,
 
    output strobe;
 
-   reg [4:0] m_state;
-   wire [4:0] m_state_next;
+   ////////////////////////////////////////////////////////////////////////////////
 
    parameter [4:0]
      M_IDLE = 0,
@@ -47,6 +46,11 @@ module mouse(clk,
      M_RX3B = 8,
      M_RX4A = 9,
      M_RX4B = 10;
+
+   reg [4:0] m_state;
+   wire [4:0] m_state_next;
+
+   ////////////////////////////////////////////////////////////////////////////////
 
    wire m_rdy;
    wire m_bsy;
@@ -86,6 +90,9 @@ module mouse(clk,
 
    assign ps2_dir = m_out_busy;
 
+   ////////////////////////////////////////////////////////////////////////////////
+   // State machine
+
    always @(posedge clk)
      if (reset)
        m_state <= 0;
@@ -111,6 +118,8 @@ module mouse(clk,
                         (m_state == M_RX4B && ~m_rdy) ? M_IDLE:
 
                         m_state;
+
+   ////////////////////////////////////////////////////////////////////////////////
 
    reg [7:0] m_b1, m_b2, m_b3, m_b4;
 
@@ -145,6 +154,7 @@ module mouse(clk,
    assign button_l = m_b2[0];
    assign button_r = m_b2[1];
    assign button_m = m_b2[2];
+
    assign x = { m_b2[4], m_b2[4], m_b2[4], m_b2[4], m_b3 };
    assign y = { m_b2[5], m_b2[5], m_b2[5], m_b2[5], m_b4 };
 
