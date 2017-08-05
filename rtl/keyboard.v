@@ -10,6 +10,7 @@ module keyboard(
 
    input clk;
    input reset;
+
    input ps2_clk;
    input ps2_data;
 
@@ -28,6 +29,8 @@ module keyboard(
    wire kb_out_rdy;
    wire [15:0] kb_out_keycode;
 
+   ////////////////////////////////////////////////////////////////////////////////
+
    ps2 ps2(.clk(clk),
            .reset(reset),
            .ps2_clk(ps2_clk),
@@ -36,8 +39,7 @@ module keyboard(
            .parity(),
            .busy(kb_bsy),
            .rdy(kb_scan_rdy),
-           .error()
-           );
+           .error());
 
    scancode_convert scancode_convert(.clk(clk),
                                      .reset(reset),
