@@ -767,12 +767,6 @@ module caddr(
 
    ////////////////////////////////////////////////////////////////////////////////
 
-`ifdef __CVER__
- `ifdef CHIPSCOPE_CADDR
-  `undef CHIPSCOPE_CADDR
- `endif
-`endif
-
 `ifdef CHIPSCOPE_CADDR
    wire [35:0] control0;
    wire [127:0] trig0;
