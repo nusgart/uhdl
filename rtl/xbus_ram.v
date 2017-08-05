@@ -1,9 +1,5 @@
 // xbus_ram.v --- RAM board
 
-`ifdef SIMULATON
- `define debug
-`endif
-
 module xbus_ram (
                  clk, reset,
                  addr, datain, dataout,
