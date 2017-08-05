@@ -367,6 +367,8 @@ module mmc(clk, reset, speed, rd, wr, init, send, stop, cmd,
           endcase
        end
 
+   ////////////////////////////////////////////////////////////////////////////////
+
 `ifdef CHIPSCOPE_MMC
    wire [35:0] control0;
    wire [7:0] trig0;
