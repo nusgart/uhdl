@@ -367,12 +367,6 @@ module mmc(clk, reset, speed, rd, wr, init, send, stop, cmd,
           endcase
        end
 
-`ifdef __CVER__
- `ifdef CHIPSCOPE_MMC
-  `undef CHIPSCOPE_MMC
- `endif
-`endif
-
 `ifdef CHIPSCOPE_MMC
    wire [35:0] control0;
    wire [7:0] trig0;
