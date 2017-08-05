@@ -24,10 +24,6 @@ module ps2_send(clk,
    output ps2_clk;              // Clock out.
    output ps2_data;             // Data out.
 
-`ifdef null
-   assign ps2_clk = 0;
-   assign ps2_data = 0;
-`else
    parameter FREQ = 25000;      // Frequency of the main clock (KHz).
    parameter PS2_FREQ = 10;     // Keyboard clock frequency (KHz).
    parameter DELAY = FREQ / PS2_FREQ; // PS2_CLK quiet timeout.
@@ -77,6 +73,5 @@ module ps2_send(clk,
            ps2_out <= { 1'b0, ps2_out[10:1] };
 
    assign ps2_data = state ? ps2_out[0] : 1'b1;
-`endif
 
 endmodule
