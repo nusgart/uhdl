@@ -62,8 +62,8 @@ module busint(mclk, reset,
    input [31:0] sdram_data_in;
    output sdram_req;
    input sdram_ready;
-   output sdram_write;
-   input sdram_done;
+   output sdram_write;   // synthesis attribute keep sdram_write true;
+   input sdram_done;     // synthesis attribute keep sdram_done true;
 
    output [14:0] vram_addr;
    output [31:0] vram_data_out;
@@ -106,10 +106,12 @@ module busint(mclk, reset,
 `endif
 
    wire decode_ok;
-   wire decode_dram, decode_disk, decode_tv, decode_io, decode_unibus, decode_spy;
+   wire decode_dram;     // synthesis attribute keep decode_dram true;
+   wire decode_disk, decode_tv, decode_io, decode_unibus, decode_spy;
 
    wire ack;
-   wire ack_dram, ack_disk, ack_tv, ack_io, ack_unibus, ack_spy;
+   wire ack_dram;           // synthesis attribute keep ack_dram true;
+   wire ack_disk, ack_tv, ack_io, ack_unibus, ack_spy;
 
    wire interrupt;
    wire interrupt_disk, interrupt_tv, interrupt_io, interrupt_unibus;
@@ -117,8 +119,8 @@ module busint(mclk, reset,
    wire disk_busreq2busint;
    wire busgrantin2disk;
 
-   wire dram_reqin;
-   wire dram_writein;
+   wire dram_reqin;     // synthesis attribute keep dram_reqin true;
+   wire dram_writein;   // synthesis attribute keep dram_writein true;
 
    wire [21:0] dram_addr;
    wire [31:0] dram_datain;
@@ -131,7 +133,7 @@ module busint(mclk, reset,
    wire [31:0] dataout_unibus;
    wire [31:0] dataout_spy;
 
-   wire [21:0] addrout_diskr;
+   wire [21:0] addrout_disk;
 
    wire device_ack;
 
