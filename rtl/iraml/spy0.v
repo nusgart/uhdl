@@ -46,44 +46,6 @@ module SPY0(spy_obh, spy_obl, spy_pc, spy_opc, spy_scratch, spy_irh, spy_irm, sp
 
    ////////////////////////////////////////////////////////////////////////////////
 
-`ifdef old_spy
-   // Read registers.
-   assign {spy_obh, spy_obl, spy_pc, spy_opc, spy_scratch, spy_irh, spy_irm, spy_irl}
-     = (eadr[3] | ~dbread) ? 8'b0000000 :
-       ({eadr[2], eadr[1], eadr[0]} == 3'b000) ? 8'b00000001 :
-       ({eadr[2], eadr[1], eadr[0]} == 3'b001) ? 8'b00000010 :
-       ({eadr[2], eadr[1], eadr[0]} == 3'b010) ? 8'b00000100 :
-       ({eadr[2], eadr[1], eadr[0]} == 3'b011) ? 8'b00001000 :
-       ({eadr[2], eadr[1], eadr[0]} == 3'b100) ? 8'b00010000 :
-       ({eadr[2], eadr[1], eadr[0]} == 3'b101) ? 8'b00100000 :
-       ({eadr[2], eadr[1], eadr[0]} == 3'b110) ? 8'b01000000 :
-       ({eadr[2], eadr[1], eadr[0]} == 3'b111) ? 8'b10000000 :
-       8'b00000000;
-   assign {spy_sth, spy_stl, spy_ah, spy_al, spy_mh, spy_ml, spy_flag2, spy_flag1}
-     = (~eadr[3] | ~dbread) ? 8'b00000000 :
-       ({eadr[2], eadr[1], eadr[0]} == 3'b000) ? 8'b00000001 :
-       ({eadr[2], eadr[1], eadr[0]} == 3'b001) ? 8'b00000010 :
-       ({eadr[2], eadr[1], eadr[0]} == 3'b010) ? 8'b00000100 :
-       ({eadr[2], eadr[1], eadr[0]} == 3'b011) ? 8'b00001000 :
-       ({eadr[2], eadr[1], eadr[0]} == 3'b100) ? 8'b00010000 :
-       ({eadr[2], eadr[1], eadr[0]} == 3'b101) ? 8'b00100000 :
-       ({eadr[2], eadr[1], eadr[0]} == 3'b110) ? 8'b01000000 :
-       ({eadr[2], eadr[1], eadr[0]} == 3'b111) ? 8'b10000000 :
-       8'b00000000;
-
-   // Load registers.
-   assign {ldscratch2, ldscratch1, ldmode, ldopc, ldclk, lddbirh, lddbirm, lddbirl}
-     = (~dbwrite) ? 8'b00000000 :
-       ({eadr[2], eadr[1], eadr[0]} == 3'b000) ? 8'b00000001 :
-       ({eadr[2], eadr[1], eadr[0]} == 3'b001) ? 8'b00000010 :
-       ({eadr[2], eadr[1], eadr[0]} == 3'b010) ? 8'b00000100 :
-       ({eadr[2], eadr[1], eadr[0]} == 3'b011) ? 8'b00001000 :
-       ({eadr[2], eadr[1], eadr[0]} == 3'b100) ? 8'b00010000 :
-       ({eadr[2], eadr[1], eadr[0]} == 3'b101) ? 8'b00100000 :
-       ({eadr[2], eadr[1], eadr[0]} == 3'b110) ? 8'b01000000 :
-       ({eadr[2], eadr[1], eadr[0]} == 3'b111) ? 8'b10000000 :
-       8'b00000000;
-`else
    // Read registers.
    assign {spy_obh, spy_obl, spy_pc, spy_opc, spy_scratch, spy_irh, spy_irm, spy_irl}
      = ({dbread, eadr} == 6'b10_0000) ? 8'b00000001 :
@@ -133,6 +95,5 @@ module SPY0(spy_obh, spy_obl, spy_pc, spy_opc, spy_scratch, spy_irh, spy_irm, sp
        ({dbwrite, eadr} == 6'b10_1010) ? 4'b0100 :
        ({dbwrite, eadr} == 6'b10_1011) ? 4'b1000 :
        4'b0000;
-`endif
 
 endmodule
