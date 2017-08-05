@@ -104,9 +104,6 @@ module part_32x19dpram(reset,
             $display("spc: W %o <- %o; %t", address_b, data_b, $time);
 
  `endif
- `ifdef use_iologger
-          test.iologger(32'd10, {17'b0, address_b}, {13'b0, data_b});
- `endif
        end
 
    always @(posedge clk_a)
@@ -121,9 +118,6 @@ module part_32x19dpram(reset,
                if (address_a != 0 && debug != 0)
                  $display("spc: R %o -> %o; (collision) %t", address_a, data_b, $time);
  `endif
- `ifdef use_iologger
-               test.iologger(32'd11, {17'b0, address_a}, {13'b0, data_b});
- `endif
             end
           else
             begin
@@ -131,9 +125,6 @@ module part_32x19dpram(reset,
  `ifdef debug
                if (address_a != 0 && debug != 0)
                  $display("spc: R %o -> %o; %t", address_a, ram[address_a], $time);
- `endif
- `ifdef use_iologger
-               test.iologger(32'd11, {17'b0, address_a}, {13'b0, ram[address_a]});
  `endif
             end
        end

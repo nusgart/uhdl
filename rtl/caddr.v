@@ -621,13 +621,6 @@ module caddr(
  `endif
           end
 
- `ifdef use_iologger
-        if (state_fetch && ~sintr && bus_int)
-          test.iologger(32'd3, 0, 1);
-        if (state_fetch && sintr && ~bus_int)
-          test.iologger(32'd3, 0, 0);
- `endif
-
  `ifdef debug_ifetch
         if (ifetch && state_fetch)
           $display("(lba) ifetch! lpc %o, lc %o; %t", lpc, lc, $time);

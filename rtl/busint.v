@@ -315,29 +315,6 @@ module busint(mclk, reset,
      end
 `endif
 
-`ifdef use_iologger
-   always @(posedge mclk)
-     begin
-        // CPU write.
-        if (req && write && state == BUS_REQ && next_state != BUS_REQ)
-          begin
-             test.iologger(32'd2, addr, busin);
-          end
-
-        // CPU read.
-        if (req & load)
-          begin
-             test.iologger(32'd1, addr, busout);
-          end
-
-        // DMA disk to memory.
-        if (disk_write2busint && state == BUS_SLAVE && next_state != BUS_SLAVE)
-          begin
-             test.iologger(32'd4, addrout_disk, dataout_disk);
-          end
-     end
-`endif
-
    // Bus control state machine.
    always @(posedge mclk)
      if (reset)
