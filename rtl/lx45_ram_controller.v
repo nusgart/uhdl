@@ -9,9 +9,6 @@
 //      VRAM CPU r/w, 32 bits
 //
 
-`define lx45_real_sdram
-`undef lx45_fake_sdram
-
 module lx45_ram_controller(
                            sysclk_in,
                            lpddr_clk_out,
