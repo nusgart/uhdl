@@ -279,11 +279,11 @@ module lx45_ram_controller(
    assign lpddr_clk_out = lpddr_clk;
    assign lpddr_calib_done = c3_calib_done;
 
-   lpddr lpddr_intf(
-                    .sys_clk(sysclk_in),
-                    .sys_rst(lpddr_reset),
-                    .clock(lpddr_clk),
-                    .reset(),
+   mig_32bit lpddr_intf (
+                    .c3_sys_clk(sysclk_in),
+                    .c3_sys_rst_i(lpddr_reset),
+                    .c3_clk0(lpddr_clk),
+                    .c3_rst0(),
 
                     .mcb3_dram_dq(mcb3_dram_dq),
                     .mcb3_dram_a(mcb3_dram_a),
