@@ -4,7 +4,7 @@ The Big Bang -*- text -*-
 (si:set-sys-host "server" ':unix 404)
 (login 'ams 'server)
 
-(load "server://tree//site//site.lisp")
+(load "server://tree//sys//site.lisp")
 (fs:define-sys-logical-device)
 
 (dolist (x '(
@@ -22,11 +22,15 @@ The Big Bang -*- text -*-
 (qc-file "sys:sys2;struct lisp")
 (qc-file "sys:sys2;setf lisp")
 
-;; Compile RTC and read-table.
+;; Compile RTC and read-table.  If restoring from the DLW System 78
+;; tape, you will need to restore (and probobly patch) RTC LISP to
+;; work accordingly.
 (qc-file "sys:io;rtc lisp")
 (load "sys:io;rtc")
 (si:rtc-file "sys:io;rdtbl lisp")
 
+;; If restoring from System 78 tapes from DLW, you will need to patch
+;; a bunch of files.
 (si:recompile-world 'no-increment-patch)
 
 (fs:define-sys-logical-device)
