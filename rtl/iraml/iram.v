@@ -29,7 +29,8 @@ module IRAM(clk, reset, pc, pc_out, state_out, iwr, iwe, iram, fetch_out, prefet
 
 `define use_ucode_ram
 `ifdef use_ucode_ram
-   part_16kx49ram i_IRAM(.clk_a(clk), .reset(reset), .address_a(pc), .q_a(iram), .data_a(iwr), .wren_a(iwe), .rden_a(1'b1));
+   part_16kx49ram i_IRAM(.reset(reset), 
+                         .clk_a(clk), .address_a(pc), .q_a(iram), .data_a(iwr), .wren_a(iwe), .rden_a(1'b1));
    assign fetch_out = 0;
    assign prefetch_out = 0;
 `else
