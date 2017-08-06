@@ -5,7 +5,7 @@
 //   - CHIPSCOPE_CADDR: Enable Chipscope for caddr module.
 //   - CHIPSCOPE_MMC: Likewise, but for mmc module.
 //   - CHIPSCOPE_MMC_BD: Likewise, but for mmc_block_dev module.
-  
+
 // Default behaviour.
 `define ISE
 `undef SIMULATION
@@ -21,7 +21,7 @@
  `undef lx45_real_sdram
  `define lx45_fake_sdram
 `else 
-  `define lx45_real_sdram
+ `define lx45_real_sdram
  `undef lx45_fake_sdram
 `endif
 
