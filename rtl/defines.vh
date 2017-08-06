@@ -1,20 +1,18 @@
-`ifndef SIMULATION
+// Notes on defines:
+//   - ISE: Defined during synthesizing under Xilinx ISE.
+//   - SIMULATION: Defined during simulations.
+
+// Default behaviour.
 `define ISE
-//`define SIMULATION
+`undef SIMULATION
+
+// When running under Xilinx ISim, XILINX_ISIM is defined.
+`ifdef XLINX_ISIM
+ `undef ISE
+ `define SIMULATION
 `endif
 
-`ifdef ISE
- `define ISE_OR_SIMULATION
- `undef SIMULATION
-`endif
-
-`ifdef SIMULATION
- `ifdef ISE
-  `undef ISE
- `endif
- `define ISE_OR_SIMULATION
-`endif
-
+// For LPDDR model.
 `define x512Mb
 `define FULL_MEM
 `define sg5
