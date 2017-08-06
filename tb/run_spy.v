@@ -26,10 +26,7 @@ module run_spy;
                      .spy_out(spy_out),
                      .dbread(dbread),
                      .dbwrite(dbwrite),
-                     .eadr(eadr),
-
-                     .bd_cmd(), .bd_start(), .bd_bsy(), .bd_rdy(), .bd_err(), .bd_addr(),
-                     .bd_data_in(), .bd_data_out(), .bd_rd(), .bd_wr(), .bd_iordy(), .bd_state()
+                     .eadr(eadr)
                      );
 
    // Send RS-232 data by wiggling RS-232 input.
