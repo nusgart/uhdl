@@ -18,10 +18,9 @@ module part_16kx49ram(reset,
 
    parameter RAM_SIZE = 16384;
 
-   reg [48:0] q_a;
-
 `ifdef SIMULATION
    reg [48:0] ram [0:RAM_SIZE-1];
+   reg [48:0] q_a;
 
  `ifdef debug
    integer i, debug;
