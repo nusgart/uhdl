@@ -26,12 +26,10 @@ module part_2kx17dpram(reset,
 
 `ifdef SIMULATION
    reg [16:0] ram [0:RAM_SIZE-1];
-   reg [16:0] out_a;
-   reg [16:0] out_b;
+   reg [16:0] q_a;
+   reg [16:0] q_b;
 
-   assign q_a = out_a;
-   assign q_b = out_b;
-
+ `ifdef debug
    integer i, debug;
 
    initial
@@ -40,6 +38,7 @@ module part_2kx17dpram(reset,
         for (i = 0; i < RAM_SIZE; i=i+1)
           ram[i] = 17'b0;
      end
+ `endif
 
    always @(posedge clk_a)
      if (wren_a)
@@ -61,10 +60,10 @@ module part_2kx17dpram(reset,
 
    always @(posedge clk_a)
      if (reset)
-       out_a <= 0;
+       q_a <= 0;
      else if (rden_a)
        begin
-          out_a <= ram[address_a];
+          q_a <= ram[address_a];
  `ifdef debug
           if (debug > 0)
             $display("dram[%o] -> %o", address_a, ram[address_a]);
@@ -73,10 +72,10 @@ module part_2kx17dpram(reset,
 
    always @(posedge clk_a)
      if (reset)
-       out_b <= 0;
+       q_b <= 0;
      else if (rden_b)
        begin
-          out_b <= ram[address_b];
+          q_b <= ram[address_b];
  `ifdef debug
           if (debug > 0)
             $display("dram[%o] -> %o", address_b, ram[address_b]);

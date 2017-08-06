@@ -27,11 +27,8 @@ module part_32x19dpram(reset,
 
 `ifdef SIMULATION
    reg [18:0] ram [0:RAM_SIZE-1];
-   reg [18:0] out_a;
-   reg [18:0] out_b;
-
-   assign q_a = out_a;
-   assign q_b = out_b;
+   reg [18:0] q_a;
+   reg [18:0] q_b;
 
  `ifdef debug
    integer i, debug;
@@ -65,12 +62,12 @@ module part_32x19dpram(reset,
 
    always @(posedge clk_a)
      if (reset)
-       out_a <= 0;
+       q_a <= 0;
      else if (rden_a)
        begin
           if (wren_b && address_b == address_a)
             begin
-               out_a <= data_b;
+               q_a <= data_b;
  `ifdef debug
                if (address_a != 0 && debug != 0)
                  $display("spc: R %o -> %o; (collision) %t", address_a, data_b, $time);
@@ -78,7 +75,7 @@ module part_32x19dpram(reset,
             end
           else
             begin
-               out_a <= ram[address_a];
+               q_a <= ram[address_a];
  `ifdef debug
                if (address_a != 0 && debug != 0)
                  $display("spc: R %o -> %o; %t", address_a, ram[address_a], $time);
@@ -88,10 +85,10 @@ module part_32x19dpram(reset,
 
    always @(posedge clk_b)
      if (reset)
-       out_b <= 0;
+       q_b <= 0;
      else if (rden_b)
        begin
-          out_b <= ram[address_b];
+          q_b <= ram[address_b];
  `ifdef debug
           if (address_b != 0 && debug != 0)
             $display("spc: R %o -> %o; %t", address_b, ram[address_b], $time);

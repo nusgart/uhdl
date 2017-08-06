@@ -20,9 +20,6 @@ module part_16kx49ram(reset,
 
 `ifdef SIMULATION
    reg [48:0] ram [0:RAM_SIZE-1];
-   reg [48:0] out_a;
-
-   assign q_a = out_a;
 
  `ifdef debug
    integer i, debug;
@@ -50,9 +47,9 @@ module part_16kx49ram(reset,
        begin
           // Patch out DISK-COPY (which takes hours to simulate).
  `ifdef debug_patch_disk_copy
-          out_a <= address_a == 14'o24045 ? 49'h000000001000 : ram[address_a];
+          q_a <= address_a == 14'o24045 ? 49'h000000001000 : ram[address_a];
  `else
-          out_a <= ram[address_a];
+          q_a <= ram[address_a];
  `endif
  `ifdef debug
           if (debug > 1)
