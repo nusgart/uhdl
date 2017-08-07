@@ -507,8 +507,8 @@
       <association xil_pn:name="PostTranslateSimulation" xil_pn:seqID="244"/>
     </file>
     <file xil_pn:name="rtl/defines.vh" xil_pn:type="FILE_VERILOG">
-      <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="1" xil_pn:seqIDinc="130"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="1" xil_pn:seqIDinc="130"/>
+      <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="1" xil_pn:seqIDinc="121"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="1" xil_pn:seqIDinc="121"/>
     </file>
     <file xil_pn:name="rtl/cadr/qctl.v" xil_pn:type="FILE_VERILOG">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="64"/>
