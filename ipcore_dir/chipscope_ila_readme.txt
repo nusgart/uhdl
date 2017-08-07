@@ -1,5 +1,5 @@
 The following files were generated for 'chipscope_ila' in directory
-/home/ams/cpus-caddr/ipcore_dir/
+/home/ams/lm-3/uhdl/ipcore_dir/
 
 XCO file generator:
    Generate an XCO file for compatibility with legacy flows.
@@ -19,11 +19,6 @@ Creates an implementation netlist:
    * chipscope_ila.veo
    * chipscope_ila.xdc
    * chipscope_ila_xmdf.tcl
-
-Creates an HDL instantiation template:
-   Creates an HDL instantiation template for the IP.
-
-   * chipscope_ila.veo
 
 IP Symbol Generator:
    Generate an IP symbol based on the current project options'.

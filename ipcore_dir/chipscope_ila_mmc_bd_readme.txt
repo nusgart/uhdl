@@ -1,5 +1,5 @@
 The following files were generated for 'chipscope_ila_mmc_bd' in directory
-/home/ams/cpus-caddr/ipcore_dir/
+/home/ams/lm-3/uhdl/ipcore_dir/
 
 XCO file generator:
    Generate an XCO file for compatibility with legacy flows.

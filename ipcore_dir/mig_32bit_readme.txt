@@ -1,6 +1,6 @@
 
 The design files are located at
-/home/ams/cpus-caddr/ipcore_dir:
+/home/ams/lm-3/uhdl/ipcore_dir:
 
    - mig_32bit.veo:
         veo template file containing code that can be used as a model
