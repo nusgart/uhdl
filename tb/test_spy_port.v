@@ -2,7 +2,7 @@
 
 `timescale 1ns / 1ns
 
-module run_spy;
+module test_spy_port;
 
    reg clk;
    reg reset;
@@ -183,8 +183,8 @@ module run_spy;
      begin
         $timeformat(-9, 0, "ns", 7);
 
-        $dumpfile("run-spy.vcd");
-        $dumpvars(0, run_spy);
+        $dumpfile("spy_port.vcd");
+        $dumpvars(0, test_spy_port);
      end
 
    initial

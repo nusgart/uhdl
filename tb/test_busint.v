@@ -268,7 +268,7 @@ module test_busint;
    initial
      begin
         $timeformat(-9, 0, "ns", 7);
-        $dumpfile("run-disk.vcd");
+        $dumpfile("busint.vcd");
         $dumpvars(0, test_busint);
      end
 

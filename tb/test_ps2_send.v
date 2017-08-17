@@ -1,6 +1,6 @@
 `timescale 1ns / 1ns
 
-module test_ps2;
+module test_ps2_send;
 
    reg clk;
    reg reset;
@@ -114,8 +114,8 @@ module test_ps2;
      begin
         $timeformat(-9, 0, "ns", 7);
 
-        $dumpfile("test-ps2.vcd");
-        $dumpvars(0, test_ps2);
+        $dumpfile("ps2_send.vcd");
+        $dumpvars(0, test_ps2_send);
      end
 
    initial

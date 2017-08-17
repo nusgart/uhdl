@@ -2,7 +2,7 @@
 
 `define debug
 
-module test;
+module test_scancode_convert;
 
    reg clk, reset;
    reg [7:0] testcode;
@@ -21,8 +21,8 @@ module test;
    initial
      begin
         $timeformat(-9, 0, "ns", 7);
-        $dumpfile("test-scancode_convert.vcd");
-        $dumpvars(0, test.scancode_convert);
+        $dumpfile("scancode_convert.vcd");
+        $dumpvars(0, test_scancode_convert);
      end
 
    task sendscan;

@@ -2,7 +2,7 @@
 `define lpddr_model
 `define sim_ps
 
-module top_niox_tb;
+module test_top_niox;
 
    reg sysclk;
    reg switch;
@@ -158,8 +158,8 @@ module top_niox_tb;
 
    initial
      begin
-        $dumpfile("top_niox_tb.vcd");
-        $dumpvars(0, top_niox_tb);
+        $dumpfile("top_niox.vcd");
+        $dumpvars(0, test_top_niox);
 
         start_waves = 15833000;
         stop_waves = 17100000;

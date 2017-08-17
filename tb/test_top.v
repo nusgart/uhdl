@@ -9,7 +9,7 @@
 `timescale 1ps / 1ps
 `endif
 
-module run_top;
+module test_top;
 
    reg rs232_rxd;
    reg sysclk;
@@ -108,8 +108,8 @@ module run_top;
    initial
      begin
         $timeformat(-9, 0, "ns", 7);
-        $dumpfile("run_top_lx45_test.vcd");
-        $dumpvars(0, run_top);
+        $dumpfile("top.vcd");
+        $dumpvars(0, test_top);
      end
 `endif
 

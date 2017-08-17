@@ -158,7 +158,7 @@ module test_keyboard;
      begin
         $timeformat(-9, 0, "ns", 7);
 
-        $dumpfile("test-keyboard.vcd");
+        $dumpfile("keyboard.vcd");
         $dumpvars(0, test_keyboard);
      end
 

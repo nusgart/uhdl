@@ -37,7 +37,7 @@ module test_support;
    initial
      begin
         $timeformat(-9, 0, "ns", 7);
-        $dumpfile("run-support.vcd");
+        $dumpfile("support.vcd");
         $dumpvars(0, test_support);
      end
 
