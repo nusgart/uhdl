@@ -1061,3 +1061,56 @@ You are free to name your modules as you please, provided that the following con
 * xilinx isim
 
 Xilinx defines XILINX_ISIM for isim.
+
+** Verify against schematic:
+
+  -rw-r--r-- 1 ams ams  214 Aug  7 08:29 alatch.v
+  -rw-r--r-- 1 ams ams  222 Aug  7 08:29 platch.v
+  -rw-r--r-- 1 ams ams  222 Aug  7 08:29 spclch.v
+  -rw-r--r-- 1 ams ams  223 Aug  7 08:29 trap.v
+  -rw-r--r-- 1 ams ams  259 Aug  7 08:29 ior.v
+  -rw-r--r-- 1 ams ams  460 Aug  7 08:29 vmas.v
+  -rw-r--r-- 1 ams ams  478 Aug  7 08:29 spcw.v
+  -rw-r--r-- 1 ams ams  554 Aug  7 08:29 mmem.v
+  -rw-r--r-- 1 ams ams  568 Aug  7 08:29 mds.v
+  -rw-r--r-- 1 ams ams  581 Aug  7 08:29 pdl01.v
+  -rw-r--r-- 1 ams ams  585 Aug  7 08:29 amem01.v
+  -rw-r--r-- 1 ams ams  593 Aug  7 08:29 mskg4.v
+  -rw-r--r-- 1 ams ams  635 Aug  7 08:29 l.v
+  -rw-r--r-- 1 ams ams  651 Aug  7 08:29 mo01.v
+  -rw-r--r-- 1 ams ams  729 Aug  7 08:29 mlatch.v
+  -rw-r--r-- 1 ams ams  813 Aug  7 08:29 vmem12.v
+  -rw-r--r-- 1 ams ams  875 Aug  7 08:29 vmem0.v
+  -rw-r--r-- 1 ams ams  879 Aug  7 08:29 smctl.v
+  -rw-r--r-- 1 ams ams 2661 Aug  7 08:29 aluc4.v
+  -rw-r--r-- 1 ams ams 3126 Aug  7 08:29 alu01.v
+  -rw-r--r-- 1 ams ams 4898 Aug  7 08:29 shift01.v
+  -rw-r--r-- 1 ams ams 5133 Aug  7 08:29 source.v
+
+Require state:
+
+* -rw-r--r-- 1 ams ams  524 Aug  7 08:29 opcd.v
+* -rw-r--r-- 1 ams ams  556 Aug  7 08:29 qctl.v
+* -rw-r--r-- 1 ams ams  599 Aug  7 08:29 mf.v
+* -rw-r--r-- 1 ams ams  613 Aug  7 08:29 vmemdr.v
+* -rw-r--r-- 1 ams ams  620 Aug  7 08:29 iwr.v
+* -rw-r--r-- 1 ams ams  655 Aug  7 08:29 mctl.v
+* -rw-r--r-- 1 ams ams  662 Aug  7 08:29 lpc.v
+* -rw-r--r-- 1 ams ams  739 Aug  7 08:29 q.v
+* -rw-r--r-- 1 ams ams  754 Aug  7 08:29 ireg.v
+* -rw-r--r-- 1 ams ams  844 Aug  7 08:29 dspctl.v
+* -rw-r--r-- 1 ams ams  872 Aug  7 08:29 actl.v
+* -rw-r--r-- 1 ams ams  916 Aug  7 08:29 npc.v
+* -rw-r--r-- 1 ams ams  937 Aug  7 08:29 vma.v
+* -rw-r--r-- 1 ams ams 1164 Aug  7 08:29 dram02.v
+* -rw-r--r-- 1 ams ams 1248 Aug  7 08:29 spc.v
+* -rw-r--r-- 1 ams ams 1488 Aug  7 08:29 md.v
+* -rw-r--r-- 1 ams ams 1513 Aug  7 08:29 pdlptr.v
+* -rw-r--r-- 1 ams ams 1527 Aug  7 08:29 pdlctl.v
+* -rw-r--r-- 1 ams ams 1969 Aug  7 08:29 flag.v
+* -rw-r--r-- 1 ams ams 2084 Aug  7 08:29 lcc.v
+* -rw-r--r-- 1 ams ams 2096 Aug  7 08:29 vctl2.v
+* -rw-r--r-- 1 ams ams 2350 Aug  7 08:29 lc.v
+* -rw-r--r-- 1 ams ams 2666 Aug  7 08:29 contrl.v
+* -rw-r--r-- 1 ams ams 2796 Aug  7 08:29 vctl1.v
+* -rw-r--r-- 1 ams ams 3029 Aug  7 08:29 spy124.v
