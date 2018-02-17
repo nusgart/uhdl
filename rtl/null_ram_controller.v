@@ -31,11 +31,7 @@ module null_ram_controller(
                            vram_vga_addr, vram_vga_data_out,
                            vram_vga_req, vram_vga_ready,
 
-                           mcb3_dram_dq, mcb3_dram_a, mcb3_dram_ba,
-                           mcb3_dram_cke, mcb3_dram_ras_n, mcb3_dram_cas_n,
-                           mcb3_dram_we_n, mcb3_dram_dm, mcb3_dram_udqs,
-                           mcb3_rzq, mcb3_dram_udm, mcb3_dram_dqs,
-                           mcb3_dram_ck, mcb3_dram_ck_n
+                           
                            );
 
    input sysclk_in;
@@ -81,20 +77,7 @@ module null_ram_controller(
    input vram_vga_req;
    output vram_vga_ready;
 
-   inout [15:0] mcb3_dram_dq;
-   output [12:0] mcb3_dram_a;
-   output [1:0] mcb3_dram_ba;
-   output mcb3_dram_cke;
-   output mcb3_dram_ras_n;
-   output mcb3_dram_cas_n;
-   output mcb3_dram_we_n;
-   output mcb3_dram_dm;
-   inout mcb3_dram_udqs;
-   inout mcb3_rzq;
-   output mcb3_dram_udm;
-   inout mcb3_dram_dqs;
-   output mcb3_dram_ck;
-   output mcb3_dram_ck_n;
+
 
    reg sdram_done;
    reg sdram_ready;
