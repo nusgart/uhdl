@@ -7,7 +7,9 @@
 //   - CHIPSCOPE_MMC_BD: Likewise, but for mmc_block_dev module.
 
 // Default behaviour.
-`define ISE
+
+`define VIVADO
+`undef ISE
 `undef SIMULATION
 
 // When running under Xilinx ISim, XILINX_ISIM is defined.
