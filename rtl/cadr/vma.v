@@ -1,5 +1,7 @@
 // VMA --- VMA REGISTER
 
+`include "defines.vh"
+
 module VMA(clk, reset, state_alu, state_write, state_fetch, vmaenb, vmas, spy_in, srcvma, ldvmal, ldvmah, vma, vmadrive);
 
    input clk;

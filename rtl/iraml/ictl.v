@@ -1,5 +1,7 @@
 // ICTL --- I RAM CONTROL
 
+`include "defines.vh"
+
 module ICTL(idebug, promdisabled, iwrited, state_write, iwe);
 
    input state_write;

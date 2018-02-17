@@ -1,5 +1,7 @@
 // VMEM1, VMEM2 --- VIRTUAL MEMORY MAP STAGE 1
 
+`include "defines.vh"
+
 module VMEM12(clk, reset, vmap, mapi, vm1rp, vma, vmo, vm1wp);
 
    input clk;

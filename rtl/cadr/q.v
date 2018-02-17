@@ -1,5 +1,7 @@
 // Q --- Q REGISTER
 
+`include "defines.vh"
+
 module Q(clk, reset, state_fetch, qs0, qs1, alu, q);
 
    input clk;

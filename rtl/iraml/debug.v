@@ -1,5 +1,7 @@
 // DEBUG --- PDP11 DEBUG INSTRUCTION
 
+`include "defines.vh"
+
 module DEBUG(clk, reset, spy_in, i, idebug, promenable, iprom, iram, lddbirh, lddbirm, lddbirl);
 
    input clk;

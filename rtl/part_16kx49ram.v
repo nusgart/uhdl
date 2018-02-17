@@ -18,7 +18,7 @@ module part_16kx49ram(reset,
 
    parameter RAM_SIZE = 16384;
    
-   //`ifdef VIVADO
+   `ifdef VIVADO
    
        wire ena_a = rden_a | wren_a;
        // xpm_memory_spram: Single Port RAM
@@ -70,7 +70,7 @@ module part_16kx49ram(reset,
        );
        
        // End of xpm_memory_spram instance declaration
-//`endif
+`endif
 
    
 `ifdef SIMULATION

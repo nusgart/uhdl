@@ -1,4 +1,6 @@
 // xbus_spy.v --- SPY board
+`include "defines.vh"
+
 
 module xbus_spy(
                 clk, reset,

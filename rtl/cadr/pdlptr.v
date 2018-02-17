@@ -1,5 +1,7 @@
 // PDLPTR --- PDL INDEX AND POINTER
 
+`include "defines.vh"
+
 module PDLPTR(clk, reset, pidrive, ppdrive, pdlidx, pdlptr, state_alu, state_write, state_fetch, state_read, destpdlx, srcpdlidx, srcpdlptr, ob, destpdlp, pdlcnt, srcpdlpop);
 
    input clk;

@@ -1,4 +1,6 @@
 // MCTL --- M CONTROL
+`include "defines.vh"
+
 
 module MCTL(mpassm, srcm, mrp, mwp, madr, ir, destm, wadr, state_decode, state_write);
 

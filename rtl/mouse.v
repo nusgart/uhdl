@@ -1,5 +1,7 @@
 // mouse.v --- mouse interface
 
+`include "defines.vh"
+
 module mouse(clk,
              reset,
              ps2_clk_in,

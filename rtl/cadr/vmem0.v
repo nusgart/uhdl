@@ -1,5 +1,7 @@
 // VMEM0 --- VIRTUAL MEMORY MAP STAGE 0
 
+`include "defines.vh"
+
 module VMEM0(clk, reset, mapi, vmap, vm0rp, vma, srcmap, memstart, vm0wp);
 
    input clk;

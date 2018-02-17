@@ -2,6 +2,8 @@
 //
 // Simple AT style keyboard scancode to Lisp Machine keyboard convertion.
 
+`include "defines.vh"
+
 module scancode_convert(clk,
                         reset,
                         strobe_in,

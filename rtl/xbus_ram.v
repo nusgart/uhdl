@@ -1,4 +1,6 @@
 // xbus_ram.v --- RAM board
+`include "defines.vh"
+
 
 module xbus_ram (
                  clk, reset,

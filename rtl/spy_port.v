@@ -1,5 +1,7 @@
 // spy_port.v --- serial port spy support
 
+`include "defines.vh"
+
 module spy_port(sysclk, clk, reset, rs232_rxd, rs232_txd,
                 spy_in, spy_out, dbread, dbwrite, eadr);
 

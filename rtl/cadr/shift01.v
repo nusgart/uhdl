@@ -1,5 +1,7 @@
 // SHIFT0, SHIFT1 --- SHIFTER (RIGHT & LEFT)
 
+`include "defines.vh"
+
 module SHIFT01(r, s0, s1, s2, s3, s4, m);
 
    input [31:0] m;

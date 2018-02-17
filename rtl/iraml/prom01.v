@@ -1,5 +1,7 @@
 // PROM0, PROM1 --- PROM
 
+`include "defines.vh"
+
 module PROM01(clk, promaddr, iprom);
 
    input clk;

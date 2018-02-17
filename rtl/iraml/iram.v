@@ -1,5 +1,7 @@
 // IRAM --- RAM
 
+`include "defines.vh"
+
 module IRAM(clk, reset, pc, pc_out, state_out, iwr, iwe, iram, fetch_out, prefetch_out, machrun_out, mcr_data_in, state_fetch, machrun, state, need_mmu_state, state_mmu, state_write, state_prefetch, promdisabled);
 
    input clk;

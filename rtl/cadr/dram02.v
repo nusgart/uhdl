@@ -1,4 +1,6 @@
 // DRAM0, DRAM1, DRAM2 --- DISPATCH RAM
+`include "defines.vh"
+
 
 module DRAM02(clk, reset, state_prefetch, state_write, vmo, a, r, ir, dmask, dispwr, dpc, dn, dp, dr);
 

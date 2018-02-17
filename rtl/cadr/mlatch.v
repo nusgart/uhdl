@@ -1,5 +1,7 @@
 // MLATCH --- M MEMORY LATCH
 
+`include "defines.vh"
+
 module MLATCH(pdldrive, spcdrive, mfdrive, mmem, pdlo, spcptr, spco, mf, m, mpassm);
 
    input [18:0] spco;

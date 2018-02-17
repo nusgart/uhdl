@@ -1,5 +1,7 @@
 // vga_display.v --- memory to VGA interface
 
+`include "defines.vh"
+
 module vga_display(clk,
                    pixclk,
                    reset,

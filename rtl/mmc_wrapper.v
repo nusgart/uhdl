@@ -3,6 +3,8 @@
 // Clock domain aware wrapper for MMC card interface handles the
 // faster MMC clock and slower CPU clock.
 
+`include "defines.vh"
+
 module mmc_wrapper(clk, mmc_clk, reset,
                    speed, rd, wr, init, send, stop, cmd,
                    data_in, data_out, done, state_out,

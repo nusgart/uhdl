@@ -1,5 +1,7 @@
 // PCTL --- ---!!!
 
+`include "defines.vh"
+
 module PCTL(pc, idebug, promdisabled, iwrited, promenable, promaddr);
 
    input [13:0] pc;

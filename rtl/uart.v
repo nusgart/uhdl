@@ -1,5 +1,7 @@
 // uart.v --- low speed async. UART
 
+`include "defines.vh"
+
 module uart(clk, reset,
             ld_tx_req, ld_tx_ack, tx_data, tx_enable, tx_out, tx_empty,
             rx_req, rx_ack, rx_data, rx_enable, rx_in, rx_empty);

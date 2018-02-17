@@ -1,5 +1,7 @@
 // keyboard.v --- keyboard interface
 
+`include "defines.vh"
+
 module keyboard(
                 clk,
                 reset,

@@ -1,5 +1,7 @@
 // MMEM --- M MEMORY
 
+`include "defines.vh"
+
 module MMEM(clk, reset, mrp, mwp, madr, l, mmem);
 
    input clk;

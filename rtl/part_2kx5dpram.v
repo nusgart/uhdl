@@ -2,6 +2,8 @@
 //
 // Used by VMEM0.
 
+`include "defines.vh"
+
 module part_2kx5dpram(reset,
                       clk_a, address_a, q_a, data_a, wren_a, rden_a,
                       clk_b, address_b, q_b, data_b, wren_b, rden_b);

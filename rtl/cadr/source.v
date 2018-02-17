@@ -1,5 +1,7 @@
 // SOURCE --- SOURCE, DEST, OP DECODE
 
+`include "defines.vh"
+
 module SOURCE(ir, iralu, irbyte, destimod0, destimod1, iwrited, idebug, nop, irdisp, irjump, funct, div, mul, srcq, srcopc, srcpdltop, srcpdlpop, srcpdlidx, srcpdlptr, srcspc, srcdc, srcspcpop, srclc, srcmd, srcmap, srcvma, imod, destmem, destvma, destmdr, dest, destm, destintctl, destlc, destspc, destpdlp, destpdlx, destpdl_x, destpdl_p, destpdltop);
 
    input [48:0] ir;

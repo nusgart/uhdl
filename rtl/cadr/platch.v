@@ -1,5 +1,7 @@
 // PLATCH --- PDL BUFFER LATCH
 
+`include "defines.vh"
+
 module PLATCH(pdl, pdlo);
 
    input [31:0] pdlo;

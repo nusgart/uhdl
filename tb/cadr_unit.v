@@ -1,3 +1,5 @@
+`include "defines.vh"
+
 `define use_cpu
 `define use_spyport
 `define use_vga
@@ -16,7 +18,7 @@ module cadr_unit(usb_txd, usb_rxd,
            ms_ps2_clk, ms_ps2_data,
            vga_hsync, vga_vsync, vga_r, vga_g, vga_b,
            mmc_cs, mmc_di, mmc_do, mmc_sclk,
-           switch
+           switch, pixel_clk
            `ifdef use_hdmi
             , tmds, tmdsb
            `endif
@@ -47,12 +49,14 @@ module cadr_unit(usb_txd, usb_rxd,
    input mmc_di;
 
    input [3:0] switch;
-
+   
    
    `ifdef use_hdmi
     output [3:0] tmds;
     output [3:0] tmdsb;
    `endif
+
+   input pixel_clk;
 
    wire sysclk_buf;
    wire clk50;
@@ -468,7 +472,7 @@ module cadr_unit(usb_txd, usb_rxd,
 
    assign vga_reset = reset;
    assign clk50 = sysclk_buf;
-
+   assign pixclk = pixel_clk;
    // Run CPU clock at half sysclk (25MHz).
  `ifdef slow
    reg [3:0] clkcnt;

@@ -1,5 +1,7 @@
 // SMCTL --- SHIFT/MASK CONTROL
 
+`include "defines.vh"
+
 module SMCTL(mskr, s0, s1, s2, s3, s4, sh3, sh4, mskl, irbyte, ir);
 
    input [48:0] ir;

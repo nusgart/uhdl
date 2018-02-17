@@ -1,5 +1,7 @@
 // PDLCTL --- PDL BUFFER CONTROL
 
+`include "defines.vh"
+
 module PDLCTL(clk, reset, pdlidx, pdla, pdlwrite, state_alu, state_write, state_read, ir, pwp, prp, pdlenb, pdldrive, pdlcnt, pdlptr, destpdltop, destpdl_x, destpdl_p, srcpdlpop, state_mmu, nop, srcpdltop, state_fetch);
 
    input clk;

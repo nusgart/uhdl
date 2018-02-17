@@ -1,5 +1,7 @@
 // SPCW --- SPC WRITE DATA SEL
 
+`include "defines.vh"
+
 module SPCW(destspc, l, spcw, n, wpc, ipc);
 
    input [13:0] ipc;

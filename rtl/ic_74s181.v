@@ -1,3 +1,6 @@
+`include "defines.vh"
+
+
 module ic_74S181(S, A, B, M, CIN_N, F, X, Y, COUT_N, AEB);
 
    input [3:0] A, B, S;

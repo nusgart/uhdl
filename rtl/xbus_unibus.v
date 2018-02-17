@@ -1,4 +1,6 @@
 // xbus_unibus.v --- unibus board
+`include "defines.vh"
+
 
 module xbus_unibus(
                    reset, clk,

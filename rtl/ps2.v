@@ -15,6 +15,8 @@
 // PS/2 clock is either at a low level or less than 11 bits of serial
 // data have been received (start + 8 data + parity + stop).
 
+`include "defines.vh"
+
 module ps2(clk,
            reset,
            ps2_clk,

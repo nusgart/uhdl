@@ -1,4 +1,6 @@
 // AMEM0, AMEM1 --- A MEMORY (LEFT & RIGHT)
+`include "defines.vh"
+
 
 module AMEM01(clk, reset, l, aadr, arp, awp, amem);
 

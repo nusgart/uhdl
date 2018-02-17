@@ -1,4 +1,6 @@
 // LCC --- LC CONTROL
+`include "defines.vh"
+
 
 module LCC(clk, reset, state_fetch, lc0b, needfetch, ifetch, spc1a, sh4, sh3, sintr, lc, lc_byte_mode, spop, srcspcpopreal, spc, lcinc, destlc, irdisp, ir, ext_int, bus_int);
 

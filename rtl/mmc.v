@@ -2,6 +2,8 @@
 //
 // Handles SPI transaction and MMC/SD clock.
 
+`include "defines.vh"
+
 module mmc(clk, reset, speed, rd, wr, init, send, stop, cmd,
            data_in, data_out, done, state_out,
            mmc_cs, mmc_di, mmc_do, mmc_sclk);

@@ -3,6 +3,8 @@
 // This expects the block device to provide 1024 byte blocks with a 16
 // bit interface. Currently the LBA is passed with 512 byte block
 // addressing.
+`include "defines.vh"
+
 
 module xbus_disk(
                  reset, clk,

@@ -1,4 +1,6 @@
 // FLAG --- FLAGS, CONDITIONALS
+`include "defines.vh"
+
 
 module FLAG(clk, reset, ir, nopa, aeqm, sintr, int_enable, vmaok, sequence_break, alu, lc_byte_mode, prog_unibus_reset, ob, r, state_fetch, destintctl, jcond);
 

@@ -1,5 +1,7 @@
 // PDL0, PDL1 --- PDL BUFFER (RIGHT & LEFT)
 
+`include "defines.vh"
+
 module PDL01(clk, reset, prp, pdla, l, pwp, pdlo);
 
    input clk;

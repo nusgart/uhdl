@@ -1,6 +1,8 @@
 // part_21kx32dpram.v --- 21kx32 dual port synchronous SRAM
 //
 // Used by VRAM.
+`include "defines.vh"
+
 
 module part_21kx32dpram(reset,
                         clk_a, address_a, q_a, data_a, wren_a, rden_a,

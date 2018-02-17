@@ -1,5 +1,7 @@
 // MSKG4 --- MASK GENERATION
 
+`include "defines.vh"
+
 module MSKG4(clk, mskl, mskr, msk);
 
    input clk;

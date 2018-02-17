@@ -1,4 +1,6 @@
 // LC --- LOCATION COUNTER
+`include "defines.vh"
+
 
 module LC(clk, reset, destlc, lca, lcinc, lc_byte_mode, lc, srclc, state_alu, state_write, state_mmu, state_fetch, ob, opcdrive, opc, dcdrive, dc, pdlptr, pidrive, pdlidx, qdrive, q, mddrive, md, vmadrive, vma, mapdrive, pfw, needfetch, int_enable, prog_unibus_reset, sequence_break, lc0b, ppdrive, vmap, pfr, vmo, mf);
 

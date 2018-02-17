@@ -1,5 +1,7 @@
 // OPCD --- OPC, DC, ZERO DRIVE
 
+`include "defines.vh"
+
 module OPCD(dcdrive, opcdrive, srcdc, srcopc, state_alu, state_write, state_mmu, state_fetch);
 
    input state_alu;

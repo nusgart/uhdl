@@ -1,5 +1,7 @@
 // QCTL --- Q REGISTER CONTROL
 
+`include "defines.vh"
+
 module QCTL(state_alu, state_write, state_mmu, state_fetch, ir, iralu, srcq, qs0, qs1, qdrive);
 
    input state_alu;

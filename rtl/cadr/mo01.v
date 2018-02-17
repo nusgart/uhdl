@@ -1,5 +1,7 @@
 // MO1, MO2 --- MASKER/OUTPUT SELECT
 
+`include "defines.vh"
+
 module MO01(msk, r, a, alu, q, osel, ob);
 
    input [1:0] osel;

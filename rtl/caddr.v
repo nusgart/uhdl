@@ -1,4 +1,6 @@
 // caddr.v --- CADR processor
+`include "defines.vh"
+
 
 module caddr(
              clk, ext_int, ext_reset, ext_boot, ext_halt,

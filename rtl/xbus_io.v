@@ -1,4 +1,6 @@
 // xbus_io.v --- IOB board
+`include "defines.vh"
+
 
 module xbus_io(
                clk, reset,

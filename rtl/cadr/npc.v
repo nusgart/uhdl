@@ -1,5 +1,7 @@
 // NPC --- NPC,IPC,PC
 
+`include "defines.vh"
+
 module NPC(clk, reset, state_fetch, ipc, trap, pcs1, pcs0, ir, spc, spc1a, dpc, pc);
 
    input clk;

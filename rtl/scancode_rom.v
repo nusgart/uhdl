@@ -1,5 +1,7 @@
 // scancode_rom.v --- map PS/2 scancodes to Lisp Machine scancodes
 
+`include "defines.vh"
+
 module scancode_rom(addr, data);
 
    input [8:0] addr;

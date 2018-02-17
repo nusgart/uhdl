@@ -3,6 +3,8 @@
 // Basic bus interface for CADR, does basic arbitration and allows
 // disk to be bus master. See SYS:DOC;UNADDR TEXT for how addresses
 // are mapped.
+`include "defines.vh"
+
 
 module busint(mclk, reset,
               addr, busin, busout, spyin, spyout, spyreg, spyrd, spywr,

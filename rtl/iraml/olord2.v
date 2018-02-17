@@ -1,5 +1,7 @@
 // OLORD2 --- OVERLORD
 
+`include "defines.vh"
+
 module OLORD2(clk, reset, statstop, err, errhalt, boot, boot_trap, ldmode, spy_in, errstop, ext_reset, ext_boot, srun, ext_halt, stat_ovf);
 
    input clk;

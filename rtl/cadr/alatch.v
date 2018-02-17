@@ -1,4 +1,6 @@
 // ALATCH --- A MEMORY LATCH
+`include "defines.vh"
+
 
 module ALATCH(amem, a);
 

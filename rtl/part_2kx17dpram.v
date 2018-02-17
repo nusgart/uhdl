@@ -1,3 +1,6 @@
+`include "defines.vh"
+
+
 // part_2kx17dpram.v --- 2kx17 dual port synchronous SRAM
 //
 // Used by DRAM.

@@ -1,4 +1,6 @@
 // xbus_tv.v --- TV board
+`include "defines.vh"
+
 
 module xbus_tv(
                clk, reset, addr,

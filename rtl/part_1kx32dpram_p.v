@@ -2,6 +2,8 @@
 //
 // Used by PDL.
 
+`include "defines.vh"
+
 module part_1kx32dpram_p(reset,
                          clk_a, address_a, q_a, data_a, wren_a, rden_a,
                          clk_b, address_b, q_b, data_b, wren_b, rden_b);

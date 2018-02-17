@@ -2,6 +2,8 @@
 //
 // Used by PROM.
 
+`include "defines.vh"
+
 module part_512x49prom(clk, addr, q);
 
    input clk;

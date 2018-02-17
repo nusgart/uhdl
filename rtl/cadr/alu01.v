@@ -1,4 +1,6 @@
 // ALU0, ALU1 --- ---!!!
+`include "defines.vh"
+
 
 module ALU01(
              aluf, alumode,

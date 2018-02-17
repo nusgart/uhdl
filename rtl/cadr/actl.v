@@ -1,4 +1,6 @@
 // ACTL --- A CONTROL
+`include "defines.vh"
+
 
 module ACTL(clk, reset, state_decode, state_write, ir, dest, destm, aadr, wadr, arp, awp);
 

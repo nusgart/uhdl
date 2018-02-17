@@ -4,6 +4,8 @@
 //
 //      start + data + parity + stop.
 
+`include "defines.vh"
+
 module ps2_send(clk,
                 reset,
                 ps2_clk,

@@ -1,5 +1,7 @@
 // VMAS --- VMA INPUT SELECTOR
 
+`include "defines.vh"
+
 module VMAS(vmas, mapi, vmasel, ob, memprepare, md, vma, lc);
 
    input [25:0] lc;

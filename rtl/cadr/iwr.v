@@ -1,4 +1,6 @@
 // IWR --- INSTRUCTION WRITE REGISTER
+`include "defines.vh"
+
 
 module IWR(clk, reset, state_fetch, a, m, iwr);
 

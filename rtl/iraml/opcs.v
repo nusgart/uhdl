@@ -1,5 +1,7 @@
 // OPCS --- OLD PC SAVE SHIFTER
 
+`include "defines.vh"
+
 module OPCS(clk, reset, opcclk, opcinh, pc, opc, state_fetch);
 
    input clk;

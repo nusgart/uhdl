@@ -1,5 +1,7 @@
 // MD --- MEMORY DATA REGISTER
 
+`include "defines.vh"
+
 module MD(clk, reset, md, mddrive, mdgetspar, spy_in, loadmd, memrq, destmdr, mds, srcmd, state_alu, state_write, state_mmu, state_fetch, ldmdh, ldmdl);
 
    input clk;

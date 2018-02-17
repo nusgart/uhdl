@@ -1,4 +1,6 @@
 // IREG --- INSTRUCTION REGISTER
+`include "defines.vh"
+
 
 module IREG(clk, reset, i, iob, ir, state_fetch, destimod1, destimod0);
 

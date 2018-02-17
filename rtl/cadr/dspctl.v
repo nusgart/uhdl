@@ -1,4 +1,6 @@
 // DSPCTL --- DISPATCH CONTROL
+`include "defines.vh"
+
 
 module DSPCTL(clk, reset, state_fetch, irdisp, funct, ir, dmask, dmapbenb, dispwr, dc);
 

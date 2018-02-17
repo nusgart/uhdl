@@ -1,5 +1,7 @@
 // ps2_support.v --- ---!!!
 
+`include "defines.vh"
+
 module ps2_support(clk, reset,
                    kb_ps2_clk_in, kb_ps2_data_in,
                    kb_data, kb_ready,

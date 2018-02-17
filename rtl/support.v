@@ -1,4 +1,6 @@
 // support.v --- generate various signals for CPU
+`include "defines.vh"
+
 
 module support(sysclk, cpuclk, button_r, button_b, button_h, button_c,
                lpddr_reset, lpddr_calib_done,

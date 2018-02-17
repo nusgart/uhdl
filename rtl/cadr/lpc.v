@@ -1,4 +1,6 @@
 // LPC --- LAST PC
+`include "defines.vh"
+
 
 module LPC(clk, reset, lpc_hold, pc, wpc, irdisp, ir, state_fetch);
 

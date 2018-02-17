@@ -9,6 +9,8 @@
 //      VRAM CPU r/w, 32 bits
 //
 
+`include "defines.vh"
+
 module null_ram_controller(
                            sysclk_in,
                            lpddr_clk_out,

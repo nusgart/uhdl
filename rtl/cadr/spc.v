@@ -1,5 +1,7 @@
 // SPC --- SPC MEMORY AND POINTER
 
+`include "defines.vh"
+
 module SPC(clk, reset, spcnt, state_fetch, spush, spcptr, spco, spcw, srp, swp);
 
    input clk;

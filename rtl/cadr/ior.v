@@ -1,4 +1,6 @@
 // IOR --- INST. MODIFY OR
+`include "defines.vh"
+
 
 module IOR(iob, i, ob);
 

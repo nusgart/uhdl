@@ -1,4 +1,6 @@
 // ALUC4 --- ALU CARRY AND FUNCTION
+`include "defines.vh"
+
 
 module ALUC4(a, q, ir, div, iralu, irjump, mul, xout3, xout7, xout11, xout15, xout19, xout23, xout27, xout31, yout3, yout7, yout11, yout15, yout19, yout23, yout27, yout31, osel, aluf, alumode, cin0, cin4_n, cin8_n, cin12_n, cin16_n, cin20_n, cin24_n, cin28_n, cin32_n);
 

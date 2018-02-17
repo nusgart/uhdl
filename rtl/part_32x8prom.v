@@ -1,6 +1,8 @@
 // part_32x8prom.v --- 32x8 ROM
 //
 // Used by DMASK.
+`include "defines.vh"
+
 
 module part_32x8prom(clk, addr, q);
 
