@@ -1,0 +1,174 @@
+Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
+--------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2017.4 (win64) Build 2086221 Fri Dec 15 20:55:39 MST 2017
+| Date         : Sat Feb 17 06:52:50 2018
+| Host         : ryzenbox running 64-bit major release  (build 9200)
+| Command      : report_control_sets -verbose -file cadr_unit_control_sets_placed.rpt
+| Design       : cadr_unit
+| Device       : xc7z020
+--------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Flip-Flop Distribution
+3. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Number of unique control sets                            |   102 |
+| Unused register locations in slices containing registers |   245 |
++----------------------------------------------------------+-------+
+
+
+2. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |             104 |           83 |
+| No           | No                    | Yes                    |               2 |            1 |
+| No           | Yes                   | No                     |             449 |          159 |
+| Yes          | No                    | No                     |              58 |           19 |
+| Yes          | No                    | Yes                    |              11 |            4 |
+| Yes          | Yes                   | No                     |            1155 |          420 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+3. Detailed Control Set Information
+-----------------------------------
+
++----------------------+----------------------------------------------------------+-------------------------------------------------+------------------+----------------+
+|     Clock Signal     |                       Enable Signal                      |                 Set/Reset Signal                | Slice Load Count | Bel Load Count |
++----------------------+----------------------------------------------------------+-------------------------------------------------+------------------+----------------+
+|  sysclk_buf          | mmc_bd/mmc_wrapper/mmc/mmc_do_i_1_n_0                    | support/led_OBUF[0]                             |                1 |              1 |
+|  sysclk_buf          | mmc_bd/mmc_wrapper/mmc/mmc_cs_i_1_n_0                    | support/led_OBUF[0]                             |                1 |              1 |
+|  cpuclk              | spy_port/spy_uart/tx_out9_out                            | support/led_OBUF[0]                             |                1 |              1 |
+|  cpuclk              |                                                          | support/FSM_onehot_reset_state_reg_n_0_[4]      |                1 |              2 |
+|  cpuclk              | cpu/cadr_vmem12/i_VMEM1/iob_csr_reg[0][0]                | support/led_OBUF[0]                             |                2 |              4 |
+|  sysclk_buf          | support/reset_state                                      |                                                 |                1 |              4 |
+|  cpuclk              | ps2_support/keyboard/ps2/ps2_clk_fall_edge               | ps2_support/keyboard/ps2/bitcnt_r[3]_i_1__0_n_0 |                1 |              4 |
+|  cpuclk              | ps2_support/mouse/ps2_out/ps2_out[8]_i_2_n_0             | ps2_support/mouse/ps2_out/ps2_out[8]_i_1_n_0    |                3 |              4 |
+|  cpuclk              | spy_port/spy_uart/tx_bit_cnt[3]_i_1_n_0                  | support/led_OBUF[0]                             |                2 |              4 |
+|  cpuclk              | spy_port/p_2_out[12]                                     | support/led_OBUF[0]                             |                1 |              4 |
+|  cpuclk              | spy_port/p_2_out[3]                                      | support/led_OBUF[0]                             |                1 |              4 |
+|  cpuclk              | spy_port/spy_uart/rx_bit_cnt                             | spy_port/spy_uart/rx_bit_cnt[3]_i_1_n_0         |                1 |              4 |
+|  cpuclk              | spy_port/p_2_out[6]                                      | support/led_OBUF[0]                             |                1 |              4 |
+|  cpuclk              | spy_port/p_2_out[8]                                      | support/led_OBUF[0]                             |                1 |              4 |
+|  cpuclk              | support/E[0]                                             |                                                 |                2 |              4 |
+|  cpuclk              | ps2_support/mouse/ps2_in/ps2_clk_fall_edge               | ps2_support/mouse/ps2_in/bitcnt_r[3]_i_1_n_0    |                1 |              4 |
+|  cpuclk              | cpu/cadr_ireg/lc_byte_mode0                              | spy_port/reset                                  |                1 |              4 |
+|  sysclk_buf          | rc/sdram_state0                                          |                                                 |                2 |              5 |
+|  cpuclk              | support/cpu_state                                        |                                                 |                2 |              5 |
+|  cpuclk              | spy_port/eadr0                                           | support/led_OBUF[0]                             |                2 |              5 |
+|  cpuclk              | ps2_support/mouse/ps2_out/state[4]_i_1__2_n_0            | support/led_OBUF[0]                             |                2 |              5 |
+|  cpuclk              | busint/disk/E[0]                                         | support/led_OBUF[0]                             |                2 |              5 |
+|  cpuclk              | ps2_support/mouse/ps2_in/m_b2_reg[0][0]                  | support/led_OBUF[0]                             |                2 |              5 |
+|  cpuclk              | cpu/cadr_ireg/E[0]                                       | spy_port/reset                                  |                2 |              5 |
+|  cpuclk              | spy_port/reg_addr[4]_i_1_n_0                             | support/led_OBUF[0]                             |                1 |              5 |
+|  cpuclk              | cpu/cadr_vma/disk_head_reg[0]_0[0]                       | support/led_OBUF[0]                             |                2 |              5 |
+|  cpuclk              | ps2_support/mouse/ps2_out/ps2_out[8]_i_2_n_0             | support/led_OBUF[0]                             |                3 |              6 |
+|  cpuclk              | busint/timeout_count0                                    | busint/timeout_count[5]_i_1_n_0                 |                2 |              6 |
+|  sysclk_buf          | mmc_bd/mmc_wrapper/mmc/s_data_0                          |                                                 |                3 |              8 |
+|  cpuclk              | ps2_support/mouse/ps2_in/m_b3_reg[0][0]                  | support/led_OBUF[0]                             |                2 |              8 |
+|  cpuclk              | ps2_support/mouse/ps2_in/E[0]                            | support/led_OBUF[0]                             |                2 |              8 |
+|  cpuclk              | ps2_support/keyboard/ps2/kb_scan_rdy                     | support/led_OBUF[0]                             |                1 |              8 |
+|  sysclk_buf          | mmc_bd/mmc_wrapper/mmc/data_out0                         | mmc_bd/mmc_wrapper/mmc/data_out[7]_i_1_n_0      |                3 |              8 |
+|  cpuclk              | busint/disk/inc_wc                                       | busint/disk/wc[7]_i_1_n_0                       |                2 |              8 |
+|  cpuclk              | ps2_support/kb_ready                                     | support/led_OBUF[0]                             |                3 |              8 |
+|  cpuclk              | spy_port/rx_req                                          | support/led_OBUF[0]                             |                1 |              8 |
+|  cpuclk              | mmc_bd/mmc_wrapper/E[0]                                  | support/led_OBUF[0]                             |                1 |              8 |
+|  cpuclk              | ps2_support/keyboard/scancode_convert/keycode[8]_i_1_n_0 | support/led_OBUF[0]                             |                6 |              8 |
+|  cpuclk              | spy_port/spy_uart/rx_data0                               | support/led_OBUF[0]                             |                2 |              8 |
+|  cpuclk              | mmc_bd/mmc_wrapper/wc_reg[0][0]                          | mmc_bd/wc[7]_i_1__0_n_0                         |                2 |              8 |
+| ~cpuclk              |                                                          |                                                 |                4 |              8 |
+|  sysclk_buf          | mmc_bd/mmc_wrapper/mmc/bit_shift                         | mmc_bd/mmc_wrapper/mmc/bitcount[7]_i_1_n_0      |                3 |              8 |
+|  cpuclk              | mmc_bd/mmc_wrapper/E[1]                                  | support/led_OBUF[0]                             |                1 |              8 |
+|  cpuclk              | cpu/cadr_olord1/E[0]                                     | spy_port/reset                                  |                2 |             10 |
+|  cpuclk              | ps2_support/mouse/ps2_in/ps2_clk_fall_edge               | support/led_OBUF[0]                             |                2 |             10 |
+|  cpuclk              | ps2_support/keyboard/ps2/ps2_clk_fall_edge               | support/led_OBUF[0]                             |                3 |             10 |
+|  cpuclk              | cpu/cadr_ireg/pdlidx_reg[9][0]                           | spy_port/reset                                  |                7 |             10 |
+|  cpuclk              | cpu/cadr_ireg/pdlptr_reg[9][0]                           | spy_port/reset                                  |                7 |             10 |
+|  cpuclk              | cpu/state_reg_n_0_[0]                                    | spy_port/reset                                  |                6 |             10 |
+|  pixel_clk_IBUF_BUFG | vga/vclk                                                 | support/led_OBUF[0]                             |                4 |             11 |
+|  cpuclk              | cpu/cadr_vma/done_intr_enb_reg_0[0]                      | support/led_OBUF[0]                             |                5 |             11 |
+|  cpuclk              | ps2_support/mouse/ps2_out/p_1_in                         | support/SR[0]                                   |                4 |             11 |
+|  sysclk_buf          |                                                          |                                                 |                5 |             11 |
+|  pixel_clk_IBUF_BUFG |                                                          | vga/h_counter[10]_i_1_n_0                       |                3 |             11 |
+|  pixel_clk_IBUF_BUFG |                                                          | vga/h_pos[10]_i_1_n_0                           |                3 |             11 |
+|  cpuclk              | busint/disk/disk_cyl[11]_i_1_n_0                         | support/led_OBUF[0]                             |                4 |             12 |
+|  cpuclk              | spy_port/spy_ir_reg[32][0]                               | spy_port/reset                                  |                3 |             13 |
+|  cpuclk              | mmc_bd/mmc_wrapper/FSM_sequential_state_reg[6]_0[0]      | support/led_OBUF[0]                             |               14 |             14 |
+|  cpuclk              | cpu/cadr_olord1/opc_reg[13][0]                           | spy_port/reset                                  |                6 |             14 |
+|  cpuclk              | cpu/cadr_olord1/lpc_reg[13][0]                           | spy_port/reset                                  |                5 |             14 |
+|  cpuclk              |                                                          | ps2_support/mouse/ps2_in/timer_r[0]_i_1_n_0     |                4 |             14 |
+|  cpuclk              |                                                          | ps2_support/keyboard/ps2/timer_r[0]_i_1__0_n_0  |                4 |             14 |
+|  cpuclk              | busint/disk/disk_ccw0                                    | support/led_OBUF[0]                             |                6 |             15 |
+|  pixel_clk_IBUF_BUFG | vga/v_addr_inc                                           | vga/v_addr[0]_i_1_n_0                           |                4 |             15 |
+|  cpuclk              | spy_port/spy_uart/tx_bit_time[0]_i_2_n_0                 | spy_port/spy_uart/tx_bit_time[0]_i_1_n_0        |                4 |             16 |
+|  cpuclk              | spy_port/E[1]                                            | spy_port/reset                                  |                5 |             16 |
+|  cpuclk              | busint/spy/spyrd_d                                       | support/led_OBUF[0]                             |                6 |             16 |
+|  cpuclk              | spy_port/vma_reg[28][1]                                  | spy_port/reset                                  |                6 |             16 |
+|  cpuclk              | spy_port/vma_reg[28][0]                                  | spy_port/reset                                  |                6 |             16 |
+|  cpuclk              | spy_port/p_6_in                                          | support/led_OBUF[0]                             |                5 |             16 |
+|  cpuclk              | busint/disk/data_hold_reg[15]_0[0]                       | support/led_OBUF[0]                             |                6 |             16 |
+|  cpuclk              | busint/disk/disk_data_hold0                              | support/led_OBUF[0]                             |                7 |             16 |
+|  sysclk_buf          |                                                          | mmc_bd/mmc_wrapper/mmc/bit_time[0]_i_1_n_0      |                4 |             16 |
+|  cpuclk              |                                                          | spy_port/spy_uart/rx_bit_time[0]_i_1_n_0        |                4 |             16 |
+|  cpuclk              | spy_port/spy_ir_reg[16][0]                               | spy_port/reset                                  |                9 |             16 |
+|  cpuclk              | spy_port/E[0]                                            | spy_port/reset                                  |                7 |             16 |
+|  cpuclk              | spy_port/spy_ir_reg[0][0]                                | spy_port/reset                                  |                7 |             16 |
+|  cpuclk              | cpu/cadr_olord1/state_fetch                              | cpu/cadr_olord1/pc_reg[13]                      |                7 |             17 |
+|  cpuclk              | busint/io/hz60_counter_reg[19]_0                         | busint/io/hz60_counter[0]_i_1__0_n_0            |                5 |             20 |
+|  cpuclk              | ps2_support/ms_ready                                     | support/led_OBUF[0]                             |                7 |             21 |
+|  cpuclk              | cpu/cadr_vma/disk_clp_reg[0][0]                          | support/led_OBUF[0]                             |                7 |             22 |
+|  cpuclk              | busint/disk/disk_ma0                                     | support/led_OBUF[0]                             |                5 |             22 |
+|  cpuclk              | busint/disk/addrout[21]_i_1_n_0                          | support/led_OBUF[0]                             |                6 |             22 |
+|  cpuclk              |                                                          | spy_port/reset                                  |               14 |             22 |
+|  cpuclk              | busint/disk/lba32_reg[31]                                | support/led_OBUF[0]                             |                4 |             23 |
+|  cpuclk              | cpu/cadr_vma/dataout_reg[0][0]                           | busint/tv/dataout[31]_i_1_n_0                   |                9 |             30 |
+|  cpuclk              | cpu/cadr_vctl1/reg_dataout_reg[0]_0[0]                   | cpu/cadr_vma/SR[0]                              |               20 |             31 |
+|  cpuclk              | busint/io/us_clock                                       | support/led_OBUF[0]                             |                8 |             32 |
+|  cpuclk              | busint/io/hz60_counter                                   | support/led_OBUF[0]                             |                8 |             32 |
+|  cpuclk              | busint/disk/dma_data_hold[31]_i_1_n_0                    | support/led_OBUF[0]                             |                8 |             32 |
+|  sysclk_buf          | support/sdram_out_reg[31][0]                             |                                                 |                9 |             32 |
+|  cpuclk              | cpu/cadr_ireg/l_reg[31][0]                               | spy_port/reset                                  |               10 |             32 |
+|  cpuclk              | support/E[0]                                             | support/dataout_reg[31][0]                      |               14 |             32 |
+|  pixel_clk_IBUF_BUFG | rc/E[0]                                                  | support/led_OBUF[0]                             |                9 |             32 |
+|  cpuclk              | cpu/cadr_ireg/q_reg[0][0]                                | spy_port/reset                                  |               16 |             32 |
+|  pixel_clk_IBUF_BUFG |                                                          | support/led_OBUF[0]                             |                7 |             36 |
+|  cpuclk              | cpu/cadr_olord1/ir_reg[0]                                | spy_port/reset                                  |               18 |             45 |
+|  sysclk_buf          | mmc_bd/mmc_wrapper/mmc/s_cmd[47]_i_1_n_0                 | support/led_OBUF[0]                             |                9 |             48 |
+|  cpuclk              | cpu/cadr_olord1/state_fetch                              | spy_port/reset                                  |               39 |             77 |
+|  cpuclk              |                                                          |                                                 |               75 |             86 |
+|  sysclk_buf          |                                                          | support/led_OBUF[0]                             |               34 |            100 |
+|  cpuclk              |                                                          | support/led_OBUF[0]                             |               82 |            209 |
++----------------------+----------------------------------------------------------+-------------------------------------------------+------------------+----------------+
+
+
++--------+-----------------------+
+| Fanout | Number of ControlSets |
++--------+-----------------------+
+| 1      |                     3 |
+| 2      |                     1 |
+| 4      |                    13 |
+| 5      |                     9 |
+| 6      |                     2 |
+| 8      |                    15 |
+| 10     |                     6 |
+| 11     |                     6 |
+| 12     |                     1 |
+| 13     |                     1 |
+| 14     |                     5 |
+| 15     |                     2 |
+| 16+    |                    38 |
++--------+-----------------------+
+
+

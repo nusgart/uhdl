@@ -25,7 +25,8 @@ module caddr(
              memack,
              wrcyc,
              loadmd,
-             bus_int
+             bus_int,
+             promaddr
              );
 
    input clk;
@@ -59,6 +60,8 @@ module caddr(
    output [31:0] vma;
    output [21:8] pma;
 
+   output [8:0] promaddr;
+
    input [11:0] bd_state_in;
    input [4:0] disk_state_in;
 
@@ -67,7 +70,7 @@ module caddr(
    input bus_int;
    input memack;
    input set_promdisable;
-
+   
 `ifdef debug
    integer debug;
 `endif

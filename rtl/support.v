@@ -139,7 +139,7 @@ module support(sysclk, cpuclk, button_r, button_b, button_h, button_c,
                             (reset_state == r_init) ? r_reset1 :
                             (reset_state == r_reset1) ? r_reset2 :
                             (reset_state == r_reset2) ? r_reset3 :
-                            (reset_state == r_reset3 && lpddr_calib_done) ? r_reset4 :
+                            (reset_state == r_reset3 /*&& lpddr_calib_done*/) ? r_reset4 :
                             (reset_state == r_reset4 && cpu_state != c_idle) ? r_wait :
                             (reset_state == r_wait & ~pressed) ? r_idle :
                             (reset_state == r_idle && pressed) ? r_reset1 :

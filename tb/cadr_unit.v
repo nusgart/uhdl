@@ -22,9 +22,9 @@ module cadr_unit(usb_txd, usb_rxd,
            `ifdef use_hdmi
             , tmds, tmdsb
            `endif
-            
+            , promaddr
            );
-
+output [8:0] promaddr;
    input usb_rxd;
    output usb_txd;
 
@@ -155,7 +155,7 @@ module cadr_unit(usb_txd, usb_rxd,
                    .button_c(switch[3]),
                    .dcm_reset(dcm_reset),
                    .lpddr_reset(lpddr_reset),
-                   .lpddr_calib_done(lpddr_calib_done),
+                   .lpddr_calib_done(1'b1),
                    .reset(reset),
                    .interrupt(interrupt),
                    .boot(boot),
@@ -239,7 +239,8 @@ module cadr_unit(usb_txd, usb_rxd,
 
                  .promdisable(set_promdisable),
                  .disk_state(disk_state),
-                 .bus_state(bus_state)
+                 .bus_state(bus_state),
+                 .promaddr(promaddr)
                  );
 
    wire [4:0] disk_state_in;
