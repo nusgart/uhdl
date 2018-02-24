@@ -1,0 +1,3 @@
+[submodule "NIOX"]
+	path = NIOX
+	url = https://github.com/ams/niox
