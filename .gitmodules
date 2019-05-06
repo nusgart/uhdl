@@ -1,3 +1,4 @@
-[submodule "NIOX"]
-	path = NIOX
-	url = https://github.com/ams/niox
+[submodule "hdlmake.mk"]
+	path = hdlmake.mk
+	url =  https://github.com/ams/hdlmake.mk
+	branch = master

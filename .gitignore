@@ -1,0 +1,7 @@
+*.prj
+*.scr
+*_tb
+obj_dir/
+*~
+.version
+

@@ -1,0 +1,93 @@
+[*]
+[*] GTKWave Analyzer v3.3.95 (w)1999-2018 BSI
+[*] Sat Nov 17 23:18:00 2018
+[*]
+[dumpfile] "/md0/home/ams/lm-3/uhdl/busint_chaos_tb.vcd"
+[dumpfile_mtime] "Sat Nov 17 23:17:00 2018"
+[dumpfile_size] 36363
+[savefile] "/md0/home/ams/lm-3/uhdl/busint_chaos_tb.gtkw"
+[timestart] 1135000
+[size] 1680 1014
+[pos] -1 -1
+*-20.000000 6042000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] busint_chaos_tb.
+[treeopen] busint_chaos_tb.busint.
+[treeopen] busint_chaos_tb.busint.chaos.
+[sst_width] 213
+[signals_width] 270
+[sst_expanded] 1
+[sst_vpaned_height] 218
+@28
+busint_chaos_tb.clk
+busint_chaos_tb.reset
+@c00200
+-XBUS
+@30
+[color] 7
+busint_chaos_tb.addr[21:0]
+[color] 7
+busint_chaos_tb.busin[31:0]
+[color] 7
+busint_chaos_tb.busout[31:0]
+@28
+[color] 7
+busint_chaos_tb.req
+[color] 7
+busint_chaos_tb.ack
+[color] 7
+busint_chaos_tb.write
+[color] 7
+busint_chaos_tb.load
+[color] 7
+busint_chaos_tb.interrupt
+@1401200
+-XBUS
+@c00200
+-CHAOSNET REGISTERS
+@30
+busint_chaos_tb.my_addr[31:0]
+busint_chaos_tb.csr[31:0]
+@1401200
+-CHAOSNET REGISTERS
+@c00200
+-CHAOSNET INTERNAL REGISTERS
+@30
+busint_chaos_tb.busint.chaos.chaos_addr[15:0]
+busint_chaos_tb.busint.chaos.chaos_csr[15:0]
+busint_chaos_tb.busint.chaos.chaos_bit_count[15:0]
+@1401200
+-CHAOSNET INTERNAL REGISTERS
+@800200
+-XMIT BUF
+@23
+busint_chaos_tb.busint.chaos.tbuf.tbct[7:0]
+@820
+[color] 7
+busint_chaos_tb.busin[31:0]
+@28
+busint_chaos_tb.busint.chaos.tbuf.twp
+busint_chaos_tb.busint.chaos.tbuf.trp
+@22
+busint_chaos_tb.busint.chaos.tbuf.tdata[15:0]
+@1000200
+-XMIT BUF
+@800200
+-TBUF INTERNAL
+@28
+busint_chaos_tb.busint.chaos.tbuf.clk
+busint_chaos_tb.busint.chaos.tbuf.reset
+@200
+-
+@22
+busint_chaos_tb.busint.chaos.tbuf.tbct[7:0]
+@820
+busint_chaos_tb.busint.chaos.tbuf.datain[15:0]
+@28
+busint_chaos_tb.busint.chaos.tbuf.twp
+busint_chaos_tb.busint.chaos.tbuf.trp
+@22
+busint_chaos_tb.busint.chaos.tbuf.tdata[15:0]
+@1000200
+-TBUF INTERNAL
+[pattern_trace] 1
+[pattern_trace] 0
