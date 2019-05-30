@@ -20,9 +20,14 @@
 // ---!!! 	enable_mmc
 // ---!!! 	enable_ps2 / enable_usb (???)
 // ---!!! 	enable_ethernet (???)
+`define enable_vga
+`define enable_mmc
+`define enable_ps2
+
 
 `timescale 1ns/1ps
 `default_nettype none
+
 
 module lm3(/*AUTOARG*/
    // Outputs
@@ -155,10 +160,10 @@ module lm3(/*AUTOARG*/
    // output bd_iordy;
    // output bd_rdy;
 
-   input mmc_di;
-   output mmc_cs;
-   output mmc_do;
-   output mmc_sclk;
+   input wire mmc_di;
+   output wire mmc_cs;
+   output wire mmc_do;
+   output wire mmc_sclk;
 
    // VGA ////////////////////////////////////////////////////////////////////////////////
 
@@ -173,8 +178,8 @@ module lm3(/*AUTOARG*/
    output vga_r;
    output vga_g;
    output vga_b;
-   output vga_hsync;
-   output vga_vsync;
+   output wire vga_hsync;
+   output wire vga_vsync;
 
    // PS/2 ////////////////////////////////////////////////////////////////////////////////
 
@@ -185,11 +190,11 @@ module lm3(/*AUTOARG*/
    // output kb_ready;
    // output ms_ready;
 
-   input kb_ps2_clk;
-   input kb_ps2_data;
+   input wire kb_ps2_clk;
+   input wire kb_ps2_data;
 
-   inout ms_ps2_clk;
-   inout ms_ps2_data;
+   inout wire ms_ps2_clk;
+   inout wire ms_ps2_data;
 
    // SPY ////////////////////////////////////////////////////////////////////////////////
 
@@ -369,7 +374,7 @@ module lm3(/*AUTOARG*/
       .ms_button			(ms_button[2:0]),
       .ms_ready				(ms_ready));	  //    input ms_ready;
 
-   assign disk_state_in = busint.disk.state;
+   assign disk_state_in = disk_state;
 
    cadr cpu
      (
@@ -405,7 +410,9 @@ module lm3(/*AUTOARG*/
       .memack				(memack),
       .set_promdisable			(set_promdisable)); //    input set_promdisable;
 
+`define enable_mmc
 `ifdef enable_mmc
+
    block_dev_mmc mmc_bd
      (
       .clk(cpu_clk),		//    input clk;
@@ -496,6 +503,9 @@ module lm3(/*AUTOARG*/
       // Inputs
       .reset				(reset),
       .rs232_rxd			(rs232_rxd));	//    input rs232_rxd;
+`else
+//assign rs232_rxd = 1'b0;
+assign rs232_txd = 1'b0;
 `endif
 
 endmodule

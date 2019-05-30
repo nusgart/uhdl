@@ -21,27 +21,27 @@ module OLORD1(/*AUTOARG*/
    ldopc, ldscratch1, ldscratch2, set_promdisable, statstop, waiting
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
-   input state_fetch;
+   input wire state_fetch;
 
    input [15:0] spy_in;
-   input boot;
-   input errhalt;
-   input ldclk;
-   input ldmode;
-   input ldopc;
-   input ldscratch1;
-   input ldscratch2;
-   input set_promdisable;
-   input statstop;
-   input waiting;
+   input wire boot;
+   input wire errhalt;
+   input wire ldclk;
+   input wire ldmode;
+   input wire ldopc;
+   input wire ldscratch1;
+   input wire ldscratch2;
+   input wire set_promdisable;
+   input wire statstop;
+   input wire waiting;
    output [15:0] scratch;
    output errstop;
    output idebug;
    output lpc_hold;
-   output machrun;
+   output wire machrun;
    output nop11;
    output opcclk;
    output opcinh;
@@ -49,8 +49,8 @@ module OLORD1(/*AUTOARG*/
    output promdisabled;
    output srun;
    output ssdone;
-   output stat_ovf;
-   output stathalt;
+   output wire stat_ovf;
+   output wire stathalt;
 
    ////////////////////////////////////////////////////////////////////////////////
 

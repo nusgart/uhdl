@@ -31,18 +31,15 @@
 
 module IRAM(/*AUTOARG*/
    // Outputs
-   iram,
+   output wire [48:0] iram,
    // Inputs
-   clk, reset, pc, iwr, iwe
+   input wire clk,
+   input wire reset,
+   input wire [13:0] pc,
+   input wire iwr, 
+   input wire iwe
    );
 
-   input clk;
-   input reset;
-
-   input [13:0] pc;
-   input [48:0] iwr;
-   input iwe;
-   output [48:0] iram;
 
    ////////////////////////////////////////////////////////////////////////////////
 
@@ -68,7 +65,7 @@ module IRAM(/*AUTOARG*/
    always @(posedge clk)
      if (1'b1) begin
      end
-`else
+`elsif ISE
    wire ena_a = 1'b1 | iwe;
 
    ise_IRAM inst
@@ -80,6 +77,18 @@ module IRAM(/*AUTOARG*/
       .dina(iwr),
       .douta(iram)
       /*AUTOINST*/);
+`else
+	altera_iram inst(
+		.address(pc),
+		.clock(clk),
+		.data(iwr),
+		.wren(iwe),
+		.q(iram));
+	/*
+   /// TODO implement IRAM
+	rom #(.ADDRESS_WIDTH(14), .DATA_WIDTH(49), .MEM_DEPTH(16384),
+	 .MEM_FILE("ucadr-mcr-841.hex")) PROM
+     (.clk_i(clk), .addr_i(pc), .q_o(iram));*/
 `endif
 
 endmodule

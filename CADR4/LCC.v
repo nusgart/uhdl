@@ -20,29 +20,29 @@ module LCC(/*AUTOARG*/
    irdisp, lc_byte_mode, spop, srcspcpopreal
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
-   input state_fetch;
+   input wire state_fetch;
 
    input [18:0] spc;
    input [25:0] lc;
    input [48:0] ir;
-   input bus_int;
-   input destlc;
-   input ext_int;
-   input irdisp;
-   input lc_byte_mode;
-   input spop;
-   input srcspcpopreal;
-   output ifetch;
-   output lc0b;
-   output lcinc;
-   output needfetch;
-   output sh3;
-   output sh4;
+   input wire bus_int;
+   input wire destlc;
+   input wire ext_int;
+   input wire irdisp;
+   input wire lc_byte_mode;
+   input wire spop;
+   input wire srcspcpopreal;
+   output wire ifetch;
+   output wire lc0b;
+   output wire lcinc;
+   output wire needfetch;
+   output wire sh3;
+   output wire sh4;
    output sintr;
-   output spc1a;
+   output wire spc1a;
 
    ////////////////////////////////////////////////////////////////////////////////
 

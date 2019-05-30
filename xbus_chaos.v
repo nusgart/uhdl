@@ -160,17 +160,17 @@ module xbus_chaos(/*AUTOARG*/
    clk, reset, addr, datain, req, write
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
    input [21:0] addr;
    input [31:0] datain;
-   input req;
-   input write;
+   input wire req;
+   input wire write;
    output [31:0] dataout;
-   output ack;
-   output decode;
-   output interrupt;
+   output wire ack;
+   output wire decode;
+   output wire interrupt;
 
    ////////////////////////////////////////////////////////////////////////////////
 

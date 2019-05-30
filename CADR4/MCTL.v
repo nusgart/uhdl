@@ -19,17 +19,17 @@ module MCTL(/*AUTOARG*/
    state_decode, state_write, ir, wadr, destm
    );
 
-   input state_decode;
-   input state_write;
+   input wire state_decode;
+   input wire state_write;
 
    input [48:0] ir;
    input [9:0] wadr;
-   input destm;
+   input wire destm;
    output [4:0] madr;
-   output mpassm;
-   output mrp;
-   output mwp;
-   output srcm;
+   output wire mpassm;
+   output wire mrp;
+   output wire mwp;
+   output wire srcm;
 
    ////////////////////////////////////////////////////////////////////////////////
 

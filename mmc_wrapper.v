@@ -15,22 +15,22 @@ module mmc_wrapper(/*AUTOARG*/
 
    input [47:0] cmd;
    input [7:0] data_in;
-   input clk;
-   input init;
-   input mmc_clk;
-   input mmc_di;
-   input rd;
-   input reset;
-   input send;
-   input speed;
-   input stop;
-   input wr;
+   input wire clk;
+   input wire init;
+   input wire mmc_clk;
+   input wire mmc_di;
+   input wire rd;
+   input wire reset;
+   input wire send;
+   input wire speed;
+   input wire stop;
+   input wire wr;
    output [3:0] state_out;
    output [7:0] data_out;
-   output done;
-   output mmc_cs;
-   output mmc_do;
-   output mmc_sclk;
+   output wire done;
+   output wire mmc_cs;
+   output wire mmc_do;
+   output wire mmc_sclk;
 
    ////////////////////////////////////////////////////////////////////////////////
 

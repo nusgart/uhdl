@@ -19,16 +19,16 @@ module SPC(/*AUTOARG*/
    clk, reset, state_fetch, spcw, spcnt, spush, srp, swp
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
-   input state_fetch;
+   input wire state_fetch;
 
    input [18:0] spcw;
-   input spcnt;
-   input spush;
-   input srp;
-   input swp;
+   input wire spcnt;
+   input wire spush;
+   input wire srp;
+   input wire swp;
    output [18:0] spco;
    output [4:0] spcptr;
 
@@ -48,7 +48,7 @@ module SPC(/*AUTOARG*/
    assign spcptr_p1 = spcptr + 5'b00001;
    assign spcadr = (spcnt && spush) ? spcptr_p1 : spcptr;
 
-`ifdef SIMULATION
+`ifndef ISE
    reg [18:0] ram [0:31];
    reg [18:0] out_a;
    reg [18:0] out_b;

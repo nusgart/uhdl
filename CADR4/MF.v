@@ -20,15 +20,15 @@ module MF(/*AUTOARG*/
    srcm
    );
 
-   input state_alu;
-   input state_fetch;
-   input state_mmu;
-   input state_write;
+   input wire state_alu;
+   input wire state_fetch;
+   input wire state_mmu;
+   input wire state_write;
 
-   input pdlenb;
-   input spcenb;
-   input srcm;
-   output mfdrive;
+   input wire pdlenb;
+   input wire spcenb;
+   input wire srcm;
+   output wire mfdrive;
 
    ////////////////////////////////////////////////////////////////////////////////
 

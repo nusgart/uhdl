@@ -10,11 +10,11 @@ module keyboard(/*AUTOARG*/
    clk, reset, ps2_clk, ps2_data
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
-   input ps2_clk;
-   input ps2_data;
+   input wire ps2_clk;
+   input wire ps2_data;
 
    output [15:0] data;
    output strobe;

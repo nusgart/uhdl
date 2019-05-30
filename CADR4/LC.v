@@ -23,13 +23,13 @@ module LC(/*AUTOARG*/
    qdrive, sequence_break, srclc, vmadrive
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
-   input state_alu;
-   input state_fetch;
-   input state_mmu;
-   input state_write;
+   input wire state_alu;
+   input wire state_fetch;
+   input wire state_mmu;
+   input wire state_write;
 
    input [13:0] opc;
    input [23:0] vmo;
@@ -41,25 +41,25 @@ module LC(/*AUTOARG*/
    input [9:0] dc;
    input [9:0] pdlidx;
    input [9:0] pdlptr;
-   input dcdrive;
-   input destlc;
-   input int_enable;
-   input lc0b;
-   input lc_byte_mode;
-   input lcinc;
-   input mapdrive;
-   input mddrive;
-   input needfetch;
-   input opcdrive;
-   input pfr;
-   input pfw;
-   input pidrive;
-   input ppdrive;
-   input prog_unibus_reset;
-   input qdrive;
-   input sequence_break;
-   input srclc;
-   input vmadrive;
+   input wire dcdrive;
+   input wire destlc;
+   input wire int_enable;
+   input wire lc0b;
+   input wire lc_byte_mode;
+   input wire lcinc;
+   input wire mapdrive;
+   input wire mddrive;
+   input wire needfetch;
+   input wire opcdrive;
+   input wire pfr;
+   input wire pfw;
+   input wire pidrive;
+   input wire ppdrive;
+   input wire prog_unibus_reset;
+   input wire qdrive;
+   input wire sequence_break;
+   input wire srclc;
+   input wire vmadrive;
    output [25:0] lc;
    output [31:0] mf;
 

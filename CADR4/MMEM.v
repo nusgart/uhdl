@@ -19,13 +19,13 @@ module MMEM(/*AUTOARG*/
    clk, reset, l, madr, mrp, mwp
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
    input [31:0] l;
    input [4:0] madr;
-   input mrp;
-   input mwp;
+   input wire mrp;
+   input wire mwp;
    output [31:0] mmem;
 
    ////////////////////////////////////////////////////////////////////////////////
@@ -64,7 +64,8 @@ module MMEM(/*AUTOARG*/
      else if (1'b0) begin
 	out_b <= ram[madr];
      end
-`else
+
+`elsif ISE
    wire ena_a = mrp | 1'b0;
    wire ena_b = 1'b0 | mwp;
 
@@ -83,6 +84,17 @@ module MMEM(/*AUTOARG*/
       .dinb(l),
       .doutb()
       /*AUTOINST*/);
+		
+`else //if ALTERA
+
+mmem inst(
+   .rdaddress(madr),
+	.wraddress(madr),
+	.clock(clk),
+	.data(l),
+	.wren(mwp),
+	.q(mmem)
+);
 
 `endif
 

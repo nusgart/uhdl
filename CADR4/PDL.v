@@ -20,13 +20,13 @@ module PDL(/*AUTOARG*/
    clk, reset, l, pdla, prp, pwp
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
    input [31:0] l;
    input [9:0] pdla;
-   input prp;
-   input pwp;
+   input wire prp;
+   input wire pwp;
    output [31:0] pdlo;
 
    ////////////////////////////////////////////////////////////////////////////////
@@ -64,7 +64,7 @@ module PDL(/*AUTOARG*/
      else if (1'b0) begin
 	out_b <= ram[pdla];
      end
-`else
+`elsif ISE
    wire ena_a = prp | 1'b0;
    wire ena_b = 1'b0 | pwp;
 
@@ -83,6 +83,15 @@ module PDL(/*AUTOARG*/
       .dinb(l),
       .doutb()
       /*AUTOINST*/);
+`else
+	/// TODO IMPLEMENT SRAM BASED PDL
+	alt_pdl inst (
+		.clock(clk),
+		.rdaddress(pdla),
+		.wraddress(pdla),
+		.data(l),
+		.q(pdlo),
+		.wren(pwp));
 `endif
 
 endmodule

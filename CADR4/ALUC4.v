@@ -26,21 +26,21 @@ module ALUC4(/*AUTOARG*/
    input [31:0] q;
    input [48:0] ir;
 
-   input iralu;
-   input irjump;
+   input wire iralu;
+   input wire irjump;
 
-   input div;
-   input mul;
+   input wire div;
+   input wire mul;
 
    output [1:0] osel;
 
    output [3:0] aluf;
-   output alumode;
-   output cin0;
+   output wire alumode;
+   output wire cin0;
 
-   input xout3, xout7, xout11, xout15, xout19, xout23, xout27, xout31;
-   input yout3, yout7, yout11, yout15, yout19, yout23, yout27, yout31;
-   output cin4_n, cin8_n, cin12_n, cin16_n, cin20_n, cin24_n, cin28_n, cin32_n;
+   input wire xout3, xout7, xout11, xout15, xout19, xout23, xout27, xout31;
+   input wire yout3, yout7, yout11, yout15, yout19, yout23, yout27, yout31;
+   output wire cin4_n, cin8_n, cin12_n, cin16_n, cin20_n, cin24_n, cin28_n, cin32_n;
 
    ////////////////////////////////////////////////////////////////////////////////
 

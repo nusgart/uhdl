@@ -22,38 +22,38 @@ module VCTL2(/*AUTOARG*/
    memprepare, memstart, nopa, srcmap, srcmd, wrcyc
    );
 
-   input state_decode;
-   input state_mmu;
-   input state_read;
-   input state_write;
+   input wire state_decode;
+   input wire state_mmu;
+   input wire state_read;
+   input wire state_write;
 
    input [31:0] vma;
    input [48:0] ir;
-   input destmdr;
-   input destmem;
-   input destvma;
-   input dispwr;
-   input dmapbenb;
-   input ifetch;
-   input irdisp;
-   input loadmd;
-   input memprepare;
-   input memstart;
-   input nopa;
-   input srcmap;
-   input srcmd;
-   input wrcyc;
-   output mdsel;
-   output memdrive;
-   output memrd;
-   output memwr;
-   output vm0rp;
-   output vm0wp;
-   output vm1rp;
-   output vm1wp;
-   output vmaenb;
-   output vmasel;
-   output wmap;
+   input wire destmdr;
+   input wire destmem;
+   input wire destvma;
+   input wire dispwr;
+   input wire dmapbenb;
+   input wire ifetch;
+   input wire irdisp;
+   input wire loadmd;
+   input wire memprepare;
+   input wire memstart;
+   input wire nopa;
+   input wire srcmap;
+   input wire srcmd;
+   input wire wrcyc;
+   output wire mdsel;
+   output wire memdrive;
+   output wire memrd;
+   output wire memwr;
+   output wire vm0rp;
+   output wire vm0wp;
+   output wire vm1rp;
+   output wire vm1wp;
+   output wire vmaenb;
+   output wire vmasel;
+   output wire wmap;
 
    ////////////////////////////////////////////////////////////////////////////////
 

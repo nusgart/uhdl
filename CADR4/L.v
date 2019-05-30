@@ -19,14 +19,14 @@ module L(/*AUTOARG*/
    clk, reset, state_alu, state_write, ob, vmaenb
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
-   input state_alu;
-   input state_write;
+   input wire state_alu;
+   input wire state_write;
 
    input [31:0] ob;
-   input vmaenb;
+   input wire vmaenb;
    output [31:0] l;
 
    ////////////////////////////////////////////////////////////////////////////////

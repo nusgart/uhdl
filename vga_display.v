@@ -24,20 +24,20 @@ module vga_display(/*AUTOARG*/
    parameter BOX_WIDTH = 768;
    parameter BOX_HEIGHT = 896;
 
-   input vga_clk;
-   input reset;
+   input wire vga_clk;
+   input wire reset;
 
    output [14:0] vram_addr;
    input [31:0] vram_data;
-   input vram_ready;
-   output vram_req;
+   input wire vram_ready;
+   output wire vram_req;
 
-   output vga_r;
-   output vga_b;
-   output vga_g;
-   output vga_hsync;
-   output vga_vsync;
-   output vga_blank;
+   output wire vga_r;
+   output wire vga_b;
+   output wire vga_g;
+   output wire vga_hsync;
+   output wire vga_vsync;
+   output wire vga_blank;
 
    ////////////////////////////////////////////////////////////////////////////////
 

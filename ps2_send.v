@@ -3,7 +3,7 @@
 /* verilator lint_off WIDTH */
 
 `timescale 1ns/1ps
-`default_nettype none
+`default_nettype wire
 
 module ps2_send(/*AUTOARG*/
    // Outputs

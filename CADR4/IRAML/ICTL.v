@@ -19,12 +19,12 @@ module ICTL(/*AUTOARG*/
    state_write, idebug, iwrited, promdisabled
    );
 
-   input state_write;
+   input wire state_write;
 
-   input idebug;
-   input iwrited;
-   input promdisabled;
-   output iwe;
+   input wire idebug;
+   input wire iwrited;
+   input wire promdisabled;
+   output wire iwe;
 
    ////////////////////////////////////////////////////////////////////////////////
 

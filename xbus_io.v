@@ -13,24 +13,24 @@ module xbus_io(/*AUTOARG*/
    ms_button, kb_ready, kb_data
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
    input [21:0] addr;
    input [31:0] datain;
-   input req;
-   input write;
+   input wire req;
+   input wire write;
    output [31:0] dataout;
-   output ack;
-   output decode;
-   output interrupt;
+   output wire ack;
+   output wire decode;
+   output wire interrupt;
 
-   input ms_ready;
+   input wire ms_ready;
    input [11:0] ms_x;
    input [11:0]  ms_y;
    input [2:0] ms_button;
 
-   input kb_ready;
+   input wire kb_ready;
    input [15:0] kb_data;
 
    output [7:0] vector;

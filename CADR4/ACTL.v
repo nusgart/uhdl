@@ -19,19 +19,19 @@ module ACTL(/*AUTOARG*/
    clk, reset, state_decode, state_write, ir, dest, destm
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
-   input state_decode;
-   input state_write;
+   input wire state_decode;
+   input wire state_write;
 
    input [48:0] ir;
-   input dest;
-   input destm;
+   input wire dest;
+   input wire destm;
    output [9:0] aadr;
    output [9:0] wadr;
-   output arp;
-   output awp;
+   output wire arp;
+   output wire awp;
 
    ////////////////////////////////////////////////////////////////////////////////
 

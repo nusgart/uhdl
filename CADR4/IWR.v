@@ -19,10 +19,10 @@ module IWR(/*AUTOARG*/
    clk, reset, state_fetch, a, m
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
-   input state_fetch;
+   input wire state_fetch;
 
    input [31:0] a;
    input [31:0] m;

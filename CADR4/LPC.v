@@ -19,15 +19,15 @@ module LPC(/*AUTOARG*/
    clk, reset, state_fetch, lpc_hold, pc, ir, irdisp
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
-   input state_fetch;
+   input wire state_fetch;
 
-   input lpc_hold;
+   input wire lpc_hold;
    input [13:0] pc;
    input [48:0] ir;
-   input irdisp;
+   input wire irdisp;
    output [13:0] wpc;
 
    ////////////////////////////////////////////////////////////////////////////////

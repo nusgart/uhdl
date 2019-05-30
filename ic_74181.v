@@ -6,9 +6,9 @@
 module ic_74181(S, A, B, M, CIN_N, F, X, Y, COUT_N, AEB);
 
    input [3:0] A, B, S;
-   input CIN_N, M;
+   input wire CIN_N, M;
    output [3:0] F;
-   output AEB, X, Y, COUT_N;
+   output wire AEB, X, Y, COUT_N;
 
    TopLevel74181 Ckt74181(S, A, B, M, CIN_N, F, X, Y, COUT_N, AEB);
 
@@ -17,9 +17,9 @@ endmodule
 module TopLevel74181(S, A, B, M, CNb, F, X, Y, CN4b, AEB);
 
    input [3:0] A, B, S;
-   input CNb, M;
+   input wire CNb, M;
    output [3:0] F;
-   output AEB, X, Y, CN4b;
+   output wire AEB, X, Y, CN4b;
 
    wire [3:0] E, D, C, Bb;
 
@@ -86,9 +86,9 @@ endmodule
 module CLAmodule(Gb, Pb, CNb, C, X, Y, CN4b);
 
    input [3:0] Gb, Pb;
-   input CNb;
+   input wire CNb;
    output [3:0] C;
-   output X, Y, CN4b;
+   output wire X, Y, CN4b;
 
    wire Pb0, Pb1, Pb2, Pb3;
    wire Pb0Gb1, Pb1Gb2, Pb2Gb3;
@@ -133,9 +133,9 @@ endmodule
 module Summodule(E, D, C, M, F, AEB);
 
    input [3:0] E, D, C;
-   input M;
+   input wire M;
    output [3:0] F;
-   output AEB;
+   output wire AEB;
 
    wire [3:0] EXD, CM;
 

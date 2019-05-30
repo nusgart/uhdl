@@ -19,14 +19,14 @@ module OPCS(/*AUTOARG*/
    clk, reset, state_fetch, pc, opcclk, opcinh
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
-   input state_fetch;
+   input wire state_fetch;
 
    input [13:0] pc;
-   input opcclk;
-   input opcinh;
+   input wire opcclk;
+   input wire opcinh;
    output [13:0] opc;
 
    ////////////////////////////////////////////////////////////////////////////////

@@ -12,22 +12,22 @@ module ps2_support(/*AUTOARG*/
    ms_ps2_data_in
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
-   input kb_ps2_clk_in;
-   input kb_ps2_data_in;
+   input wire kb_ps2_clk_in;
+   input wire kb_ps2_data_in;
    output kb_ready;
    output [15:0] kb_data;
 
-   input ms_ps2_clk_in;
-   input ms_ps2_data_in;
+   input wire ms_ps2_clk_in;
+   input wire ms_ps2_data_in;
    output ms_ready;
    output [11:0] ms_x, ms_y;
    output [2:0] ms_button;
-   output ms_ps2_clk_out;
-   output ms_ps2_data_out;
-   output ms_ps2_dir;
+   output wire ms_ps2_clk_out;
+   output wire ms_ps2_data_out;
+   output wire ms_ps2_dir;
 
    ////////////////////////////////////////////////////////////////////////////////
    // Keyboard

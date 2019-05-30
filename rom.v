@@ -13,7 +13,7 @@ module rom(clk_i, addr_i, q_o);
    parameter MEM_FILE = "rom.hex";
    parameter MEM_FILE_FORMAT = "hex";
 
-   input clk_i;
+   input wire clk_i;
    input [ADDRESS_WIDTH-1:0] addr_i;
    output [DATA_WIDTH-1:0] q_o;
 

@@ -10,18 +10,18 @@ module xbus_unibus(/*AUTOARG*/
    clk, addr, datain, req, write, timedout
    );
 
-   input clk;
+   input wire clk;
 
    input [21:0] addr;
    input [31:0] datain;
-   input req;
-   input write;
+   input wire req;
+   input wire write;
    output [31:0] dataout;
-   output ack;
-   output decode;
-   output interrupt;
+   output wire ack;
+   output wire decode;
+   output wire interrupt;
 
-   input timedout;
+   input wire timedout;
    output promdisable;
 
    ////////////////////////////////////////////////////////////////////////////////

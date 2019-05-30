@@ -20,25 +20,25 @@ module MD(/*AUTOARG*/
    mds, destmdr, ldmdh, ldmdl, loadmd, memrq, srcmd
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
-   input state_alu;
-   input state_fetch;
-   input state_mmu;
-   input state_write;
+   input wire state_alu;
+   input wire state_fetch;
+   input wire state_mmu;
+   input wire state_write;
 
    input [15:0] spy_in;
    input [31:0] mds;
-   input destmdr;
-   input ldmdh;
-   input ldmdl;
-   input loadmd;
-   input memrq;
-   input srcmd;
+   input wire destmdr;
+   input wire ldmdh;
+   input wire ldmdl;
+   input wire loadmd;
+   input wire memrq;
+   input wire srcmd;
    output [31:0] md;
-   output mddrive;
-   output mdgetspar;
+   output wire mddrive;
+   output wire mdgetspar;
 
    ////////////////////////////////////////////////////////////////////////////////
 
@@ -68,7 +68,7 @@ module MD(/*AUTOARG*/
        md[15:0] <= spy_in;
 
    assign mddrive = srcmd & (state_alu || state_write || state_mmu || state_fetch);
-   assign mdgetspar = ~destmdr & ~ignpar;
+   //assign mdgetspar = (~destmdr) & (~ignpar);
    assign ignpar = 1'b0;
    assign mdclk = loadmd | destmdr;
 

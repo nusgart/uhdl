@@ -5,32 +5,27 @@
 
 module block_dev_mmc(/*AUTOARG*/
    // Outputs
-   bd_state, bd_data_out, bd_bsy, bd_err, bd_iordy, bd_rdy, mmc_cs,
-   mmc_do, mmc_sclk,
+   output wire [11:0] bd_state,
+   output wire [15:0] bd_data_out,
+   output wire bd_bsy,
+   output wire bd_err,
+   output wire bd_iordy,
+   output wire bd_rdy,
+   output wire mmc_cs,
+   output wire mmc_do,
+   output wire mmc_sclk,
    // Inputs
-   bd_data_in, bd_cmd, bd_addr, bd_rd, bd_start, bd_wr, clk, mmc_di,
-   mmcclk, reset
+   input wire [15:0] bd_data_in,
+   input wire [1:0] bd_cmd,
+   input wire [23:0] bd_addr,
+   input wire bd_rd,
+   input wire bd_start,
+   input wire bd_wr,
+   input wire clk,
+   input wire mmc_di,
+   input wire mmcclk,
+   input wire reset
    );
-
-   input [15:0] bd_data_in;
-   input [1:0] bd_cmd;
-   input [23:0] bd_addr;
-   input bd_rd;
-   input bd_start;
-   input bd_wr;
-   input clk;
-   input mmc_di;
-   input mmcclk;
-   input reset;
-   output [11:0] bd_state;
-   output [15:0] bd_data_out;
-   output bd_bsy;
-   output bd_err;
-   output bd_iordy;
-   output bd_rdy;
-   output mmc_cs;
-   output mmc_do;
-   output mmc_sclk;
 
    ////////////////////////////////////////////////////////////////////////////////
 
@@ -293,7 +288,7 @@ module block_dev_mmc(/*AUTOARG*/
      if (reset)
        state <= s_idle;
      else begin
-	state <= state_next;
+		 state <= state_next;
      end
 
    assign mmc_active = { mmc_speed, mmc_state };

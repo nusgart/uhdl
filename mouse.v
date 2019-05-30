@@ -14,23 +14,23 @@ module mouse(/*AUTOARG*/
    clk, reset, ps2_clk_in, ps2_data_in
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
-   input ps2_clk_in;
-   input ps2_data_in;
+   input wire ps2_clk_in;
+   input wire ps2_data_in;
 
    output [11:0] x;
    output [11:0] y;
-   output button_l;
-   output button_m;
-   output button_r;
+   output wire button_l;
+   output wire button_m;
+   output wire button_r;
 
-   output ps2_clk_out;
-   output ps2_data_out;
+   output wire ps2_clk_out;
+   output wire ps2_data_out;
 
-   output ps2_dir;
-   output strobe;
+   output wire ps2_dir;
+   output wire strobe;
 
    ////////////////////////////////////////////////////////////////////////////////
 

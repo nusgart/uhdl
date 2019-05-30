@@ -15,11 +15,11 @@ module hz60(/*AUTOARG*/
      HZ60_CLK_RATE = 26'd60,
      HZ60_CLK_DIV = SYS_CLK / HZ60_CLK_RATE;
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
-   input hz60_enabled;
-   output hz60_clk_fired;
+   input wire hz60_enabled;
+   output wire hz60_clk_fired;
    output [31:0] hz60_clk;
 
    ////////////////////////////////////////////////////////////////////////////////

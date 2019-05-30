@@ -30,17 +30,17 @@ module ps2(/*AUTOARG*/
    parameter FREQ = 50000;	// Main clock frequency (KHz).
    parameter PS2_FREQ = 10;	// Keyboard clock frequency (KHz).
 
-   input clk;			// Main clock.
-   input reset;			// Asynchronous reset.
+   input wire clk;			// Main clock.
+   input wire reset;			// Asynchronous reset.
 
-   input ps2_clk;		// Clock from keyboard.
-   input ps2_data;		// Data from keyboard.
+   input wire ps2_clk;		// Clock from keyboard.
+   input wire ps2_data;		// Data from keyboard.
 
    output [7:0] code;		// Received byte.
-   output parity;		// Parity bit for scancode.
-   output busy;			// Busy receiving scancode.
-   output rdy;			// Scancode ready pulse.
-   output error;		// Error receiving scancode.
+   output wire parity;		// Parity bit for scancode.
+   output wire busy;			// Busy receiving scancode.
+   output wire rdy;			// Scancode ready pulse.
+   output wire error;		// Error receiving scancode.
 
    ////////////////////////////////////////////////////////////////////////////////
 

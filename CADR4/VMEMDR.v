@@ -19,17 +19,17 @@ module VMEMDR(/*AUTOARG*/
    state_alu, state_fetch, state_mmu, state_write, vmo, srcmap
    );
 
-   input state_alu;
-   input state_fetch;
-   input state_mmu;
-   input state_write;
+   input wire state_alu;
+   input wire state_fetch;
+   input wire state_mmu;
+   input wire state_write;
 
    input [23:0] vmo;
-   input srcmap;
+   input wire srcmap;
    output [21:8] pma;
-   output lvmo_22;
-   output lvmo_23;
-   output mapdrive;
+   output wire lvmo_22;
+   output wire lvmo_23;
+   output wire mapdrive;
 
    ////////////////////////////////////////////////////////////////////////////////
 

@@ -21,31 +21,31 @@ module PDLCTL(/*AUTOARG*/
    nop, srcpdlpop, srcpdltop
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
-   input state_alu;
-   input state_fetch;
-   input state_mmu;
-   input state_read;
-   input state_write;
+   input wire state_alu;
+   input wire state_fetch;
+   input wire state_mmu;
+   input wire state_read;
+   input wire state_write;
 
    input [48:0] ir;
    input [9:0] pdlidx;
    input [9:0] pdlptr;
-   input destpdl_p;
-   input destpdl_x;
-   input destpdltop;
-   input nop;
-   input srcpdlpop;
-   input srcpdltop;
+   input wire destpdl_p;
+   input wire destpdl_x;
+   input wire destpdltop;
+   input wire nop;
+   input wire srcpdlpop;
+   input wire srcpdltop;
    output [9:0] pdla;
-   output pdlcnt;
-   output pdldrive;
-   output pdlenb;
-   output pdlwrite;
-   output prp;
-   output pwp;
+   output wire pdlcnt;
+   output wire pdldrive;
+   output wire pdlenb;
+   output wire pdlwrite;
+   output wire prp;
+   output wire pwp;
 
    ////////////////////////////////////////////////////////////////////////////////
 

@@ -25,10 +25,10 @@ module MLATCH(/*AUTOARG*/
    input [31:0] mmem;
    input [31:0] pdlo;
    input [4:0] spcptr;
-   input mfdrive;
-   input mpassm;
-   input pdldrive;
-   input spcdrive;
+   input wire mfdrive;
+   input wire mpassm;
+   input wire pdldrive;
+   input wire spcdrive;
    output [31:0] m;
 
    ////////////////////////////////////////////////////////////////////////////////

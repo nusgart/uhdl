@@ -23,22 +23,22 @@ module DRAM(/*AUTOARG*/
    dispwr
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
-   input state_prefetch;
-   input state_write;
+   input wire state_prefetch;
+   input wire state_write;
 
    input [23:0] vmo;
    input [31:0] a;
    input [31:0] r;
    input [48:0] ir;
    input [6:0] dmask;
-   input dispwr;
+   input wire dispwr;
    output [13:0] dpc;
-   output dn;
-   output dp;
-   output dr;
+   output wire dn;
+   output wire dp;
+   output wire dr;
 
    ////////////////////////////////////////////////////////////////////////////////
 
@@ -84,7 +84,7 @@ module DRAM(/*AUTOARG*/
      else if (1'b0) begin
 	out_b <= ram[dadr];
      end
-`else
+`elsif ISE
    wire ena_a = ~state_prefetch && ~dwe | 1'b0;
    wire ena_b = 1'b0 | dwe;
 
@@ -103,6 +103,15 @@ module DRAM(/*AUTOARG*/
       .dinb(a[16:0]),
       .doutb()
       /*AUTOINST*/);
+`else
+altera_DRAM inst(
+	.clock(clk),
+	.data(a[16:0]),
+	.rdaddress(dadr),
+	.wraddress(dadr),
+	.wren(dwe),
+	.q({dr, dp, dn, dpc})
+);
 `endif
 
 endmodule

@@ -20,18 +20,18 @@ module SMCTL(/*AUTOARG*/
    );
 
    input [48:0] ir;
-   input irbyte;
-   input sh3;
-   input sh4;
+   input wire irbyte;
+   input wire sh3;
+   input wire sh4;
 
    output [4:0] mskl;
    output [4:0] mskr;
 
-   output s0;
-   output s1;
-   output s2;
-   output s3;
-   output s4;
+   output wire s0;
+   output wire s1;
+   output wire s2;
+   output wire s3;
+   output wire s4;
 
    ////////////////////////////////////////////////////////////////////////////////
 

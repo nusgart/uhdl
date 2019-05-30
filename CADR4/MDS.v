@@ -22,9 +22,9 @@ module MDS(/*AUTOARG*/
    input [31:0] busint_bus;
    input [31:0] md;
    input [31:0] ob;
-   input loadmd;
-   input mdsel;
-   input memdrive;
+   input wire loadmd;
+   input wire mdsel;
+   input wire memdrive;
    output [31:0] mds;
 
    ////////////////////////////////////////////////////////////////////////////////

@@ -19,7 +19,7 @@ module MSKG4(/*AUTOARG*/
    clk, mskl, mskr
    );
 
-   input clk;
+   input wire clk;
 
    input [4:0] mskl;
    input [4:0] mskr;

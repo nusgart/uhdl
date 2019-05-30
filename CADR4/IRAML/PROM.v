@@ -20,7 +20,7 @@ module PROM(/*AUTOARG*/
    clk, promaddr
    );
 
-   input clk;
+   input wire clk;
 
    input [8:0] promaddr;
    output [48:0] iprom;

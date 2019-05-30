@@ -19,15 +19,15 @@ module VMEM0(/*AUTOARG*/
    clk, reset, mapi, vma, memstart, srcmap, vm0rp, vm0wp
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
    input [23:8] mapi;
    input [31:0] vma;
-   input memstart;
-   input srcmap;
-   input vm0rp;
-   input vm0wp;
+   input wire memstart;
+   input wire srcmap;
+   input wire vm0rp;
+   input wire vm0wp;
    output [4:0] vmap;
 
    ////////////////////////////////////////////////////////////////////////////////
@@ -43,7 +43,7 @@ module VMEM0(/*AUTOARG*/
 
    assign vmem0_adr = mapi[23:13];
 
-`ifdef SIMULATION
+`ifdef kldgsnkldsglkjdgSIMULATION
    reg [4:0] ram [0:2047];
    reg [4:0] out_a;
    reg [4:0] out_b;
@@ -71,7 +71,7 @@ module VMEM0(/*AUTOARG*/
      else if (1'b0) begin
 	out_b <= ram[vmem0_adr];
      end
-`else
+`elsif ISE
    wire ena_a = vm0rp && ~vm0wp | 1'b0;
    wire ena_b = 1'b0 | vm0wp;
 
@@ -90,6 +90,18 @@ module VMEM0(/*AUTOARG*/
       .dinb(vma[31:27]),
       .doutb()
       /*AUTOINST*/);
+		
+`else 
+
+vmem0 inst(
+	.clock(clk),
+	.data(vma[31:27]),
+	.rdaddress(vmem0_adr),
+	.wraddress(vmem0_adr),
+	.wren(vm0wp),
+	.q(vmap)
+);
+
 `endif
 
    assign use_map = srcmap | memstart;

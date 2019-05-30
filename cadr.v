@@ -14,34 +14,36 @@ module cadr(/*AUTOARG*/
    set_promdisable
    );
 
-   input clk;
-   input ext_int;
-   input ext_reset;
-   input ext_boot;
-   input ext_halt;
+   input wire clk;
+   input wire ext_int;
+   input wire ext_reset;
+   input wire ext_boot;
+   input wire ext_halt;
    input [15:0] spy_in;
    output [15:0] spy_out;
-   input dbread;
-   input dbwrite;
+   input wire dbread;
+   input wire dbwrite;
    input [4:0] eadr;
    output [13:0] mcr_addr;
    output [48:0] mcr_data_out;
    input [48:0] mcr_data_in;
-   input mcr_ready;
+   input wire mcr_ready;
    output mcr_write;
-   input mcr_done;
+   input wire mcr_done;
    output [31:0] md;
-   output memrq;
-   output wrcyc;
+   output wire memrq;
+   output wire wrcyc;
    output [31:0] vma;
    output [21:8] pma;
    input [11:0] bd_state;
    input [4:0] disk_state_in;
-   input loadmd;
+   input wire loadmd;
    input [31:0] busint_bus;
-   input bus_int;
-   input memack;
-   input set_promdisable;
+   input wire bus_int;
+   input wire memack;
+   input wire set_promdisable;
+	///
+	wire [11:0] bd_state_in;
 
    ////////////////////////////////////////////////////////////////////////////////
 

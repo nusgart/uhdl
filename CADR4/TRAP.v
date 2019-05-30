@@ -16,8 +16,8 @@ module TRAP(/*AUTOARG*/
    boot_trap
    );
 
-   input boot_trap;
-   output trap;
+   input wire boot_trap;
+   output wire trap;
 
    ////////////////////////////////////////////////////////////////////////////////
 

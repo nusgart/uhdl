@@ -71,6 +71,7 @@ module top_lx45(/*AUTOARG*/
    wire			lpddr_reset;		// From support of support_lx45.v
    wire [13:0]		mcr_addr;		// From lm3 of lm3.v
    wire [48:0]		mcr_data_out;		// From lm3 of lm3.v
+	wire [48:0]    mcr_data_in;   // From lm3 of lm3.v
    wire			mcr_done;		// From rc of ram_controller_lx45.v
    wire			mcr_ready;		// From rc of ram_controller_lx45.v
    wire			mcr_write;		// From lm3 of lm3.v
@@ -78,6 +79,7 @@ module top_lx45(/*AUTOARG*/
    wire			reset;			// From support of support_lx45.v
    wire [21:0]		sdram_addr;		// From lm3 of lm3.v
    wire [31:0]		sdram_data_cpu2rc;	// From lm3 of lm3.v
+	wire [31:0]    sdram_data_rc2cpu; // From lm3 of lm3.v
    wire			sdram_done;		// From rc of ram_controller_lx45.v
    wire			sdram_ready;		// From rc of ram_controller_lx45.v
    wire			sdram_req;		// From lm3 of lm3.v
@@ -94,6 +96,7 @@ module top_lx45(/*AUTOARG*/
    wire			vram_cpu_write;		// From lm3 of lm3.v
    wire [14:0]		vram_vga_addr;		// From lm3 of lm3.v
    wire [31:0]		vram_vga_data_out;	// From rc of ram_controller_lx45.v
+	wire [31:0]    vram_cpu_data_in; // From rc of ram_controller_lx45.v
    wire			vram_vga_ready;		// From rc of ram_controller_lx45.v
    wire			vram_vga_req;		// From lm3 of lm3.v
    // End of automatics

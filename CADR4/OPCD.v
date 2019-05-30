@@ -19,15 +19,15 @@ module OPCD(/*AUTOARG*/
    state_alu, state_fetch, state_mmu, state_write, srcdc, srcopc
    );
 
-   input state_alu;
-   input state_fetch;
-   input state_mmu;
-   input state_write;
+   input wire state_alu;
+   input wire state_fetch;
+   input wire state_mmu;
+   input wire state_write;
 
-   input srcdc;
-   input srcopc;
-   output dcdrive;
-   output opcdrive;
+   input wire srcdc;
+   input wire srcopc;
+   output wire dcdrive;
+   output wire opcdrive;
 
    ////////////////////////////////////////////////////////////////////////////////
 

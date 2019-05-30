@@ -20,25 +20,25 @@ module PDLPTR(/*AUTOARG*/
    destpdlp, destpdlx, pdlcnt, srcpdlidx, srcpdlpop, srcpdlptr
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
-   input state_alu;
-   input state_fetch;
-   input state_read;
-   input state_write;
+   input wire state_alu;
+   input wire state_fetch;
+   input wire state_read;
+   input wire state_write;
 
    input [31:0] ob;
-   input destpdlp;
-   input destpdlx;
-   input pdlcnt;
-   input srcpdlidx;
-   input srcpdlpop;
-   input srcpdlptr;
+   input wire destpdlp;
+   input wire destpdlx;
+   input wire pdlcnt;
+   input wire srcpdlidx;
+   input wire srcpdlpop;
+   input wire srcpdlptr;
    output [9:0] pdlidx;
    output [9:0] pdlptr;
-   output pidrive;
-   output ppdrive;
+   output wire pidrive;
+   output wire ppdrive;
 
    ////////////////////////////////////////////////////////////////////////////////
 

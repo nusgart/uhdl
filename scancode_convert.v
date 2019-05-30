@@ -14,12 +14,12 @@ module scancode_convert(/*AUTOARG*/
    clk, reset, strobe_in, code
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
-   input strobe_in;
+   input wire strobe_in;
    input [7:0] code;
-   output strobe_out;
+   output wire strobe_out;
    output [15:0] keycode;
 
    ////////////////////////////////////////////////////////////////////////////////

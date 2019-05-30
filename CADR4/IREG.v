@@ -19,15 +19,15 @@ module IREG(/*AUTOARG*/
    clk, reset, state_fetch, iob, i, destimod0, destimod1
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
-   input state_fetch;
+   input wire state_fetch;
 
    input [47:0] iob;
    input [48:0] i;
-   input destimod0;
-   input destimod1;
+   input wire destimod0;
+   input wire destimod1;
    output [48:0] ir;
 
    ////////////////////////////////////////////////////////////////////////////////

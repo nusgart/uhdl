@@ -19,13 +19,13 @@ module Q(/*AUTOARG*/
    clk, reset, state_fetch, qs0, qs1, alu
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
-   input state_fetch;
+   input wire state_fetch;
 
-   input qs0;
-   input qs1;
+   input wire qs0;
+   input wire qs1;
 
    input [32:0] alu;
    output [31:0] q;

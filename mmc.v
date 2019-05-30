@@ -18,6 +18,7 @@ module mmc(/*AUTOARG*/
 
    input [47:0] cmd;
    input [7:0] data_in;
+   wire clk, init, mmc_di, rd, reset, send, speed, stop, wr, done;
    input clk;
    input init;
    input mmc_di;

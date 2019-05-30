@@ -20,22 +20,22 @@ module FLAG(/*AUTOARG*/
    sintr, vmaok
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
-   input state_fetch;
+   input wire state_fetch;
 
    input [31:0] ob;
    input [31:0] r;
    input [32:0] alu;
    input [48:0] ir;
-   input aeqm;
-   input destintctl;
-   input nopa;
-   input sintr;
-   input vmaok;
+   input wire aeqm;
+   input wire destintctl;
+   input wire nopa;
+   input wire sintr;
+   input wire vmaok;
    output int_enable;
-   output jcond;
+   output wire jcond;
    output lc_byte_mode;
    output prog_unibus_reset;
    output sequence_break;

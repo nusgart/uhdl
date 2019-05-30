@@ -23,8 +23,8 @@ module VMAS(/*AUTOARG*/
    input [31:0] md;
    input [31:0] ob;
    input [31:0] vma;
-   input memprepare;
-   input vmasel;
+   input wire memprepare;
+   input wire vmasel;
 
    output [23:8] mapi;
    output [31:0] vmas;

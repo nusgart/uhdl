@@ -20,11 +20,11 @@ module PCTL(/*AUTOARG*/
    );
 
    input [13:0] pc;
-   input idebug;
-   input iwrited;
-   input promdisabled;
+   input wire idebug;
+   input wire iwrited;
+   input wire promdisabled;
    output [8:0] promaddr;
-   output promenable;
+   output wire promenable;
 
    ////////////////////////////////////////////////////////////////////////////////
 

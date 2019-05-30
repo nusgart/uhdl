@@ -22,11 +22,11 @@ module SHIFT(/*AUTOARG*/
    );
 
    input [31:0] m;
-   input s0;
-   input s1;
-   input s2;
-   input s3;
-   input s4;
+   input wire s0;
+   input wire s1;
+   input wire s2;
+   input wire s3;
+   input wire s4;
    output [31:0] r;
 
    ////////////////////////////////////////////////////////////////////////////////

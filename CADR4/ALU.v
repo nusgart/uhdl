@@ -24,18 +24,18 @@ module ALU(/*AUTOARG*/
    );
 
    input [3:0] aluf;
-   input alumode;
+   input wire alumode;
 
    input [31:0] a;
    input [31:0] m;
 
    output [32:0] alu;
-   output aeqm;
+   output wire aeqm;
 
-   input cin0, cin4_n, cin8_n, cin12_n, cin16_n, cin20_n, cin24_n, cin28_n, cin32_n;
+   input wire cin0, cin4_n, cin8_n, cin12_n, cin16_n, cin20_n, cin24_n, cin28_n, cin32_n;
 
-   output xout3, xout7, xout11, xout15, xout19, xout23, xout27, xout31;
-   output yout3, yout7, yout11, yout15, yout19, yout23, yout27, yout31;
+   output wire xout3, xout7, xout11, xout15, xout19, xout23, xout27, xout31;
+   output wire yout3, yout7, yout11, yout15, yout19, yout23, yout27, yout31;
 
    ////////////////////////////////////////////////////////////////////////////////
 

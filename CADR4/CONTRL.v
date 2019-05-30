@@ -22,40 +22,40 @@ module CONTRL(/*AUTOARG*/
    srcspcpop, trap
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
-   input state_alu;
-   input state_fetch;
-   input state_write;
+   input wire state_alu;
+   input wire state_fetch;
+   input wire state_write;
 
    input [3:0] funct;
    input [48:0] ir;
-   input destspc;
-   input dn;
-   input dp;
-   input dr;
-   input irdisp;
-   input irjump;
-   input jcond;
-   input nop11;
-   input srcspc;
-   input srcspcpop;
-   input trap;
+   input wire destspc;
+   input wire dn;
+   input wire dp;
+   input wire dr;
+   input wire irdisp;
+   input wire irjump;
+   input wire jcond;
+   input wire nop11;
+   input wire srcspc;
+   input wire srcspcpop;
+   input wire trap;
    output iwrited;
-   output n;
-   output nop;
-   output nopa;
-   output pcs0;
-   output pcs1;
-   output spcdrive;
-   output spcenb;
-   output spcnt;
-   output spop;
-   output spush;
-   output srcspcpopreal;
-   output srp;
-   output swp;
+   output wire n;
+   output wire nop;
+   output wire nopa;
+   output wire pcs0;
+   output wire pcs1;
+   output wire spcdrive;
+   output wire spcenb;
+   output wire spcnt;
+   output wire spop;
+   output wire spush;
+   output wire srcspcpopreal;
+   output wire srp;
+   output wire swp;
 
    ////////////////////////////////////////////////////////////////////////////////
 

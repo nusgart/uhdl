@@ -15,8 +15,8 @@ module us(/*AUTOARG*/
      US_CLK_RATE = 26'd1000000,
      US_CLK_DIV = SYS_CLK / US_CLK_RATE;
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
    output [31:0] us_clk;
 

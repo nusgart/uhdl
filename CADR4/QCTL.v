@@ -19,18 +19,18 @@ module QCTL(/*AUTOARG*/
    state_alu, state_write, state_mmu, state_fetch, ir, iralu, srcq
    );
 
-   input state_alu;
-   input state_write;
-   input state_mmu;
-   input state_fetch;
+   input wire state_alu;
+   input wire state_write;
+   input wire state_mmu;
+   input wire state_fetch;
 
    input [48:0] ir;
-   input iralu;
-   input srcq;
+   input wire iralu;
+   input wire srcq;
 
-   output qs0;
-   output qs1;
-   output qdrive;
+   output wire qs0;
+   output wire qs1;
+   output wire qdrive;
 
    ////////////////////////////////////////////////////////////////////////////////
 

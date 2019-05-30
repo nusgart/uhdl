@@ -22,8 +22,8 @@ module SPCW(/*AUTOARG*/
    input [13:0] ipc;
    input [13:0] wpc;
    input [31:0] l;
-   input destspc;
-   input n;
+   input wire destspc;
+   input wire n;
    output [18:0] spcw;
 
    ////////////////////////////////////////////////////////////////////////////////

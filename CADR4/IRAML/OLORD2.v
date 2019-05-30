@@ -20,21 +20,21 @@ module OLORD2(/*AUTOARG*/
    stat_ovf
    );
 
-   input clk;
-   input ext_reset;
+   input wire clk;
+   input wire ext_reset;
 
    input [15:0] spy_in;
-   input errstop;
-   input ext_boot;
-   input ext_halt;
-   input ldmode;
-   input srun;
-   input stat_ovf;
-   output boot;
+   input wire errstop;
+   input wire ext_boot;
+   input wire ext_halt;
+   input wire ldmode;
+   input wire srun;
+   input wire stat_ovf;
+   output wire boot;
    output boot_trap;
-   output err;
-   output errhalt;
-   output reset;
+   output wire err;
+   output wire errhalt;
+   output wire reset;
    output statstop;
 
    ////////////////////////////////////////////////////////////////////////////////

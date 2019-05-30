@@ -20,21 +20,21 @@ module VMA(/*AUTOARG*/
    ldvmah, ldvmal, srcvma, vmaenb
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
-   input state_alu;
-   input state_fetch;
-   input state_write;
+   input wire state_alu;
+   input wire state_fetch;
+   input wire state_write;
 
    input [15:0] spy_in;
    input [31:0] vmas;
-   input ldvmah;
-   input ldvmal;
-   input srcvma;
-   input vmaenb;
+   input wire ldvmah;
+   input wire ldvmal;
+   input wire srcvma;
+   input wire vmaenb;
    output [31:0] vma;
-   output vmadrive;
+   output wire vmadrive;
 
    ////////////////////////////////////////////////////////////////////////////////
 

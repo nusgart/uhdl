@@ -15,19 +15,15 @@
 
 module AMEM(/*AUTOARG*/
    // Outputs
-   amem,
+   output wire [31:0] amem,
    // Inputs
-   clk, reset, l, aadr, arp, awp
+   input wire clk,
+   input wire reset,
+   input wire [31:0] l,
+   input wire [9:0] aadr,
+   input wire arp,
+   input wire awp
    );
-
-   input clk;
-   input reset;
-
-   input [31:0] l;
-   input [9:0] aadr;
-   input arp;
-   input awp;
-   output [31:0] amem;
 
    ////////////////////////////////////////////////////////////////////////////////
 
@@ -64,10 +60,11 @@ module AMEM(/*AUTOARG*/
      else if (1'b0) begin
 	out_b <= ram[aadr];
      end
-`else
+`elsif ISE
    wire ena_a = arp | 1'b0;
    wire ena_b = 1'b0 | awp;
 
+	
    ise_AMEM inst
      (
       .clka(clk),
@@ -83,6 +80,14 @@ module AMEM(/*AUTOARG*/
       .dinb(l),
       .doutb()
       /*AUTOINST*/);
+`else 
+altera_AMEM inst (
+		.rdaddress(aadr),
+		.wraddress(aadr),
+		.clock(clk),
+		.data(l),
+		.wren(awp),
+		.q(amem));
 `endif
 
 endmodule

@@ -4,4 +4,8 @@
 obj_dir/
 *~
 .version
-
+*.bak
+*.map
+*.ncd
+*.bit
+/uhdl*

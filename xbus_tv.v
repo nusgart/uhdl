@@ -12,25 +12,25 @@ module xbus_tv(/*AUTOARG*/
    vram_ready
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
    input [21:0] addr;
    input [31:0] datain;
-   input req;
-   input write;
+   input wire req;
+   input wire write;
    output [31:0] dataout;
-   output ack;
-   output decode;
-   output interrupt;
+   output wire ack;
+   output wire decode;
+   output wire interrupt;
 
    output [14:0] vram_addr;
    input [31:0] vram_data_in;
    output [31:0] vram_data_out;
-   input vram_done;
-   input vram_ready;
-   output vram_req;
-   output vram_write;
+   input wire vram_done;
+   input wire vram_ready;
+   output wire vram_req;
+   output wire vram_write;
 
    ////////////////////////////////////////////////////////////////////////////////
 

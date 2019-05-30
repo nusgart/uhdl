@@ -21,14 +21,14 @@ module VMEM1(/*AUTOARG*/
    clk, reset, mapi, vma, vmap, vm1rp, vm1wp
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
    input [23:8] mapi;
    input [31:0] vma;
    input [4:0] vmap;
-   input vm1rp;
-   input vm1wp;
+   input wire vm1rp;
+   input wire vm1wp;
    output [23:0] vmo;
 
    ////////////////////////////////////////////////////////////////////////////////
@@ -72,7 +72,7 @@ module VMEM1(/*AUTOARG*/
      else if (1'b0) begin
 	out_b <= ram[vmem1_adr];
      end
-`else
+`elsif ISE
    wire ena_a = vm1rp && ~vm1wp | 1'b0;
    wire ena_b = 1'b0 | vm1wp;
 
@@ -91,6 +91,15 @@ module VMEM1(/*AUTOARG*/
       .dinb(vma[23:0]),
       .doutb()
       /*AUTOINST*/);
+`else
+vmem1 inst(
+	.clock(clk),
+	.data(vma[23:0]),
+	.rdaddress(vmem1_adr),
+	.wraddress(vmem1_adr),
+	.wren(vm1wp),
+	.q(vmo)
+);
 `endif
 
 endmodule

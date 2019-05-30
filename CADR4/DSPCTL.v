@@ -19,18 +19,18 @@ module DSPCTL(/*AUTOARG*/
    clk, reset, state_fetch, funct, ir, irdisp
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
-   input state_fetch;
+   input wire state_fetch;
 
    input [3:0] funct;
    input [48:0] ir;
-   input irdisp;
+   input wire irdisp;
    output [6:0] dmask;
    output [9:0] dc;
-   output dispwr;
-   output dmapbenb;
+   output wire dispwr;
+   output wire dmapbenb;
 
    ////////////////////////////////////////////////////////////////////////////////
 

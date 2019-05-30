@@ -11,6 +11,7 @@ module spy_port(/*AUTOARG*/
    );
 
    input [15:0] spy_in;
+   wire clk, reset, rs232_rxd, sysclk;
    input clk;
    input reset;
    input rs232_rxd;

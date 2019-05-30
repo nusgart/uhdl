@@ -27,75 +27,75 @@ module busint(/*AUTOARG*/
    ms_x, ms_y, ms_button, ms_ready, spyin
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
    input [21:0] addr;
    input [31:0] datain;
-   input req;
-   input write;
+   input wire req;
+   input wire write;
    output [31:0] dataout;
-   output ack;
-   output load;
-   output interrupt;
+   output wire ack;
+   output wire load;
+   output wire interrupt;
 
    // ---!!! //////////////////////////////////////////////////////////////////////
 
    input [31:0] sdram_data_in;
-   input sdram_done;
-   input sdram_ready;
+   input wire sdram_done;
+   input wire sdram_ready;
    output [21:0] sdram_addr;
    output [31:0] sdram_data_out;
-   output sdram_req;
-   output sdram_write;
+   output wire sdram_req;
+   output wire sdram_write;
 
    // ---!!! //////////////////////////////////////////////////////////////////////
 
    input [11:0] bd_state;
    input [15:0] bd_data_in;
-   input bd_bsy;
-   input bd_err;
-   input bd_iordy;
-   input bd_rdy;
+   input wire bd_bsy;
+   input wire bd_err;
+   input wire bd_iordy;
+   input wire bd_rdy;
    output [15:0] bd_data_out;
    output [1:0] bd_cmd;
    output [23:0] bd_addr;
-   output bd_rd;
-   output bd_start;
-   output bd_wr;
+   output wire bd_rd;
+   output wire bd_start;
+   output wire bd_wr;
 
    output [4:0] disk_state;
 
    // ---!!! //////////////////////////////////////////////////////////////////////
 
    input [31:0] vram_data_in;
-   input vram_done;
-   input vram_ready;
+   input wire vram_done;
+   input wire vram_ready;
    output [14:0] vram_addr;
    output [31:0] vram_data_out;
-   output vram_req;
-   output vram_write;
+   output wire vram_req;
+   output wire vram_write;
 
    // ---!!! //////////////////////////////////////////////////////////////////////
 
    input [15:0] kb_data;
-   input kb_ready;
+   input wire kb_ready;
 
    input [11:0] ms_x;
    input [11:0] ms_y;
    input [2:0] ms_button;
-   input ms_ready;
+   input wire ms_ready;
 
    // ---!!! ///////////////////////////////////////////////////////////////////////
 
-   output promdisable;
+   output wire promdisable;
 
    // ---!!! //////////////////////////////////////////////////////////////////////
 
    input [15:0] spyin;
    output [15:0] spyout;
-   output spyrd;
-   output spywr;
+   output wire spyrd;
+   output wire spywr;
    output [3:0] spyreg;
 
    ////////////////////////////////////////////////////////////////////////////////

@@ -29,32 +29,32 @@ module xbus_disk(/*AUTOARG*/
      DISK_HEADS = 19,
      DISK_BLOCKS = 17;
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
    input [21:0] addrin;
    input [31:0] datain;
-   input reqin;
-   input writein;
+   input wire reqin;
+   input wire writein;
    output [31:0] dataout;
-   input ackin;
-   input busgrantin;
-   input decodein;
-   output interrupt;
+   input wire ackin;
+   input wire busgrantin;
+   input wire decodein;
+   output wire interrupt;
 
    output [21:0] addrout;
    output reqout;
    output writeout;
-   output ackout;
+   output wire ackout;
    output busreqout;
-   output decodeout;
+   output wire decodeout;
 
    input [11:0] bd_state;
    input [15:0] bd_data_in;
-   input bd_bsy;
-   input bd_err;
-   input bd_iordy;
-   input bd_rdy;
+   input wire bd_bsy;
+   input wire bd_err;
+   input wire bd_iordy;
+   input wire bd_rdy;
    output [15:0] bd_data_out;
    output [1:0] bd_cmd;
    output [23:0] bd_addr;

@@ -19,18 +19,18 @@ module NPC(/*AUTOARG*/
    clk, reset, state_fetch, dpc, spc, ir, pcs0, pcs1, spc1a, trap
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
-   input state_fetch;
+   input wire state_fetch;
 
    input [13:0] dpc;
    input [18:0] spc;
    input [48:0] ir;
-   input pcs0;
-   input pcs1;
-   input spc1a;
-   input trap;
+   input wire pcs0;
+   input wire pcs1;
+   input wire spc1a;
+   input wire trap;
    output [13:0] ipc;
    output [13:0] pc;
 

@@ -6,8 +6,8 @@
 module ic_74182(CIN_N, X, Y, XOUT, YOUT, COUT0_N, COUT1_N, COUT2_N);
 
    input [3:0] X, Y;
-   input CIN_N;
-   output XOUT, YOUT, COUT0_N, COUT1_N, COUT2_N;
+   input wire CIN_N;
+   output wire XOUT, YOUT, COUT0_N, COUT1_N, COUT2_N;
 
    TopLevel74182 Ckt74182(CIN_N, X, Y, XOUT, YOUT, COUT0_N, COUT1_N, COUT2_N);
 
@@ -16,8 +16,8 @@ endmodule
 module TopLevel74182(CN, PB, GB, PBo, GBo, CNX, CNY, CNZ);
 
    input [3:0] PB, GB;
-   input CN;
-   output PBo, GBo, CNX, CNY, CNZ;
+   input wire CN;
+   output wire PBo, GBo, CNX, CNY, CNZ;
 
    wire PB0GB0, PB0GB01, PB0GB012;
    wire PB1GB1, PB1GB12, PB1GB123;

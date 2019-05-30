@@ -20,29 +20,29 @@ module VCTL1(/*AUTOARG*/
    ifetch, lcinc, lvmo_22, lvmo_23, memack, memrd, memwr, needfetch
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
-   input state_alu;
-   input state_fetch;
-   input state_prefetch;
-   input state_write;
+   input wire state_alu;
+   input wire state_fetch;
+   input wire state_prefetch;
+   input wire state_write;
 
-   input ifetch;
-   input lcinc;
-   input lvmo_22;
-   input lvmo_23;
-   input memack;
-   input memrd;
-   input memwr;
-   input needfetch;
+   input wire ifetch;
+   input wire lcinc;
+   input wire lvmo_22;
+   input wire lvmo_23;
+   input wire memack;
+   input wire memrd;
+   input wire memwr;
+   input wire needfetch;
    output memprepare;
-   output memrq;
+   output wire memrq;
    output memstart;
-   output pfr;                  // VMA permissions (read).
-   output pfw;                  // VMA permissions (write).
+   output wire pfr;                  // VMA permissions (read).
+   output wire pfw;                  // VMA permissions (write).
    output vmaok;                // VMA access OK.
-   output waiting;
+   output wire waiting;
    output wrcyc;
 
    ////////////////////////////////////////////////////////////////////////////////

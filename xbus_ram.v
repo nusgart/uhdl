@@ -5,31 +5,24 @@
 
 module xbus_ram (/*AUTOARG*/
    // Outputs
-   dataout, ack, decode, sdram_addr, sdram_data_out, sdram_req,
-   sdram_write,
+   output wire [31:0] dataout,
+   output wire ack,
+   output wire decode,
+   output wire [21:0] sdram_addr,
+   output wire [31:0] sdram_data_out,
+   output wire sdram_req,
+   output wire sdram_write,
    // Inputs
-   clk, reset, addr, datain, req, write, sdram_data_in, sdram_ready,
-   sdram_done
+   input wire clk,
+   input wire reset,
+   input wire [21:0] addr,
+   input wire [31:0] datain, 
+   input wire req,
+   input wire write,
+   input wire [31:0] sdram_data_in,
+   input wire sdram_ready,
+   input wire sdram_done
    );
-
-   input clk;
-   input reset;
-
-   input [21:0] addr;
-   input [31:0] datain;
-   input req;
-   input write;
-   output [31:0] dataout;
-   output ack;
-   output decode;
-
-   output [21:0] sdram_addr;
-   output [31:0] sdram_data_out;
-   input [31:0] sdram_data_in;
-   output sdram_req;
-   input sdram_ready;
-   output sdram_write;
-   input sdram_done;
 
    ////////////////////////////////////////////////////////////////////////////////
   

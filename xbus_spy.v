@@ -7,26 +7,22 @@
 
 module xbus_spy(/*AUTOARG*/
    // Outputs
-   dataout, ack, decode, spyout, spyreg, spyrd, spywr,
+   output wire [31:0] dataout, 
+   output wire ack, 
+   output wire decode, 
+   output wire [15:0] spyout, 
+   output wire [3:0] spyreg, 
+   output wire spyrd, 
+   output wire spywr,
    // Inputs
-   clk, addr, datain, req, write, spyin
+   input wire clk, 
+   input wire [21:0] addr, 
+   input wire [31:0] datain, 
+   input wire req, 
+   input wire write, 
+   input wire [15:0] spyin
    );
 
-   input clk;
-
-   input [21:0] addr;
-   input [31:0] datain;
-   input req;
-   input write;
-   output [31:0] dataout;
-   output ack;
-   output decode;
-
-   input [15:0] spyin;
-   output [15:0] spyout;
-   output [3:0] spyreg;
-   output spyrd;
-   output spywr;
 
    ////////////////////////////////////////////////////////////////////////////////
 

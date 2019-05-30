@@ -20,17 +20,17 @@ module DEBUG(/*AUTOARG*/
    promenable
    );
 
-   input clk;
-   input reset;
+   input wire clk;
+   input wire reset;
 
    input [15:0] spy_in;
    input [48:0] iprom;
    input [48:0] iram;
-   input idebug;
-   input lddbirh;
-   input lddbirl;
-   input lddbirm;
-   input promenable;
+   input wire idebug;
+   input wire lddbirh;
+   input wire lddbirl;
+   input wire lddbirm;
+   input wire promenable;
    output [48:0] i;
 
    ////////////////////////////////////////////////////////////////////////////////
