@@ -1,14 +1,14 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
--- Date        : Thu May 30 17:13:04 2019
+-- Date        : Wed Jun  5 13:47:34 2019
 -- Host        : nnusgart-G3-3579 running 64-bit Ubuntu 18.04.2 LTS
--- Command     : write_vhdl -force -mode funcsim -rename_top ise_PDL -prefix
---               ise_PDL_ ise_AMEM_sim_netlist.vhdl
--- Design      : ise_AMEM
+-- Command     : write_vhdl -force -mode funcsim
+--               /home/nnusgart/Xilinx/cadr/cadr.srcs/sources_1/ip/ise_PDL/ise_PDL_sim_netlist.vhdl
+-- Design      : ise_PDL
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
--- Device      : xc7a35tftg256-3
+-- Device      : xc7a35ticsg324-1L
 -- --------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -29,6 +29,8 @@ entity ise_PDL_blk_mem_gen_prim_wrapper is
     wea : in STD_LOGIC_VECTOR ( 0 to 0 );
     web : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of ise_PDL_blk_mem_gen_prim_wrapper : entity is "blk_mem_gen_prim_wrapper";
 end ise_PDL_blk_mem_gen_prim_wrapper;
 
 architecture STRUCTURE of ise_PDL_blk_mem_gen_prim_wrapper is
@@ -298,6 +300,8 @@ entity ise_PDL_blk_mem_gen_prim_width is
     wea : in STD_LOGIC_VECTOR ( 0 to 0 );
     web : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of ise_PDL_blk_mem_gen_prim_width : entity is "blk_mem_gen_prim_width";
 end ise_PDL_blk_mem_gen_prim_width;
 
 architecture STRUCTURE of ise_PDL_blk_mem_gen_prim_width is
@@ -337,6 +341,8 @@ entity ise_PDL_blk_mem_gen_generic_cstr is
     wea : in STD_LOGIC_VECTOR ( 0 to 0 );
     web : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of ise_PDL_blk_mem_gen_generic_cstr : entity is "blk_mem_gen_generic_cstr";
 end ise_PDL_blk_mem_gen_generic_cstr;
 
 architecture STRUCTURE of ise_PDL_blk_mem_gen_generic_cstr is
@@ -376,6 +382,8 @@ entity ise_PDL_blk_mem_gen_top is
     wea : in STD_LOGIC_VECTOR ( 0 to 0 );
     web : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of ise_PDL_blk_mem_gen_top : entity is "blk_mem_gen_top";
 end ise_PDL_blk_mem_gen_top;
 
 architecture STRUCTURE of ise_PDL_blk_mem_gen_top is
@@ -415,6 +423,8 @@ entity ise_PDL_blk_mem_gen_v8_4_2_synth is
     wea : in STD_LOGIC_VECTOR ( 0 to 0 );
     web : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of ise_PDL_blk_mem_gen_v8_4_2_synth : entity is "blk_mem_gen_v8_4_2_synth";
 end ise_PDL_blk_mem_gen_v8_4_2_synth;
 
 architecture STRUCTURE of ise_PDL_blk_mem_gen_v8_4_2_synth is
@@ -552,7 +562,7 @@ entity ise_PDL_blk_mem_gen_v8_4_2 is
   attribute C_EN_SLEEP_PIN : integer;
   attribute C_EN_SLEEP_PIN of ise_PDL_blk_mem_gen_v8_4_2 : entity is 0;
   attribute C_EST_POWER_SUMMARY : string;
-  attribute C_EST_POWER_SUMMARY of ise_PDL_blk_mem_gen_v8_4_2 : entity is "Estimated Power for IP     :     5.9043 mW";
+  attribute C_EST_POWER_SUMMARY of ise_PDL_blk_mem_gen_v8_4_2 : entity is "Estimated Power for IP     :     5.609085 mW";
   attribute C_FAMILY : string;
   attribute C_FAMILY of ise_PDL_blk_mem_gen_v8_4_2 : entity is "artix7";
   attribute C_HAS_AXI_ID : integer;
@@ -588,7 +598,7 @@ entity ise_PDL_blk_mem_gen_v8_4_2 is
   attribute C_INITB_VAL : string;
   attribute C_INITB_VAL of ise_PDL_blk_mem_gen_v8_4_2 : entity is "0";
   attribute C_INIT_FILE : string;
-  attribute C_INIT_FILE of ise_PDL_blk_mem_gen_v8_4_2 : entity is "ise_AMEM.mem";
+  attribute C_INIT_FILE of ise_PDL_blk_mem_gen_v8_4_2 : entity is "ise_PDL.mem";
   attribute C_INIT_FILE_NAME : string;
   attribute C_INIT_FILE_NAME of ise_PDL_blk_mem_gen_v8_4_2 : entity is "no_coe_file_loaded";
   attribute C_INTERFACE_TYPE : integer;
@@ -655,6 +665,8 @@ entity ise_PDL_blk_mem_gen_v8_4_2 is
   attribute C_WRITE_WIDTH_B of ise_PDL_blk_mem_gen_v8_4_2 : entity is 32;
   attribute C_XDEVICEFAMILY : string;
   attribute C_XDEVICEFAMILY of ise_PDL_blk_mem_gen_v8_4_2 : entity is "artix7";
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of ise_PDL_blk_mem_gen_v8_4_2 : entity is "blk_mem_gen_v8_4_2";
   attribute downgradeipidentifiedwarnings : string;
   attribute downgradeipidentifiedwarnings of ise_PDL_blk_mem_gen_v8_4_2 : entity is "yes";
 end ise_PDL_blk_mem_gen_v8_4_2;
@@ -780,7 +792,7 @@ entity ise_PDL is
   attribute NotValidForBitStream : boolean;
   attribute NotValidForBitStream of ise_PDL : entity is true;
   attribute CHECK_LICENSE_TYPE : string;
-  attribute CHECK_LICENSE_TYPE of ise_PDL : entity is "ise_AMEM,blk_mem_gen_v8_4_2,{}";
+  attribute CHECK_LICENSE_TYPE of ise_PDL : entity is "ise_PDL,blk_mem_gen_v8_4_2,{}";
   attribute downgradeipidentifiedwarnings : string;
   attribute downgradeipidentifiedwarnings of ise_PDL : entity is "yes";
   attribute x_core_info : string;
@@ -854,7 +866,7 @@ architecture STRUCTURE of ise_PDL is
   attribute C_EN_SLEEP_PIN : integer;
   attribute C_EN_SLEEP_PIN of U0 : label is 0;
   attribute C_EST_POWER_SUMMARY : string;
-  attribute C_EST_POWER_SUMMARY of U0 : label is "Estimated Power for IP     :     5.9043 mW";
+  attribute C_EST_POWER_SUMMARY of U0 : label is "Estimated Power for IP     :     5.609085 mW";
   attribute C_FAMILY : string;
   attribute C_FAMILY of U0 : label is "artix7";
   attribute C_HAS_AXI_ID : integer;
@@ -890,7 +902,7 @@ architecture STRUCTURE of ise_PDL is
   attribute C_INITB_VAL : string;
   attribute C_INITB_VAL of U0 : label is "0";
   attribute C_INIT_FILE : string;
-  attribute C_INIT_FILE of U0 : label is "ise_AMEM.mem";
+  attribute C_INIT_FILE of U0 : label is "ise_PDL.mem";
   attribute C_INIT_FILE_NAME : string;
   attribute C_INIT_FILE_NAME of U0 : label is "no_coe_file_loaded";
   attribute C_INTERFACE_TYPE : integer;

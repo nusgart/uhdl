@@ -243,13 +243,11 @@ module example_top #
 
    // Inputs
    
-   // Differential system clocks
-   input                                        sys_clk_p,
-   input                                        sys_clk_n,
+   // Single-ended system clock
+   input                                        sys_clk_i,
    
-   // differential iodelayctrl clk (reference clock)
-   input                                        clk_ref_p,
-   input                                        clk_ref_n,
+   // Single-ended iodelayctrl clk (reference clock)
+   input                                        clk_ref_i,
 
    output                                       tg_compare_error,
    output                                       init_calib_complete,
@@ -438,11 +436,9 @@ function integer clogb2 (input integer size);
       
        
 // System Clock Ports
-       .sys_clk_p                       (sys_clk_p),
-       .sys_clk_n                       (sys_clk_n),
+       .sys_clk_i                       (sys_clk_i),
 // Reference Clock Ports
-       .clk_ref_p                      (clk_ref_p),
-       .clk_ref_n                      (clk_ref_n),
+       .clk_ref_i                      (clk_ref_i),
        .device_temp            (device_temp),
        `ifdef SKIP_CALIB
        .calib_tap_req                    (calib_tap_req),

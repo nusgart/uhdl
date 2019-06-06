@@ -422,17 +422,17 @@ module ddr_memif_mig #
                                      // It is associated to a set of IODELAYs with
                                      // an IDELAYCTRL that have same IODELAY CONTROLLER
                                      // clock frequency (300MHz/400MHz).
-   parameter SYSCLK_TYPE           = "DIFFERENTIAL",
+   parameter SYSCLK_TYPE           = "SINGLE_ENDED",
                                      // System clock type DIFFERENTIAL, SINGLE_ENDED,
                                      // NO_BUFFER
-   parameter REFCLK_TYPE           = "DIFFERENTIAL",
+   parameter REFCLK_TYPE           = "SINGLE_ENDED",
                                      // Reference clock type DIFFERENTIAL, SINGLE_ENDED,
                                      // NO_BUFFER, USE_SYSTEM_CLOCK
    parameter SYS_RST_PORT          = "TRUE",
                                      // "TRUE" - if pin is selected for sys_rst
                                      //          and IBUF will be instantiated.
                                      // "FALSE" - if pin is not selected for sys_rst
-   parameter FPGA_SPEED_GRADE      = 3,
+   parameter FPGA_SPEED_GRADE      = 1,
                                      // FPGA speed grade
       
    parameter CMD_PIPE_PLUS1        = "ON",
@@ -449,7 +449,7 @@ module ddr_memif_mig #
    //***************************************************************************
    parameter REFCLK_FREQ           = 200.0,
                                      // IODELAYCTRL reference clock frequency
-   parameter DIFF_TERM_REFCLK      = "TRUE",
+   parameter DIFF_TERM_REFCLK      = "FALSE",
                                      // Differential Termination for idelay
                                      // reference clock input pins
    //***************************************************************************
@@ -518,13 +518,11 @@ module ddr_memif_mig #
 
    // Inputs
    
-   // Differential system clocks
-   input                                        sys_clk_p,
-   input                                        sys_clk_n,
+   // Single-ended system clock
+   input                                        sys_clk_i,
    
-   // differential iodelayctrl clk (reference clock)
-   input                                        clk_ref_p,
-   input                                        clk_ref_n,
+   // Single-ended iodelayctrl clk (reference clock)
+   input                                        clk_ref_i,
    
    // user interface signals
    input [ADDR_WIDTH-1:0]                       app_addr,
@@ -641,9 +639,11 @@ module ddr_memif_mig #
   wire                                ddr3_parity;
       
 
-  wire                              sys_clk_i;
+  wire                              sys_clk_p;
+  wire                              sys_clk_n;
   wire                              mmcm_clk;
-  wire                              clk_ref_i;
+  wire                              clk_ref_p;
+  wire                              clk_ref_n;
   wire [11:0]                       device_temp_s;
   wire [11:0]                       device_temp_i;
 
@@ -732,8 +732,10 @@ module ddr_memif_mig #
   assign ui_clk = clk;
   assign ui_clk_sync_rst = rst;
   
-  assign sys_clk_i = 1'b0;
-  assign clk_ref_i = 1'b0;
+  assign sys_clk_p = 1'b0;
+  assign sys_clk_n = 1'b0;
+  assign clk_ref_p = 1'b0;
+  assign clk_ref_n = 1'b0;
   assign device_temp = device_temp_s;
       
 

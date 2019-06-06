@@ -7,10 +7,10 @@
 
 module xbus_spy(/*AUTOARG*/
    // Outputs
-   output wire [31:0] dataout, 
+   output reg [31:0] dataout, 
    output wire ack, 
    output wire decode, 
-   output wire [15:0] spyout, 
+   output reg [15:0] spyout, 
    output wire [3:0] spyreg, 
    output wire spyrd, 
    output wire spywr,
@@ -32,8 +32,8 @@ module xbus_spy(/*AUTOARG*/
    /*AUTOWIRE*/
    /*AUTOREG*/
    // Beginning of automatic regs (for this module's undeclared outputs)
-   reg [31:0]		dataout;
-   reg [15:0]		spyout;
+   //reg [31:0]		dataout;
+   //reg [15:0]		spyout;
    // End of automatics
 
    ////////////////////////////////////////////////////////////////////////////////

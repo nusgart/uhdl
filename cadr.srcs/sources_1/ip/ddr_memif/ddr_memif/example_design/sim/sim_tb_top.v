@@ -237,14 +237,8 @@ module sim_tb_top;
 
 
   reg                     sys_clk_i;
-  wire                               sys_clk_p;
-  wire                               sys_clk_n;
-    
 
   reg clk_ref_i;
-  wire                               clk_ref_p;
-  wire                               clk_ref_n;
-    
 
   
   wire                               ddr3_reset_n;
@@ -317,16 +311,12 @@ module sim_tb_top;
   always
     sys_clk_i = #(CLKIN_PERIOD/2.0) ~sys_clk_i;
 
-  assign sys_clk_p = sys_clk_i;
-  assign sys_clk_n = ~sys_clk_i;
 
   initial
     clk_ref_i = 1'b0;
   always
     clk_ref_i = #REFCLK_PERIOD ~clk_ref_i;
 
-  assign clk_ref_p = clk_ref_i;
-  assign clk_ref_n = ~clk_ref_i;
 
 
 
@@ -505,11 +495,9 @@ module sim_tb_top;
      .ddr3_odt             (ddr3_odt_fpga),
     
      
-     .sys_clk_p            (sys_clk_p),
-     .sys_clk_n            (sys_clk_n),
+     .sys_clk_i            (sys_clk_i),
     
-     .clk_ref_p            (clk_ref_p),
-     .clk_ref_n            (clk_ref_n),
+     .clk_ref_i            (clk_ref_i),
     
       .init_calib_complete (init_calib_complete),
       .tg_compare_error    (tg_compare_error),

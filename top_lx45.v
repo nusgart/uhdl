@@ -13,9 +13,9 @@ module top_lx45(/*AUTOARG*/
    rs232_txd, led, vga_hsync, vga_vsync, vga_r, vga_g, vga_b, mmc_cs,
    mmc_do, mmc_sclk, mcb3_dram_a, mcb3_dram_ba, mcb3_dram_cke,
    mcb3_dram_ras_n, mcb3_dram_cas_n, mcb3_dram_we_n, mcb3_dram_dm,
-   mcb3_dram_udm, mcb3_dram_ck, mcb3_dram_ck_n,
+   mcb3_dram_udm, mcb3_dram_ck, mcb3_dram_ck_n, mcb3_dram_reset_n,
    // Inouts
-   ms_ps2_clk, ms_ps2_data, mcb3_dram_dq, mcb3_dram_udqs, mcb3_rzq,
+   ms_ps2_clk, ms_ps2_data, mcb3_dram_dq, mcb3_dram_dqs_n, mcb3_rzq,
    mcb3_dram_dqs,
    // Inputs
    rs232_rxd, sysclk, kb_ps2_clk, kb_ps2_data, mmc_di, switch
@@ -47,10 +47,11 @@ module top_lx45(/*AUTOARG*/
    output mcb3_dram_cas_n;
    output mcb3_dram_we_n;
    output mcb3_dram_dm;
-   inout mcb3_dram_udqs;
+   inout [1:0] mcb3_dram_dqs_n;
+   output mcb3_dram_reset_n;
    inout mcb3_rzq;
    output mcb3_dram_udm;
-   inout mcb3_dram_dqs;
+   inout [1:0] mcb3_dram_dqs;
    output mcb3_dram_ck;
    output mcb3_dram_ck_n;
    
@@ -99,13 +100,15 @@ module top_lx45(/*AUTOARG*/
 	wire [31:0]    vram_cpu_data_in; // From rc of ram_controller_lx45.v
    wire			vram_vga_ready;		// From rc of ram_controller_lx45.v
    wire			vram_vga_req;		// From lm3 of lm3.v
+   
+   wire clk_dram;
    // End of automatics
    
    ////////////////////////////////////////////////////////////////////////////////
   
    BUFG clk50_bufg(.I(sysclk), .O(clk50));
    
-   clk_wiz clocking_inst(.CLK_50(clk50), .CLK_VGA(vga_clk), .RESET(dcm_reset), .LOCKED(vga_clk_locked));
+   clk_wiz clocking_inst(.CLK_50(clk50), .CLK_VGA(vga_clk), .clk_dram(clk_dram), .RESET(dcm_reset), .LOCKED(vga_clk_locked));
    
    initial clkcnt = 0;
    always @(posedge clk50)
@@ -155,6 +158,7 @@ module top_lx45(/*AUTOARG*/
       .mcb3_dram_ras_n			(mcb3_dram_ras_n),
       .mcb3_dram_udm			(mcb3_dram_udm),
       .mcb3_dram_we_n			(mcb3_dram_we_n),
+      .mcb3_dram_reset_n    (mcb3_dram_reset_n),
       .mcr_done				(mcr_done),
       .mcr_ready			(mcr_ready),
       .sdram_done			(sdram_done),
@@ -165,7 +169,7 @@ module top_lx45(/*AUTOARG*/
       // Inouts
       .mcb3_dram_dq			(mcb3_dram_dq[15:0]),
       .mcb3_dram_dqs			(mcb3_dram_dqs),
-      .mcb3_dram_udqs			(mcb3_dram_udqs),
+      .mcb3_dram_dqs_n			(mcb3_dram_dqs_n),
       .mcb3_rzq				(mcb3_rzq),
       // Inputs
       .mcr_addr				(mcr_addr[13:0]),
@@ -182,6 +186,7 @@ module top_lx45(/*AUTOARG*/
       .sdram_req			(sdram_req),
       .sdram_write			(sdram_write),
       .sysclk				(sysclk),
+      .dram_clk             (clk_dram),
       .vga_clk				(vga_clk),
       .vram_cpu_req			(vram_cpu_req),
       .vram_cpu_write			(vram_cpu_write),

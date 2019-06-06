@@ -111,11 +111,9 @@
     .ui_clk_sync_rst                (ui_clk_sync_rst),  // output			ui_clk_sync_rst
     .app_wdf_mask                   (app_wdf_mask),  // input [7:0]		app_wdf_mask
     // System Clock Ports
-    .sys_clk_p                       (sys_clk_p),  // input				sys_clk_p
-    .sys_clk_n                       (sys_clk_n),  // input				sys_clk_n
+    .sys_clk_i                       (sys_clk_i),  // input			sys_clk_i
     // Reference Clock Ports
-    .clk_ref_p                      (clk_ref_p),  // input				clk_ref_p
-    .clk_ref_n                      (clk_ref_n),  // input				clk_ref_n
+    .clk_ref_i                      (clk_ref_i),  // input				clk_ref_i
     .sys_rst                        (sys_rst) // input sys_rst
     );
 

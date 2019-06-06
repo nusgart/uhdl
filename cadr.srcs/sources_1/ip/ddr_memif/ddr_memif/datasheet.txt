@@ -1,19 +1,19 @@
 
 
 Vivado Project Options:
-   Target Device                   : xc7a35t-ftg256
-   Speed Grade                     : -3
+   Target Device                   : xc7a35ti-csg324
+   Speed Grade                     : -1L
    HDL                             : verilog
    Synthesis Tool                  : VIVADO
 
 MIG Output Options:
    Module Name                     : ddr_memif
    No of Controllers               : 1
-   Selected Compatible Device(s)   : --
+   Selected Compatible Device(s)   : xc7a100ti-csg324
 
 FPGA Options:
-   System Clock Type               : Differential
-   Reference Clock Type            : Differential
+   System Clock Type               : Single-Ended
+   Reference Clock Type            : Single-Ended
    Debug Port                      : OFF
    Internal Vref                   : disabled
    IO Power Reduction              : ON
@@ -70,12 +70,12 @@ Bank Selections:
 		Byte Group T1:	DQ[8-15]
 
 Reference_Clock: 
-	SignalName: clk_ref_p/n
-		PadLocation: F5/E5(CC_P/N)  Bank: 35
+	SignalName: clk_ref_i
+		PadLocation: E11  Bank: 15
 
 System_Clock: 
-	SignalName: sys_clk_p/n
-		PadLocation: N11/N12(CC_P/N)  Bank: 14
+	SignalName: sys_clk_i
+		PadLocation: N11  Bank: 14
 
 System_Control: 
 	SignalName: sys_rst

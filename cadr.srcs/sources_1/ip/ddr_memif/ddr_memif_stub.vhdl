@@ -1,13 +1,13 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
--- Date        : Mon May 20 22:06:44 2019
+-- Date        : Wed Jun  5 14:09:43 2019
 -- Host        : nnusgart-G3-3579 running 64-bit Ubuntu 18.04.2 LTS
 -- Command     : write_vhdl -force -mode synth_stub
 --               /home/nnusgart/Xilinx/cadr/cadr.srcs/sources_1/ip/ddr_memif/ddr_memif_stub.vhdl
 -- Design      : ddr_memif
 -- Purpose     : Stub declaration of top-level module interface
--- Device      : xc7a35tftg256-3
+-- Device      : xc7a35ticsg324-1L
 -- --------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -29,10 +29,8 @@ entity ddr_memif is
     ddr3_cs_n : out STD_LOGIC_VECTOR ( 0 to 0 );
     ddr3_dm : out STD_LOGIC_VECTOR ( 1 downto 0 );
     ddr3_odt : out STD_LOGIC_VECTOR ( 0 to 0 );
-    sys_clk_p : in STD_LOGIC;
-    sys_clk_n : in STD_LOGIC;
-    clk_ref_p : in STD_LOGIC;
-    clk_ref_n : in STD_LOGIC;
+    sys_clk_i : in STD_LOGIC;
+    clk_ref_i : in STD_LOGIC;
     app_addr : in STD_LOGIC_VECTOR ( 28 downto 0 );
     app_cmd : in STD_LOGIC_VECTOR ( 2 downto 0 );
     app_en : in STD_LOGIC;
@@ -64,6 +62,6 @@ architecture stub of ddr_memif is
 attribute syn_black_box : boolean;
 attribute black_box_pad_pin : string;
 attribute syn_black_box of stub : architecture is true;
-attribute black_box_pad_pin of stub : architecture is "ddr3_dq[15:0],ddr3_dqs_n[1:0],ddr3_dqs_p[1:0],ddr3_addr[13:0],ddr3_ba[2:0],ddr3_ras_n,ddr3_cas_n,ddr3_we_n,ddr3_reset_n,ddr3_ck_p[0:0],ddr3_ck_n[0:0],ddr3_cke[0:0],ddr3_cs_n[0:0],ddr3_dm[1:0],ddr3_odt[0:0],sys_clk_p,sys_clk_n,clk_ref_p,clk_ref_n,app_addr[28:0],app_cmd[2:0],app_en,app_wdf_data[63:0],app_wdf_end,app_wdf_mask[7:0],app_wdf_wren,app_rd_data[63:0],app_rd_data_end,app_rd_data_valid,app_rdy,app_wdf_rdy,app_sr_req,app_ref_req,app_zq_req,app_sr_active,app_ref_ack,app_zq_ack,ui_clk,ui_clk_sync_rst,init_calib_complete,device_temp[11:0],sys_rst";
+attribute black_box_pad_pin of stub : architecture is "ddr3_dq[15:0],ddr3_dqs_n[1:0],ddr3_dqs_p[1:0],ddr3_addr[13:0],ddr3_ba[2:0],ddr3_ras_n,ddr3_cas_n,ddr3_we_n,ddr3_reset_n,ddr3_ck_p[0:0],ddr3_ck_n[0:0],ddr3_cke[0:0],ddr3_cs_n[0:0],ddr3_dm[1:0],ddr3_odt[0:0],sys_clk_i,clk_ref_i,app_addr[28:0],app_cmd[2:0],app_en,app_wdf_data[63:0],app_wdf_end,app_wdf_mask[7:0],app_wdf_wren,app_rd_data[63:0],app_rd_data_end,app_rd_data_valid,app_rdy,app_wdf_rdy,app_sr_req,app_ref_req,app_zq_req,app_sr_active,app_ref_ack,app_zq_ack,ui_clk,ui_clk_sync_rst,init_calib_complete,device_temp[11:0],sys_rst";
 begin
 end;

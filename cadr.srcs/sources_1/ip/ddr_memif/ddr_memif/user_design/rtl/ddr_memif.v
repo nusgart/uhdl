@@ -86,12 +86,10 @@ module ddr_memif (
   output [1:0]     ddr3_dm,
   output [0:0]       ddr3_odt,
   // Inputs
-  // Differential system clocks
-  input             sys_clk_p,
-  input             sys_clk_n,
-  // differential iodelayctrl clk (reference clock)
-  input             clk_ref_p,
-  input             clk_ref_n,
+  // Single-ended system clock
+  input         sys_clk_i,
+  // Single-ended iodelayctrl clk (reference clock)
+  input             clk_ref_i,
   // user interface signals
   input [28:0]       app_addr,
   input [2:0]       app_cmd,
@@ -169,11 +167,9 @@ module ddr_memif (
     .ui_clk_sync_rst                (ui_clk_sync_rst),
     .app_wdf_mask                   (app_wdf_mask),
     // System Clock Ports
-    .sys_clk_p                       (sys_clk_p),
-    .sys_clk_n                       (sys_clk_n),
+    .sys_clk_i                       (sys_clk_i),
     // Reference Clock Ports
-    .clk_ref_p                      (clk_ref_p),
-    .clk_ref_n                      (clk_ref_n),
+    .clk_ref_i                      (clk_ref_i),
        .device_temp            (device_temp),
        `ifdef SKIP_CALIB
        .calib_tap_req                    (calib_tap_req),
