@@ -1,0 +1,24 @@
+SET_FLAG MODE INTERACTIVE
+SET_FLAG STANDALONE_MODE TRUE
+SET_PREFERENCE ipi_mode no
+SET_PREFERENCE is_ip_locked false
+SET_PREFERENCE devicefamily artix7
+SET_PREFERENCE device xc7a35ti
+SET_PREFERENCE speedgrade -1L
+SET_PREFERENCE package csg324
+SET_PREFERENCE verilogsim true
+SET_PREFERENCE vhdlsim false
+SET_PREFERENCE designentry Verilog
+SET_PREFERENCE outputdirectory /home/nnusgart/.Xil/Vivado-12991-nnusgart-G3-3579/coregen/dram_memif/_tmp/
+SET_PREFERENCE subworkingdirectory /home/nnusgart/.Xil/Vivado-12991-nnusgart-G3-3579/coregen/dram_memif/_tmp/
+SET_PREFERENCE flowvendor Other
+SET_PREFERENCE tool vivado
+SET_PREFERENCE compnamestatus 0
+SET_PARAMETER component_name dram_memif
+SET_PARAMETER xml_input_file /home/nnusgart/Xilinx/cadr/cadr.srcs/sources_1/ip/dram_memif/mig_a.prj
+SET_PARAMETER data_dir_path /media/nnusgart/DATA/Xilinx/Vivado/2018.3/data/ip/xilinx/mig_7series_v4_2
+SET_CORE_NAME Memory Interface Generator (MIG 7 Series)
+SET_CORE_VERSION 4.2
+SET_CORE_VLNV xilinx.com:ip:mig_7series:4.2
+SET_CORE_PATH /media/nnusgart/DATA/Xilinx/Vivado/2018.3/data/ip/xilinx/mig_7series_v4_2
+SET_CORE_DATASHEET /media/nnusgart/DATA/Xilinx/Vivado/2018.3/data/ip/xilinx/mig_7series_v4_2/data/docs/ds176_7series_MIS.pdf
