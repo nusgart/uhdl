@@ -115,3 +115,7 @@ set_property IOSTANDARD SSTL135 [get_ports {ddr3_dm[0]}]
 set_property PACKAGE_PIN R5 [get_ports ddr3_odt]
 set_property IOSTANDARD SSTL135 [get_ports ddr3_odt]
 set_property IOSTANDARD SSTL135 [get_ports ddr3_cs_n]
+
+set_property PACKAGE_PIN L1 [get_ports {ddr3_dm[0]}]
+set_property PACKAGE_PIN U1 [get_ports {ddr3_dm[1]}]
+set_property PACKAGE_PIN U8 [get_ports ddr3_cs_n]

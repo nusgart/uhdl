@@ -134,7 +134,7 @@ module top_lx45(/*AUTOARG*/
       .cpu_clk				(cpu_clk),
       .lpddr_calib_done			(lpddr_calib_done));
    
-   ram_controller_lx45 rc
+   ram_controller_A7 rc
      (
       .lpddr_clk_out(),
       .clk(clk50),
