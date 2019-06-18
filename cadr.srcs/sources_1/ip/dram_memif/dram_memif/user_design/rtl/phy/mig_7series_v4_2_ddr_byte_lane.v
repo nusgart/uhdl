@@ -299,7 +299,7 @@ wire                               pre_fifo_full;
 wire                               pre_fifo_rden;
 wire   [5:0]                       ddr_ck_out_q;
 wire                               ififo_rd_en_in /* synthesis syn_maxfan = 10 */;
-wire oserdes_clkdiv /*synthesis syn_insert_buffer="none"*/;
+wire oserdes_clkdiv;
 wire oserdes_clk_delayed;
 wire po_rd_enable;
 
@@ -595,7 +595,7 @@ endgenerate
 
 wire  #0 phase_ref = freq_refclk;
 
-wire oserdes_clk /*synthesis syn_insert_buffer="none"*/;
+wire oserdes_clk;
 
 
 PHASER_OUT_PHY #(

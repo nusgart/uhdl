@@ -16,10 +16,10 @@ module mmc_model(/*AUTOARG*/
    spiClk, spiDataIn, spiCS_n
    );
 
-   input spiClk;
-   input spiDataIn;
+   input wire spiClk;
+   input wire spiDataIn;
    output spiDataOut;
-   input spiCS_n;
+   input wire spiCS_n;
 
    ////////////////////////////////////////////////////////////////////////////////
 

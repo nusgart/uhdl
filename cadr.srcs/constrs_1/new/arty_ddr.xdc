@@ -81,7 +81,6 @@ set_property PACKAGE_PIN F4 [get_ports mmc_do]
 set_property PACKAGE_PIN F3 [get_ports mmc_sclk]
 
 set_property CLOCK_DEDICATED_ROUTE ANY_CMT_COLUMN [get_nets sysclk_IBUF]
-set_property CLOCK_DEDICATED_ROUTE BACKBONE [get_nets ulpi_clk_in_c]
 
 
 set_property IOSTANDARD LVCMOS33 [get_ports kb_ps2_clk]
@@ -119,3 +118,8 @@ set_property IOSTANDARD SSTL135 [get_ports ddr3_cs_n]
 set_property PACKAGE_PIN L1 [get_ports {ddr3_dm[0]}]
 set_property PACKAGE_PIN U1 [get_ports {ddr3_dm[1]}]
 set_property PACKAGE_PIN U8 [get_ports ddr3_cs_n]
+set_switching_activity -toggle_rate 0.010 -static_probability 0.880 [get_nets {support/led_OBUF[0]}]
+
+reset_switching_activity -all 
+create_clock -period 10.000 -name sysclk -waveform {0.000 5.000} [get_ports sysclk]
+create_generated_clock -name {clkcnt_reg[0]} -source [get_ports sysclk] -divide_by 2 [get_pins {clkcnt_reg[0]/Q}]

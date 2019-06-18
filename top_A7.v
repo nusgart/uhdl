@@ -116,13 +116,16 @@ module top_A7(/*AUTOARG*/
    
    ////////////////////////////////////////////////////////////////////////////////
    wire clk50;
+   wire clk_dram_in;
    wire vga_clk;
    wire vga_clk_locked;
    wire cpu_clk;
    wire machrun;
    BUFG clk50_bufg(.I(sysclk), .O(clk50));
+   BUFG clkdram_bg(.I(sysclk), .O(clk_dram_in));
+   clk_wiz clocking_inst(.CLK_50(clk50), .CLK_VGA(vga_clk), /*.clk_dram(clk_dram),*/ .RESET(dcm_reset), .LOCKED(vga_clk_locked));
    
-   clk_wiz clocking_inst(.CLK_50(clk50), .CLK_VGA(vga_clk), .clk_dram(clk_dram), .RESET(dcm_reset), .LOCKED(vga_clk_locked));
+   clk_wiz_dram clk_inst(.clk_in(clk_dram_in), .clk_dram(clk_dram), .reset(reset));
    
    initial clkcnt = 0;
    always @(posedge clk50)
