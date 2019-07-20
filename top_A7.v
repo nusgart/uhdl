@@ -48,7 +48,7 @@ module top_A7(/*AUTOARG*/
    
    input wire rs232_rxd;
    output wire rs232_txd;
-   output [3:0] led;
+   output [15:0] led;
    input wire sysclk;
    input wire kb_ps2_clk;
    input wire kb_ps2_data;
@@ -80,12 +80,16 @@ module top_A7(/*AUTOARG*/
    wire			interrupt;		// From support of support_lx45.v
    wire			lpddr_calib_done;	// From rc of ram_controller_lx45.v
    wire			lpddr_reset;		// From support of support_lx45.v
+   // microcode
+   /*
    wire [13:0]		mcr_addr;		// From lm3 of lm3.v
    wire [48:0]		mcr_data_out;		// From lm3 of lm3.v
-	wire [48:0]    mcr_data_in;   // From lm3 of lm3.v
+   wire [48:0]    mcr_data_in;   // From lm3 of lm3.v
    wire			mcr_done;		// From rc of ram_controller_lx45.v
    wire			mcr_ready;		// From rc of ram_controller_lx45.v
    wire			mcr_write;		// From lm3 of lm3.v
+   */
+   ///sdram
    wire			prefetch;		// From lm3 of lm3.v
    wire			reset;			// From support of support_lx45.v
    wire [21:0]		sdram_addr;		// From lm3 of lm3.v
@@ -98,6 +102,7 @@ module top_A7(/*AUTOARG*/
    wire			spy_rd;			// From lm3 of lm3.v
    wire [3:0]		spy_reg;		// From lm3 of lm3.v
    wire			spy_wr;			// From lm3 of lm3.v
+   /// vga
    wire			vga_blank;		// From lm3 of lm3.v
    wire [14:0]		vram_cpu_addr;		// From lm3 of lm3.v
    wire [31:0]		vram_cpu_data_out;	// From lm3 of lm3.v
@@ -113,19 +118,31 @@ module top_A7(/*AUTOARG*/
    
    wire clk_dram;
    // End of automatics
-   
+   wire [2:0] cpu_st;
+   wire [2:0] rst_st;
    ////////////////////////////////////////////////////////////////////////////////
    wire clk50;
+   //wire clk_vga_in;
    wire clk_dram_in;
+   //wire sys_clk_in;
    wire vga_clk;
    wire vga_clk_locked;
    wire cpu_clk;
    wire machrun;
-   BUFG clk50_bufg(.I(sysclk), .O(clk50));
-   BUFG clkdram_bg(.I(sysclk), .O(clk_dram_in));
-   clk_wiz clocking_inst(.CLK_50(clk50), .CLK_VGA(vga_clk), /*.clk_dram(clk_dram),*/ .RESET(dcm_reset), .LOCKED(vga_clk_locked));
+   //wire ref_clk_in;
+   wire ref_clk;
    
-   clk_wiz_dram clk_inst(.clk_in(clk_dram_in), .clk_dram(clk_dram), .reset(reset));
+   //BUFG vgaclk_bufg(.I(sysclk), .O(clk_vga_in));
+   //BUFG clkdram_bg(.I(sysclk), .O(clk_dram_in));
+   //BUFG sysclk_bufg(.I(sysclk), .O(sys_clk_in));
+   //BUFG refclk_bufg(.I(sysclk), .O(ref_clk_in));
+   
+   sysclk_wiz sys_inst (.clk_in1(sysclk), .clk50(clk50), .clk_dram(clk_dram), .clk_ref(ref_clk), .reset(1'b0));
+   
+   clk_wiz clocking_inst(.CLK_50(sysclk), .CLK_VGA(vga_clk), /*.clk_dram(clk_dram),*/ .RESET(dcm_reset), .LOCKED(vga_clk_locked));
+   
+   //clk_wiz_dram clk_inst(.clk_in(clk_dram_in), .clk_dram(clk_dram), .reset(dcm_reset));
+   //clk_wiz_0 clk_inst_a(.clk_in(ref_clk_in), .ref_clk_out(ref_clk), .reset(dcm_reset));
    
    initial clkcnt = 0;
    always @(posedge clk50)
@@ -139,6 +156,8 @@ module top_A7(/*AUTOARG*/
       .button_b(1'b0),
       .button_h(1'b0),
       .button_c(1'b0),
+      .cpu_st(cpu_st),
+      .rst_st(rst_st),
       /*AUTOINST*/
       // Outputs
       .boot				(boot),
@@ -151,12 +170,14 @@ module top_A7(/*AUTOARG*/
       .cpu_clk				(cpu_clk),
       .lpddr_calib_done			(lpddr_calib_done));
    
-   ram_controller_A7 rc
-     (
+   //wire zq_sent;
+   //wire zq_ack;
+   
+   ram_controller_A7 rc (
       .lpddr_clk_out(),
       .clk                  (clk50),
-      .mcr_data_out         (mcr_data_in),
-      .mcr_data_in          (mcr_data_out),
+      //.mcr_data_out         (mcr_data_in),
+      //.mcr_data_in          (mcr_data_out),
       .sdram_data_in        (sdram_data_cpu2rc),
       .sdram_data_out       (sdram_data_rc2cpu),
       .vram_cpu_data_in     (vram_cpu_data_out),
@@ -174,18 +195,21 @@ module top_A7(/*AUTOARG*/
       .ddr3_dq              (ddr3_dq),  // inout [15:0]		ddr3_dq
       .ddr3_dqs_n           (ddr3_dqs_n),  // inout [1:0]		ddr3_dqs_n
       .ddr3_dqs_p           (ddr3_dqs_p),
+      .ddr3_cs_n            (ddr3_cs_n),
+      .ddr3_dm              (ddr3_dm),
+      .ddr3_odt             (ddr3_odt),
       // outputs
       .vram_vga_data_out	(vram_vga_data_out[31:0]),
       .lpddr_calib_done		(lpddr_calib_done),
-      .mcr_done				(mcr_done),
-      .mcr_ready			(mcr_ready),
+      //.mcr_done				(mcr_done),
+      //.mcr_ready			(mcr_ready),
       .sdram_done			(sdram_done),
       .sdram_ready			(sdram_ready),
       .vram_cpu_done		(vram_cpu_done),
       .vram_cpu_ready		(vram_cpu_ready),
       .vram_vga_ready		(vram_vga_ready),
       // Inputs
-      .mcr_addr				(mcr_addr[13:0]),
+      //.mcr_addr				(mcr_addr[13:0]),
       .vram_cpu_addr		(vram_cpu_addr[14:0]),
       .vram_vga_addr		(vram_vga_addr[14:0]),
       .sdram_addr			(sdram_addr[21:0]),
@@ -193,13 +217,14 @@ module top_A7(/*AUTOARG*/
       .fetch				(fetch),
       .lpddr_reset			(lpddr_reset),
       .machrun				(machrun),
-      .mcr_write			(mcr_write),
+      //.mcr_write			(mcr_write),
       .prefetch				(prefetch),
       .reset				(reset),
       .sdram_req			(sdram_req),
       .sdram_write			(sdram_write),
       .sysclk				(sysclk),
       .dram_clk             (clk_dram),
+      .ref_clk              (ref_clk),
       .vga_clk				(vga_clk),
       .vram_cpu_req			(vram_cpu_req),
       .vram_cpu_write		(vram_cpu_write),
@@ -222,9 +247,9 @@ module top_A7(/*AUTOARG*/
 	   .disk_state			(disk_state[4:0]),
 	   .fetch			(fetch),
 	   .prefetch			(prefetch),
-	   .mcr_addr			(mcr_addr[13:0]),
-	   .mcr_data_out		(mcr_data_out[48:0]),
-	   .mcr_write			(mcr_write),
+	   //.mcr_addr			(mcr_addr[13:0]),
+	   //.mcr_data_out		(mcr_data_out[48:0]),
+	   //.mcr_write			(mcr_write),
 	   .mmc_cs			(mmc_cs),
 	   .mmc_do			(mmc_do),
 	   .mmc_sclk			(mmc_sclk),
@@ -253,9 +278,9 @@ module top_A7(/*AUTOARG*/
 	   .boot			(boot),
 	   .halt			(halt),
 	   .interrupt			(interrupt),
-	   .mcr_data_in			(mcr_data_in[48:0]),
-	   .mcr_ready			(mcr_ready),
-	   .mcr_done			(mcr_done),
+	   //.mcr_data_in			(mcr_data_in[48:0]),
+	   //.mcr_ready			(mcr_ready),
+	   //.mcr_done			(mcr_done),
 	   .mmc_di			(mmc_di),
 	   .vram_vga_data_out		(vram_vga_data_out[31:0]),
 	   .vram_vga_ready		(vram_vga_ready),
@@ -264,11 +289,50 @@ module top_A7(/*AUTOARG*/
 	   .kb_ps2_data			(kb_ps2_data),
 	   .rs232_rxd			(rs232_rxd));
    
-   assign led[3] = 1'b0;
-   assign led[2] = disk_state[1];
-   assign led[1] = disk_state[2];
-   assign led[0] = reset;
+   reg calib_done;
+   initial calib_done = 0;
    
+   always @(posedge clk_dram) begin
+     if (lpddr_calib_done) begin
+       calib_done <= 1;
+     end else begin
+       calib_done <= calib_done;
+     end
+   end
+   
+   assign led[3] = cpu_st[0]; //1'b1;
+   assign led[2] = cpu_st[1]; //disk_state[1];
+   assign led[1] = cpu_st[2]; //disk_state[2];
+   assign led[0] = calib_done; //lpddr_calib_done;
+   
+   //
+   reg a;
+   initial a = 0;
+   
+   always @(posedge sysclk) begin
+     if (lpddr_reset) begin
+       a <= 1;
+      end else begin
+        a <= a;
+      end
+   end
+   
+   // led 0: B=4, R=5, G=6 
+   assign led[4] = rst_st[0];
+   assign led[5] = 1'b0;
+   assign led[6] = 1'b0;
+   // led 1 B=7
+   assign led[7] = rst_st[1];
+   assign led[8] = 1'b0;
+   assign led[9] = 1'b0;
+   // led 2 B=10, R=11, G=12
+   assign led[10] = rst_st[2];
+   assign led[11] = 1'b0;//lpddr_reset;
+   assign led[12] = 1'b0;//lpddr_reset;
+   // led 3
+   assign led[13] = a;//lpddr_reset;
+   // assign led[14]
+   // assign led[15]
 endmodule
 
 `default_nettype wire

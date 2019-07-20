@@ -9,8 +9,8 @@ SET_PREFERENCE package csg324
 SET_PREFERENCE verilogsim true
 SET_PREFERENCE vhdlsim false
 SET_PREFERENCE designentry Verilog
-SET_PREFERENCE outputdirectory /home/nnusgart/.Xil/Vivado-18029-nnusgart-G3-3579/coregen/dram_memif/_tmp/
-SET_PREFERENCE subworkingdirectory /home/nnusgart/.Xil/Vivado-18029-nnusgart-G3-3579/coregen/dram_memif/_tmp/
+SET_PREFERENCE outputdirectory /home/nnusgart/.Xil/Vivado-10836-nnusgart-G3-3579/coregen/dram_memif/_tmp/
+SET_PREFERENCE subworkingdirectory /home/nnusgart/.Xil/Vivado-10836-nnusgart-G3-3579/coregen/dram_memif/_tmp/
 SET_PREFERENCE flowvendor Other
 SET_PREFERENCE tool vivado
 SET_PREFERENCE compnamestatus 0

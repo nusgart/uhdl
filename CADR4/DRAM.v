@@ -55,35 +55,28 @@ module DRAM(/*AUTOARG*/
    assign daddr0 = (ir[8] & vmo[18]) | (ir[9] & vmo[19]) | (dmask[0] & r[0]) | (ir[12]);
    assign dadr = {ir[22:13], daddr0} | ({4'b0000, dmask[6:1], 1'b0} & {4'b0000, r[6:1], 1'b0});
    assign dwe = dispwr & state_write;
-
-`ifdef SIMULATION
+`define INFER
+`ifdef INFER
    reg [16:0] ram [0:2047];
    reg [16:0] out_a;
-   reg [16:0] out_b;
 
    assign {dr,dp,dn,dpc} = out_a;
 
 
    always @(posedge clk)
      if (1'b0) begin
-	ram[dadr] <= 17'b0;
+       ram[dadr] <= 17'b0;
      end else if (dwe) begin
-	ram[dadr] <= a[16:0];
+       ram[dadr] <= a[16:0];
      end
 
    always @(posedge clk)
      if (reset)
        out_a <= 0;
      else if (~state_prefetch && ~dwe) begin
-	out_a <= ram[dadr];
+       out_a <= ram[dadr];
      end
 
-   always @(posedge clk)
-     if (reset)
-       out_b <= 0;
-     else if (1'b0) begin
-	out_b <= ram[dadr];
-     end
 `elsif ISE
    wire ena_a = ~state_prefetch && ~dwe | 1'b0;
    wire ena_b = 1'b0 | dwe;

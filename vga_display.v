@@ -11,15 +11,15 @@ module vga_display(/*AUTOARG*/
    vga_clk, reset, vram_data, vram_ready
    );
 
-   parameter H_DISP = 1280;
-   parameter H_FPORCH = 16;
-   parameter H_SYNC = 100;
-   parameter H_BPORCH = 200;
+   parameter H_DISP = 640;//1920;//1280;
+   parameter H_FPORCH = 16;//110;
+   parameter H_SYNC = 96;//40;
+   parameter H_BPORCH = 48;//20;
 
-   parameter V_DISP = 1024;
-   parameter V_FPORCH = 1;
-   parameter V_SYNC = 3;
-   parameter V_BPORCH = 38;
+   parameter V_DISP = 480;//1080;//1024;
+   parameter V_FPORCH = 11;//5;
+   parameter V_SYNC = 2;//5;
+   parameter V_BPORCH = 33;//30;
 
    parameter BOX_WIDTH = 768;
    parameter BOX_HEIGHT = 896;
@@ -44,8 +44,8 @@ module vga_display(/*AUTOARG*/
    localparam H_COUNTER_MAX = (H_DISP + H_FPORCH + H_SYNC + H_BPORCH);
    localparam V_COUNTER_MAX = (V_DISP + V_FPORCH + V_SYNC + V_BPORCH);
 
-   localparam H_BOX_OFFSET = (H_DISP - BOX_WIDTH) / 2;
-   localparam V_BOX_OFFSET = (V_DISP - BOX_HEIGHT) / 2;
+   localparam H_BOX_OFFSET = 0;//(H_DISP - BOX_WIDTH) / 2;
+   localparam V_BOX_OFFSET = 0;//(V_DISP - BOX_HEIGHT) / 2;
 
    reg [10:0] h_counter;
    reg [10:0] h_pos;
@@ -193,20 +193,20 @@ module vga_display(/*AUTOARG*/
    // Pixel shift register.
    always @(posedge vga_clk)
      if (reset) begin
-	/*AUTORESET*/
-	// Beginning of autoreset for uninitialized flops
-	pixel <= 1'h0;
-	ram_data_hold_empty <= 1'h0;
-	ram_shift <= 32'h0;
-	// End of automatics
+	   /*AUTORESET*/
+	   // Beginning of autoreset for uninitialized flops
+	   pixel <= 1'h0;
+	   ram_data_hold_empty <= 1'h0;
+	   ram_shift <= 32'h0;
+	 // End of automatics
      end else if (ram_shift_load) begin
-	ram_shift <= ram_data_hold;
-	ram_data_hold_empty <= 1'b1;
-	pixel <= ram_shift[0];
+	   ram_shift <= ram_data_hold;
+	   ram_data_hold_empty <= 1'b1;
+	   pixel <= ram_shift[0];
      end else begin
-	ram_shift <= { 1'b0, ram_shift[31:1] };
-	pixel <= ram_shift[0];
-	if (vram_ready)
+	   ram_shift <= { 1'b0, ram_shift[31:1] };
+	   pixel <= ram_shift[0];
+	 if (vram_ready)
 	  ram_data_hold_empty <= 0;
      end
 
@@ -247,8 +247,8 @@ module vga_display(/*AUTOARG*/
    assign vga_r = in_box ? pixel : in_border;
    assign vga_b = in_box ? pixel : in_border;
    assign vga_g = in_box ? pixel : in_border;
-   assign vga_vsync = ~vsync;
-   assign vga_hsync = ~hsync;
+   assign vga_vsync = vsync;
+   assign vga_hsync = hsync;
    assign vga_blank = ~valid;
 
 endmodule

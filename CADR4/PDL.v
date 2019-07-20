@@ -36,33 +36,24 @@ module PDL(/*AUTOARG*/
    localparam MEM_DEPTH = 1024;
 
    ////////////////////////////////////////////////////////////////////////////////
+`define INFER
 
-`ifdef SIMULATION
+`ifdef INFER
    reg [31:0] ram [0:1023];
    reg [31:0] out_a;
-   reg [31:0] out_b;
 
    assign pdlo = out_a;
 
    always @(posedge clk)
-     if (1'b0) begin
-	ram[pdla] <= 32'b0;
-     end else if (pwp) begin
-	ram[pdla] <= l;
+     if (pwp) begin
+       ram[pdla] <= l;
      end
 
    always @(posedge clk)
      if (reset)
        out_a <= 0;
      else if (prp) begin
-	out_a <= ram[pdla];
-     end
-
-   always @(posedge clk)
-     if (reset)
-       out_b <= 0;
-     else if (1'b0) begin
-	out_b <= ram[pdla];
+       out_a <= ram[pdla];
      end
 `elsif ISE
    wire ena_a = prp | 1'b0;

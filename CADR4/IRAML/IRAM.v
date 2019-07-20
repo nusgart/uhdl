@@ -28,7 +28,7 @@
 
 `timescale 1ns/1ps
 `default_nettype none
-
+`define ISE
 module IRAM(/*AUTOARG*/
    // Outputs
    output wire [48:0] iram,
@@ -36,7 +36,7 @@ module IRAM(/*AUTOARG*/
    input wire clk,
    input wire reset,
    input wire [13:0] pc,
-   input wire iwr, 
+   input wire [48:0] iwr, 
    input wire iwe
    );
 
@@ -48,8 +48,11 @@ module IRAM(/*AUTOARG*/
    localparam MEM_DEPTH = 16384;
 
    ////////////////////////////////////////////////////////////////////////////////
-
 `ifdef SIMULATION
+`define INFER
+`endif
+`define INFER
+`ifdef INFER
    reg [48:0] ram [0:MEM_DEPTH-1];
    reg [48:0] out_a;
 
@@ -59,11 +62,12 @@ module IRAM(/*AUTOARG*/
    /* synthesis syn_ramstyle="block_ram" */
    always @(posedge clk)
      if (iwe) begin
-	ram[pc] <= iwr;
+       ram[pc] <= iwr;
      end
 
    always @(posedge clk)
      if (1'b1) begin
+       out_a <= ram[pc];
      end
 `elsif ISE
    wire ena_a = 1'b1 | iwe;

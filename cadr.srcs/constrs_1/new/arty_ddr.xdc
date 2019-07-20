@@ -59,22 +59,44 @@
 #set_property PACKAGE_PIN N5 [get_ports ddr3_cke]
 # system clock
 set_property PACKAGE_PIN E3 [get_ports sysclk]
+### "Main LED's"
+set_property PACKAGE_PIN H6 [get_ports {led[15]}]
+set_property PACKAGE_PIN K1 [get_ports {led[14]}]
+set_property PACKAGE_PIN K2 [get_ports {led[13]}]
+
+set_property PACKAGE_PIN J2 [get_ports {led[12]}]
+set_property PACKAGE_PIN J3 [get_ports {led[11]}]
+set_property PACKAGE_PIN H4 [get_ports {led[10]}]
+
+set_property PACKAGE_PIN J4 [get_ports {led[9]}]
+set_property PACKAGE_PIN G3 [get_ports {led[8]}]
+set_property PACKAGE_PIN G4 [get_ports {led[7]}]
+
+set_property PACKAGE_PIN F6 [get_ports {led[6]}]
+set_property PACKAGE_PIN G6 [get_ports {led[5]}]
+set_property PACKAGE_PIN E1 [get_ports {led[4]}]
+
 set_property PACKAGE_PIN H5 [get_ports {led[3]}]
 set_property PACKAGE_PIN J5 [get_ports {led[2]}]
 set_property PACKAGE_PIN T9 [get_ports {led[1]}]
 set_property PACKAGE_PIN T10 [get_ports {led[0]}]
+## USB-USART
 set_property PACKAGE_PIN D10 [get_ports rs232_rxd]
 set_property PACKAGE_PIN A9 [get_ports rs232_txd]
-set_property PACKAGE_PIN G13 [get_ports vga_b]
-set_property PACKAGE_PIN B11 [get_ports vga_g]
-set_property PACKAGE_PIN D12 [get_ports vga_hsync]
-set_property PACKAGE_PIN A11 [get_ports vga_r]
-set_property PACKAGE_PIN D13 [get_ports vga_vsync]
+## PMOD Header JA and JB
+set_property PACKAGE_PIN K16 [get_ports vga_b]
+set_property PACKAGE_PIN C15 [get_ports vga_g]
+set_property PACKAGE_PIN J17 [get_ports vga_hsync]
+set_property PACKAGE_PIN D12 [get_ports vga_r]
+set_property PACKAGE_PIN J18 [get_ports vga_vsync]
 set_property PACKAGE_PIN A8 [get_ports switch]
+## PMOD Header JB
 set_property PACKAGE_PIN D15 [get_ports kb_ps2_clk]
 set_property PACKAGE_PIN E15 [get_ports kb_ps2_data]
+## PMOD Header JC
 set_property PACKAGE_PIN V10 [get_ports ms_ps2_clk]
 set_property PACKAGE_PIN U12 [get_ports ms_ps2_data]
+## PMOD Header JD
 set_property PACKAGE_PIN D4 [get_ports mmc_cs]
 set_property PACKAGE_PIN D3 [get_ports mmc_di]
 set_property PACKAGE_PIN F4 [get_ports mmc_do]
@@ -120,6 +142,20 @@ set_property PACKAGE_PIN U1 [get_ports {ddr3_dm[1]}]
 set_property PACKAGE_PIN U8 [get_ports ddr3_cs_n]
 set_switching_activity -toggle_rate 0.010 -static_probability 0.880 [get_nets {support/led_OBUF[0]}]
 
-reset_switching_activity -all 
 create_clock -period 10.000 -name sysclk -waveform {0.000 5.000} [get_ports sysclk]
 create_generated_clock -name {clkcnt_reg[0]} -source [get_ports sysclk] -divide_by 2 [get_pins {clkcnt_reg[0]/Q}]
+
+set_property IOSTANDARD LVCMOS33 [get_ports {led[15]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {led[14]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {led[13]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {led[12]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {led[11]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {led[10]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {led[9]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {led[8]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {led[7]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {led[6]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {led[5]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {led[4]}]
+
+#set_false_path -from [get_clocks ref_clk_out_clk_wiz_0] -to [get_clocks clk_pll_i]

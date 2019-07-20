@@ -29,10 +29,10 @@ Extended FPGA Options:
 Controller Options :
    Memory                        : DDR3_SDRAM
    Interface                     : NATIVE
-   Design Clock Frequency        : 3000 ps (  0.00 MHz)
+   Design Clock Frequency        : 3077 ps (  0.00 MHz)
    Phy to Controller Clock Ratio : 4:1
-   Input Clock Period            : 6000 ps
-   CLKFBOUT_MULT (PLL)           : 8
+   Input Clock Period            : 10000 ps
+   CLKFBOUT_MULT (PLL)           : 13
    DIVCLK_DIVIDE (PLL)           : 1
    VCC_AUX IO                    : 1.8V
    Memory Type                   : Components
@@ -69,11 +69,11 @@ Bank Selections:
 
 System_Control: 
 	SignalName: sys_rst
-		PadLocation: V17  Bank: 14
+		PadLocation: No connect  Bank: 14
 	SignalName: init_calib_complete
-		PadLocation: V16  Bank: 14
+		PadLocation: No connect  Bank: 14
 	SignalName: tg_compare_error
-		PadLocation: K15  Bank: 15
+		PadLocation: No connect  Bank: 15
 
 
 

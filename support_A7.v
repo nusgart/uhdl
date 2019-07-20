@@ -11,6 +11,8 @@ module support_A7(/*AUTOARG*/
    output wire interrupt,
    output wire lpddr_reset, 
    output wire reset,
+   output wire [2:0] cpu_st,
+   output wire [2:0] rst_st,
    // Inputs
    input wire button_b,
    input wire button_c, 
@@ -62,7 +64,8 @@ module support_A7(/*AUTOARG*/
 
    /*AUTOWIRE*/
    /*AUTOREG*/
-
+   assign cpu_st = cpu_state;
+   assign rst_st = reset_state;
    ////////////////////////////////////////////////////////////////////////////////
 
    assign interrupt = 1'b0;
@@ -88,10 +91,10 @@ module support_A7(/*AUTOARG*/
      lpddr_reset_holdoff_cnt = 0;
 
    always @(posedge sysclk)
-     if (lpddr_reset_holdoff_cnt != 4'd4)
+     if (lpddr_reset_holdoff_cnt != 4'd15)
        lpddr_reset_holdoff_cnt <= lpddr_reset_holdoff_cnt + 4'd1;
 
-   assign lpddr_reset_holdoff = lpddr_reset_holdoff_cnt != 4'd4;
+   assign lpddr_reset_holdoff = lpddr_reset_holdoff_cnt != 4'd15;
 
    assign cpu_in_reset = (reset_state == r_init ||
 			  reset_state == r_reset1 ||
@@ -119,13 +122,14 @@ module support_A7(/*AUTOARG*/
 
    always @(posedge cpu_clk)
      if (cpu_slowevent) begin
-	cpu_state <= cpu_state_next;
+       cpu_state <= cpu_state_next;
      end
 
    assign reset_state_next =
 			    (reset_state == r_init) ? r_reset1 :
 			    (reset_state == r_reset1) ? r_reset2 :
 			    (reset_state == r_reset2) ? r_reset3 :
+			    //(reset_state == r_reset3) ? r_reset4 :
 			    (reset_state == r_reset3 && lpddr_calib_done) ? r_reset4 :
 			    (reset_state == r_reset4 && cpu_state != c_idle) ? r_wait :
 			    (reset_state == r_wait & ~pressed) ? r_idle :

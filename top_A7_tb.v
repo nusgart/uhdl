@@ -117,7 +117,7 @@ module top_A7_tb;
    initial begin
       $timeformat(-9, 0, "ns", 7);
       $dumpfile(`VCDFILE);
-      $dumpvars(0, top_lx45_tb);
+      $dumpvars(0, top_A7_tb);
    end
 
    initial begin

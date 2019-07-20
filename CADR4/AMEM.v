@@ -32,34 +32,25 @@ module AMEM(/*AUTOARG*/
    localparam MEM_DEPTH = 1024;
 
    ////////////////////////////////////////////////////////////////////////////////
-
-`ifdef SIMULATION
+`define INFER
+`ifdef INFER
    reg [31:0] ram [0:1023];
    reg [31:0] out_a;
-   reg [31:0] out_b;
 
    assign amem = out_a;
 
    always @(posedge clk)
-     if (1'b0) begin
-	ram[aadr] <= 32'b0;
-     end else if (awp) begin
-	ram[aadr] <= l;
+     if (awp) begin
+       ram[aadr] <= l;
      end
 
    always @(posedge clk)
      if (reset)
        out_a <= 0;
      else if (arp) begin
-	out_a <= ram[aadr];
+       out_a <= ram[aadr];
      end
-
-   always @(posedge clk)
-     if (reset)
-       out_b <= 0;
-     else if (1'b0) begin
-	out_b <= ram[aadr];
-     end
+     
 `elsif ISE
    wire ena_a = arp | 1'b0;
    wire ena_b = 1'b0 | awp;

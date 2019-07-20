@@ -51,7 +51,7 @@ module mouse(/*AUTOARG*/
    ps2 ps2_in
      (
       .ps2_clk(ps2_clk_in),
-      .ps2_data(ps2_data_out),
+      .ps2_data(ps2_data_in),
       .parity(),
       /*AUTOINST*/
       // Outputs

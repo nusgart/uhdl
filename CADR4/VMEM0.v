@@ -42,34 +42,27 @@ module VMEM0(/*AUTOARG*/
    ////////////////////////////////////////////////////////////////////////////////
 
    assign vmem0_adr = mapi[23:13];
+`define INFER
 
-`ifdef kldgsnkldsglkjdgSIMULATION
+`ifdef INFER
    reg [4:0] ram [0:2047];
    reg [4:0] out_a;
-   reg [4:0] out_b;
 
    assign vmap = out_a;
 
 
    always @(posedge clk)
      if (1'b0) begin
-	ram[vmem0_adr] <= 5'b0;
+       ram[vmem0_adr] <= 5'b0;
      end else if (vm0wp) begin
-	ram[vmem0_adr] <= vma[31:27];
+       ram[vmem0_adr] <= vma[31:27];
      end
 
    always @(posedge clk)
      if (reset)
        out_a <= 0;
      else if (vm0rp && ~vm0wp) begin
-	out_a <= ram[vmem0_adr];
-     end
-
-   always @(posedge clk)
-     if (reset)
-       out_b <= 0;
-     else if (1'b0) begin
-	out_b <= ram[vmem0_adr];
+       out_a <= ram[vmem0_adr];
      end
 `elsif ISE
    wire ena_a = vm0rp && ~vm0wp | 1'b0;

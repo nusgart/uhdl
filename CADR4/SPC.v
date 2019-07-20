@@ -47,11 +47,10 @@ module SPC(/*AUTOARG*/
    wire [4:0] spcptr_p1;
    assign spcptr_p1 = spcptr + 5'b00001;
    assign spcadr = (spcnt && spush) ? spcptr_p1 : spcptr;
-
+`undef ISE
 `ifndef ISE
    reg [18:0] ram [0:31];
    reg [18:0] out_a;
-   reg [18:0] out_b;
 
    assign spco = out_a;
 
@@ -73,15 +72,7 @@ module SPC(/*AUTOARG*/
 	end else begin
 	   out_a <= ram[spcptr];
 	end
-     end
-
-   always @(posedge clk)
-     if (reset)
-       out_b <= 0;
-     else if (1'b0)
-       begin
-	  out_b <= ram[spcadr];
-       end
+    end
 `else
    wire ena_a = srp && ~swp | 1'b0;
    wire ena_b = 1'b0 | swp;

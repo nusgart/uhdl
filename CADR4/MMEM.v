@@ -35,7 +35,23 @@ module MMEM(/*AUTOARG*/
    localparam MEM_DEPTH = 32;
 
    ////////////////////////////////////////////////////////////////////////////////
+   reg [31:0] ram [0:31];
+   reg [31:0] out_a;
+   assign mmem = out_a;
 
+
+   always @(posedge clk)
+     if (mwp) begin
+	   ram[madr] <= l;
+     end
+
+   always @(posedge clk)
+     if (reset)
+       out_a <= 0;
+     else if (mrp) begin
+	   out_a <= ram[madr];
+     end
+/*
 `ifdef SIMULATION
    reg [31:0] ram [0:31];
    reg [31:0] out_a;
@@ -83,7 +99,7 @@ module MMEM(/*AUTOARG*/
       .addrb(madr),
       .dinb(l),
       .doutb()
-      /*AUTOINST*/);
+      /*AUTOINST* /);
 		
 `else //if ALTERA
 
@@ -97,7 +113,7 @@ mmem inst(
 );
 
 `endif
-
+*/
 endmodule
 
 `default_nettype wire

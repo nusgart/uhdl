@@ -18,7 +18,7 @@ module ram_controller_A7(/*AUTOARG*/
    mcr_addr, vram_cpu_addr, vram_vga_addr, sdram_addr, sdram_data_in,
    vram_cpu_data_in, mcr_data_in, clk, cpu_clk, fetch, lpddr_reset,
    machrun, mcr_write, prefetch, reset, sdram_req, sdram_write, dram_clk,
-   sysclk, vga_clk, vram_cpu_req, vram_cpu_write, vram_vga_req
+   sysclk, vga_clk, vram_cpu_req, vram_cpu_write, vram_vga_req, ref_clk
    );
    
    /// DDR3 interface
@@ -55,6 +55,7 @@ module ram_controller_A7(/*AUTOARG*/
    input wire sdram_req;
    input wire sdram_write;
    input wire dram_clk;
+   input wire ref_clk;
 
    
    // video ram interface
@@ -86,7 +87,7 @@ module ram_controller_A7(/*AUTOARG*/
    input wire lpddr_reset;
    input wire machrun;
    input wire prefetch;
-   input reset;
+   input wire reset;
    input wire sysclk;
    
 
@@ -120,7 +121,7 @@ module ram_controller_A7(/*AUTOARG*/
    reg sdram_done;
    reg sdram_ready;
 
-   wire [29:0] lpddr_addr;
+   wire [27:0] lpddr_addr;
    wire [2:0] lpddr_cmd;
    wire [31:0] sdram_resp_in;
    wire [31:0] vram_vga_ram_out;
@@ -138,7 +139,6 @@ module ram_controller_A7(/*AUTOARG*/
    wire lpddr_wr_done;
    wire lpddr_wr_full;
    wire lpddr_wr_rdy;
-   wire reset;
    wire sys_clk;
    wire sys_rst;
    wire lpddr_wr_en;
@@ -147,7 +147,7 @@ module ram_controller_A7(/*AUTOARG*/
 
    always @(posedge clk)
      if (reset) begin
-	sdram_state <= SD_IDLE;
+       sdram_state <= SD_IDLE;
      end else
        sdram_state <= sdram_state_next;
 
@@ -166,15 +166,13 @@ module ram_controller_A7(/*AUTOARG*/
 
    always @(posedge clk)
      if (reset) begin
-	/*AUTORESET*/
-	// Beginning of autoreset for uninitialized flops
-	sdram_out <= 32'h0;
-	// End of automatics
-     end else begin
-	if (sdram_state[NSD_READBSY]) begin
+       /*AUTORESET*/
+       // Beginning of autoreset for uninitialized flops
+       sdram_out <= 32'h0;
+	  // End of automatics
+     end else if (sdram_state[NSD_READBSY]) begin
 	   sdram_out <= sdram_addr[21:17] == 0 ? sdram_resp_in : 32'hffffffff;
-	end
-     end
+	 end
 
    //always @(posedge clk)
      /*if (reset) begin
@@ -219,7 +217,7 @@ module ram_controller_A7(/*AUTOARG*/
        sdram_done <= int_sdram_done && sdram_write;
 
    assign lpddr_cmd = sdram_write ? 3'b000 : 3'b001;
-   assign lpddr_addr = { 6'b0, sdram_addr, 2'b0 };
+   assign lpddr_addr = { 4'b0, sdram_addr, 2'b0 };
    assign lpddr_cmd_en = (sdram_state[NSD_READ] && sdram_state_next == SD_READBSY) ||
 			 (sdram_state[NSD_WRITE] && sdram_state_next == SD_WRITEBSY);
    assign lpddr_rd_rdy = ~lpddr_cmd_full;
@@ -228,11 +226,48 @@ module ram_controller_A7(/*AUTOARG*/
    assign lpddr_wr_done = 1'b1;
    assign lpddr_wr_en = sdram_state[NSD_WRITEBSY];
    assign lpddr_clk_out = lpddr_clk;
-   assign lpddr_calib_done = c3_calib_done;
   
   wire mm_sysclk;
   
-  //BUFG sss(.I(dram_clk), .O(mm_sysclk));
+//  reg [2:0] zq_state;
+//  wire zq_req;
+  
+//  always @(posedge clk) begin
+//    // TODO 
+//    if (~sys_rst || lpddr_reset) begin
+//      zq_state <= 2'b0;
+//    end else begin
+//      if (zq_state != 3'b111) begin
+//          zq_state <= zq_state + 3'b001;
+//      end else begin
+//         zq_sent <= 1'b1;
+//         zq_state <= 3'b111;
+//      end
+//    end
+//  end
+  
+//  output reg zq_sent;
+//  assign zq_req = (zq_state != 3'b111) || (zq_state != 3'b000);
+//  output wire zq_ack;
+  
+  /// reset logic
+  reg [15:0] reset_ctr;
+  reg bb;
+//  assign zq_ack = bb;
+  always @(posedge sysclk) begin
+    if (lpddr_reset) begin
+      reset_ctr <= 16'd65535;
+      bb <= 0;
+    end else if (reset_ctr != 16'b0) begin
+      reset_ctr <= reset_ctr - 1;
+    end
+    if (int_sdram_ready) begin
+      bb <= 1;
+    end
+  end
+  
+  assign sys_rst = (reset_ctr == 0);
+  assign lpddr_calib_done = c3_calib_done || bb;
 
   dram_memif u_ddr_memif
       (
@@ -273,14 +308,14 @@ module ram_controller_A7(/*AUTOARG*/
        .app_zq_req                     (1'b0),
        //.app_sr_active                  (1'b0),
        //.app_ref_ack                    (1'b0),
-       //.app_zq_ack                     (1'b0),
-       //.ui_clk                         (clk),
+       //.app_zq_ack                     (zq_ack),
+       .ui_clk                         (lpddr_clk),
        //.ui_clk_sync_rst                (lpddr_reset),
        .app_wdf_mask                   (4'b0000),
 // System Clock Ports
        .sys_clk_i                      (dram_clk),
-       .clk_ref_i                      (dram_clk),
-       .sys_rst                        (lpddr_reset)
+       .clk_ref_i                      (ref_clk),
+       .sys_rst                        (sys_rst)
        );
 
 //   mig_32bit lpddr_intf
@@ -327,36 +362,47 @@ module ram_controller_A7(/*AUTOARG*/
 //      .c3_p0_rd_empty(lpddr_rd_empty)
 //      /*AUTOINST*/);
 
-   wire ena_a = vram_cpu_req | vram_cpu_write;
-   wire ena_b = vram_vga_req | 1'b0;
 
-   ise_vram inst
-     (
-      .clka(cpu_clk),
-      .ena(ena_a),
-      .wea(vram_cpu_write),
-      .addra(vram_cpu_addr),
-      .dina(vram_cpu_data_in),
-      .douta(vram_cpu_data_out),
-      .clkb(vga_clk),
-      .enb(ena_b),
-      .web(1'b0),
-      .addrb(vram_vga_addr),
-      .dinb(32'b0),
-      .doutb(vram_vga_ram_out)
-      /*AUTOINST*/);
+   vram videoram (
+     .clk1(cpu_clk),
+     .en1 (vram_cpu_req),
+     .we (vram_cpu_write),
+     .addr1(vram_cpu_addr),
+     .di(vram_cpu_data_in),
+     .res1(vram_cpu_data_out),
+     
+     .clk2(vga_clk),
+     .en2(vram_vga_req),
+     .addr2(vram_vga_addr),
+     .res2(vram_vga_ram_out)
+   );
+   
+//   ise_vram inst
+//     (
+//      .clka(cpu_clk),
+//      .ena(ena_a),
+//      .wea(vram_cpu_write),
+//      .addra(vram_cpu_addr),
+//      .dina(vram_cpu_data_in),
+//      .douta(vram_cpu_data_out),
+//      .clkb(vga_clk),
+//      .enb(ena_b),
+//      .web(1'b0),
+//      .addrb(vram_vga_addr),
+//      .dinb(32'b0),
+//      .doutb(vram_vga_ram_out)
+//      /*AUTOINST*/);
 
    assign vram_vga_data_out = vram_vga_ready ? vram_vga_ram_out : vram_vga_data;
 
    always @(posedge vga_clk)
      if (reset) begin
-	/*AUTORESET*/
-	// Beginning of autoreset for uninitialized flops
-	vram_vga_data <= 32'h0;
-	// End of automatics
-     end else
-       if (vram_vga_ready)
-	 vram_vga_data <= vram_vga_ram_out;
+	  /*AUTORESET*/
+	  // Beginning of autoreset for uninitialized flops
+	  vram_vga_data <= 32'h0;
+	  // End of automatics
+      end else if (vram_vga_ready)
+       vram_vga_data <= vram_vga_ram_out;
 
    always @(posedge vga_clk)
      if (reset) begin
@@ -380,6 +426,7 @@ module ram_controller_A7(/*AUTOARG*/
        vram_cpu_ready_dly <= { vram_cpu_ready_dly[2:0], vram_cpu_req };
 
    assign vram_cpu_ready = vram_cpu_ready_dly[3];
+   /// microcode is no-op
    assign mcr_data_out = 0;
    assign mcr_ready = 0;
    assign mcr_done = 0;
