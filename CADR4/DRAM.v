@@ -55,7 +55,7 @@ module DRAM(/*AUTOARG*/
    assign daddr0 = (ir[8] & vmo[18]) | (ir[9] & vmo[19]) | (dmask[0] & r[0]) | (ir[12]);
    assign dadr = {ir[22:13], daddr0} | ({4'b0000, dmask[6:1], 1'b0} & {4'b0000, r[6:1], 1'b0});
    assign dwe = dispwr & state_write;
-`define INFER
+//`define INFER
 `ifdef INFER
    reg [16:0] ram [0:2047];
    reg [16:0] out_a;

@@ -159,3 +159,5 @@ set_property IOSTANDARD LVCMOS33 [get_ports {led[5]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {led[4]}]
 
 #set_false_path -from [get_clocks ref_clk_out_clk_wiz_0] -to [get_clocks clk_pll_i]
+
+set_switching_activity -toggle_rate 0.000 -static_probability 0.001 [get_nets {support/SR[0]}]

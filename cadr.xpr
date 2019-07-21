@@ -1051,7 +1051,6 @@
     <FileSet Name="ise_PDL" Type="BlockSrcs" RelSrcDir="$PSRCDIR/ise_PDL">
       <File Path="$PSRCDIR/sources_1/ip/ise_PDL/ise_PDL.xci">
         <FileInfo>
-          <Attr Name="UserDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -1085,7 +1084,6 @@
     <FileSet Name="ise_AMEM" Type="BlockSrcs" RelSrcDir="$PSRCDIR/ise_AMEM">
       <File Path="$PSRCDIR/sources_1/ip/ise_AMEM/ise_AMEM.xci">
         <FileInfo>
-          <Attr Name="UserDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -1099,7 +1097,6 @@
     <FileSet Name="ise_DRAM" Type="BlockSrcs" RelSrcDir="$PSRCDIR/ise_DRAM">
       <File Path="$PSRCDIR/sources_1/ip/ise_DRAM/ise_DRAM.xci">
         <FileInfo>
-          <Attr Name="UserDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -1113,7 +1110,6 @@
     <FileSet Name="ise_MMEM" Type="BlockSrcs" RelSrcDir="$PSRCDIR/ise_MMEM">
       <File Path="$PSRCDIR/sources_1/ip/ise_MMEM/ise_MMEM.xci">
         <FileInfo>
-          <Attr Name="UserDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -1127,7 +1123,6 @@
     <FileSet Name="ise_SPC" Type="BlockSrcs" RelSrcDir="$PSRCDIR/ise_SPC">
       <File Path="$PSRCDIR/sources_1/ip/ise_SPC/ise_SPC.xci">
         <FileInfo>
-          <Attr Name="UserDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -1141,7 +1136,6 @@
     <FileSet Name="ise_VMEM0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/ise_VMEM0">
       <File Path="$PSRCDIR/sources_1/ip/ise_VMEM0/ise_VMEM0.xci">
         <FileInfo>
-          <Attr Name="UserDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -1155,7 +1149,6 @@
     <FileSet Name="ise_VMEM1" Type="BlockSrcs" RelSrcDir="$PSRCDIR/ise_VMEM1">
       <File Path="$PSRCDIR/sources_1/ip/ise_VMEM1/ise_VMEM1.xci">
         <FileInfo>
-          <Attr Name="UserDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -1169,7 +1162,6 @@
     <FileSet Name="ise_vram" Type="BlockSrcs" RelSrcDir="$PSRCDIR/ise_vram">
       <File Path="$PSRCDIR/sources_1/ip/ise_vram/ise_vram.xci">
         <FileInfo>
-          <Attr Name="UserDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -1183,7 +1175,6 @@
     <FileSet Name="ise_IRAM" Type="BlockSrcs" RelSrcDir="$PSRCDIR/ise_IRAM">
       <File Path="$PSRCDIR/sources_1/ip/ise_IRAM/ise_IRAM.xci">
         <FileInfo>
-          <Attr Name="UserDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>

@@ -32,7 +32,7 @@ module AMEM(/*AUTOARG*/
    localparam MEM_DEPTH = 1024;
 
    ////////////////////////////////////////////////////////////////////////////////
-`define INFER
+//`define INFER
 `ifdef INFER
    reg [31:0] ram [0:1023];
    reg [31:0] out_a;

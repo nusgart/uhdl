@@ -51,7 +51,7 @@ module IRAM(/*AUTOARG*/
 `ifdef SIMULATION
 `define INFER
 `endif
-`define INFER
+//`define INFER
 `ifdef INFER
    reg [48:0] ram [0:MEM_DEPTH-1];
    reg [48:0] out_a;

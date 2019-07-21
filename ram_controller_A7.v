@@ -1,5 +1,4 @@
 // ram_controller_lx45.v --- ---!!!
-
 `timescale 1ns/1ps
 `default_nettype none
 
@@ -362,7 +361,7 @@ module ram_controller_A7(/*AUTOARG*/
 //      .c3_p0_rd_empty(lpddr_rd_empty)
 //      /*AUTOINST*/);
 
-
+`ifdef INFER_VRAM
    vram videoram (
      .clk1(cpu_clk),
      .en1 (vram_cpu_req),
@@ -376,23 +375,25 @@ module ram_controller_A7(/*AUTOARG*/
      .addr2(vram_vga_addr),
      .res2(vram_vga_ram_out)
    );
-   
-//   ise_vram inst
-//     (
-//      .clka(cpu_clk),
-//      .ena(ena_a),
-//      .wea(vram_cpu_write),
-//      .addra(vram_cpu_addr),
-//      .dina(vram_cpu_data_in),
-//      .douta(vram_cpu_data_out),
-//      .clkb(vga_clk),
-//      .enb(ena_b),
-//      .web(1'b0),
-//      .addrb(vram_vga_addr),
-//      .dinb(32'b0),
-//      .doutb(vram_vga_ram_out)
-//      /*AUTOINST*/);
-
+   `else
+   wire ena_a = vram_cpu_req | vram_cpu_write;
+   wire ena_b = vram_vga_req | 1'b0;
+   ise_vram inst
+     (
+      .clka(cpu_clk),
+      .ena(ena_a),
+      .wea(vram_cpu_write),
+      .addra(vram_cpu_addr),
+      .dina(vram_cpu_data_in),
+      .douta(vram_cpu_data_out),
+      .clkb(vga_clk),
+      .enb(ena_b),
+      .web(1'b0),
+      .addrb(vram_vga_addr),
+      .dinb(32'b0),
+      .doutb(vram_vga_ram_out)
+      /*AUTOINST*/);
+`endif
    assign vram_vga_data_out = vram_vga_ready ? vram_vga_ram_out : vram_vga_data;
 
    always @(posedge vga_clk)
