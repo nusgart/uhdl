@@ -23,6 +23,7 @@
 `define enable_vga
 `define enable_mmc
 `define enable_ps2
+`define enable_spy_port
 
 
 `timescale 1ns/1ps
@@ -36,7 +37,7 @@ module lm3(/*AUTOARG*/
    spy_reg, busint_spyout, spy_rd, spy_wr, disk_state, fetch,
    prefetch, mcr_addr, mcr_data_out, mcr_write, mmc_cs, mmc_do,
    mmc_sclk, vram_vga_addr, vram_vga_req, vga_blank, vga_r, vga_g,
-   vga_b, vga_hsync, vga_vsync, rs232_txd,
+   vga_b, vga_hsync, vga_vsync, rs232_txd, promdis, bdst,
    // Inouts
    ms_ps2_clk, ms_ps2_data,
    // Inputs
@@ -53,7 +54,7 @@ module lm3(/*AUTOARG*/
    input reset;			/// SUPPORT / RC
 
    // BUSINT ////////////////////////////////////////////////////////////////////////////////
-
+   output wire promdis;
    // input [11:0] ms_x;
    // input [11:0] ms_y;
    // input [15:0] bd_data_bd2cpu;
@@ -104,6 +105,7 @@ module lm3(/*AUTOARG*/
    output spy_wr;
 
    output [4:0] disk_state;
+   output [11:0] bdst;
 
    // CADR ////////////////////////////////////////////////////////////////////////////////
 
@@ -314,6 +316,9 @@ module lm3(/*AUTOARG*/
    wire vram_vga_req;
    wire wrcyc;
    wire set_promdisable;
+   //////ccc
+   assign promdis = set_promdisable;
+   assign bdst = bd_state;
    
    ////////////////////////////////////////////////////////////////////////////////
 

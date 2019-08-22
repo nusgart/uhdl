@@ -38,6 +38,15 @@ module vga_display(/*AUTOARG*/
    output wire vga_hsync;
    output wire vga_vsync;
    output wire vga_blank;
+   
+   reg localreset;
+   reg r_pipe;
+   
+   always @(posedge vga_clk, posedge reset)
+	if (reset)
+		{ localreset, r_pipe } <= 2'b01;
+	else
+		{ localreset, r_pipe } <= { r_pipe, 1'b0 };
 
    ////////////////////////////////////////////////////////////////////////////////
 
@@ -102,7 +111,7 @@ module vga_display(/*AUTOARG*/
    // Horizontal and vertical counters
 
    always @(posedge vga_clk)
-     if (reset) begin
+     if (localreset) begin
 	/*AUTORESET*/
 	// Beginning of autoreset for uninitialized flops
 	h_counter <= 11'h0;
@@ -112,8 +121,8 @@ module vga_display(/*AUTOARG*/
      else
        h_counter <= h_counter + 1;
 
-   always @(posedge vga_clk or posedge reset)
-     if (reset) begin
+   always @(posedge vga_clk)
+     if (localreset) begin
 	/*AUTORESET*/
 	// Beginning of autoreset for uninitialized flops
 	v_counter <= 11'h0;
@@ -129,7 +138,7 @@ module vga_display(/*AUTOARG*/
    // Horizontal and vertical position
 
    always @(posedge vga_clk)
-     if (reset) begin
+     if (localreset) begin
 	/*AUTORESET*/
 	// Beginning of autoreset for uninitialized flops
 	h_pos <= 11'h0;
@@ -142,8 +151,8 @@ module vga_display(/*AUTOARG*/
      end else
        h_pos <= 0;
 
-   always @(posedge vga_clk or posedge reset)
-     if (reset) begin
+   always @(posedge vga_clk)
+     if (localreset) begin
 	/*AUTORESET*/
 	// Beginning of autoreset for uninitialized flops
 	v_pos <= 11'h0;
@@ -170,7 +179,7 @@ module vga_display(/*AUTOARG*/
 
    // Grab VRAM data when ready.
    always @(posedge vga_clk)
-     if (reset) begin
+     if (localreset) begin
 	/*AUTORESET*/
 	// Beginning of autoreset for uninitialized flops
 	ram_data_hold <= 32'h0;
@@ -180,7 +189,7 @@ module vga_display(/*AUTOARG*/
 
    // Ask for new VRAM data when hold empty.
    always @(posedge vga_clk)
-     if (reset) begin
+     if (localreset) begin
 	/*AUTORESET*/
 	// Beginning of autoreset for uninitialized flops
 	ram_req <= 1'h0;
@@ -192,7 +201,7 @@ module vga_display(/*AUTOARG*/
 
    // Pixel shift register.
    always @(posedge vga_clk)
-     if (reset) begin
+     if (localreset) begin
 	   /*AUTORESET*/
 	   // Beginning of autoreset for uninitialized flops
 	   pixel <= 1'h0;
@@ -214,7 +223,7 @@ module vga_display(/*AUTOARG*/
 
    // VRAM address.
    always @(posedge vga_clk)
-     if (reset) begin
+     if (localreset) begin
 	/*AUTORESET*/
 	// Beginning of autoreset for uninitialized flops
 	v_addr <= 15'h0;

@@ -98,8 +98,8 @@ set_property PACKAGE_PIN V10 [get_ports ms_ps2_clk]
 set_property PACKAGE_PIN U12 [get_ports ms_ps2_data]
 ## PMOD Header JD
 set_property PACKAGE_PIN D4 [get_ports mmc_cs]
-set_property PACKAGE_PIN D3 [get_ports mmc_di]
-set_property PACKAGE_PIN F4 [get_ports mmc_do]
+set_property PACKAGE_PIN D3 [get_ports mmc_do]
+set_property PACKAGE_PIN F4 [get_ports mmc_di]
 set_property PACKAGE_PIN F3 [get_ports mmc_sclk]
 
 set_property CLOCK_DEDICATED_ROUTE ANY_CMT_COLUMN [get_nets sysclk_IBUF]
@@ -142,8 +142,6 @@ set_property PACKAGE_PIN U1 [get_ports {ddr3_dm[1]}]
 set_property PACKAGE_PIN U8 [get_ports ddr3_cs_n]
 set_switching_activity -toggle_rate 0.010 -static_probability 0.880 [get_nets {support/led_OBUF[0]}]
 
-create_clock -period 10.000 -name sysclk -waveform {0.000 5.000} [get_ports sysclk]
-create_generated_clock -name {clkcnt_reg[0]} -source [get_ports sysclk] -divide_by 2 [get_pins {clkcnt_reg[0]/Q}]
 
 set_property IOSTANDARD LVCMOS33 [get_ports {led[15]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {led[14]}]
@@ -158,6 +156,5 @@ set_property IOSTANDARD LVCMOS33 [get_ports {led[6]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {led[5]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {led[4]}]
 
-#set_false_path -from [get_clocks ref_clk_out_clk_wiz_0] -to [get_clocks clk_pll_i]
-
-set_switching_activity -toggle_rate 0.000 -static_probability 0.001 [get_nets {support/SR[0]}]
+create_clock -period 10.000 -name sysclk -waveform {0.000 5.000} [get_ports sysclk]
+create_generated_clock -name clkcnt -source [get_pins mc/u_dram_memif/u_dram_memif_mig/u_ddr3_infrastructure/gen_mmcm.mmcm_i/CLKFBOUT] -divide_by 2 [get_pins {clkcnt_reg[0]/Q}]

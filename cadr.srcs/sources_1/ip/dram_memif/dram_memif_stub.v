@@ -1,10 +1,10 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
-// Date        : Sat Jul 20 16:12:43 2019
+// Date        : Sat Jul 20 16:12:39 2019
 // Host        : nnusgart-G3-3579 running 64-bit Ubuntu 18.04.2 LTS
-// Command     : write_verilog -force -mode synth_stub
-//               /home/nnusgart/Xilinx/cadr/cadr.srcs/sources_1/ip/dram_memif/dram_memif_stub.v
+// Command     : write_verilog -force -mode synth_stub -rename_top dram_memif -prefix
+//               dram_memif_ dram_memif_stub.v
 // Design      : dram_memif
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7a35ticsg324-1L

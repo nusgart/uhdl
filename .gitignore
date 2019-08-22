@@ -9,3 +9,13 @@ obj_dir/
 *.ncd
 *.bit
 /uhdl*
+*.mcs
+*.prm
+/ise/
+/db/
+/incremental_db/
+/iseconfig/
+/reports/
+/xst/
+/cadr.runs/
+

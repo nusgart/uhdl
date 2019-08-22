@@ -66,8 +66,6 @@ module top_A7(/*AUTOARG*/
    input wire switch;
    
    ////////////////////////////////////////////////////////////////////////////////
-	  
-   reg [3:0] clkcnt;
    
    /*AUTOWIRE*/
    // Beginning of automatic wires (for undeclared instantiated-module outputs)
@@ -120,22 +118,27 @@ module top_A7(/*AUTOARG*/
    // End of automatics
    wire [2:0] cpu_st;
    wire [2:0] rst_st;
+   wire [11:0] bdst;
    ////////////////////////////////////////////////////////////////////////////////
    wire clk50;
    //wire clk_vga_in;
+   wire local_reset;
    wire clk_dram_in;
-   //wire sys_clk_in;
+   //wire sysclk;
    wire vga_clk;
    wire vga_clk_locked;
    wire cpu_clk;
    wire machrun;
    //wire ref_clk_in;
    wire ref_clk;
+   wire main_clk;
+   wire promdis;
    
    //BUFG vgaclk_bufg(.I(sysclk), .O(clk_vga_in));
    //BUFG clkdram_bg(.I(sysclk), .O(clk_dram_in));
    //BUFG sysclk_bufg(.I(sysclk), .O(sys_clk_in));
    //BUFG refclk_bufg(.I(sysclk), .O(ref_clk_in));
+   BUFG reset_bufg(.I(local_reset), .O(reset));
    
    sysclk_wiz sys_inst (.clk_in1(sysclk), .clk50(clk50), .clk_dram(clk_dram), .clk_ref(ref_clk), .reset(1'b0));
    
@@ -143,10 +146,11 @@ module top_A7(/*AUTOARG*/
    
    //clk_wiz_dram clk_inst(.clk_in(clk_dram_in), .clk_dram(clk_dram), .reset(dcm_reset));
    //clk_wiz_0 clk_inst_a(.clk_in(ref_clk_in), .ref_clk_out(ref_clk), .reset(dcm_reset));
-   
+   reg [0:0] clkcnt;
+   //reg [3:0] clkcnt;
    initial clkcnt = 0;
-   always @(posedge clk50)
-     clkcnt <= clkcnt + 4'd1;
+   always @(posedge main_clk)
+     clkcnt <= ~clkcnt;
    BUFG cpuclk_bufg(.I(clkcnt[0]), .O(cpu_clk));
    
    support_A7 support
@@ -165,17 +169,16 @@ module top_A7(/*AUTOARG*/
       .halt				(halt),
       .interrupt			(interrupt),
       .lpddr_reset			(lpddr_reset),
-      .reset				(reset),
+      .reset				(local_reset),
       // Inputs
       .cpu_clk				(cpu_clk),
       .lpddr_calib_done			(lpddr_calib_done));
    
-   //wire zq_sent;
-   //wire zq_ack;
-   
+   `define USE_MEM_CONTROLLER
+   `ifndef USE_MEM_CONTROLLER
    ram_controller_A7 rc (
       .lpddr_clk_out(),
-      .clk                  (clk50),
+      .clk                  (main_clk),
       //.mcr_data_out         (mcr_data_in),
       //.mcr_data_in          (mcr_data_out),
       .sdram_data_in        (sdram_data_cpu2rc),
@@ -229,8 +232,60 @@ module top_A7(/*AUTOARG*/
       .vram_cpu_req			(vram_cpu_req),
       .vram_cpu_write		(vram_cpu_write),
       .vram_vga_req			(vram_vga_req));
-   
+   `else
+   memory_controller_A7 mc (
+      .sdram_data_in        (sdram_data_cpu2rc),
+      .sdram_data_out       (sdram_data_rc2cpu),
+      .vram_cpu_data_in     (vram_cpu_data_out),
+      .vram_cpu_data_out    (vram_cpu_data_in),
+       // DDR3
+      .ddr3_addr            (ddr3_addr),  // output [13:0]		ddr3_addr
+      .ddr3_ba              (ddr3_ba),  // output [2:0]		ddr3_ba
+      .ddr3_cas_n           (ddr3_cas_n),  // output			ddr3_cas_n
+      .ddr3_ck_n            (ddr3_ck_n),  // output [0:0]		ddr3_ck_n
+      .ddr3_ck_p            (ddr3_ck_p),  // output [0:0]		ddr3_ck_p
+      .ddr3_cke             (ddr3_cke),  // output [0:0]		ddr3_cke
+      .ddr3_ras_n           (ddr3_ras_n),  // output			ddr3_ras_n
+      .ddr3_reset_n         (ddr3_reset_n),  // output			ddr3_reset_n
+      .ddr3_we_n            (ddr3_we_n),  // output			ddr3_we_n
+      .ddr3_dq              (ddr3_dq),  // inout [15:0]		ddr3_dq
+      .ddr3_dqs_n           (ddr3_dqs_n),  // inout [1:0]		ddr3_dqs_n
+      .ddr3_dqs_p           (ddr3_dqs_p),
+      .ddr3_cs_n            (ddr3_cs_n),
+      .ddr3_dm              (ddr3_dm),
+      .ddr3_odt             (ddr3_odt),
+      // outputs
+      .vram_vga_data_out	(vram_vga_data_out[31:0]),
+      .sdram_calib_done		(lpddr_calib_done),
+      .sdram_done			(sdram_done),
+      .sdram_ready			(sdram_ready),
+      .vram_cpu_done		(vram_cpu_done),
+      .vram_cpu_ready		(vram_cpu_ready),
+      .vram_vga_ready		(vram_vga_ready),
+      // Inputs
+      //.mcr_addr				(mcr_addr[13:0]),
+      .vram_cpu_addr		(vram_cpu_addr[14:0]),
+      .vram_vga_addr		(vram_vga_addr[14:0]),
+      .sdram_addr			(sdram_addr[21:0]),
+      .fetch				(fetch),
+      .sdram_reset			(lpddr_reset),
+      .machrun				(machrun),
+      //.mcr_write			(mcr_write),
+      .prefetch				(prefetch),
+      .reset				(reset),
+      .sdram_req			(sdram_req),
+      .sdram_write			(sdram_write),
+      .cpu_clk				(cpu_clk),
+      .sdram_clk            (sysclk),
+      .sdram_clk_out        (main_clk),
+      .ref_clk              (ref_clk),
+      .vga_clk				(vga_clk),
+      .vram_cpu_req			(vram_cpu_req),
+      .vram_cpu_write		(vram_cpu_write),
+      .vram_vga_req			(vram_vga_req));
+   `endif
    lm3 lm3(/*AUTOINST*/
+       .promdis(promdis),
 	   // Outputs
 	   .sdram_addr			(sdram_addr[21:0]),
 	   .sdram_data_cpu2rc		(sdram_data_cpu2rc[31:0]),
@@ -250,6 +305,7 @@ module top_A7(/*AUTOARG*/
 	   //.mcr_addr			(mcr_addr[13:0]),
 	   //.mcr_data_out		(mcr_data_out[48:0]),
 	   //.mcr_write			(mcr_write),
+	   .bdst                        (bdst),
 	   .mmc_cs			(mmc_cs),
 	   .mmc_do			(mmc_do),
 	   .mmc_sclk			(mmc_sclk),
@@ -266,7 +322,7 @@ module top_A7(/*AUTOARG*/
 	   .ms_ps2_clk			(ms_ps2_clk),
 	   .ms_ps2_data			(ms_ps2_data),
 	   // Inputs
-	   .clk50			(clk50),
+	   .clk50			(main_clk),
 	   .reset			(reset),
 	   .sdram_data_rc2cpu		(sdram_data_rc2cpu[31:0]),
 	   .sdram_done			(sdram_done),
@@ -292,7 +348,7 @@ module top_A7(/*AUTOARG*/
    reg calib_done;
    initial calib_done = 0;
    
-   always @(posedge clk_dram) begin
+   always @(posedge main_clk) begin
      if (lpddr_calib_done) begin
        calib_done <= 1;
      end else begin
@@ -310,29 +366,39 @@ module top_A7(/*AUTOARG*/
    initial a = 0;
    
    always @(posedge sysclk) begin
-     if (lpddr_reset) begin
+     if (boot) begin
        a <= 1;
       end else begin
         a <= a;
       end
    end
    
+   reg [19:0] led_dimmer;
+   reg led_enable;
+   initial led_dimmer = 0;
+   
+   always @(posedge sysclk) begin
+     led_dimmer <= led_dimmer + 1;
+     led_enable <= led_dimmer[19];
+   end
+   
+   
    // led 0: B=4, R=5, G=6 
-   assign led[4] = rst_st[0];
-   assign led[5] = 1'b0;
-   assign led[6] = 1'b0;
+   assign led[4] = rst_st[0] & led_enable;
+   assign led[5] = promdis & led_enable;
+   assign led[6] = bdst[0] & led_enable; //disk_state[0] & led_enable;
    // led 1 B=7
-   assign led[7] = rst_st[1];
-   assign led[8] = 1'b0;
-   assign led[9] = 1'b0;
+   assign led[7] = rst_st[1] & led_enable;
+   assign led[8] = bdst[1] & led_enable; //~promdis & led_enable;
+   assign led[9] = bdst[2] & led_enable; //disk_state[1] & led_enable;
    // led 2 B=10, R=11, G=12
-   assign led[10] = rst_st[2];
-   assign led[11] = 1'b0;//lpddr_reset;
-   assign led[12] = 1'b0;//lpddr_reset;
+   assign led[10] = rst_st[2] & led_enable;
+   assign led[11] = bdst[3] & led_enable;//lpddr_reset;
+   assign led[12] = bdst[4] & led_enable;//disk_state[2] & led_enable;//lpddr_reset;
    // led 3
-   assign led[13] = a;//lpddr_reset;
-   // assign led[14]
-   // assign led[15]
+   assign led[13] = a & led_enable;//lpddr_reset;
+   assign led[14] = bdst[5] & led_enable;
+   assign led[15] = bdst[6] & led_enable;
 endmodule
 
 `default_nettype wire

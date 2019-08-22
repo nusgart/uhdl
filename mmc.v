@@ -12,7 +12,7 @@ module mmc(/*AUTOARG*/
    cmd, data_in, clk, init, mmc_di, rd, reset, send, speed, stop, wr
    );
 
-   parameter [31:0] FREQ = 50000000;
+   parameter [31:0] FREQ = 40_625_000;//50000000;
    parameter [31:0] RATE_HI = 10000000;
    parameter [31:0] RATE_LO = 100000;
 

@@ -142,6 +142,16 @@ module ram_controller_A7(/*AUTOARG*/
    wire sys_rst;
    wire lpddr_wr_en;
 
+   /// local reset
+   reg pll_reset;
+   reg dr_pipe;
+   
+   always @(posedge sysclk, posedge reset)
+	if (reset)
+		{ pll_reset, dr_pipe } <= 2'b01;
+	else
+		{ pll_reset, dr_pipe } <= { dr_pipe, 1'b0 };
+
    ////////////////////////////////////////////////////////////////////////////////
 
    always @(posedge clk)
@@ -206,6 +216,19 @@ module ram_controller_A7(/*AUTOARG*/
      end else
        sdram_ready <= int_sdram_ready && sdram_req;
 
+   reg [21:0] intrn_sdram_addr;
+   reg [21:0] local_sdram_addr;
+   
+   always @(posedge ref_clk) begin
+     if (pll_reset) begin
+       intrn_sdram_addr <= 21'b0;
+       local_sdram_addr <= 21'b0;
+     end else begin
+       intrn_sdram_addr <= sdram_addr;
+       local_sdram_addr <= intrn_sdram_addr;
+     end
+   end
+
    always @(posedge cpu_clk)
      if (reset) begin
 	/*AUTORESET*/
@@ -216,7 +239,7 @@ module ram_controller_A7(/*AUTOARG*/
        sdram_done <= int_sdram_done && sdram_write;
 
    assign lpddr_cmd = sdram_write ? 3'b000 : 3'b001;
-   assign lpddr_addr = { 4'b0, sdram_addr, 2'b0 };
+   assign lpddr_addr = { 4'b0, local_sdram_addr, 2'b0 };
    assign lpddr_cmd_en = (sdram_state[NSD_READ] && sdram_state_next == SD_READBSY) ||
 			 (sdram_state[NSD_WRITE] && sdram_state_next == SD_WRITEBSY);
    assign lpddr_rd_rdy = ~lpddr_cmd_full;
@@ -227,27 +250,6 @@ module ram_controller_A7(/*AUTOARG*/
    assign lpddr_clk_out = lpddr_clk;
   
   wire mm_sysclk;
-  
-//  reg [2:0] zq_state;
-//  wire zq_req;
-  
-//  always @(posedge clk) begin
-//    // TODO 
-//    if (~sys_rst || lpddr_reset) begin
-//      zq_state <= 2'b0;
-//    end else begin
-//      if (zq_state != 3'b111) begin
-//          zq_state <= zq_state + 3'b001;
-//      end else begin
-//         zq_sent <= 1'b1;
-//         zq_state <= 3'b111;
-//      end
-//    end
-//  end
-  
-//  output reg zq_sent;
-//  assign zq_req = (zq_state != 3'b111) || (zq_state != 3'b000);
-//  output wire zq_ack;
   
   /// reset logic
   reg [15:0] reset_ctr;
@@ -396,17 +398,26 @@ module ram_controller_A7(/*AUTOARG*/
 `endif
    assign vram_vga_data_out = vram_vga_ready ? vram_vga_ram_out : vram_vga_data;
 
+   reg vga_reset;
+   reg r_pipe;
+
    always @(posedge vga_clk)
-     if (reset) begin
+     if (vga_reset) begin
 	  /*AUTORESET*/
 	  // Beginning of autoreset for uninitialized flops
 	  vram_vga_data <= 32'h0;
 	  // End of automatics
       end else if (vram_vga_ready)
        vram_vga_data <= vram_vga_ram_out;
+   
+   always @(posedge vga_clk, posedge reset)
+	if (reset)
+		{ vga_reset, r_pipe } <= 2'b01;
+	else
+		{ vga_reset, r_pipe } <= { r_pipe, 1'b0 };
 
    always @(posedge vga_clk)
-     if (reset) begin
+     if (vga_reset) begin
 	/*AUTORESET*/
 	// Beginning of autoreset for uninitialized flops
 	vram_vga_ready_dly <= 4'h0;

@@ -30,10 +30,19 @@ module block_dev_mmc(/*AUTOARG*/
    ////////////////////////////////////////////////////////////////////////////////
 
    parameter
-     CMD01 = 48'h400000000095,
-     CMD02 = 48'h410000000001,
+     // THIS IS ACTUALL
+     CMD00 = 48'h400000000095,
+     // 01 000001
+     CMD01 = 48'h410000000001,
+     //48-00 00 01 AA-43: 01-00.1000-
+     //48'b01_001000_0000 0001 1010 1010
+     CMD08 = 48'h48_000001AA_87,//{2'b01, 6'd8, 32'h1AA, 7'h43},
      CMD16 = 48'h500000000001,
-     CMD17 = 48'h510000000001;
+     CMD17 = 48'h510000000001,
+     // 2'b01, 6'd41, 
+     CMD41 = 48'h69_40000000_19,
+     //CMD41 = 48'h694018000019,
+     CMD55 = 48'h77_00000000_65;
    parameter [6:0]
      s_idle = 0,
      s_busy = 1,
@@ -101,7 +110,19 @@ module block_dev_mmc(/*AUTOARG*/
      s_write4a = 65,
      s_write5aa = 66,
      s_write5b = 67,
-     s_write6a = 68;
+     s_write6a = 68,
+     // SDHC and SDXC handling code
+     s_reset3b = 69,
+     s_reset3c = 70,
+     s_reset3d = 71,
+     s_reset3e = 72,
+     s_reset3f = 73,
+     s_reset3g = 74,
+     s_reset3h = 75,
+     s_reset3i = 76,
+     s_reset3j = 77,
+     s_reset3ca = 78,
+     s_reset3cb = 79;
 
    reg [15:0] data_hold;
    reg [15:0] mmc_hold;
@@ -138,6 +159,11 @@ module block_dev_mmc(/*AUTOARG*/
    wire [4:0] mmc_active;
    wire [7:0] mmc_out;
    wire mmc_done;
+   
+   /// sd stuff
+   reg mmc_sss = 0;
+   // is the card a high-capacity card?
+   reg sd_hc = 0;
 
    /*AUTOWIRE*/
    /*AUTOREG*/
@@ -236,11 +262,20 @@ module block_dev_mmc(/*AUTOARG*/
 	// Beginning of autoreset for uninitialized flops
 	lba32 <= 32'h0;
 	// End of automatics
-     end else begin
+     end else if (!sd_hc) begin
+        // low-capacity cards use byte-based addressing
+        // we use 512 byte blocks.
 	if (inc_lba)
 	  lba32 <= lba32 + 32'd512;
 	else if (bd_start)
 	  lba32 <= { bd_addr[22:0], 9'b0 };
+     end else begin
+        // high-capacity cards use block-based addressing
+        // blocks are fixed to 512 bytes
+	if (inc_lba)
+	  lba32 <= lba32 + 32'd1;
+	else if (bd_start)
+	  lba32 <= { 8'b0, bd_addr[23:0] };
      end
 
    always @(posedge clk)
@@ -346,7 +381,8 @@ module block_dev_mmc(/*AUTOARG*/
 	end
 	s_reset1: begin
 	   mmc_send = 1;
-	   mmc_cmd = CMD01;
+	   mmc_cmd = CMD00;
+	   sd_hc = 1'b0;
 	   if (~mmc_done)
 	     state_next = s_reset1a;
 	end
@@ -376,11 +412,82 @@ module block_dev_mmc(/*AUTOARG*/
 	end
 	s_reset3a: begin
 	   if (mmc_done)
-	     state_next = s_reset4;
+	     state_next = s_reset3b;
+	end
+	//// Route around this
+	s_reset3b: begin
+	  // TODO
+	  mmc_send = 1;
+	  mmc_cmd = CMD08;
+	  mmc_sss = 0;
+	  if (~mmc_done)
+	    state_next = s_reset3c;
+	end
+	s_reset3c: begin
+	  if (mmc_done) begin
+	    state_next = s_reset3ca;
+	  end
+	end
+	s_reset3ca: begin
+	  mmc_rd = 1;
+	  if (~mmc_done) begin
+	    state_next = s_reset3cb;
+	  end
+	end
+	s_reset3cb: begin
+	  if (mmc_done) begin
+	    // check for Illegal command error:  if CMD08 not recognized, then is
+	    // an SDSC card.
+	    state_next = (mmc_out == 5) ? s_reset3d: s_reset3d;
+	  end
+	end
+	s_reset3d: begin
+	  // send CMD55 for ACMD41
+	  mmc_send = 1;
+	  mmc_cmd = CMD55;
+	  sd_hc = 1;
+	  if (~mmc_done)
+	    state_next = s_reset3e;
+	end
+	s_reset3e: begin
+	  if (mmc_done)
+	    state_next = s_reset3f;
+	end
+	s_reset3f: begin
+	  // send subcommand 41
+	  mmc_send = 1;
+	  mmc_cmd = CMD41;
+	  mmc_sss = 0;
+	  if (~mmc_done)
+	    state_next = s_reset3g;
+	end
+	s_reset3g: begin
+	  if (mmc_done) begin
+	    state_next = s_reset3h;
+	  end
+        end
+        s_reset3h: begin
+          // read the result out
+          mmc_rd = 1;
+	  if (~mmc_done) begin
+	    state_next = s_reset3i;
+	  end
+	end
+	s_reset3i: begin
+	  // If the SD card has completed initialization, move to state reset11
+	  // otherwise, return to state reset3d.
+	  if (mmc_done) begin
+	      if (mmc_out[0])
+	        state_next = s_reset3d;
+	      else
+	        state_next = s_reset6;
+	  end
 	end
 	s_reset4: begin
+	   // handle SDSC and MMC cards
 	   mmc_send = 1;
-	   mmc_cmd = CMD02;
+	   mmc_cmd = CMD01;
+	   sd_hc = 0;
 	   if (~mmc_done)
 	     state_next = s_reset4a;
 	end
@@ -424,6 +531,7 @@ module block_dev_mmc(/*AUTOARG*/
 	s_reset8: begin
 	   mmc_hispeed = 1;
 	   mmc_send = 1;
+	   // CMD16: set block size to 512
 	   mmc_cmd = { 8'h50, 32'd512, 8'h01 };
 	   if (~mmc_done)
 	     state_next = s_reset8a;

@@ -93,18 +93,18 @@ module ps2_support(/*AUTOARG*/
 
    always @(posedge clk)
      if (reset) begin
-	/*AUTORESET*/
-	// Beginning of autoreset for uninitialized flops
-	ms_button <= 3'h0;
-	ms_ready <= 1'h0;
-	ms_x <= 12'h0;
-	ms_y <= 12'h0;
-	// End of automatics
+       /*AUTORESET*/
+       // Beginning of autoreset for uninitialized flops
+       ms_button <= 3'h0;
+       ms_ready <= 1'h0;
+       ms_x <= 12'h0;
+       ms_y <= 12'h0;
+       // End of automatics
      end else begin
-	ms_x <= m_x;
-	ms_y <= m_y;
-	ms_button <= m_button;
-	ms_ready <= m_ready;
+       ms_x <= m_x;
+       ms_y <= m_y;
+       ms_button <= m_button;
+       ms_ready <= m_ready;
      end
 
 endmodule
