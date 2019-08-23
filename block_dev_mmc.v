@@ -30,12 +30,13 @@ module block_dev_mmc(/*AUTOARG*/
    ////////////////////////////////////////////////////////////////////////////////
 
    parameter
-     // THIS IS ACTUALL
+     // Initialize device
      CMD00 = 48'h400000000095,
      // 01 000001
      CMD01 = 48'h410000000001,
-     //48-00 00 01 AA-43: 01-00.1000-
-     //48'b01_001000_0000 0001 1010 1010
+     //CMD08 is 48'b01 001000 00000000 00000000 00000001 10101010 0000111 1
+     //48000001AA87
+     CCCC = 48'h48000001AA87, //48'h48_000001AA_0F
      CMD08 = 48'h48_000001AA_87,//{2'b01, 6'd8, 32'h1AA, 7'h43},
      CMD16 = 48'h500000000001,
      CMD17 = 48'h510000000001,
@@ -122,7 +123,11 @@ module block_dev_mmc(/*AUTOARG*/
      s_reset3i = 76,
      s_reset3j = 77,
      s_reset3ca = 78,
-     s_reset3cb = 79;
+     s_reset3cb = 79,
+     s_reset3cc = 80,
+     s_reset3cd = 81,
+     s_reset3ce = 82,
+     s_reset3cf = 83;
 
    reg [15:0] data_hold;
    reg [15:0] mmc_hold;
@@ -230,6 +235,7 @@ module block_dev_mmc(/*AUTOARG*/
      end
 
    assign bd_data_out = mmc_hold;
+   reg [2:0] tms, tms_next;
 
    always @(posedge clk)
      if (reset) begin
@@ -320,10 +326,12 @@ module block_dev_mmc(/*AUTOARG*/
        err <= 1'b1;
 
    always @(posedge clk)
-     if (reset)
+     if (reset) begin
        state <= s_idle;
-     else begin
+       tms <= 0;
+     end else begin
 		 state <= state_next;
+		 tms <= tms_next;
      end
 
    assign mmc_active = { mmc_speed, mmc_state };
@@ -438,9 +446,45 @@ module block_dev_mmc(/*AUTOARG*/
 	  if (mmc_done) begin
 	    // check for Illegal command error:  if CMD08 not recognized, then is
 	    // an SDSC card.
-	    state_next = (mmc_out == 5) ? s_reset3d: s_reset3d;
+	    state_next = (mmc_out == 5) ? s_reset4: s_reset3cc;
+	    tms_next = 4;
 	  end
 	end
+	s_reset3cc: begin
+	  mmc_stop = 1;
+	  if (~mmc_done) begin
+	    state_next = s_reset3cd;
+	  end
+	end
+	s_reset3cd: begin
+	  if (mmc_done) begin
+	    state_next = s_reset3d;
+	  end
+	end
+	/*s_reset3cc: begin
+	  mmc_rd = 1;
+	  if (~mmc_done) begin
+	    state_next = s_reset3cd;
+	    tms_next = tms - 3'b1;
+	  end
+	end
+	s_reset3cd: begin
+	  if (mmc_done) begin
+	    state_next = (tms == 0) ? s_reset3d: s_reset3cc;
+	  end
+	end
+	s_reset3ce: begin
+	  mmc_stop = 1;
+	  if (~mmc_done) begin
+	    state_next = s_reset3cf;
+	  end
+	end
+	s_reset3cf: begin
+	  if (mmc_done) begin
+	    state_next = state_reset3d;
+	  end
+	end
+	*/
 	s_reset3d: begin
 	  // send CMD55 for ACMD41
 	  mmc_send = 1;
@@ -480,7 +524,7 @@ module block_dev_mmc(/*AUTOARG*/
 	      if (mmc_out[0])
 	        state_next = s_reset3d;
 	      else
-	        state_next = s_reset6;
+	        state_next = s_reset10;
 	  end
 	end
 	s_reset4: begin

@@ -373,6 +373,18 @@ module top_A7(/*AUTOARG*/
       end
    end
    
+   reg prom_disabled;
+   initial prom_disabled = 0;
+   
+   always @(posedge sysclk) begin
+     if (promdis) begin
+        prom_disabled <= 1;
+      end else begin
+        prom_disabled <= prom_disabled;
+      end
+   end
+   
+   
    reg [19:0] led_dimmer;
    reg led_enable;
    initial led_dimmer = 0;
@@ -385,7 +397,7 @@ module top_A7(/*AUTOARG*/
    
    // led 0: B=4, R=5, G=6 
    assign led[4] = rst_st[0] & led_enable;
-   assign led[5] = promdis & led_enable;
+   assign led[5] = prom_disabled & led_enable;
    assign led[6] = bdst[0] & led_enable; //disk_state[0] & led_enable;
    // led 1 B=7
    assign led[7] = rst_st[1] & led_enable;
