@@ -11,7 +11,7 @@ module hz60(/*AUTOARG*/
    );
 
    parameter
-     SYS_CLK = 26'd50000000,
+     SYS_CLK = 26'd40_625_000,//26'd50000000,
      HZ60_CLK_RATE = 26'd60,
      HZ60_CLK_DIV = SYS_CLK / HZ60_CLK_RATE;
 

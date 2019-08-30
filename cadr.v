@@ -6,7 +6,7 @@
 module cadr(/*AUTOARG*/
    // Outputs
    spy_out, mcr_addr, mcr_data_out, mcr_write, md, memrq, wrcyc, vma,
-   pma,
+   pma, o_pc,
    // Inputs
    clk, ext_int, ext_reset, ext_boot, ext_halt, spy_in, dbread,
    dbwrite, eadr, mcr_data_in, mcr_ready, mcr_done, bd_state,
@@ -42,8 +42,7 @@ module cadr(/*AUTOARG*/
    input wire bus_int;
    input wire memack;
    input wire set_promdisable;
-	///
-	wire [11:0] bd_state_in;
+   output wire [13:0] o_pc;
 
    ////////////////////////////////////////////////////////////////////////////////
 
@@ -306,7 +305,7 @@ module cadr(/*AUTOARG*/
    reg [48:0]		mcr_data_out;
    reg			mcr_write;
    // End of automatics
-
+   assign o_pc = pc;
    ////////////////////////////////////////////////////////////////////////////////
 
    parameter [5:0]
@@ -964,7 +963,7 @@ module cadr(/*AUTOARG*/
 		      .clk		(clk),
 		      .reset		(reset),
 		      .state_write	(state_write),
-		      .bd_state_in	(bd_state_in[11:0]),
+		      .bd_state_in	(bd_state[11:0]),
 		      .opc		(opc[13:0]),
 		      .pc		(pc[13:0]),
 		      .scratch		(scratch[15:0]),

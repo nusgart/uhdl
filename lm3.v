@@ -37,7 +37,7 @@ module lm3(/*AUTOARG*/
    spy_reg, busint_spyout, spy_rd, spy_wr, disk_state, fetch,
    prefetch, mcr_addr, mcr_data_out, mcr_write, mmc_cs, mmc_do,
    mmc_sclk, vram_vga_addr, vram_vga_req, vga_blank, vga_r, vga_g,
-   vga_b, vga_hsync, vga_vsync, rs232_txd, promdis, bdst,
+   vga_b, vga_hsync, vga_vsync, rs232_txd, promdis, bdst, o_pc,
    // Inouts
    ms_ps2_clk, ms_ps2_data,
    // Inputs
@@ -106,6 +106,7 @@ module lm3(/*AUTOARG*/
 
    output [4:0] disk_state;
    output [11:0] bdst;
+   output [13:0] o_pc;
 
    // CADR ////////////////////////////////////////////////////////////////////////////////
 
@@ -400,6 +401,7 @@ module lm3(/*AUTOARG*/
       .wrcyc				(wrcyc),
       .vma				(vma[31:0]),
       .pma				(pma[21:8]),
+      .o_pc                             (o_pc),
       // Inputs
       .spy_in				(spy_in[15:0]),
       .dbread				(dbread),

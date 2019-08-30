@@ -9,7 +9,7 @@ module tbuf(/*AUTOARG*/
    // Inputs
    clk, reset, datain, tbct, trp, twp
    );
-   wire clk, reset, trp, twp;
+   
    input clk;
    input reset;
    
@@ -18,6 +18,8 @@ module tbuf(/*AUTOARG*/
    input trp;
    input twp;
    output [15:0] tdata;
+   
+   wire clk, reset, trp, twp;
    
    ////////////////////////////////////////////////////////////////////////////////
 

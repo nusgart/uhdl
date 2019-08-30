@@ -16,7 +16,6 @@ module uart(/*AUTOARG*/
    parameter [31:0] FREQ = 50000000;
    parameter [31:0] RATE = 115200;
 
-   wire clk, ld_tx_req, reset, rx_enable, rx_in, rx_req, tx_enable, rx_ack, ld_tx_ack;
    input [7:0] tx_data;
    input clk;
    input ld_tx_req;
@@ -31,6 +30,7 @@ module uart(/*AUTOARG*/
    output rx_empty;
    output tx_empty;
    output tx_out;
+   wire clk, ld_tx_req, reset, rx_enable, rx_in, rx_req, tx_enable, rx_ack, ld_tx_ack;
 
    ////////////////////////////////////////////////////////////////////////////////
 

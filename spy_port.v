@@ -11,7 +11,6 @@ module spy_port(/*AUTOARG*/
    );
 
    input [15:0] spy_in;
-   wire clk, reset, rs232_rxd, sysclk;
    input clk;
    input reset;
    input rs232_rxd;
@@ -21,6 +20,7 @@ module spy_port(/*AUTOARG*/
    output dbread;
    output dbwrite;
    output rs232_txd;
+   wire clk, reset, rs232_rxd, sysclk;
 
    ////////////////////////////////////////////////////////////////////////////////
 
@@ -66,7 +66,8 @@ module spy_port(/*AUTOARG*/
    wire start_write;
    wire tx_delay_done;
    wire tx_done;
-   wire tx_enable, tx_empty;
+   wire tx_enable = 1;
+   wire tx_empty;
    wire tx_start;
    wire rs232_txd;
    

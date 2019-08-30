@@ -11,6 +11,8 @@ module vga_display(/*AUTOARG*/
    vga_clk, reset, vram_data, vram_ready
    );
 
+   `define FULLSCR
+   `ifndef FULLSCR
    parameter H_DISP = 640;//1920;//1280;
    parameter H_FPORCH = 16;//110;
    parameter H_SYNC = 96;//40;
@@ -20,7 +22,17 @@ module vga_display(/*AUTOARG*/
    parameter V_FPORCH = 11;//5;
    parameter V_SYNC = 2;//5;
    parameter V_BPORCH = 33;//30;
+   `else
+   parameter H_DISP = 1280;
+   parameter H_FPORCH = 110;
+   parameter H_SYNC = 40;
+   parameter H_BPORCH = 220;
 
+   parameter V_DISP = 720;
+   parameter V_FPORCH = 5;
+   parameter V_SYNC = 5;
+   parameter V_BPORCH = 20;
+   `endif
    parameter BOX_WIDTH = 768;
    parameter BOX_HEIGHT = 896;
 
@@ -77,7 +89,8 @@ module vga_display(/*AUTOARG*/
    wire vsync;
 
    ////////////////////////////////////////////////////////////////////////////////
-
+   `define VGA_CORRECT
+   `ifndef VGA_CORRECT
    assign hsync = h_counter >= (H_DISP + H_FPORCH) &&
 		  h_counter < (H_DISP + H_FPORCH + H_SYNC);
 
@@ -86,7 +99,19 @@ module vga_display(/*AUTOARG*/
 
    assign valid = (h_counter <= H_DISP) &&
 		  (v_counter <= V_DISP);
-
+   `else
+   localparam HS_START = H_DISP + H_FPORCH;
+   localparam HS_END = HS_START + H_SYNC;
+   localparam HA_END = H_DISP;
+   
+   localparam VS_START = V_DISP + V_FPORCH;
+   localparam VS_END = VS_START + V_SYNC;
+   localparam VA_END = V_DISP;
+   
+   assign hsync = (h_counter >= HS_START) && (h_counter < HS_END);
+   assign vsync = (v_counter >= VS_START) && (v_counter < VS_END);
+   assign valid = (h_counter < HA_END) && (v_counter < VA_END);
+   `endif
 
    assign h_in_box = h_counter >= H_BOX_OFFSET &&
 		     h_counter < (H_BOX_OFFSET + BOX_WIDTH);
@@ -185,7 +210,8 @@ module vga_display(/*AUTOARG*/
 	ram_data_hold <= 32'h0;
 	// End of automatics
      end else if (vram_ready && ram_data_hold_empty)
-       ram_data_hold <= vram_data;
+       ram_data_hold <= {1'b1, vram_data[30:0]};
+       //ram_data_hold <= vram_data;
 
    // Ask for new VRAM data when hold empty.
    always @(posedge vga_clk)

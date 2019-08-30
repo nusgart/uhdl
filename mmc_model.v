@@ -5,9 +5,12 @@
 
 `define CMD0	8'h40
 `define CMD1	8'h41
+`define CMD8    8'h48
 `define CMD16	8'h50
 `define CMD17	8'h51
 `define CMD24	8'h58
+`define CMD55   8'h77
+`define CMD41   8'h69
 
 module mmc_model(/*AUTOARG*/
    // Outputs

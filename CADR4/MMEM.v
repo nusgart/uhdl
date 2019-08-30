@@ -98,8 +98,7 @@ module MMEM(/*AUTOARG*/
       .web(mwp),
       .addrb(madr),
       .dinb(l),
-      .doutb()
-      /*AUTOINST* /);
+      .doutb());
 		
 `else //if ALTERA
 
