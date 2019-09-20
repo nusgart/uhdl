@@ -65,7 +65,7 @@ module vga_display(/*AUTOARG*/
    localparam H_COUNTER_MAX = (H_DISP + H_FPORCH + H_SYNC + H_BPORCH);
    localparam V_COUNTER_MAX = (V_DISP + V_FPORCH + V_SYNC + V_BPORCH);
 
-   localparam H_BOX_OFFSET = 0;//(H_DISP - BOX_WIDTH) / 2;
+   localparam H_BOX_OFFSET = (H_DISP - BOX_WIDTH) / 2;
    localparam V_BOX_OFFSET = 0;//(V_DISP - BOX_HEIGHT) / 2;
 
    reg [10:0] h_counter;

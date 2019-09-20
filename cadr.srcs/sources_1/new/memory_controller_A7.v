@@ -190,14 +190,19 @@ module memory_controller_A7(
  reg [31:0] local_data_out;
  reg local_req;
  reg local_write;
+ reg local_done;
  
  reg dram_done;
+ 
  assign sdram_ready = (state == IDLE);
- assign sdram_done = dram_done;
  assign sdram_clk_out = ui_clk;
  
  reg cpu_req;
  reg cpu_write;
+ reg cpu_done;
+ 
+ assign sdram_done = cpu_done;
+ 
  // metastability avoidance
  // Needs work
  always @ (posedge ui_clk) begin
@@ -208,13 +213,16 @@ module memory_controller_A7(
    local_write <= cpu_write;
    // addr
    cpu_addr <= sdram_addr;
-   local_addr <= {4'b0, cpu_addr, 2'b0};
+   local_addr <= {5'b0, cpu_addr, 1'b0};
    // data in
    cpu_data_in <= sdram_data_in;
    local_data_in <= cpu_data_in;
    // data out
    cpu_data_out <= local_data_out;
    sdram_data_out <= cpu_data_out;
+   // dram done
+   local_done <= dram_done;
+   cpu_done <= local_done;
  end
  
  always @ (posedge ui_clk) begin
@@ -333,7 +341,8 @@ module memory_controller_A7(
     .app_zq_ack                     (app_zq_ack),  // output			app_zq_ack
     .ui_clk                         (ui_clk),  // output			ui_clk
     .ui_clk_sync_rst                (ui_clk_sync_rst),  // output			ui_clk_sync_rst
-    .app_wdf_mask                   (15'b0000000000001111),  // input [15:0]		app_wdf_mask
+    //.app_wdf_mask                   (15'b0000000000001111),  // input [15:0]		app_wdf_mask
+    .app_wdf_mask                     (15'b111111111110000),  // input [15:0]		app_wdf_mask
     // System Clock Ports
     .sys_clk_i                       (sdram_clk),
     // Reference Clock Ports

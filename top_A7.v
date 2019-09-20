@@ -15,7 +15,7 @@ module top_A7(/*AUTOARG*/
    // Inouts
    ms_ps2_clk, ms_ps2_data,
    // Inputs
-   rs232_rxd, sysclk, kb_ps2_clk, kb_ps2_data, mmc_di, switch,
+   rs232_rxd, sysclk, kb_ps2_clk, kb_ps2_data, mmc_di, button, switch,
    // RAM interface
    ddr3_dq, ddr3_dm, ddr3_dqs_p, ddr3_dqs_n, ddr3_addr, ddr3_ba, ddr3_ck_p, 
    ddr3_ck_n, ddr3_cs_n, ddr3_cas_n, ddr3_ras_n, ddr3_cke, ddr3_odt,
@@ -63,8 +63,8 @@ module top_A7(/*AUTOARG*/
    output wire mmc_do;
    output wire mmc_sclk;
    input wire mmc_di;
-   input wire switch;
-   
+   input wire [3:0] switch;
+   input wire [3:0] button;
    ////////////////////////////////////////////////////////////////////////////////
    
    /*AUTOWIRE*/
@@ -133,12 +133,25 @@ module top_A7(/*AUTOARG*/
    wire ref_clk;
    wire main_clk;
    wire promdis;
+   wire [13:0] pc;
+   wire [23:0] bd_addr;
+   wire [5:0] bd_cmds;
+   
+   
+   reg rs1;
+   reg rs2;
+   
+   always @(posedge main_clk) begin
+     rs1 <= local_reset;
+     rs2 <= rs1;
+   end
+   
    
    //BUFG vgaclk_bufg(.I(sysclk), .O(clk_vga_in));
    //BUFG clkdram_bg(.I(sysclk), .O(clk_dram_in));
    //BUFG sysclk_bufg(.I(sysclk), .O(sys_clk_in));
    //BUFG refclk_bufg(.I(sysclk), .O(ref_clk_in));
-   BUFG reset_bufg(.I(local_reset), .O(reset));
+   BUFG reset_bufg(.I(rs2), .O(reset));
    
    sysclk_wiz sys_inst (.clk_in1(sysclk), .clk50(clk50), .clk_dram(clk_dram), .clk_ref(ref_clk), .reset(1'b0));
    
@@ -156,10 +169,10 @@ module top_A7(/*AUTOARG*/
    support_A7 support
      (
       .sysclk(clk50),
-      .button_r(switch),
-      .button_b(1'b0),
-      .button_h(1'b0),
-      .button_c(1'b0),
+      .button_r(button[3]),
+      .button_b(button[2]),
+      .button_h(button[1]),
+      .button_c(button[0]),
       .cpu_st(cpu_st),
       .rst_st(rst_st),
       /*AUTOINST*/
@@ -302,6 +315,9 @@ module top_A7(/*AUTOARG*/
 	   .disk_state			(disk_state[4:0]),
 	   .fetch			(fetch),
 	   .prefetch			(prefetch),
+	   .o_pc                        (pc),
+	   .o_bd_addr                   (bd_addr),
+	   .o_bda                       (bd_cmds),
 	   //.mcr_addr			(mcr_addr[13:0]),
 	   //.mcr_data_out		(mcr_data_out[48:0]),
 	   //.mcr_write			(mcr_write),
@@ -345,72 +361,21 @@ module top_A7(/*AUTOARG*/
 	   .kb_ps2_data			(kb_ps2_data),
 	   .rs232_rxd			(rs232_rxd));
    
-   reg calib_done;
-   initial calib_done = 0;
-   
-   always @(posedge main_clk) begin
-     if (lpddr_calib_done) begin
-       calib_done <= 1;
-     end else begin
-       calib_done <= calib_done;
-     end
-   end
-   
-   assign led[3] = cpu_st[0]; //1'b1;
-   assign led[2] = cpu_st[1]; //disk_state[1];
-   assign led[1] = cpu_st[2]; //disk_state[2];
-   assign led[0] = calib_done; //lpddr_calib_done;
-   
-   //
-   reg a;
-   initial a = 0;
-   
-   always @(posedge sysclk) begin
-     if (boot) begin
-       a <= 1;
-      end else begin
-        a <= a;
-      end
-   end
-   
-   reg prom_disabled;
-   initial prom_disabled = 0;
-   
-   always @(posedge sysclk) begin
-     if (promdis) begin
-        prom_disabled <= 1;
-      end else begin
-        prom_disabled <= prom_disabled;
-      end
-   end
-   
-   
-   reg [19:0] led_dimmer;
-   reg led_enable;
-   initial led_dimmer = 0;
-   
-   always @(posedge sysclk) begin
-     led_dimmer <= led_dimmer + 1;
-     led_enable <= led_dimmer[19];
-   end
-   
-   
-   // led 0: B=4, R=5, G=6 
-   assign led[4] = rst_st[0] & led_enable;
-   assign led[5] = prom_disabled & led_enable;
-   assign led[6] = bdst[0] & led_enable; //disk_state[0] & led_enable;
-   // led 1 B=7
-   assign led[7] = rst_st[1] & led_enable;
-   assign led[8] = bdst[1] & led_enable; //~promdis & led_enable;
-   assign led[9] = bdst[2] & led_enable; //disk_state[1] & led_enable;
-   // led 2 B=10, R=11, G=12
-   assign led[10] = rst_st[2] & led_enable;
-   assign led[11] = bdst[3] & led_enable;//lpddr_reset;
-   assign led[12] = bdst[4] & led_enable;//disk_state[2] & led_enable;//lpddr_reset;
-   // led 3
-   assign led[13] = a & led_enable;//lpddr_reset;
-   assign led[14] = bdst[5] & led_enable;
-   assign led[15] = bdst[6] & led_enable;
+   led_controller lc (
+     .sysclk (sysclk),
+     .led (led),
+     .reset (reset),
+     .rst_st (rst_st),
+     .cpu_st(cpu_st),
+     .bdst(bdst),
+     .prom_disable(promdis),
+     .ddr_calib_done (lpddr_calib_done),
+     .pc (pc),
+     .boot(boot),
+     .switches(switch),
+     .bd_addr (bd_addr),
+     .bd_cmds (bd_cmds)
+   );
 endmodule
 
 `default_nettype wire

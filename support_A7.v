@@ -51,6 +51,7 @@ module support_A7(/*AUTOARG*/
    reg [5:0] sys_medcount;
    reg [9:0] hold;
    reg press_history;
+   reg r_calib, local_calib;
 
    wire [2:0] cpu_state_next;
    wire [2:0] reset_state_next;
@@ -124,13 +125,18 @@ module support_A7(/*AUTOARG*/
      if (cpu_slowevent) begin
        cpu_state <= cpu_state_next;
      end
+     
+   always @(posedge sysclk) begin
+     r_calib <= lpddr_calib_done;
+     local_calib <= r_calib;
+   end
 
    assign reset_state_next =
 			    (reset_state == r_init) ? r_reset1 :
 			    (reset_state == r_reset1) ? r_reset2 :
 			    (reset_state == r_reset2) ? r_reset3 :
 			    //(reset_state == r_reset3) ? r_reset4 :
-			    (reset_state == r_reset3 && lpddr_calib_done) ? r_reset4 :
+			    (reset_state == r_reset3 && local_calib) ? r_reset4 :
 			    (reset_state == r_reset4 && cpu_state != c_idle) ? r_wait :
 			    (reset_state == r_wait & ~pressed) ? r_idle :
 			    (reset_state == r_idle && pressed) ? r_reset1 :

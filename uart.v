@@ -13,7 +13,7 @@ module uart(/*AUTOARG*/
    tx_enable
    );
 
-   parameter [31:0] FREQ = 50000000;
+   parameter [31:0] FREQ = 40_625_000;//50000000;
    parameter [31:0] RATE = 115200;
 
    input [7:0] tx_data;

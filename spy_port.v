@@ -231,8 +231,10 @@ module spy_port(/*AUTOARG*/
 	/*AUTORESET*/
 	// Beginning of autoreset for uninitialized flops
 	spy_bd_reg <= 16'h0;
+	response <= 16'b0;
 	// End of automatics
      end else begin
+        response <= spy_in;
 	if (start_bd_write)
 	  spy_bd_reg <= data;
 	else
