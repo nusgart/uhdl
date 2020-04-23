@@ -421,8 +421,8 @@ module lm3(/*AUTOARG*/
       .memack				(memack),
       .set_promdisable			(set_promdisable)); //    input set_promdisable;
 
-`define enable_mmc
-`ifdef enable_mmc
+`define fenable_mmc
+`ifdef fenable_mmc
 
    block_dev_mmc mmc_bd
      (
@@ -449,6 +449,34 @@ module lm3(/*AUTOARG*/
       .mmc_di				(mmc_di),
       .reset				(reset));		//    input reset;
 `endif
+`ifdef genable_mmc
+
+   sd_block_dev mmc_bd
+     (
+      .clk(cpu_clk),		//    input clk;
+      .mmc_clk(clk50),		//    input mmcclk;
+      .bd_data_in(bd_data_cpu2bd), //    input [15:0] bd_data_in;
+      .bd_data_out(bd_data_bd2cpu), //    output [15:0] bd_data_out;
+      /*AUTOINST*/
+      // Outputs
+      .bd_state				(bd_state[11:0]),
+      .bd_bsy				(bd_bsy),
+      .bd_err				(bd_err),
+      .bd_iordy				(bd_iordy),
+      .bd_rdy				(bd_rdy),
+      .mmc_cs				(mmc_cs),
+      .mmc_do				(mmc_do),
+      .mmc_sclk				(mmc_sclk),
+      // Inputs
+      .bd_cmd				(bd_cmd[1:0]),
+      .bd_addr				(bd_addr[23:0]),
+      .bd_rd				(bd_rd),
+      .bd_start				(bd_start),
+      .bd_wr				(bd_wr),
+      .mmc_di				(mmc_di),
+      .reset				(reset));		//    input reset;
+`endif
+
 
 `ifdef enable_vga
    vga_display vga
