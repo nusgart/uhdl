@@ -305,6 +305,7 @@ module xbus_chaos(/*AUTOARG*/
 	      dataout = { 16'b0, chaos_addr };
 	   end
 	   22'o17772062: begin // Read Buffer
+	      trp = 1'b1;
 	   end
 	   22'o17772063: begin // Bit Count
 	      dataout = { 16'b0, chaos_bit_count };
