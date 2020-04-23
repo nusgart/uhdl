@@ -25,7 +25,7 @@ module led_controller(
     input wire sysclk,
     input wire reset,
     input wire [2:0] rst_st,
-    input wire [6:0] bdst,
+    input wire [11:0] bdst,
     input wire prom_disable,
     input wire [2:0] cpu_st,
     input wire [3:0] switches,
@@ -115,7 +115,22 @@ module led_controller(
          r_led[15:0] <= bd_addr[15:0];
        end
        4'b0011: begin
-         r_led[15:0] <= {bd_cmds[5:0], bd_addr[23:15]};
+         r_led[15:0] <= {1'b0, bd_cmds[5:0], bd_addr[23:15]};
+       end
+       4'b0100: begin
+         r_led[0] <= bdst[0];
+         r_led[1] <= bdst[1];
+         r_led[2] <= bdst[2];
+         r_led[3] <= bdst[3];
+         r_led[4] <= bdst[4];
+         r_led[5] <= bdst[5];
+         r_led[6] <= bdst[6];
+         r_led[7] <= bdst[7];
+         r_led[8] <= bdst[8];
+         r_led[9] <= bdst[9];
+         r_led[10] <= bdst[10];
+         r_led[11] <= bdst[11];
+         
        end
        endcase
      end

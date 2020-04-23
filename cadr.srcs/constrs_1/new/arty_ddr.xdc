@@ -176,3 +176,6 @@ set_property PACKAGE_PIN D9 [get_ports {button[0]}]
 #set_false_path -from [get_pins mc/u_dram_memif/u_dram_memif_mig/u_memc_ui_top_std/mem_intfc0/ddr_phy_top0/u_ddr_calib_top/init_calib_complete_reg/C] -to [get_pins lc/calib_done_reg/D]
 #set_false_path -from [get_pins {support/FSM_onehot_cpu_state_reg[6]/C}] -to [get_pins {lc/r_led_reg[0]/D}]
 #set_multicycle_path -from [get_pins -hierarchical -regexp .*^mc.u_dram.*plete_reg/C.*] -to [get_pins -hierarchical -regexp {.*support/FSM.*state.reg.*/[CD]E?.*}] 10
+
+set_multicycle_path -to [get_pins -hierarchical -regexp .*lc/r_led_reg.*D.*] 10
+
