@@ -168,6 +168,8 @@ module block_dev_mmc(/*AUTOARG*/
    /// sd stuff
    reg mmc_sss = 0;
    // is the card a high-capacity card?
+   reg set_sd_hc;
+   reg clear_sd_hc;
    reg sd_hc = 0;
 
    /*AUTOWIRE*/
@@ -325,6 +327,18 @@ module block_dev_mmc(/*AUTOARG*/
      else if (set_err)
        err <= 1'b1;
 
+   always @(posedge clk) begin
+     if (reset) begin
+       sd_hc <= 1'b0;
+     end else begin
+       if (set_sd_hc) begin
+         sd_hc <= 1'b1;
+       end else if (clear_sd_hc) begin
+         sd_hc <= 1'b0;
+       end
+     end
+   end
+
    always @(posedge clk)
      if (reset) begin
        state <= s_idle;
@@ -337,7 +351,8 @@ module block_dev_mmc(/*AUTOARG*/
    assign mmc_active = { mmc_speed, mmc_state };
    assign bd_state = { mmc_active, state };
 
-   always @(state or r_bd_cmd or bd_cmd_hold or r_bd_start or bd_rd or bd_wr or mmc_done or mmc_out or mmc_hold or bd_data_out or data_hold or lba32 or inited or wc or bc) begin
+   //always @(state or r_bd_cmd or bd_cmd_hold or r_bd_start or bd_rd or bd_wr or mmc_done or mmc_out or mmc_hold or bd_data_out or data_hold or lba32 or inited or wc or bc) begin
+   always @(state or r_bd_cmd or bd_cmd_hold or r_bd_start or bd_rd or bd_wr or mmc_done or mmc_out or mmc_hold or bd_data_out) begin
       state_next = state;
       mmc_cmd = 0;
       mmc_rd = 0;
@@ -356,6 +371,8 @@ module block_dev_mmc(/*AUTOARG*/
       inc_bc = 0;
       inc_lba = 0;
       set_inited = 0;
+      set_sd_hc = 0;
+      clear_sd_hc = 0;
       case (state)
 	s_idle: begin
 	   if (r_bd_start) begin
@@ -390,7 +407,7 @@ module block_dev_mmc(/*AUTOARG*/
 	s_reset1: begin
 	   mmc_send = 1;
 	   mmc_cmd = CMD00;
-	   sd_hc = 1'b0;
+	   clear_sd_hc = 1'b1;
 	   if (~mmc_done)
 	     state_next = s_reset1a;
 	end
@@ -420,7 +437,7 @@ module block_dev_mmc(/*AUTOARG*/
 	end
 	s_reset3a: begin
 	   if (mmc_done)
-	     state_next = s_reset3b;
+	     state_next = s_reset4; //s_reset3b;
 	end
 	//// Route around this
 	s_reset3b: begin
@@ -489,7 +506,7 @@ module block_dev_mmc(/*AUTOARG*/
 	  // send CMD55 for ACMD41
 	  mmc_send = 1;
 	  mmc_cmd = CMD55;
-	  sd_hc = 1;
+	  set_sd_hc = 1;
 	  if (~mmc_done)
 	    state_next = s_reset3e;
 	end
@@ -523,15 +540,17 @@ module block_dev_mmc(/*AUTOARG*/
 	  if (mmc_done) begin
 	      if (mmc_out[0])
 	        state_next = s_reset3d;
-	      else
+	      else begin
+	        mmc_hispeed = 1'b1;
 	        state_next = s_reset10;
+	      end
 	  end
 	end
 	s_reset4: begin
 	   // handle SDSC and MMC cards
 	   mmc_send = 1;
 	   mmc_cmd = CMD01;
-	   sd_hc = 0;
+	   clear_sd_hc = 1'b1;
 	   if (~mmc_done)
 	     state_next = s_reset4a;
 	end
