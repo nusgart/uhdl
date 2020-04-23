@@ -210,8 +210,8 @@ module vga_display(/*AUTOARG*/
 	ram_data_hold <= 32'h0;
 	// End of automatics
      end else if (vram_ready && ram_data_hold_empty)
-       ram_data_hold <= {1'b1, vram_data[30:0]};
-       //ram_data_hold <= vram_data;
+       //ram_data_hold <= {1'b1, vram_data[30:0]};
+       ram_data_hold <= vram_data;
 
    // Ask for new VRAM data when hold empty.
    always @(posedge vga_clk)
