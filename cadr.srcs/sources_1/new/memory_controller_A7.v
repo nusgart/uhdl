@@ -192,9 +192,10 @@ module memory_controller_A7(
  reg local_write;
  reg local_done;
  
- reg dram_done;
+ reg dram_write_done;
+ reg dram_read_done;
  
- assign sdram_ready = (state == IDLE);
+ //assign sdram_ready = (state == IDLE);
  assign sdram_clk_out = ui_clk;
  
  reg cpu_req;
@@ -202,7 +203,9 @@ module memory_controller_A7(
  reg cpu_done;
  
  assign sdram_done = cpu_done;
+ assign sdram_ready = dram_read_done;
  
+ `ifdef SEP_CLOCKS
  // metastability avoidance
  // Needs work
  always @ (posedge ui_clk) begin
@@ -224,31 +227,39 @@ module memory_controller_A7(
    local_done <= dram_done;
    cpu_done <= local_done;
  end
+ `else
+ always @(*) begin
+   local_req = sdram_req;
+   local_write = sdram_write;
+   local_addr = {2'b0, sdram_addr, 3'b0};
+   local_data_in = sdram_data_in;
+   sdram_data_out = local_data_out;
+   cpu_done = dram_write_done;
+ end
+ `endif
  
  always @ (posedge ui_clk) begin
    if (ui_clk_sync_rst) begin
      state <= INIT;
      app_en <= 0;
      app_wdf_wren <= 0;
-     dram_done <= 0;
+     dram_write_done <= 0;
+     dram_read_done <= 0;
    end else begin
      case (state)
        INIT: begin
          if (init_calib_complete) begin
            state <= IDLE;
-           dram_done <= 1;
-         end else dram_done <= 0;
+         end
        end
        IDLE: begin
          // todo controller logic
+         dram_write_done <= 0;
+         dram_read_done <= 0;
          if (local_req) begin
            state <= READ;
-           dram_done <= 0;
          end else if (local_write) begin
            state <= WRITE;
-           dram_done <= 0;
-         end else begin
-           dram_done <= 1;
          end
        end
        WRITE: begin
@@ -272,7 +283,7 @@ module memory_controller_A7(
 
         if (~app_en & ~app_wdf_wren) begin
           state <= IDLE;
-          dram_done <= 1;
+          dram_write_done <= 1;
         end
        end
        READ: begin
@@ -292,7 +303,7 @@ module memory_controller_A7(
          if (app_rd_data_valid) begin
            local_data_out <= app_rd_data[31:0];
            state <= IDLE;
-           dram_done <= 1;
+           dram_read_done <= 1;
         end
        end
        // invalid state --> go to idle state
@@ -318,7 +329,7 @@ module memory_controller_A7(
     .ddr3_dqs_p                     (ddr3_dqs_p),  // inout [1:0]		ddr3_dqs_p
     .init_calib_complete            (init_calib_complete),  // output			init_calib_complete
       
-	.ddr3_cs_n                      (ddr3_cs_n),  // output [0:0]		ddr3_cs_n
+    .ddr3_cs_n                      (ddr3_cs_n),  // output [0:0]		ddr3_cs_n
     .ddr3_dm                        (ddr3_dm),  // output [1:0]		ddr3_dm
     .ddr3_odt                       (ddr3_odt),  // output [0:0]		ddr3_odt
     // Application interface ports
@@ -350,3 +361,4 @@ module memory_controller_A7(
     .sys_rst                        (sys_rst) // input sys_rst
     );
 endmodule
+`default_nettype wire
