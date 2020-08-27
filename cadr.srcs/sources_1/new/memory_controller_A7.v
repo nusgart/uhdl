@@ -171,9 +171,11 @@ module memory_controller_A7(
  localparam INIT = 3'd0;
  localparam IDLE = 3'd1;
  localparam WRITE = 3'd2;
- localparam WRITE_DONE = 3'd3;
- localparam READ = 3'd4;
- localparam READ_DONE = 3'd5;
+ localparam WRITE_SEND = 3'd3;
+ localparam WRITE_DONE = 3'd4;
+ localparam READ = 3'd5;
+ localparam READ_DONE = 3'd6;
+ localparam WAIT = 3'd7;
  // Interface Commmands
  localparam CMD_WRITE = 3'b000;
  localparam CMD_READ = 3'b001;
@@ -263,6 +265,14 @@ module memory_controller_A7(
          end
        end
        WRITE: begin
+         /*app_wdf_wren <= 1;
+         app_addr <= local_addr;
+         app_cmd <= CMD_WRITE;
+         app_wdf_data[31:0] <= local_data_in[31:0];
+         
+         if (app_wdf_rdy) begin
+           state <= WRITE_SEND;
+         end*/
          if (app_rdy & app_wdf_rdy) begin
            app_en <= 1;
            app_wdf_wren <= 1;
@@ -282,7 +292,7 @@ module memory_controller_A7(
         end
 
         if (~app_en & ~app_wdf_wren) begin
-          state <= IDLE;
+          state <= WAIT;
           dram_write_done <= 1;
         end
        end
@@ -295,16 +305,22 @@ module memory_controller_A7(
         end
        end
        READ_DONE: begin
-         // prevent double-reading
+         // prevent double-reading RAM side
          if (app_rdy & app_en) begin
            app_en <= 0;
          end
          // read out data
          if (app_rd_data_valid) begin
            local_data_out <= app_rd_data[31:0];
-           state <= IDLE;
+           state <= WAIT;
            dram_read_done <= 1;
         end
+       end
+       WAIT: begin
+         // prevent double-opearation CPU side
+         if (~local_req && ~local_write) begin
+           state <= IDLE;
+         end
        end
        // invalid state --> go to idle state
        default: state <= IDLE;
@@ -353,7 +369,7 @@ module memory_controller_A7(
     .ui_clk                         (ui_clk),  // output			ui_clk
     .ui_clk_sync_rst                (ui_clk_sync_rst),  // output			ui_clk_sync_rst
     //.app_wdf_mask                   (15'b0000000000001111),  // input [15:0]		app_wdf_mask
-    .app_wdf_mask                     (15'b111111111110000),  // input [15:0]		app_wdf_mask
+    .app_wdf_mask                     (16'b1111111111110000),  // input [15:0]		app_wdf_mask
     // System Clock Ports
     .sys_clk_i                       (sdram_clk),
     // Reference Clock Ports
