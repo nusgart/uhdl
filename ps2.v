@@ -27,7 +27,7 @@ module ps2(/*AUTOARG*/
    clk, reset, ps2_clk, ps2_data
    );
 
-   parameter FREQ = 50000;	// Main clock frequency (KHz).
+   parameter FREQ = 40_625;//50000;	// Main clock frequency (KHz).
    parameter PS2_FREQ = 10;	// Keyboard clock frequency (KHz).
 
    input wire clk;			// Main clock.

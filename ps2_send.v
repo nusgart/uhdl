@@ -23,7 +23,7 @@ module ps2_send(/*AUTOARG*/
 
    ////////////////////////////////////////////////////////////////////////////////
 
-   parameter FREQ = 25000;
+   parameter FREQ = 40_625 / 2;//25000;
    parameter PS2_FREQ = 10;
    parameter DELAY = FREQ / PS2_FREQ;
 
