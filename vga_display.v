@@ -13,6 +13,7 @@ module vga_display(/*AUTOARG*/
 
    `define FULLSCR
    `ifndef FULLSCR
+   `ifdef LOWRES
    parameter H_DISP = 640;//1920;//1280;
    parameter H_FPORCH = 16;//110;
    parameter H_SYNC = 96;//40;
@@ -22,6 +23,19 @@ module vga_display(/*AUTOARG*/
    parameter V_FPORCH = 11;//5;
    parameter V_SYNC = 2;//5;
    parameter V_BPORCH = 33;//30;
+   `define NEG_POL
+   `else
+   parameter H_DISP = 1920;
+   parameter H_FPORCH = 88;
+   parameter H_SYNC = 44;
+   parameter H_BPORCH = 148;
+
+   parameter V_DISP = 1080;
+   parameter V_FPORCH = 4;
+   parameter V_SYNC = 5;
+   parameter V_BPORCH = 36;
+   `define POS_POL
+   `endif
    `else
    parameter H_DISP = 1280;
    parameter H_FPORCH = 110;
@@ -32,6 +46,7 @@ module vga_display(/*AUTOARG*/
    parameter V_FPORCH = 5;
    parameter V_SYNC = 5;
    parameter V_BPORCH = 20;
+   `define POS_POL
    `endif
    parameter BOX_WIDTH = 768;
    parameter BOX_HEIGHT = 896;
