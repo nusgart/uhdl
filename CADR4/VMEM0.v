@@ -42,7 +42,7 @@ module VMEM0(/*AUTOARG*/
    ////////////////////////////////////////////////////////////////////////////////
 
    assign vmem0_adr = mapi[23:13];
-`define INFER
+//`define INFER
 
 `ifdef INFER
    reg [4:0] ram [0:2047];

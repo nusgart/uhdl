@@ -47,7 +47,7 @@ module SPC(/*AUTOARG*/
    wire [4:0] spcptr_p1;
    assign spcptr_p1 = spcptr + 5'b00001;
    assign spcadr = (spcnt && spush) ? spcptr_p1 : spcptr;
-`undef ISE
+//`undef ISE
 `ifndef ISE
    reg [18:0] ram [0:31];
    reg [18:0] out_a;

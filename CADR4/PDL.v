@@ -36,7 +36,7 @@ module PDL(/*AUTOARG*/
    localparam MEM_DEPTH = 1024;
 
    ////////////////////////////////////////////////////////////////////////////////
-`define INFER
+//`define INFER
 
 `ifdef INFER
    reg [31:0] ram [0:1023];

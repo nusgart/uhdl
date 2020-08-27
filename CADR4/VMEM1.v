@@ -43,7 +43,7 @@ module VMEM1(/*AUTOARG*/
 
    assign vmem1_adr = {vmap[4:0], mapi[12:8]};
 
-`define INFER
+//`define INFER
 
 `ifdef SIMULATION
 `define INFER
