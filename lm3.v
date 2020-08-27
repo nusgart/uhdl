@@ -35,7 +35,7 @@ module lm3(/*AUTOARG*/
    sdram_addr, sdram_data_cpu2rc, sdram_req, sdram_write,
    vram_cpu_addr, vram_cpu_data_out, vram_cpu_req, vram_cpu_write,
    spy_reg, busint_spyout, spy_rd, spy_wr, disk_state, fetch,
-   prefetch, mcr_addr, mcr_data_out, mcr_write, mmc_cs, mmc_do,
+   prefetch, mcr_addr, mcr_data_out, mcr_write, mmc_cs, mmc_do, o_lc,
    mmc_sclk, vram_vga_addr, vram_vga_req, vga_blank, vga_r, vga_g,
    vga_b, vga_hsync, vga_vsync, rs232_txd, promdis, bdst, o_pc, o_bd_addr, o_bda,
    // Inouts
@@ -107,6 +107,7 @@ module lm3(/*AUTOARG*/
    output [4:0] disk_state;
    output [11:0] bdst;
    output [13:0] o_pc;
+   output wire [25:0] o_lc;
    output wire [23:0] o_bd_addr;
    output wire [5:0] o_bda;
 
@@ -406,6 +407,7 @@ module lm3(/*AUTOARG*/
       .vma				(vma[31:0]),
       .pma				(pma[21:8]),
       .o_pc                             (o_pc),
+      .o_lc                             (o_lc),
       // Inputs
       .spy_in				(spy_in[15:0]),
       .dbread				(dbread),

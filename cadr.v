@@ -307,6 +307,7 @@ module cadr(/*AUTOARG*/
    reg			mcr_write;
    // End of automatics
    assign o_pc = pc;
+   assign o_lc = lc;
    ////////////////////////////////////////////////////////////////////////////////
 
    parameter [5:0]

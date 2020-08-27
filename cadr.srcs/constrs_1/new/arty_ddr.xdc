@@ -179,3 +179,5 @@ set_property PACKAGE_PIN D9 [get_ports {button[0]}]
 
 set_multicycle_path -to [get_pins -hierarchical -regexp .*lc/r_led_reg.*D.*] 10
 
+
+set_false_path -to [get_pins -hierarchical -regexp .*lc/.*/D.*]

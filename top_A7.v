@@ -134,6 +134,7 @@ module top_A7(/*AUTOARG*/
    wire main_clk;
    wire promdis;
    wire [13:0] pc;
+   wire [25:0] o_lc;
    wire [23:0] bd_addr;
    wire [5:0] bd_cmds;
    
@@ -155,7 +156,7 @@ module top_A7(/*AUTOARG*/
    
    sysclk_wiz sys_inst (.clk_in1(sysclk), .clk50(clk50), .clk_dram(clk_dram), .clk_ref(ref_clk), .reset(1'b0));
    
-   clk_wiz clocking_inst(.CLK_50(sysclk), .CLK_VGA(vga_clk), /*.clk_dram(clk_dram),*/ .RESET(dcm_reset), .LOCKED(vga_clk_locked));
+   clk_wiz clocking_inst(.CLK_50(sysclk), /*.CLK_VGA(vga_clk), */.CLK_VGA(vga_clk), /*.clk_dram(clk_dram),*/ .RESET(dcm_reset), .LOCKED(vga_clk_locked));
    
    //clk_wiz_dram clk_inst(.clk_in(clk_dram_in), .clk_dram(clk_dram), .reset(dcm_reset));
    //clk_wiz_0 clk_inst_a(.clk_in(ref_clk_in), .ref_clk_out(ref_clk), .reset(dcm_reset));
@@ -316,6 +317,7 @@ module top_A7(/*AUTOARG*/
 	   .fetch			(fetch),
 	   .prefetch			(prefetch),
 	   .o_pc                        (pc),
+	   .o_lc                        (o_lc),
 	   .o_bd_addr                   (bd_addr),
 	   .o_bda                       (bd_cmds),
 	   //.mcr_addr			(mcr_addr[13:0]),
@@ -371,6 +373,7 @@ module top_A7(/*AUTOARG*/
      .prom_disable(promdis),
      .ddr_calib_done (lpddr_calib_done),
      .pc (pc),
+     .lc (o_lc),
      .boot(boot),
      .switches(switch),
      .bd_addr (bd_addr),

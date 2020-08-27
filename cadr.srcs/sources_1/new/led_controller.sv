@@ -32,6 +32,7 @@ module led_controller(
     input wire ddr_calib_done,
     input wire boot,
     input wire [13:0] pc,
+    input wire [25:0] lc,
     input wire [23:0] bd_addr,
     input wire [5:0] bd_cmds
     );
@@ -131,6 +132,12 @@ module led_controller(
          r_led[10] <= bdst[10];
          r_led[11] <= bdst[11];
          
+       end
+       4'b0101: begin
+         r_led <= lc[15:0];
+       end
+       4'b0110: begin
+         r_led <= lc[25:10];
        end
        endcase
      end
