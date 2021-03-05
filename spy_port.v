@@ -173,6 +173,18 @@ module spy_port(/*AUTOARG*/
      end else begin
 	dbwrite <= (spyu_state == SPYU_OPW1);
      end
+     
+   always @(posedge clk) begin
+     if (reset) begin
+       response <= 16'b0;
+     end else begin
+       if (dbread) begin
+         response <= spy_in;
+       end else if (start_bd_read) begin
+         response <= spy_bd_reg;
+       end
+     end
+   end
 
    always @(posedge clk)
      if (reset) begin
@@ -231,10 +243,8 @@ module spy_port(/*AUTOARG*/
 	/*AUTORESET*/
 	// Beginning of autoreset for uninitialized flops
 	spy_bd_reg <= 16'h0;
-	response <= 16'b0;
 	// End of automatics
      end else begin
-        response <= spy_in;
 	if (start_bd_write)
 	  spy_bd_reg <= data;
 	else

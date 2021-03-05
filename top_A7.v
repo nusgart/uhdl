@@ -19,7 +19,10 @@ module top_A7(/*AUTOARG*/
    // RAM interface
    ddr3_dq, ddr3_dm, ddr3_dqs_p, ddr3_dqs_n, ddr3_addr, ddr3_ba, ddr3_ck_p, 
    ddr3_ck_n, ddr3_cs_n, ddr3_cas_n, ddr3_ras_n, ddr3_cke, ddr3_odt,
-   ddr3_reset_n, ddr3_we_n
+   ddr3_reset_n, ddr3_we_n,
+   
+   // extra uart
+   uart_txd, uart_rxd
    );
    
    
@@ -65,6 +68,8 @@ module top_A7(/*AUTOARG*/
    input wire mmc_di;
    input wire [3:0] switch;
    input wire [3:0] button;
+   output wire uart_txd;
+   input wire uart_rxd;
    ////////////////////////////////////////////////////////////////////////////////
    
    /*AUTOWIRE*/
@@ -138,6 +143,12 @@ module top_A7(/*AUTOARG*/
    wire [23:0] bd_addr;
    wire [5:0] bd_cmds;
    
+   reg main_uart_rx;
+   
+   always @(*) begin
+     main_uart_rx = switch[3] ? uart_rxd : rs232_rxd;
+   end
+   
    
    reg rs1;
    reg rs2;
@@ -147,6 +158,7 @@ module top_A7(/*AUTOARG*/
      rs2 <= rs1;
    end
    
+   assign uart_txd = rs232_txd;
    
    //BUFG vgaclk_bufg(.I(sysclk), .O(clk_vga_in));
    //BUFG clkdram_bg(.I(sysclk), .O(clk_dram_in));
@@ -361,7 +373,7 @@ module top_A7(/*AUTOARG*/
 	   .vga_clk			(vga_clk),
 	   .kb_ps2_clk			(kb_ps2_clk),
 	   .kb_ps2_data			(kb_ps2_data),
-	   .rs232_rxd			(rs232_rxd));
+	   .rs232_rxd			(main_uart_rx));
    
    led_controller lc (
      .sysclk (sysclk),

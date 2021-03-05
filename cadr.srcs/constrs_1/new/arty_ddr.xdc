@@ -81,8 +81,13 @@ set_property PACKAGE_PIN J5 [get_ports {led[2]}]
 set_property PACKAGE_PIN T9 [get_ports {led[1]}]
 set_property PACKAGE_PIN T10 [get_ports {led[0]}]
 ## USB-USART
-set_property PACKAGE_PIN D10 [get_ports rs232_rxd]
-set_property PACKAGE_PIN A9 [get_ports rs232_txd]
+# A9 is the RX input on the fpga
+set_property PACKAGE_PIN A9 [get_ports rs232_rxd]
+# D10 is the tx output on the fpga
+set_property PACKAGE_PIN D10 [get_ports rs232_txd]
+set_property -dict { PACKAGE_PIN V15   IOSTANDARD LVCMOS33 } [get_ports { uart_txd }]; #IO_L16P_T2_CSI_B_14          Sch=ck_io[0]
+set_property -dict { PACKAGE_PIN U16   IOSTANDARD LVCMOS33 } [get_ports { uart_rxd }]; #IO_L18P_T2_A12_D28_14        Sch=ck_io[1]
+#set_property PACKAGE_PIN ??? [get_ports uart_txd]
 ## PMOD Header JA and JB
 set_property PACKAGE_PIN K16 [get_ports vga_b]
 set_property PACKAGE_PIN C15 [get_ports vga_g]
@@ -114,6 +119,7 @@ set_property IOSTANDARD LVCMOS33 [get_ports ms_ps2_clk]
 set_property IOSTANDARD LVCMOS33 [get_ports ms_ps2_data]
 set_property IOSTANDARD LVCMOS33 [get_ports rs232_rxd]
 set_property IOSTANDARD LVCMOS33 [get_ports rs232_txd]
+#set_property IOSTANDARD LVCMOS33 [get_ports uart_txd]
 set_property IOSTANDARD LVCMOS33 [get_ports {switch[3]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {switch[2]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {switch[1]}]
