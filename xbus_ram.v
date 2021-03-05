@@ -27,7 +27,10 @@ module xbus_ram (/*AUTOARG*/
    ////////////////////////////////////////////////////////////////////////////////
   
   
-   localparam MAX_ADDR = 22'o1677_7777;
+   //localparam MAX_ADDR = 22'o1677_7777;
+   //localparam MAX_ADDR = 22'o1677_7777;
+   //localparam MAX_ADDR = 22'o1100_0000;
+   localparam MAX_ADDR = 22'o1100_0000;
    // Need some dram address space at the end which is decoded but
    // does not read/write...
    //assign decode = addr < 22'o1100_0000 ? 1'b1: 1'b0;//22'o11000000 ? 1'b1: 1'b0;

@@ -133,7 +133,11 @@ module memory_controller_A7(
       rs0 <= 1'b1;
     end else if (rs0) begin
       rs0 <= 1'b0;
+      `ifndef SIMULATION
       reset_ctr <= 16'd65535;
+      `else
+      reset_ctr <= 16'd100;
+      `endif
     end else if (reset_ctr != 16'b0) begin
       reset_ctr <= reset_ctr - 1;
     end
