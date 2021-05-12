@@ -3,35 +3,20 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module us(/*AUTOARG*/
-   // Outputs
-   us_clk,
-   // Inputs
-   clk, reset
-   );
+module us
+  (output reg [31:0] us_clk,
 
-   parameter
-     SYS_CLK = 26'd50000000,
-     US_CLK_RATE = 26'd1000000,
-     US_CLK_DIV = SYS_CLK / US_CLK_RATE;
+   input wire	     clk,
+   input wire	     reset);
 
-   input wire clk;
-   input wire reset;
-
-   output [31:0] us_clk;
+   parameter SYS_CLK = 26'd50000000;
+   parameter US_CLK_RATE = 26'd1000000;
+   parameter US_CLK_DIV = SYS_CLK / US_CLK_RATE;
 
    ////////////////////////////////////////////////////////////////////////////////
 
-   /*AUTOWIRE*/
-   /*AUTOREG*/
-   // Beginning of automatic regs (for this module's undeclared outputs)
-   reg [31:0]		us_clk;
-   // End of automatics
-
-   ////////////////////////////////////////////////////////////////////////////////
-
-   reg [7:0] us_counter;
-   wire [25:0] us_clk_div;
+   reg [7:0]	     us_counter;
+   wire [25:0]	     us_clk_div;
 
    assign us_clk_div = US_CLK_DIV;
 
