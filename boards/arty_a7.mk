@@ -1,37 +1,38 @@
 VENDOR		= xilinx-vivado
-TARGET		= xc7a35ticsg324-1l
+TARGET		= xc7a100ticsg324-1l
 CONSTRAINTS	= boards/arty_a7.xdc
 
-PROGRAMMER	= fpgaprog
+PROGRAMMER	= vivado
 
-XSTFLAGS	= -sd cores/xilinx
-NGDBUILDFLAGS	= -sd cores/xilinx
+XCORES		= boards/arty_a7/cores/xilinx
 
-TOPLEVEL	= top_lx45
+XSTFLAGS	= -sd $(XCORES)
+NGDBUILDFLAGS	= -sd $(XCORES)
+
+TOPLEVEL	= uhdl_arty_a7
 SYN_SRCS_V	+= \
-	top_a7.v \
-	support_a7.v \
-	ram_controller_a7.v \
-	cores/xilinx/clk_wiz.v \
-	cores/xilinx/ise_MMEM.v \
-	cores/xilinx/ise_SPC.v \
-	cores/xilinx/ise_VMEM0.v \
-	cores/xilinx/ise_DRAM.v \
-	cores/xilinx/ise_PDL.v \
-	cores/xilinx/ise_AMEM.v \
-	cores/xilinx/ise_VMEM1.v \
-	cores/xilinx/ise_IRAM.v \
-	cores/xilinx/ise_vram.v \
-	cores/xilinx/mig_32bit/user_design/rtl/infrastructure.v \
-	cores/xilinx/mig_32bit/user_design/rtl/mcb_controller/iodrp_controller.v \
-	cores/xilinx/mig_32bit/user_design/rtl/mcb_controller/iodrp_mcb_controller.v \
-	cores/xilinx/mig_32bit/user_design/rtl/mcb_controller/mcb_raw_wrapper.v \
-	cores/xilinx/mig_32bit/user_design/rtl/mcb_controller/mcb_soft_calibration.v \
-	cores/xilinx/mig_32bit/user_design/rtl/mcb_controller/mcb_soft_calibration_top.v \
-	cores/xilinx/mig_32bit/user_design/rtl/mcb_controller/mcb_ui_top.v \
-	cores/xilinx/mig_32bit/user_design/rtl/memc_wrapper.v \
-	cores/xilinx/mig_32bit/user_design/rtl/mig_32bit.v
+	uhdl_arty_a7.v \
+	support_arty_a7.v \
+	ram_controller_arty_a7.v \
+	led_controller.sv
+
+SYN_SRCS_IP	+= \
+	$(XCORES)/clk_wiz_0/clk_wiz_0.xci \
+	$(XCORES)/clk_wiz_dram/clk_wiz_dram.xci \
+	$(XCORES)/clk_wiz/clk_wiz.xci \
+	$(XCORES)/ddr_memif/ddr_memif.xci \
+	$(XCORES)/dram_memif/dram_memif.xci \
+	$(XCORES)/ise_AMEM/ise_AMEM.xci \
+	$(XCORES)/ise_DRAM/ise_DRAM.xci \
+	$(XCORES)/ise_IRAM/ise_IRAM.xci \
+	$(XCORES)/ise_MMEM/ise_MMEM.xci \
+	$(XCORES)/ise_PDL/ise_PDL.xci \
+	$(XCORES)/ise_SPC/ise_SPC.xci \
+	$(XCORES)/ise_VMEM0/ise_VMEM0.xci \
+	$(XCORES)/ise_VMEM1/ise_VMEM1.xci \
+	$(XCORES)/ise_vram/ise_vram.xci \
+	$(XCORES)/mig_7series_0/mig_7series_0.xci \
+	$(XCORES)/sysclk_wiz/sysclk_wiz.xci
 
 # support_tb.v
-isim: TESTBENCHES += top_a7_tb
-
+isim: TESTBENCHES += uhdl_arty_a7_tb
