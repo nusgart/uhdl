@@ -33,10 +33,10 @@ module MSKG4(/*AUTOARG*/
    wire [31:0] msk_right;
 
    rom #(.ADDRESS_WIDTH(5), .DATA_WIDTH(32), .MEM_DEPTH(32),
-	 .MEM_FILE("mskl.bin"), .MEM_FILE_FORMAT("binary")) MSKL
+	 .MEM_FILE("CADR4/mskl.bin"), .MEM_FILE_FORMAT("binary")) MSKL
      (.clk_i(nclk), .addr_i(mskl), .q_o(msk_left));
    rom #(.ADDRESS_WIDTH(5), .DATA_WIDTH(32), .MEM_DEPTH(32),
-	 .MEM_FILE("mskr.bin"), .MEM_FILE_FORMAT("binary")) MSKR
+	 .MEM_FILE("CADR4/mskr.bin"), .MEM_FILE_FORMAT("binary")) MSKR
      (.clk_i(nclk), .addr_i(mskr), .q_o(msk_right));
 
    assign msk = msk_right & msk_left;
