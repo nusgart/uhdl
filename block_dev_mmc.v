@@ -3,32 +3,29 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module block_dev_mmc(/*AUTOARG*/
-   // Outputs
+module block_dev_mmc
+  (input wire [15:0]  bd_data_in,
+   input wire [1:0]   bd_cmd,
+   input wire [23:0]  bd_addr,
+   input wire 	      bd_rd,
+   input wire 	      bd_start,
+   input wire 	      bd_wr,
+
+   input wire 	      mmc_di,
+   input wire 	      mmcclk,
    output wire [11:0] bd_state,
    output wire [15:0] bd_data_out,
-   output wire bd_bsy,
-   output wire bd_err,
-   output wire bd_iordy,
-   output wire bd_rdy,
-   output wire mmc_cs,
-   output wire mmc_do,
-   output wire mmc_sclk,
-   // Inputs
-   input wire [15:0] bd_data_in,
-   input wire [1:0] bd_cmd,
-   input wire [23:0] bd_addr,
-   input wire bd_rd,
-   input wire bd_start,
-   input wire bd_wr,
-   input wire clk,
-   input wire mmc_di,
-   input wire mmcclk,
-   input wire reset
-   );
+   output wire 	      bd_bsy,
+   output wire 	      bd_err,
+   output wire 	      bd_iordy,
+   output wire 	      bd_rdy,
+   output wire 	      mmc_cs,
+   output wire 	      mmc_do,
+   output wire 	      mmc_sclk,
 
-   ////////////////////////////////////////////////////////////////////////////////
-
+   input wire 	      clk,
+   input wire 	      reset);
+   
    parameter
      // Initialize device
      CMD00 = 48'h400000000095,
