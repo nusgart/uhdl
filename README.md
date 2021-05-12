@@ -1,710 +1,93 @@
-MIT CADR HDL --- Verilog FPGA implementation of the MIT CADR	-*- org -*-
+<title>MIT CADR HDL</title>
 
-#+TODO: TODO(t) | DONE(d)
-#+TODO: | CANCELED(c)
+# Getting started
 
-This document documents the implementation of the CADR processor, it
-might also includes notes and errata for the main CADR specfication
-document that will be merged at some point.
+Requirements:
 
-* Memory Map (physical)
+  - Icarus Verilog
+  - Verilator
 
-22-bit physical addresses, 32-bit wide data.  Addresses are in octal.
+```
+fossil clone https://tumbleweed.nu/r/uhdl uhdl.fossil
+fossil clone https://tumbleweed.nu/r/hdlmake.mk hdlmake.mk.fossil
 
-0-16777777              Memory.
-        < 11000000
-17000000-17377777       I/O devices.
-        17000000 - 17077777     Main TV screen
-        17100000 - 17107777     Convolution box
-        17110000 - 17110017     Scheme chip interface
-        17140000 - 17177777     Audio I/O memory
-        17200000 - 17277777     Color TV
-        17377500 - 17377537     Grey TV (and frame grabber)
-        17377600 - 17377677     Vision hardware control
-        17377740 - 17377747     Audio i/o control registers
-        17377750 - 17377757     Color TV control
-        17377760 - 17377767     Main TV control
-        17377770 - 17377773     Second disk control
-        17377774 - 17377777     Disk control
-                17377774  Load command.
-                17377775  Load CLP
-                17377776  Load disk address.
-                17377777  Start write.
-17400000-17777777       Unibus mapping; LSB is 0 (16-bit), MSB (16-bits) is data
-         17740000 ???
-         17766000       SPYBUS (766000-766036)
-         17772000       IOB
-                      17772040   KBD LOW                (Unibus: 764100)
-                      17772041   KBD HI
-                      17772042   MOUSE Y
-                      17772043   MOUSE Y
-                      17772044   BEEP                   (Unibus: 764110)
-                      17772045   KBD CSR                (Unibus: 764112)
-                      17772050   USEC CLK LOW           (Unibus: 764120)
-                      17772051   USEC CLK HI            (Unibus: 764122)
-                      17772052   Start 60Hz clock.      (Unibus: 764124)
-                      17772053   GPIO                   (Uniubs: 764126)
+mkdir uhdl
+cd uhdl
+fossil open ../uhdl.fossil
 
-		        Chaosnet
-                      17772060	CSR 			(Unibus: 764140)
-                      17772061	My address		(Unibus: 764142)
-                      17772062	Data register		(Unibus: 764144)
-                      17772063	Bit count register	(Unibus: 764146)
-                      17772065	Activate transmitter	(Unibus: 764152)
+mkdir hdlmake.mk
+cd hdlmake.mk
+fossil open --nested ../../hdlmake.mk.fossil
 
-         17773000       UNIBUS
-                      17773005   Mode register          (Unibus: 766012)
-                      17773020   Bus interrupt status   (Unibus: 766040)
-                      17773021   Bus interrupt flag     (Unibus: 766042)
-                      17773022   Bus error indicators   (Unibus: 766044)
-         17777700 ????
-	
-* TODO TOP -- Simulation / Debugging
+cd ../..
+```
 
-Add debugging output for all modules.  Should debugging information be
-handled in the test benches, or in the module proper?
+See hdlmake.mk/README for detailed instructions on how to run test
+benches, create bitstreams and download them to boards.  To get an
+overview of available targets run "make help".
 
-I'm inclined to think that it should be in the module, controlled by a
-`SIMULATION' macro, including a `debug' variable that can be set from
-Verilator/TB dynamically.  E.g.,
+A disk image is also required, for example
+https://tumbleweed.nu/r/sys78/uv/disk.img.gz .  But any disk image
+created by `diskmaker` in usim will work.
 
-    `define SIMULATION
-    
-    `ifdef SIMULATION
-       integer debug = 0;
-       integer debug_decode = 0;
-    
-       always @(posedge clk)
-         if (decode && debug_decode)
-           $display("%t: %m: decode addr=%o", $time, addr);
-    
-       always @(posedge clk)
-         if (debug_decode && (sdram_req || sdram_write))
-    	   $display("%t: %m: sdram decode req %b%b addr=%o; datain=%o dataout=%o", $time, sdram_req, sdram_write, addr, datain, dataout);
-    
-       always @(posedge clk) begin
-          if (debug && sdram_req)
-    	    $display("%t: %m: sdram read addr=0x%x data=0x%x", addr, dataout);
-          if (debug && sdram_write)
-    	    $display("%t: %m: sdram write addr=0x%x data=0x%x", addr, datain);
-       end
-    `endif
+To generate the bitstream and to program the device:
 
-If we `define SIMULATION, then we can toggle the debugging output in
-Verilator (or in a testbench by setting DUT.debug = 1) dynamically.
-Or enabling specific parts of a module to be debugged (in the above,
-debug_decode).
+```
+make syn prog
+```
 
-Idea for debugging output when reading/writing to memory, this should
-be easy to parse and do something with later:
+# Supported boards
 
-	$display("%t: %m: W @%o <- %o", $time, address, data_in);
-	$display("%t: %m: R @%o -> %o", $time, address, data_out);
+Currently supported FPGA boards are:
 
-In general, all $display/$monitor statements should be of the
-following format:
+  - Pipistrello (Xilinx Spartan-6), with a Papilio Arcade Megawing
+    (BPW5031) wing.
 
-	$display("%t: %m: MESSAGE", ARGUMENTS);
+In the works:
 
-** TODO support_lx45
-** TODO busint [1/6]
-*** TODO xbus_ram
-*** TODO xbus_disk
-*** TODO xbus_tv
-*** TODO xbus_io
-*** TODO xbus_unibus
-*** TODO xbus_spy
-** TODO cadr
+  - Arty A7-100T with a Pmod shield, with VGA, 2 x PS/2, micro SD card
+    Pmods.
 
-See CADR4.
+## Pipistrello
 
-** TODO spy_port
-*** TODO uart
-** TODO ram_controller_lx45
-*** TODO mig_32bit
-*** TODO ise_vram
-** TODO block_dev_mmc
-*** TODO mmc_wrapper
-**** TODO mmc
-** TODO vga_display
-** TODO ps2_support
-*** TODO mouse [0/2]
-**** TODO ps2
-**** TODO ps2_send
-*** TODO keyboard [0/2]
-**** TODO ps2
-**** TODO scancode_convert
-***** TODO scancode_rom
+Requirements:
 
-* TODO TOP [1/8]
+  - Xilinx ISE 14.7
+  - fpgaprog (https://tumbleweed.nu/r/fpgaprog/)
 
-This is just a clean up.  Comments that are useful are restored, code
-is reorganized a bit and cleaned up.
+At the time of writing (2021-02-28, AMS), uhdl (and hdlmake.mk) for
+the Pipistrello are being mainly developed on Centos 8.  Centos 8
+requires minimal amount of work to get Xilinx ISE running properly.
+Other GNU/Linux systems should work as long as they can run GNU Make
+and Xilinx ISE.
 
-** TODO support_lx45
-*** TODO Front Panel
+The keyboard will be on PS/2 port A if using the Papilio Arcade
+Megawing (BPW5031) board.  Mouse is currently non-functional.
 
-   display show_pc(.clk(cpuclk), .reset(reset),
-		   .pc(pc), .dots(dots),
-		   .sevenseg(sevenseg), .sevenseg_an(sevenseg_an));
-   assign dots[3:0] = machrun ? cpu_state[3:0] : bus_state[3:0];
+The current MMC code is _very_ peculiar about what kind of card it
+accepts; it works at least with a SDSC card (<2GB).  And might not
+work with SDHC cards or higher speed SD cards.
 
-   assign led[7:3] = disk_state[4:0];
-   assign led[2] = machrun;
-   assign led[1] = disk_state[1];
-   assign led[0] = ~ide_dior;
+The disk image should be written directly to the SD card, using dd(1)
+or similar.
 
-**** TODO Momentary button for reset
-**** TODO Slide switch to control clock speed
+# Adding a new board
 
-One setting could be stopped clock allowing single stepping.  The old
-code used 8 slide switches for this, that seems excessive.
+To add a new board, the following files are at a minimum needed:
 
-**** TODO Momentary button for single stepping
-**** TODO display --- display pc on led'and 4x7 segment digits
+   - boards/BOARD.mk
+   - uhdl_BOARD.v
+   - uhdl_BOARD_tb.v
+   - ram_controller_BOARD.v
+   - support_BOARD.v
 
-module display(clk, reset, pc, dots, sevenseg, sevenseg_an);
-   
-    input 	clk;
-    input 	reset;
-    input [13:0] pc;
-    input [3:0]  dots;
-    output [7:0] sevenseg;
-    output [3:0] sevenseg_an;
+Pass the BOARD variable to make to do synthesis or simulation.
 
-   wire [2:0] 	 digit;
-   reg [1:0] 	 anode;
+# Test Protocol
 
-   reg [10:0]    divider;
+This is a basic test protocol to assure that things work as they
+should.
 
-   reg [13:0] 	 pc_reg;
-   reg [3:0] 	 dots_reg;
-   
-   assign digit = (anode == 2'b11) ? pc_reg[11:9] :
-		  (anode == 2'b10) ? pc_reg[8:6] :
-		  (anode == 2'b01) ? pc_reg[5:3] :
-		  (anode == 2'b00) ? pc_reg[2:0] :
-		  3'b0;
-
-   assign sevenseg_an = (anode == 2'b11) ? 4'b0111 :
-			(anode == 2'b10) ? 4'b1011 :
-			(anode == 2'b01) ? 4'b1101 :
-			(anode == 2'b00) ? 4'b1110 :
-			4'b1111;
-
-   assign sevenseg[0] = ~dots_reg[anode];
-   
-   sevensegdecode decode({1'b0, digit}, sevenseg[7:1]);
-
-   always @(posedge clk)
-     if (reset) begin
-	  pc_reg <= 0;
-	  dots_reg <= 0;
-       end else begin
-	  pc_reg <= pc;
-	  dots_reg <= dots;
-       end
-   
-   always @(posedge clk)
-     if (reset)
-       divider <= 0;
-     else
-       divider <= divider + 11'b00000000001;
-
-   // digit scan clock
-   always @(posedge clk or posedge reset)
-     if (reset)
-       anode <= 0;
-     else if (divider == 0)
-	 anode <= anode + 1'b1;
-
-endmodule
-
-***** TODO sevensegdecode --- seven segment decoder for s3board
-
-module sevensegdecode(digit, ss_out);
-
-    input [3:0] digit;
-    output [6:0] ss_out;
-   
-    // segments abcdefg
-    //  a
-    // f b
-    //  g
-    // e c
-    //  d
-
-    assign ss_out =
-        (digit == 4'd0) ? 7'b0000001 :
-        (digit == 4'd1) ? 7'b1001111 :
-        (digit == 4'd2) ? 7'b0010010 :
-        (digit == 4'd3) ? 7'b0000110 :
-        (digit == 4'd4) ? 7'b1001100 :
-        (digit == 4'd5) ? 7'b0100100 :
-        (digit == 4'd6) ? 7'b1100000 :
-        (digit == 4'd7) ? 7'b0001111 :
-        (digit == 4'd8) ? 7'b0000000 :
-        (digit == 4'd9) ? 7'b0001100 :
-        (digit == 4'ha) ? 7'b0001001 :
-        (digit == 4'hb) ? 7'b1100000 :
-        (digit == 4'hc) ? 7'b0110001 :
-        (digit == 4'hd) ? 7'b1000010 :
-        (digit == 4'he) ? 7'b0010000 :
-        (digit == 4'hf) ? 7'b0111000 :
-    	7'b1111111;
-   
-endmodule
-
-** TODO busint [6/6]
-*** DONE xbus_ram
-*** DONE xbus_disk
-*** DONE xbus_tv
-*** DONE xbus_io
-*** DONE xbus_unibus
-*** DONE xbus_spy
-
-** TODO cadr
-
-See CADR4.
-
-** TODO spy_port
-*** TODO uart
-** TODO ram_controller_lx45
-*** DONE mig_32bit
-
-This has been hand hacked a it.
-
-*** TODO ise_vram
-** TODO block_dev_mmc
-*** TODO mmc_wrapper
-**** TODO mmc
-** TODO vga_display
-
-   // -----------------------------------------------------------------------
-   //
-   //  0..23
-   //  0..23
-   //
-   //
-   //        v ram_shift_load 
-   // hold 10987654321098765432109876543210
-   // shift   10987654321098765432109876543210
-   // pixel                                   0
-   // shift    x1098765432109876543210987654321
-   // pixel                                    1
-   // shift     xx109876543210987654321098765432
-   // pixel                                     2
-   // shift      xxx10987654321098765432109876543
-   // pixel                                      3
-   // pixclk            1111111111222222222233          1111111111222222222233
-   // hpos    0123456789012345678901234567890101234567890123456789012345678901
-   //
-   // hpos 0..2ff
-   //   98 7654 3210
-   //         |0..31
-   // ------------------------------------------------------------------------
-
-** DONE ps2_support
-*** TODO mouse [0/2]
-
-This is entirely untested.
-
-**** TODO ps2
-**** TODO ps2_send
-*** DONE keyboard [1/2]
-**** TODO ps2
-**** DONE scancode_convert
-***** DONE scancode_rom
-
-* TODO CADR4 [0/64]
-
-** TODO Clean up FSM on top-level.
-
-   localparam
-     INIT   = 6'b000000,
-     DECODE = 6'b000001,
-     READ   = 6'b000010,
-     ALU    = 6'b000100,
-     WRITE  = 6'b001000,
-     MMU    = 6'b010000,
-     FETCH  = 6'b100000;
-
-   reg [5:0] state = INIT;
-   reg [5:0] state_ns = INIT;
-
-   always @(posedge clk)
-     if (reset)
-       state <= INIT;
-     else
-       state <= state_ns;
-
-   always @*
-     case (state)
-       INIT   : state_ns = DECODE;
-       DECODE : state_ns = machrun ? READ : DECODE;
-       READ   : state_ns = ALU;
-       ALU    : state_ns = WRITE;
-       WRITE  : state_ns = (memprepare | wmap | srcmap) ? MMU : FETCH;
-       MMU    : state_ns = FETCH;
-       FETCH  : state_ns = DECODE;
-     endcase
-
-** TODO A CONTROL (ACTL)
-** TODO A MEMORY LATCH (ALATCH)
-** TODO ALU0 (ALU0), ALU1 (ALU1)
-** TODO ALU CARRY AND FUNCTION (ALUC4)
-** TODO A MEMORY LEFT (AMEM0), A MEMORY RIGHT (AMEM1)
-** TODO A&M PARITY (APAR)
-** TODO BUS INTERFACE CABLES (BCPINS)
-** TODO BUSINT CABLE TERMINATION (BCTERM)
-** TODO BYPASS CAPACITORS (CAPS)
-** TODO CLOCK DISTRIBUTION (CLOCKD)
-** TODO PC, SPC CONTROL (CONTRL)
-** TODO CONNECTOR PINS (CPINS)
-** TODO DISPATCH RAM (DRAM0)
-** TODO DISPATCH RAM (DRAM1)
-** TODO DISPATCH RAM (DRAM2)
-** TODO DISPATCH CONTROL (DSPCTL)
-** TODO FLAGS, CONDITIONALS (FLAG)
-** TODO INST. MODIFY OR (IOR)
-** TODO IR PARITY (IPAR)
-** TODO INSTRUCTION REGISTER (IREG)
-** TODO INSTRUCTION WRITE REGISTER (IWR)
-** TODO L REGISTER (L)
-** TODO LOCATION COUNTER (LC)
-** TODO LC CONTROL (LCC)
-** TODO LAST PC (LPC)
-** TODO M CONTROL (MCTL)
-** TODO MEMORY DATA REGISTER (MD)
-** TODO MEMORY DATA SELECTOR (MDS)
-** TODO DRIVE MF ONTO M (MF)
-** TODO M MEMORY LATCH (MLATCH)
-** TODO M MEMORY (MMEM)
-** TODO MASKER/OUTPUT SELECT (MO0)
-** TODO MASKER/OUTPUT SELECT (MO1)
-** TODO MASK GENERATION (MSKG4)
-** TODO NPC, IPC, PC (NPC)
-** TODO OPC, DC, ZERO DRIVE (OPCD)
-** TODO PDL BUFFER LEFT (PDL0)
-** TODO PDL BUFFER RIGHT (PDL1)
-** TODO PDL BUFFER CONTROL (PDLCTL)
-** TODO PDL INDEX AND POINTER (PDLPTR)
-** TODO PDL BUFFER LATCH (PLATCH)
-** TODO Q REGISTER (Q)
-** TODO Q REGISTER CONTROL (QCTL)
-** TODO SHIFTER RIGHT (SHIFT0)
-** TODO SHIFTER LEFT (SHIFT1)
-** TODO SHIFT/MASK CONTROL (SMCTL)
-** TODO SOURCE, DEST, OP DECODE (SOURCE)
-** TODO SPC MEMORY AND POINTER (SPC)
-** TODO SPC MEMORY LATCH (SPCLCH)
-** TODO SPC MEMORY PARITY (SPCPAR)
-** TODO SPC WRITE DATA SEL (SPCW)
-** TODO PDP11 EXAMINE (IR, OB) (SPY1)
-** TODO PDP11 EXAMINE (A, M, FLAG2) (SPY2)
-** TODO PARITY ERROR TRAP (TRAP)
-** TODO VMEMORY CONTROL (VCTL1)
-** TODO VMA/MD CONTROL (VCTL2)
-** TODO VMA REGISTER (VMA)
-** TODO VMA INPUT SELECTOR (VMAS)
-** TODO VIRTUAL MEMORY MAP STAGE 0 (VMEM0)
-** TODO VIRTUAL MEMORY MAP STAGE 1 (VMEM1)
-** TODO VIRTUAL MEMORY MAP STAGE 1 (VMEM2)
-** TODO MAP OUTPUT DRIVE (VMEMDR)
-** TODO IRAML [0/33]
-*** TODO MASTER CLOCK (CLOCK1)
-*** TODO MASTER CLOCK (CLOCK2)
-*** TODO PDP11 DEBUG INSTRUCTION (DEBUG)
-*** TODO BYPASS CAPACITORS (ICAPS)
-*** TODO I RAM CONTROL (ICTL)
-*** TODO IWR PARITY (IWRPAR)
-*** TODO BUS INTERFACE CABLES (MBCPIN)
-*** TODO CONNECTOR PINS (MCPINS)
-*** TODO OVERLORD (OLORD1)
-*** TODO OVERLORD (OLORD2)
-*** TODO OLD PC SAVE SHIFTER (OPCS)
-*** TODO PROM CONTROL (PCTL)
-*** TODO PROM 0-511 (PROM0)
-*** TODO PROM 512-1023 (PROM1)
-*** TODO RAM 0K-4K, 0-11 (IRAM00)
-*** TODO RAM 4K-8K, 0-11 (IRAM01)
-*** TODO RAM 8K-12K, 0-11 (IRAM02)
-*** TODO RAM 12K-16K, 0-11 (IRAM03)
-*** TODO RAM 0K-4K, 12-24 (IRAM10)
-*** TODO RAM 4K-8K 12-23 (IRAM11)
-*** TODO RAM 8K-12K, 12-23 (IRAM12)
-*** TODO (IRAM13)
-*** TODO RAM 0K-4K, 24-35 (IRAM20)
-*** TODO RAM 4K-8K, 24-35 (IRAM21)
-*** TODO RAM8K-12K, 24-35 (IRAM22)
-*** TODO RAM 12K-16K, 24-35 (IRAM23)
-*** TODO RAM 0K-4K, 36-48 (IRAM30)
-*** TODO RAM 4K-8K, 36-48 (IRAM31)
-*** TODO RAM 8K-12K, 36-48 (IRAM32)
-*** TODO RAM 12K-16K, 36-48 (IRAM33)
-*** TODO PDP11 EXAMINE CONTROL (SPY0)
-*** TODO PDP11 EXAMINE (OPC, FLAG1, PC) (SPY4)
-*** TODO STATISTICS COUNTER (STAT)
-
-* TODO BUSINT [0/35]
-** TODO BUS PARITY (BUSPAR)
-** TODO BUS FROM UNIBUS (BUSSEL)
-** TODO BYPASS CAPACITORS (CAPS)
-** TODO CABLES TO PROCESSOR (CLM)
-** TODO TEST POINTS (CTP)
-** TODO UNIBUS SPC CONNS (CUBUS)
-** TODO XBUS BACKPLANE CONNS (CXBUS)
-** TODO DATA PATH CONTROL (DATCTL)
-** TODO DEBUGEE DATA PATH (DBGIN)
-** TODO DEBUGER DATA PATH (DBGOUT)
-** TODO DIAGNOSTIC BUS (DIAG)
-** TODO DATA PATH - ADDRESS (DPADR)
-** TODO DATA PATH - XBUS DATA (DPDATA)
-** TODO ADDRESS FROM LISP MACHINE (LMADR)
-** TODO PROCESSOR DATA XCVR (LMDATA)
-** TODO READ BUFFER (RBUF)
-** TODO ERROR LOGIC (REQERR)
-** TODO XBUS REQ & ACK (REQLM)
-** TODO XBUS & UNIBUS TIMEOUT (REQTIM)
-** TODO XBUS REQUEST FROM UNIBUS (REQU)
-** TODO LM & DEBUG TO UNIBUS (REQUB)
-** TODO REQUEST SYNCHRONIZER (RQSYNC)
-** TODO UNIBUS ADDRESS TRANSCEIVERS (UBA)
-** TODO UNIBUS SLAVE RESPONSE (UBCYC)
-** TODO UNIBUS DATA TRANSCEIVERS (UBD)
-** TODO UNIBUS INTERRUPT CONTROL (UBINTC)
-** TODO UNIBUS MAP (UBMAP)
-** TODO UNIBUS MASTERSHIP (UBMAST)
-** TODO UNIBUS ADDRESS TO XBUS (UBXA)
-** TODO UNIBUS BUS GRANT (UPRIOR)
-** TODO WRITE BUFFER (WBUF)
-** TODO XBUS ADDRESS TRANSCEIVERS (XA)
-** TODO XBUS ADDRESS PARITY (XAPAR)
-** TODO XBUS TO BUS (XBD)
-** TODO XBUS DATA TRANSCEIVERS (XD)
-
-* TODO IOB [0/27]
-** TODO 60 CYCLE CLOCK & GPIO (CLK60H)
-** TODO INTERVAL TIMER (CLKTIM)
-** TODO TIME OF DAY CLOCKS (CLKTOD)
-** TODO BACKPLANE CONNECTIONS (HEXSPC)
-** TODO UNIBUS ADDRESS (IOBADR)
-** TODO KEYBOARD, MOUSE CLOCK SYNC (IOBCLK)
-** TODO KEYBOARD & MOUSE CSR (IOBCSR)
-** TODO UNIBUS INTERRUPT (IOBINT)
-** TODO (IOBJPS)						    :MISSING:
-** TODO KEYBOARD CONTROL (IOBKBD)
-** TODO MOUSE 2 (IOBMS2)
-** TODO MOUSE INTERFACE (IOBMSE)
-** TODO SERIAL COMMUNICATIONS (IOBSER)
-** TODO UNIBUS TRANSCEIVER (IOBXCV)
-** TODO (LMDATP)						    :MISSING:
-** TODO (LMDETC)						    :MISSING:
-** TODO (LMLNDR)						    :MISSING:
-** TODO (LMMODU)						    :MISSING:
-** TODO (LMMYNM)						    :MISSING:
-** TODO (LMRBUF)						    :MISSING:
-** TODO (LMRCLK)						    :MISSING:
-** TODO (LMRCTL)						    :MISSING:
-** TODO (LMTBFCT)						    :MISSING:
-** TODO (LMTBUF)						    :MISSING:
-** TODO (LMTCLK)						    :MISSING:
-** TODO (LMTURN)						    :MISSING:
-** TODO (LMUCON)						    :MISSING:
-
-* TODO TV4B [0/25]
-** TODO (CAPS)							    :MISSING:
-** TODO (COLOR)							    :MISSING:
-** TODO MECL CLOCK (ECLCLK)
-** TODO MECL SIP TERMINATORS (ECLSIP)
-** TODO MECL VIDEO (ECLVID)
-** TODO CUSTOMIZE FOR 4 BIT VERSION (GEN4B)
-** TODO (RAMA)							    :MISSING:
-** TODO RAM ADDRESS LOGIC (RAMADR)
-** TODO (RAMB)							    :MISSING:
-** TODO ADDRESS BUFFERS (RAMBUF)
-** TODO (RAMC)							    :MISSING:
-** TODO RAM CAS/RAS (RAMCAS)
-** TODO (RAMD)							    :MISSING:
-** TODO RAM OUTPUT REGISTERS (RAMREG)
-** TODO 64 BIT SHIFT REGISTER (RAMSHF)
-** TODO SYNC PROGRAM ADDRESS (SYNADR)
-** TODO CLOCK GENERATOR (SYNCLK)
-** TODO SYNC PROGRAM RAM (SYNRAM)
-** TODO SYNC PROGRAM REG & REPEAT (SYNREG)
-** TODO (TVINC)							    :MISSING:
-** TODO TV MA (TVMA)
-** TODO XBUS ADDRESS LOGIC (XBADR)
-** TODO XBUS CONTROL (XBCTL)
-** TODO XBUS DATA XCVR (XBDATA)
-** TODO BACKPLANE CONNECTIONS (XBUS)
-
-* TODO DC [0/27]
-** TODO BUSY, LOSSAGE (DCBUSY)
-** TODO CAPACITORS (DCCAPS)
-** TODO CHANNEL CONTROL WORD (DCCCW)
-** TODO DMA CHANNEL CONTROL (DCCHAN)
-** TODO CLOCKS (DCCLK)
-** TODO COMMAND LIST POINTER (DCCLP)
-** TODO COMMAND (DCCMD)
-** TODO DISK ADDRESS (DCDA)
-** TODO DISK BUS (DCDBUS)
-** TODO ERROR CHECKING AND CORRECTION (DCECC)
-** TODO EDGE CONNECTIONS (DCEDGE)
-** TODO HEADER COMPARE (DCHDCM)
-** TODO PARITY (DCPAR)
-** TODO BIT POSITION COUNTER (DCPOSC)
-** TODO READ BUFFER (DCRBUF)
-** TODO REGISTER ADDRESSING (DCREG)
-** TODO SHIFT REGISTER (DCSH)
-** TODO STATUS (DCSTS)
-** TODO TIMEOUT (DCTMOT)
-** TODO SINGLE TRIDENT (DCTRID)
-** TODO TRIDENT SIGNAL CABLE (DCTRSG)
-** TODO MICROCODE CONTROL (DCUC)
-** TODO MICROCODE INSTRUCTION (DCUI)
-** TODO WRITE BUFFER (DCWBUF)
-** TODO XBUS ADDRESS XCVRS (DCXBSA)
-** TODO XBUS DATA TRANSCEIVERS (DCXBUS)
-** TODO BACKPLANE CONNECTIONS (XBUS)
-
-* TODO UBCHNI [0/19]
-** TODO UNIBUS OUTPUT (LMDATP)
-** TODO DETECTOR (LMDETC)
-** TODO (LMLNDR)						    :MISSING:
-** TODO SERIAL MODULATOR (LMMODU)
-** TODO FIND MSGS DESTINED FOR ME (LMMYNM)
-** TODO RECEIVER BUFFER (LMRBUF)
-** TODO RECEIVE CLOCK (LMRCLK)
-** TODO RECEIVE CONTROL (LMRCTL)
-** TODO TRANSMIT CONTROL (LMTBFC)
-** TODO TRANSMIT BUFFER (LMTBUF)
-** TODO TRANSMIT CLOCK (LMTCLK)
-** TODO MY TURN TIMER (LMTURN)
-** TODO UNIBUS CONTROL (LMUCON)
-** TODO UNIBUS ADDRESS (QADADR)
-** TODO CONN TO TRANSCEIVER (QADJPS)
-** TODO INTERVAL TIMER (QADTIM)
-** TODO (QUBBPL)						    :MISSING:
-** TODO (QUBINT)						    :MISSING:
-** TODO (QUBXCV)						    :MISSING:
-
-* TODO cpus-caddr <-> uhdl [48/103]
-
-** DONE rtl/74181.v 			:: ic_74s181.v
-** DONE rtl/74182.v 			:: ic_74s182.v
-** DONE rtl/busint.v 			:: busint.v
-** DONE rtl/caddr.v 			:: cadr.v
-** DONE rtl/keyboard.v 			:: keyboard.v
-** DONE rtl/lx45_ram_controller.v 	:: ram_controller_lx45.v
-** DONE rtl/mmc.v 			:: mmc.v
-** DONE rtl/mmc_block_dev.v 		:: block_dev_mmc.v
-** DONE rtl/mouse.v 			:: mouse.v
-** DONE rtl/part_16kx49ram.v 		:: CADR4/IRAML/IRAM.V
-** DONE rtl/part_1kx24ram.v 		:: CADR4/VMEM1
-** DONE rtl/part_1kx32ram_a.v 		:: CADR4/AMEM
-** DONE rtl/part_1kx32ram_p.v 		:: CADR4/PDL
-** DONE rtl/part_21kx32ram.v 		:: RC for LX45
-** DONE rtl/part_2kx17ram.v 		:: CADR4/DRAM
-** DONE rtl/part_2kx5ram.v 		:: CADR4/VMEM0
-** DONE rtl/part_32x19ram.v 		:: CADR4/SPC
-** DONE rtl/part_32x32ram.v 		:: CADR4/MMEM
-** DONE rtl/prom.v 			:: CADR4/DSPCTL, CADR4/MSKG4
-** DONE rtl/ps2.v 			:: ps2.v
-** DONE rtl/ps2_send.v 			:: ps2_send.v
-** DONE rtl/ps2_support.v 		:: ps2_support.v
-** DONE rtl/ram_controller.v 		:: ram_controller.v
-** DONE rtl/rom.v 			:: CADR4/IRAML/PROM.V
-** DONE rtl/scancode_convert.v 		:: scancode_convert.
-** DONE rtl/scancode_rom.v 		:: scancode_rom.v
-** DONE rtl/spy.v 			:: spy.v
-** DONE rtl/support.v 			:: support_lx45.v
-** DONE rtl/top_lx45.v 			:: top_lx45.v
-** DONE rtl/uart.v 			:: uart.v
-** DONE rtl/vga_display.v 		:: vga_display.v
-** DONE rtl/xbus-disk.v 		:: xbus_disk.v
-** DONE rtl/xbus-io.v 			:: xbus_io.v
-** DONE rtl/xbus-ram.v 			:: xbus_ram.v
-** DONE rtl/xbus-spy.v 			:: xbus_spy.v
-** DONE rtl/xbus-tv.v 			:: xbus_tv.v
-** DONE rtl/xbus-unibus.v 		:: xbus_unibus.v
-** DONE verif/debug_block_dev.v 	:: block_dev_dpi.v
-** DONE verif/run-mmc.v 		:: mmc_tb.v
-** DONE verif/run-rc.v 			:: ram_controller_tb.v
-** DONE verif/run-spy.v 		:: spy_port_tb.v
-** DONE verif/run-support.v 		:: support_tb.v
-** DONE verif/test-keyboard.v 		:: keyboard_tb.v
-** DONE verif/test-ps2_send.v 		:: ps2_send_tb.v
-** DONE verif/test-scancode_convert.v 	:: scancode_convert_tb.v
-** DONE verif/wrap_mmc.v 		:: mmc_dpi.v
-** DONE verif/run-disk.v		:: busint_disk_tb.v
-** DONE verif/run_top_lx45_test.v	:: top_lx45_tb.v
-** TODO rtl/brg.v	:: NOT USED
-** TODO rtl/clk100_dcm.v
-** TODO rtl/clk_dcm.v
-** TODO rtl/cpu_test.v
-** TODO rtl/cpu_test_cpu.v
-** TODO rtl/cpu_test_data.v
-** TODO rtl/cpu_test_disk.v
-** TODO rtl/cpu_test_mcr.v
-** TODO rtl/display.v
-** TODO rtl/fast_ram_controller.v
-** TODO rtl/fpga_clocks.v
-** TODO rtl/ide.v
-** TODO rtl/ide_block_dev.v
-** TODO rtl/lpddr.v
-** TODO rtl/lx45_clocks.v
-** TODO rtl/memory.v
-** TODO rtl/part_1kx24ram_sync.v
-** TODO rtl/part_1kx32ram.v
-** TODO rtl/pipe_ram_controller.v
-** TODO rtl/sevensegdecode.v
-** TODO rtl/slow_ram_controller.v
-** TODO rtl/top.v
-** TODO rtl/top_tb.v
-** TODO rtl/uart-old.v
-** TODO rtl/xbus-disk-ide.v
-** TODO rtl/xbus-sram.v
-** TODO verif/debug-spy-driver.v
-** TODO verif/debug-spy-serial.v
-** TODO verif/debug-support.v
-** TODO verif/debug-xbus-disk.v
-** TODO verif/debug-xbus-ram.v
-** TODO verif/debug-xbus-tv.v
-** TODO verif/debug_min_ram_controller.v
-** TODO verif/debug_ram_controller.v
-** TODO verif/debug_rom.v
-** TODO verif/ide_disk.v
-** TODO verif/mmc_disk.v	---!! empty module
-** TODO verif/ram_s3board.v
-** TODO verif/rompatch.v
-** TODO verif/rtl.v
-** TODO verif/run-top-spy.v
-** TODO verif/run-verilator.v		---!!! top.v: This is really a _tb.v file.
-** TODO verif/run.v
-** TODO verif/run_top.v
-** TODO verif/run_top_cpu_test.v
-** TODO verif/test_fast.v
-** TODO verif/wrap_ide.v
-** TODO verif/xilinx.v
-** TODO vtest/clk_dcm.v
-** TODO vtest/debounce.v
-** TODO vtest/ram_controller.v
-** TODO vtest/ram_s3board.v
-** TODO vtest/test_top.v
-** TODO vtest/top.v
-** TODO vtest/vga_display.v
-
-** NIOX [0/11]
-
-*** TODO niox/rtl/niox_cpu.v
-*** TODO niox/rtl/niox_ram.v
-*** TODO niox/rtl/niox_ram_byte_ise.v
-*** TODO niox/rtl/niox_rom.v
-*** TODO niox/rtl/niox_spy.v
-*** TODO niox/rtl/top_niox.v
-*** TODO niox/verif/mmc_model.v
-*** TODO niox/verif/sd_model.v
-*** TODO niox/verif/top_niox_tb.v
-*** TODO niox/verif/vendor_defines.v
-*** TODO niox/verif/xilinx.v
+  - Check that that CC can talk to the board.
+  - Check that Lisp boots (output on the display)
+  - Check that keyboard can send input by trying out (DEMO:HACKS).
