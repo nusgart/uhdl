@@ -1,9 +1,11 @@
 `timescale 1ns/1ns
-// `default_nettype none
+`default_nettype none
 
 // ISIM: wave add /
 
-`define VCDFILE "uhdl_pipistrello_tb.vcd"
+`ifndef VCDFILE
+ `define VCDFILE "uhdl_pipistrello_tb.vcd"
+`endif
 
 module uhdl_pipistrello_tb;
 
@@ -36,42 +38,43 @@ module uhdl_pipistrello_tb;
    wire mcb3_dram_ck_n;
 
    uhdl_pipistrello DUT(
-		.ms_ps2_clk(),
-		.ms_ps2_data(),
-		/*AUTOINST*/
-		// Outputs
-		.rs232_txd		(rs232_txd),
-		.led			(led[3:0]),
-		.vga_hsync		(vga_hsync),
-		.vga_vsync		(vga_vsync),
-		.vga_r			(vga_r),
-		.vga_g			(vga_g),
-		.vga_b			(vga_b),
-		.mmc_cs			(mmc_cs),
-		.mmc_do			(mmc_do),
-		.mmc_sclk		(mmc_sclk),
-		.mcb3_dram_a		(mcb3_dram_a[12:0]),
-		.mcb3_dram_ba		(mcb3_dram_ba[1:0]),
-		.mcb3_dram_cke		(mcb3_dram_cke),
-		.mcb3_dram_ras_n	(mcb3_dram_ras_n),
-		.mcb3_dram_cas_n	(mcb3_dram_cas_n),
-		.mcb3_dram_we_n		(mcb3_dram_we_n),
-		.mcb3_dram_dm		(mcb3_dram_dm),
-		.mcb3_dram_udm		(mcb3_dram_udm),
-		.mcb3_dram_ck		(mcb3_dram_ck),
-		.mcb3_dram_ck_n		(mcb3_dram_ck_n),
-		// Inouts
-		.mcb3_dram_dq		(mcb3_dram_dq[15:0]),
-		.mcb3_dram_udqs		(mcb3_dram_udqs),
-		.mcb3_rzq		(mcb3_rzq),
-		.mcb3_dram_dqs		(mcb3_dram_dqs),
-		// Inputs
-		.rs232_rxd		(rs232_rxd),
-		.sysclk			(sysclk),
-		.kb_ps2_clk		(kb_ps2_clk),
-		.kb_ps2_data		(kb_ps2_data),
-		.mmc_di			(mmc_di),
-		.switch			(switch));
+			.ms_ps2_clk(),
+			.ms_ps2_data(),
+			/*AUTOINST*/
+			// Outputs
+			.rs232_txd	(rs232_txd),
+			.led		(led[3:0]),
+			.vga_hsync	(vga_hsync),
+			.vga_vsync	(vga_vsync),
+			.vga_r		(vga_r),
+			.vga_g		(vga_g),
+			.vga_b		(vga_b),
+			.mmc_cs		(mmc_cs),
+			.mmc_do		(mmc_do),
+			.mmc_sclk	(mmc_sclk),
+			.mcb3_dram_a	(mcb3_dram_a[12:0]),
+			.mcb3_dram_ba	(mcb3_dram_ba[1:0]),
+			.mcb3_dram_cke	(mcb3_dram_cke),
+			.mcb3_dram_ras_n(mcb3_dram_ras_n),
+			.mcb3_dram_cas_n(mcb3_dram_cas_n),
+			.mcb3_dram_we_n	(mcb3_dram_we_n),
+			.mcb3_dram_dm	(mcb3_dram_dm),
+			.mcb3_dram_reset_n(mcb3_dram_reset_n),
+			.mcb3_dram_udm	(mcb3_dram_udm),
+			.mcb3_dram_ck	(mcb3_dram_ck),
+			.mcb3_dram_ck_n	(mcb3_dram_ck_n),
+			// Inouts
+			.mcb3_dram_dq	(mcb3_dram_dq[15:0]),
+			.mcb3_dram_dqs_n(mcb3_dram_dqs_n[1:0]),
+			.mcb3_rzq	(mcb3_rzq),
+			.mcb3_dram_dqs	(mcb3_dram_dqs[1:0]),
+			// Inputs
+			.rs232_rxd	(rs232_rxd),
+			.sysclk		(sysclk),
+			.kb_ps2_clk	(kb_ps2_clk),
+			.kb_ps2_data	(kb_ps2_data),
+			.mmc_di		(mmc_di),
+			.switch		(switch));
 
    lpddr_model_c3 u_mem3(
 			 .Dq(mcb3_dram_dq),
@@ -145,3 +148,9 @@ module uhdl_pipistrello_tb;
    end
 
 endmodule
+
+`default_nettype wire
+
+// Local Variables:
+// verilog-library-directories: (".")
+// End:
