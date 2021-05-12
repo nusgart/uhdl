@@ -235,6 +235,8 @@ module mmc_tb;
 
 endmodule
 
+`default_nettype wire
+
 // Local Variables:
 // verilog-library-directories: (".")
 // End:

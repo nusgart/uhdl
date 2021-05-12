@@ -5,48 +5,40 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module mmc(/*AUTOARG*/
-   // Outputs
-   state_out, data_out, done, mmc_cs, mmc_do, mmc_sclk,
-   // Inputs
-   cmd, data_in, clk, init, mmc_di, rd, reset, send, speed, stop, wr
-   );
+module mmc
+  (output reg 	     mmc_sclk,
+   input wire 	     mmc_di,
+   output reg 	     mmc_cs,
+   output reg 	     mmc_do,
+
+   input wire [47:0] cmd,
+   input wire [7:0]  data_in,
+   input wire 	     init,
+   input wire 	     rd,
+   input wire 	     send,
+   input wire 	     speed,
+   input wire 	     stop,
+   input wire 	     wr,
+   output wire [3:0] state_out,
+   output reg [7:0]  data_out,
+   output wire 	     done,
+
+   input wire 	     clk,
+   input wire 	     reset);
 
    parameter [31:0] FREQ = 81_250_000;//40_625_000;//50000000;
    parameter [31:0] RATE_HI = 10_000_000;
    parameter [31:0] RATE_LO = 100_000;
 
-   input [47:0] cmd;
-   input [7:0] data_in;
-   input clk;
-   input init;
-   input mmc_di;
-   input rd;
-   input reset;
-   input send;
-   input speed;
-   input stop;
-   input wr;
-   output [3:0] state_out;
-   output [7:0] data_out;
-   output done;
-   output mmc_cs;
-   output mmc_do;
-   output mmc_sclk;
-   
-   wire clk, init, mmc_di, rd, reset, send, speed, stop, wr, done;
-
-   ////////////////////////////////////////////////////////////////////////////////
-
-   parameter BITWIDTH_HI = FREQ / RATE_HI;
-   parameter BITWIDTH_HI_MAXCNT = BITWIDTH_HI-1;
-   parameter BITWIDTH_HI_MIDCNT = BITWIDTH_HI/2;
-   parameter BITWIDTH_LO = FREQ / RATE_LO;
-   parameter BITWIDTH_LO_1QTR = BITWIDTH_LO/4;
-   parameter BITWIDTH_LO_3QTR = BITWIDTH_LO - BITWIDTH_LO/4;
-   parameter BITWIDTH_LO_MAXCNT = BITWIDTH_LO-1;
-   parameter BITWIDTH_LO_MIDCNT = BITWIDTH_LO/2;
-   parameter [3:0]
+   localparam BITWIDTH_HI = FREQ / RATE_HI;
+   localparam BITWIDTH_HI_MAXCNT = BITWIDTH_HI-1;
+   localparam BITWIDTH_HI_MIDCNT = BITWIDTH_HI/2;
+   localparam BITWIDTH_LO = FREQ / RATE_LO;
+   localparam BITWIDTH_LO_1QTR = BITWIDTH_LO/4;
+   localparam BITWIDTH_LO_3QTR = BITWIDTH_LO - BITWIDTH_LO/4;
+   localparam BITWIDTH_LO_MAXCNT = BITWIDTH_LO-1;
+   localparam BITWIDTH_LO_MIDCNT = BITWIDTH_LO/2;
+   localparam [3:0]
      s0 = 4'd0,
      s_cmd0 = 4'd4,
      s_cmd1 = 4'd5,
@@ -65,13 +57,9 @@ module mmc(/*AUTOARG*/
    reg [3:0] state;
    reg [47:0] s_cmd;
    reg [7:0] bitcount;
-   reg [7:0] data_out;
    reg [7:0] s_data;
    reg bit_middle, bit_end, bit_1_3_quarter;
    reg mmc_clk_hi;
-   reg mmc_cs;
-   reg mmc_do;
-   reg mmc_sclk;
    reg s_rd, s_wr, s_send;
 
    wire [1:0] sclk_state_next;
