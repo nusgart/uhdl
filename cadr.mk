@@ -9,20 +9,20 @@ CADR4_SRCS	= \
 	cadr.v
 
 OTHER_SRCS	= \
-	lm3.v \
-	ic_74182.v \
-	ic_74181.v \
-	hz60.v \
-	us.v \
-	rom.v \
-	uart.v \
+	uhdl_common.v \
+	cores/ic_74182.v \
+	cores/ic_74181.v \
+	cores/hz60.v \
+	cores/us.v \
+	cores/rom.v \
+	cores/uart.v \
 	spy_port.v \
 	mouse.v \
 	keyboard.v \
 	scancode_rom.v \
 	scancode_convert.v \
-	ps2_send.v \
-	ps2.v \
+	cores/ps2_send.v \
+	cores/ps2.v \
 	ps2_support.v \
 	vga_display.v \
 	mmc.v \
@@ -34,8 +34,6 @@ OTHER_SRCS	= \
 	xbus_ram.v \
 	xbus_io.v \
 	xbus_disk.v \
-	tbuf.v \
-	xbus_chaos.v \
 	busint.v
 
 CADR4_PARTS	= \
