@@ -3,43 +3,29 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module xbus_unibus(/*AUTOARG*/
-   // Outputs
-   dataout, ack, decode, interrupt, promdisable,
-   // Inputs
-   clk, addr, datain, req, write, timedout
-   );
+module xbus_unibus
+  (input wire [21:0] addr,
+   input wire [31:0] datain,
+   input wire	     req,
+   input wire	     write,
+   output reg [31:0] dataout,
+   output wire	     ack,
+   output wire	     decode,
+   output wire	     interrupt,
 
-   input wire clk;
+   input wire	     timedout,
+   output reg	     promdisable,
 
-   input [21:0] addr;
-   input [31:0] datain;
-   input wire req;
-   input wire write;
-   output [31:0] dataout;
-   output wire ack;
-   output wire decode;
-   output wire interrupt;
-
-   input wire timedout;
-   output promdisable;
-
-   ////////////////////////////////////////////////////////////////////////////////
-
-   /*AUTOWIRE*/
-   /*AUTOREG*/
-   // Beginning of automatic regs (for this module's undeclared outputs)
-   reg [31:0]		dataout;
-   reg			promdisable;
-   // End of automatics
+   input wire	     clk,
+   input wire	     reset);
 
    ////////////////////////////////////////////////////////////////////////////////
    // Unibus & XBUS NXM
 
-   reg unibus_nxm = 1'b0;
-   reg xbus_nxm = 1'b0;
+   reg		     unibus_nxm = 1'b0;
+   reg		     xbus_nxm = 1'b0;
 
-   reg clear_bus_status = 1'b0;
+   reg		     clear_bus_status = 1'b0;
 
    always @(posedge clk)
      if (timedout) begin
@@ -55,15 +41,15 @@ module xbus_unibus(/*AUTOARG*/
    ////////////////////////////////////////////////////////////////////////////////
    // Bus interrupts
 
-   reg unibus_int = 1'b0;
+   reg       unibus_int = 1'b0;
    reg [7:0] unibus_vector = 8'b0;
-   reg xbus_int = 1'b0;		// ---!!! Not used?
+   reg	     xbus_int = 1'b0;		// ---!!! Not used?
 
-   reg unibus_int_en = 1'b0;
-   reg clear_unibus_int_en = 1'b0;
-   reg set_unibus_int_en = 1'b0;
+   reg	     unibus_int_en = 1'b0;
+   reg	     clear_unibus_int_en = 1'b0;
+   reg	     set_unibus_int_en = 1'b0;
 
-   reg clear_bus_ints = 1'b0;
+   reg	     clear_bus_ints = 1'b0;
 
    always @(posedge clk) begin
       if (clear_bus_ints) begin
