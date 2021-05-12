@@ -5,17 +5,18 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module rom(clk_i, addr_i, q_o);
+module rom
+  (input wire [ADDRESS_WIDTH-1:0] addr_i,
+   output wire [DATA_WIDTH-1:0] q_o,
 
+   input wire 			clk_i,
+   input wire 			reset_i);
+   
    parameter ADDRESS_WIDTH = 5;
    parameter DATA_WIDTH = 5;
    parameter MEM_DEPTH = 32;
    parameter MEM_FILE = "rom.hex";
    parameter MEM_FILE_FORMAT = "hex";
-
-   input wire clk_i;
-   input [ADDRESS_WIDTH-1:0] addr_i;
-   output [DATA_WIDTH-1:0] q_o;
 
    ////////////////////////////////////////////////////////////////////////////////
 
