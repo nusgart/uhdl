@@ -1,30 +1,29 @@
-// ram_controller_lx45.v --- ---!!!
+// ram_controller_pipistrello.v --- ---!!!
 
 `timescale 1ns/1ps
 `default_nettype none
 
-module ram_controller_lx45(/*AUTOARG*/
+module ram_controller_pipistrello(/*AUTOARG*/
    // Outputs
    mcb3_dram_a, mcb3_dram_ba, sdram_data_out, vram_cpu_data_out,
    vram_vga_data_out, mcr_data_out, lpddr_calib_done, lpddr_clk_out,
-   mcb3_dram_cas_n, mcb3_dram_ck, mcb3_dram_ck_n, mcb3_dram_cke, mcb3_dram_reset_n,
+   mcb3_dram_cas_n, mcb3_dram_ck, mcb3_dram_ck_n, mcb3_dram_cke,
    mcb3_dram_dm, mcb3_dram_ras_n, mcb3_dram_udm, mcb3_dram_we_n,
    mcr_done, mcr_ready, sdram_done, sdram_ready, vram_cpu_done,
    vram_cpu_ready, vram_vga_ready,
    // Inouts
-   mcb3_dram_dq, mcb3_dram_dqs, mcb3_dram_dqs_n, mcb3_rzq,
+   mcb3_dram_dq, mcb3_dram_dqs, mcb3_dram_udqs, mcb3_rzq,
    // Inputs
    mcr_addr, vram_cpu_addr, vram_vga_addr, sdram_addr, sdram_data_in,
    vram_cpu_data_in, mcr_data_in, clk, cpu_clk, fetch, lpddr_reset,
-   machrun, mcr_write, prefetch, reset, sdram_req, sdram_write, dram_clk,
+   machrun, mcr_write, prefetch, reset, sdram_req, sdram_write,
    sysclk, vga_clk, vram_cpu_req, vram_cpu_write, vram_vga_req
    );
 
    inout [15:0] mcb3_dram_dq;
-   inout [1:0] mcb3_dram_dqs;
-   inout [1:0] mcb3_dram_dqs_n;
-   output wire mcb3_dram_reset_n;
-   inout wire mcb3_rzq;
+   inout mcb3_dram_dqs;
+   inout mcb3_dram_udqs;
+   inout mcb3_rzq;
    input [13:0] mcr_addr;
    input [14:0] vram_cpu_addr;
    input [14:0] vram_vga_addr;
@@ -32,45 +31,44 @@ module ram_controller_lx45(/*AUTOARG*/
    input [31:0] sdram_data_in;
    input [31:0] vram_cpu_data_in;
    input [48:0] mcr_data_in;
-   input wire clk;
-   input wire cpu_clk;
-   input wire fetch;
-   input wire lpddr_reset;
-   input wire machrun;
-   input wire mcr_write;
-   input wire prefetch;
+   input clk;
+   input cpu_clk;
+   input fetch;
+   input lpddr_reset;
+   input machrun;
+   input mcr_write;
+   input prefetch;
    input reset;
-   input wire sdram_req;
-   input wire sdram_write;
-   input wire sysclk;
-   input wire dram_clk;
-   input wire vga_clk;
-   input wire vram_cpu_req;
-   input wire vram_cpu_write;
-   input wire vram_vga_req;
+   input sdram_req;
+   input sdram_write;
+   input sysclk;
+   input vga_clk;
+   input vram_cpu_req;
+   input vram_cpu_write;
+   input vram_vga_req;
    output [12:0] mcb3_dram_a;
    output [1:0] mcb3_dram_ba;
    output [31:0] sdram_data_out;
    output [31:0] vram_cpu_data_out;
    output [31:0] vram_vga_data_out;
    output [48:0] mcr_data_out;
-   output wire lpddr_calib_done;
-   output wire lpddr_clk_out;
-   output wire mcb3_dram_cas_n;
-   output wire mcb3_dram_ck;
-   output wire mcb3_dram_ck_n;
-   output wire mcb3_dram_cke;
-   output wire mcb3_dram_dm;
-   output wire mcb3_dram_ras_n;
-   output wire mcb3_dram_udm;
-   output wire mcb3_dram_we_n;
-   output wire mcr_done;
-   output wire mcr_ready;
+   output lpddr_calib_done;
+   output lpddr_clk_out;
+   output mcb3_dram_cas_n;
+   output mcb3_dram_ck;
+   output mcb3_dram_ck_n;
+   output mcb3_dram_cke;
+   output mcb3_dram_dm;
+   output mcb3_dram_ras_n;
+   output mcb3_dram_udm;
+   output mcb3_dram_we_n;
+   output mcr_done;
+   output mcr_ready;
    output sdram_done;
    output sdram_ready;
-   output wire vram_cpu_done;
-   output wire vram_cpu_ready;
-   output wire vram_vga_ready;
+   output vram_cpu_done;
+   output vram_cpu_ready;
+   output vram_vga_ready;
 
    ////////////////////////////////////////////////////////////////////////////////
 
@@ -97,7 +95,7 @@ module ram_controller_lx45(/*AUTOARG*/
    reg [3:0] vram_vga_ready_dly;
    reg [6:0] sdram_state;
    reg int_sdram_done;
-   wire int_sdram_ready;
+   reg int_sdram_ready;
    reg sdram_done;
    reg sdram_ready;
 
@@ -117,12 +115,13 @@ module ram_controller_lx45(/*AUTOARG*/
    wire lpddr_rd_empty;
    wire lpddr_rd_rdy;
    wire lpddr_wr_done;
+   wire lpddr_wr_en;
    wire lpddr_wr_full;
    wire lpddr_wr_rdy;
    wire reset;
    wire sys_clk;
    wire sys_rst;
-   wire lpddr_wr_en;
+   wire wren_b;
 
    ////////////////////////////////////////////////////////////////////////////////
 
@@ -157,16 +156,16 @@ module ram_controller_lx45(/*AUTOARG*/
 	end
      end
 
-   //always @(posedge clk)
-     /*if (reset) begin
-	/// *AUTORESET* /
+   always @(posedge clk)
+     if (reset) begin
+	/*AUTORESET*/
 	// Beginning of autoreset for uninitialized flops
 	int_sdram_ready <= 1'h0;
 	// End of automatics
      end else if (sdram_state[NSD_READ])
        int_sdram_ready <= 1'b0;
      else if (sdram_state[NSD_READW])
-       int_sdram_ready <= 1'b1;*/
+       int_sdram_ready <= 1'b1;
 
    always @(posedge clk)
      if (reset) begin
@@ -205,111 +204,142 @@ module ram_controller_lx45(/*AUTOARG*/
 			 (sdram_state[NSD_WRITE] && sdram_state_next == SD_WRITEBSY);
    assign lpddr_rd_rdy = ~lpddr_cmd_full;
    assign lpddr_rd_done = ~lpddr_rd_empty;
-   //assign lpddr_wr_rdy = ~lpddr_cmd_full && ~lpddr_wr_full;
+   assign lpddr_wr_rdy = ~lpddr_cmd_full && ~lpddr_wr_full;
    assign lpddr_wr_done = 1'b1;
    assign lpddr_wr_en = sdram_state[NSD_WRITEBSY];
    assign lpddr_clk_out = lpddr_clk;
    assign lpddr_calib_done = c3_calib_done;
-  
-  wire mm_sysclk;
-  
-  BUFG sss(.I(sysclk), .O(mm_sysclk));
 
-  ddr_memif u_ddr_memif
-      (
-       
-       
-// Memory interface ports
-       .ddr3_addr                      (mcb3_dram_a),
-       .ddr3_ba                        (mcb3_dram_ba),
-       .ddr3_cas_n                     (mcb3_dram_cas_n),
-       .ddr3_ck_n                      (mcb3_dram_ck_n),
-       .ddr3_ck_p                      (mcb3_dram_ck),
-       .ddr3_cke                       (mcb3_dram_cke),
-       .ddr3_ras_n                     (mcb3_dram_ras_n),
-       .ddr3_we_n                      (mcb3_dram_we_n),
-       .ddr3_dq                        (mcb3_dram_dq),
-       .ddr3_dqs_n                     (mcb3_dram_dqs_n),
-       .ddr3_dqs_p                     (mcb3_dram_dqs),
-       .ddr3_reset_n                   (mcb3_dram_reset_n),
-       .init_calib_complete            (c3_calib_done),
-      
-       //.ddr3_cs_n                      (ddr3_cs_n),
-       .ddr3_dm                        (mcb3_dram_dm),
-       //.ddr3_odt                       (ddr3_odt),
-// Application interface ports
-       .app_addr                       (lpddr_addr),
-       .app_cmd                        (lpddr_cmd),
-       .app_en                         (lpddr_cmd_en),
-       .app_wdf_data                   (sdram_data_in),
-       .app_wdf_end                    (1'b0),
-       .app_wdf_wren                   (lpddr_wr_en),
-       .app_rd_data                    (sdram_resp_in),
-       .app_rd_data_end                (lpddr_rd_empty),
-       //.app_rd_data_valid              (1'b0),
-       .app_rdy                        (int_sdram_ready),
-       .app_wdf_rdy                    (lpddr_wr_rdy),
-       .app_sr_req                     (1'b0),
-       .app_ref_req                    (1'b0),
-       .app_zq_req                     (1'b0),
-       //.app_sr_active                  (1'b0),
-       //.app_ref_ack                    (1'b0),
-       //.app_zq_ack                     (1'b0),
-       //.ui_clk                         (clk),
-       //.ui_clk_sync_rst                (lpddr_reset),
-      
-       .app_wdf_mask                   (4'b0000),
-      
-       
-// System Clock Ports
-       .sys_clk_i                       (dram_clk),
-       .clk_ref_i                        (mm_sysclk),
-       .sys_rst                        (lpddr_reset)
-       );
-
-//   mig_32bit lpddr_intf
-//     (
-//      .c3_sys_clk(sysclk),
-//      .c3_sys_rst_i(lpddr_reset),
-//      .c3_clk0(lpddr_clk),
-//      .c3_rst0(),
-//      .mcb3_dram_dq(mcb3_dram_dq),
-//      .mcb3_dram_a(mcb3_dram_a),
-//      .mcb3_dram_ba(mcb3_dram_ba),
-//      .mcb3_dram_cke(mcb3_dram_cke),
-//      .mcb3_dram_ras_n(mcb3_dram_ras_n),
-//      .mcb3_dram_cas_n(mcb3_dram_cas_n),
-//      .mcb3_dram_we_n(mcb3_dram_we_n),
-//      .mcb3_dram_dm(mcb3_dram_dm),
-//      .mcb3_dram_udqs(mcb3_dram_udqs),
-//      .mcb3_rzq(mcb3_rzq),
-//      .mcb3_dram_udm(mcb3_dram_udm),
-//      .mcb3_dram_dqs(mcb3_dram_dqs),
-//      .mcb3_dram_ck(mcb3_dram_ck),
-//      .mcb3_dram_ck_n(mcb3_dram_ck_n),
-//      .c3_calib_done(c3_calib_done),
-//      .c3_p0_cmd_clk(clk),
-//      .c3_p0_cmd_en(lpddr_cmd_en),
-//      .c3_p0_cmd_instr(lpddr_cmd),
-//      .c3_p0_cmd_bl(6'd0),
-//      .c3_p0_cmd_byte_addr(lpddr_addr),
-//      .c3_p0_cmd_empty(),
-//      .c3_p0_cmd_full(lpddr_cmd_full),
-//      .c3_p0_wr_clk(clk),
-//      .c3_p0_wr_en(lpddr_wr_en),
-//      .c3_p0_wr_mask(4'b0000),
-//      .c3_p0_wr_data(sdram_data_in),
-//      .c3_p0_wr_full(lpddr_wr_full),
-//      .c3_p0_wr_empty(),
-//      .c3_p0_wr_count(),
-//      .c3_p0_wr_underrun(),
-//      .c3_p0_wr_error(),
-//      .c3_p0_rd_clk(clk),
-//      .c3_p0_rd_en(1'b1),
-//      .c3_p0_rd_data(sdram_resp_in),
-//      .c3_p0_rd_full(),
-//      .c3_p0_rd_empty(lpddr_rd_empty)
-//      /*AUTOINST*/);
+   mig_32bit lpddr_intf
+     (
+      .c3_sys_clk(sysclk),
+      .c3_sys_rst_i(lpddr_reset),
+      .c3_clk0(lpddr_clk),
+      .c3_rst0(),
+      .mcb3_dram_dq(mcb3_dram_dq),
+      .mcb3_dram_a(mcb3_dram_a),
+      .mcb3_dram_ba(mcb3_dram_ba),
+      .mcb3_dram_cke(mcb3_dram_cke),
+      .mcb3_dram_ras_n(mcb3_dram_ras_n),
+      .mcb3_dram_cas_n(mcb3_dram_cas_n),
+      .mcb3_dram_we_n(mcb3_dram_we_n),
+      .mcb3_dram_dm(mcb3_dram_dm),
+      .mcb3_dram_udqs(mcb3_dram_udqs),
+      .mcb3_rzq(mcb3_rzq),
+      .mcb3_dram_udm(mcb3_dram_udm),
+      .mcb3_dram_dqs(mcb3_dram_dqs),
+      .mcb3_dram_ck(mcb3_dram_ck),
+      .mcb3_dram_ck_n(mcb3_dram_ck_n),
+      .c3_calib_done(c3_calib_done),
+      .c3_p0_cmd_clk(clk),
+      .c3_p0_cmd_en(lpddr_cmd_en),
+      .c3_p0_cmd_instr(lpddr_cmd),
+      .c3_p0_cmd_bl(6'd0),
+      .c3_p0_cmd_byte_addr(lpddr_addr),
+      .c3_p0_cmd_empty(),
+      .c3_p0_cmd_full(lpddr_cmd_full),
+      .c3_p0_wr_clk(clk),
+      .c3_p0_wr_en(lpddr_wr_en),
+      .c3_p0_wr_mask(4'b0000),
+      .c3_p0_wr_data(sdram_data_in),
+      .c3_p0_wr_full(lpddr_wr_full),
+      .c3_p0_wr_empty(),
+      .c3_p0_wr_count(),
+      .c3_p0_wr_underrun(),
+      .c3_p0_wr_error(),
+      .c3_p0_rd_clk(clk),
+      .c3_p0_rd_en(1'b1),
+      .c3_p0_rd_data(sdram_resp_in),
+      .c3_p0_rd_full(),
+      .c3_p0_rd_empty(lpddr_rd_empty),
+      .c3_p0_rd_count(),
+      .c3_p0_rd_overflow(),
+      .c3_p0_rd_error(),
+      .c3_p1_cmd_empty(),
+      .c3_p1_cmd_full(),
+      .c3_p1_wr_full(),
+      .c3_p1_wr_empty(),
+      .c3_p1_wr_count(),
+      .c3_p1_wr_underrun(),
+      .c3_p1_wr_error(),
+      .c3_p1_rd_data(),
+      .c3_p1_rd_full(),
+      .c3_p1_rd_empty(),
+      .c3_p1_rd_count(),
+      .c3_p1_rd_overflow(),
+      .c3_p1_rd_error(),
+      .c3_p2_cmd_empty(),
+      .c3_p2_cmd_full(),
+      .c3_p2_rd_data(),
+      .c3_p2_rd_full(),
+      .c3_p2_rd_empty(),
+      .c3_p2_rd_count(),
+      .c3_p2_rd_overflow(),
+      .c3_p2_rd_error(),
+      .c3_p3_cmd_empty(),
+      .c3_p3_cmd_full(),
+      .c3_p3_rd_data(),
+      .c3_p3_rd_full(),
+      .c3_p3_rd_empty(),
+      .c3_p3_rd_count(),
+      .c3_p3_rd_overflow(),
+      .c3_p3_rd_error(),
+      .c3_p4_cmd_empty(),
+      .c3_p4_cmd_full(),
+      .c3_p4_rd_data(),
+      .c3_p4_rd_full(),
+      .c3_p4_rd_empty(),
+      .c3_p4_rd_count(),
+      .c3_p4_rd_overflow(),
+      .c3_p4_rd_error(),
+      .c3_p5_cmd_empty(),
+      .c3_p5_cmd_full(),
+      .c3_p5_rd_data(),
+      .c3_p5_rd_full(),
+      .c3_p5_rd_empty(),
+      .c3_p5_rd_count(),
+      .c3_p5_rd_overflow(),
+      .c3_p5_rd_error(),
+      .c3_p1_cmd_clk(),
+      .c3_p1_cmd_en(),
+      .c3_p1_cmd_instr(),
+      .c3_p1_cmd_bl(),
+      .c3_p1_cmd_byte_addr(),
+      .c3_p1_wr_clk(),
+      .c3_p1_wr_en(),
+      .c3_p1_wr_mask(),
+      .c3_p1_wr_data(),
+      .c3_p1_rd_clk(),
+      .c3_p1_rd_en(),
+      .c3_p2_cmd_clk(),
+      .c3_p2_cmd_en(),
+      .c3_p2_cmd_instr(),
+      .c3_p2_cmd_bl(),
+      .c3_p2_cmd_byte_addr(),
+      .c3_p2_rd_clk(),
+      .c3_p2_rd_en(),
+      .c3_p3_cmd_clk(),
+      .c3_p3_cmd_en(),
+      .c3_p3_cmd_instr(),
+      .c3_p3_cmd_bl(),
+      .c3_p3_cmd_byte_addr(),
+      .c3_p3_rd_clk(),
+      .c3_p3_rd_en(),
+      .c3_p4_cmd_clk(),
+      .c3_p4_cmd_en(),
+      .c3_p4_cmd_instr(),
+      .c3_p4_cmd_bl(),
+      .c3_p4_cmd_byte_addr(),
+      .c3_p4_rd_clk(),
+      .c3_p4_rd_en(),
+      .c3_p5_cmd_clk(),
+      .c3_p5_cmd_en(),
+      .c3_p5_cmd_instr(),
+      .c3_p5_cmd_bl(),
+      .c3_p5_cmd_byte_addr(),
+      .c3_p5_rd_clk(),
+      .c3_p5_rd_en()
+      /*AUTOINST*/);
 
    wire ena_a = vram_cpu_req | vram_cpu_write;
    wire ena_b = vram_vga_req | 1'b0;
@@ -324,7 +354,7 @@ module ram_controller_lx45(/*AUTOARG*/
       .douta(vram_cpu_data_out),
       .clkb(vga_clk),
       .enb(ena_b),
-      .web(1'b0),
+      .web(wren_b),
       .addrb(vram_vga_addr),
       .dinb(32'b0),
       .doutb(vram_vga_ram_out)
