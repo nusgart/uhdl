@@ -6,33 +6,24 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module mouse(/*AUTOARG*/
-   // Outputs
-   x, y, button_l, button_m, button_r, ps2_clk_out, ps2_data_out,
-   ps2_dir, strobe,
-   // Inputs
-   clk, reset, ps2_clk_in, ps2_data_in
-   );
+module mouse
+  (input wire	      ps2_clk_in,
+   input wire	      ps2_data_in,
 
-   input wire clk;
-   input wire reset;
+   output wire [11:0] x,
+   output wire [11:0] y,
+   output wire	      button_l,
+   output wire	      button_m,
+   output wire	      button_r,
 
-   input wire ps2_clk_in;
-   input wire ps2_data_in;
+   output wire	      ps2_clk_out,
+   output wire	      ps2_data_out,
 
-   output [11:0] x;
-   output [11:0] y;
-   output wire button_l;
-   output wire button_m;
-   output wire button_r;
+   output wire	      ps2_dir,
+   output wire	      strobe,
 
-   output wire ps2_clk_out;
-   output wire ps2_data_out;
-
-   output wire ps2_dir;
-   output wire strobe;
-
-   ////////////////////////////////////////////////////////////////////////////////
+   input wire	      clk,
+   input wire	      reset);
 
    reg [7:0] b1, b2, b3, b4;
    reg full;
@@ -84,7 +75,7 @@ module mouse(/*AUTOARG*/
    //
    // State machine to handle a 4 byte packet from the mouse (assumes
    // it responds to Microsoft Intellimouse data packet format).
-   
+
    localparam [4:0]
      IDLE = 0,
      POLL1 = 1,
@@ -169,5 +160,5 @@ endmodule
 `default_nettype wire
 
 // Local Variables:
-// verilog-library-directories: (".")
+// verilog-library-directories: ("." "cores")
 // End:
