@@ -5,52 +5,43 @@
 
 `include "build_id.vh"
 
-module xbus_io(/*AUTOARG*/
-   // Outputs
-   dataout, ack, decode, interrupt, vector,
-   // Inputs
-   clk, reset, addr, datain, req, write, ms_ready, ms_x, ms_y,
-   ms_button, kb_ready, kb_data
-   );
+module xbus_io
+  (input wire [21:0] addr,
+   input wire [31:0] datain,
+   input wire 	     req,
+   input wire 	     write,
+   output reg [31:0] dataout,
+   output wire 	     ack,
+   output wire 	     decode,
+   output wire 	     interrupt,
 
-   input wire clk;
-   input wire reset;
+   input wire 	     ms_ready,
+   input wire [11:0] ms_x,
+   input wire [11:0] ms_y,
+   input wire [2:0]  ms_button,
 
-   input [21:0] addr;
-   input [31:0] datain;
-   input wire req;
-   input wire write;
-   output [31:0] dataout;
-   output wire ack;
-   output wire decode;
-   output wire interrupt;
+   input wire 	     kb_ready,
+   input wire [15:0] kb_data,
 
-   input wire ms_ready;
-   input [11:0] ms_x;
-   input [11:0]  ms_y;
-   input [2:0] ms_button;
+   output wire [7:0] vector,
 
-   input wire kb_ready;
-   input [15:0] kb_data;
+   input wire 	     clk,
+   input wire 	     reset);
 
-   output [7:0] vector;
+   reg [3:0] 	     iob_csr;
+   reg [3:0] 	     iob_rdy;
 
-   ////////////////////////////////////////////////////////////////////////////////
+   reg [31:0] 	     iob_key_scan;
 
-   reg [3:0] iob_csr;
-   reg [3:0] iob_rdy;
+   reg [1:0] 	     mouse_rawx;
+   reg [11:0] 	     mouse_x;
+   reg [11:0] 	     mouse_y;
+   reg [1:0] 	     mouse_rawy;
+   reg 		     mouse_tail;
+   reg 		     mouse_middle;
+   reg 		     mouse_head;
 
-   reg [31:0] iob_key_scan;
-
-   reg [1:0] mouse_rawx;
-   reg [11:0] mouse_x;
-   reg [11:0] mouse_y;
-   reg [1:0] mouse_rawy;
-   reg mouse_tail;
-   reg mouse_middle;
-   reg mouse_head;
-
-   reg hz60_enabled;
+   reg 		     hz60_enabled;
 
    /*AUTOWIRE*/
    // Beginning of automatic wires (for undeclared instantiated-module outputs)
@@ -59,9 +50,6 @@ module xbus_io(/*AUTOARG*/
    wire [31:0]		us_clk;			// From us of us.v
    // End of automatics
    /*AUTOREG*/
-   // Beginning of automatic regs (for this module's undeclared outputs)
-   reg [31:0]		dataout;
-   // End of automatics
 
    ////////////////////////////////////////////////////////////////////////////////
 
@@ -70,9 +58,9 @@ module xbus_io(/*AUTOARG*/
 	     .hz60_clk_fired		(hz60_clk_fired),
 	     .hz60_clk			(hz60_clk[31:0]),
 	     // Inputs
+	     .hz60_enabled		(hz60_enabled),
 	     .clk			(clk),
-	     .reset			(reset),
-	     .hz60_enabled		(hz60_enabled));
+	     .reset			(reset));
 
    us us(/*AUTOINST*/
 	 // Outputs
@@ -100,7 +88,7 @@ module xbus_io(/*AUTOARG*/
 	 case (addr)
 	   22'o17772037: begin
 	      dataout = { 16'b0, `BUILD_ID };
-	   end	      
+	   end
 	   22'o17772040: begin
 	      dataout = { 16'b0, iob_key_scan[15:0]};
 	      iob_rdy[1] <= 0;
@@ -242,5 +230,5 @@ endmodule
 `default_nettype wire
 
 // Local Variables:
-// verilog-library-directories: (".")
+// verilog-library-directories: ("." "cores")
 // End:
