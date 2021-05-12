@@ -1,7 +1,7 @@
 // uhdl.v --- ---!!!
 
 `timescale 1ns/1ps
-// `default_nettype none
+`default_nettype none
 
 `define enable_mmc
 `define enable_vga
