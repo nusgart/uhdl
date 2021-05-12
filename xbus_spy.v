@@ -5,40 +5,30 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module xbus_spy(/*AUTOARG*/
-   // Outputs
-   output reg [31:0] dataout, 
-   output wire ack, 
-   output wire decode, 
-   output reg [15:0] spyout, 
-   output wire [3:0] spyreg, 
-   output wire spyrd, 
-   output wire spywr,
-   // Inputs
-   input wire clk, 
-   input wire [21:0] addr, 
-   input wire [31:0] datain, 
-   input wire req, 
-   input wire write, 
-   input wire [15:0] spyin
-   );
+module xbus_spy
+  (input wire [21:0] addr,
+   input wire [31:0] datain,
+   input wire	     req,
+   input wire	     write,
+   output reg [31:0] dataout,
+   output wire	     ack,
+   output wire	     decode,
 
+   input wire [15:0] spyin,
+   output reg [15:0] spyout,
+   output wire [3:0] spyreg,
+   output wire	     spyrd,
+   output wire	     spywr,
 
-   ////////////////////////////////////////////////////////////////////////////////
-
-   reg [2:0] ack_delayed = 0;
-   reg [2:0] ack_state = 0;
-
-   /*AUTOWIRE*/
-   /*AUTOREG*/
-   // Beginning of automatic regs (for this module's undeclared outputs)
-   //reg [31:0]		dataout;
-   //reg [15:0]		spyout;
-   // End of automatics
+   input wire	     clk,
+   input wire	     reset);
 
    ////////////////////////////////////////////////////////////////////////////////
 
-   wire spyrd_d;
+   reg [2:0]	     ack_delayed = 0;
+   reg [2:0]	     ack_state = 0;
+
+   wire		     spyrd_d;
 
    always @(posedge clk) begin
       ack_delayed <= { ack_delayed[1:0], decode};
@@ -70,7 +60,7 @@ module xbus_spy(/*AUTOARG*/
    assign spyreg = addr[3:0];
    assign spyrd = ack_state[0] && ~write;
    assign spywr = ack_state[0] && write;
-   
+
 endmodule
 
 `default_nettype wire
