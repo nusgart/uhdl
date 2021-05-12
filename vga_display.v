@@ -3,13 +3,21 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module vga_display(/*AUTOARG*/
-   // Outputs
-   vram_addr, vram_req, vga_r, vga_b, vga_g, vga_hsync, vga_vsync,
-   vga_blank,
-   // Inputs
-   vga_clk, reset, vram_data, vram_ready
-   );
+module vga_display
+  (output wire [14:0] vram_addr,
+   input wire [31:0]  vram_data,
+   input wire	      vram_ready,
+   output wire	      vram_req,
+
+   output wire	      vga_r,
+   output wire	      vga_b,
+   output wire	      vga_g,
+   output wire	      vga_hsync,
+   output wire	      vga_vsync,
+   output wire	      vga_blank,
+
+   input wire	      vga_clk,	// VGA clock.
+   input wire	      reset);
 
    `define FULLSCR
    `ifndef FULLSCR
@@ -51,21 +59,6 @@ module vga_display(/*AUTOARG*/
    parameter BOX_WIDTH = 768;
    parameter BOX_HEIGHT = 896;
 
-   input wire vga_clk;
-   input wire reset;
-
-   output [14:0] vram_addr;
-   input [31:0] vram_data;
-   input wire vram_ready;
-   output wire vram_req;
-
-   output wire vga_r;
-   output wire vga_b;
-   output wire vga_g;
-   output wire vga_hsync;
-   output wire vga_vsync;
-   output wire vga_blank;
-   
    reg localreset;
    reg r_pipe;
    
