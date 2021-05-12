@@ -1,4 +1,4 @@
-// top_lx45.v --- ---!!!
+// uhdl_pipistrello.v --- ---!!!
 
 `timescale 1ns/1ps
 //`default_nettype none
@@ -8,7 +8,7 @@
 `define enable_ps2
 `define enable_spy_port
 
-module top_lx45(/*AUTOARG*/
+module uhdl_pipistrello(/*AUTOARG*/
    // Outputs
    rs232_txd, led, vga_hsync, vga_vsync, vga_r, vga_g, vga_b, mmc_cs,
    mmc_do, mmc_sclk, mcb3_dram_a, mcb3_dram_ba, mcb3_dram_cke,
@@ -61,45 +61,45 @@ module top_lx45(/*AUTOARG*/
    
    /*AUTOWIRE*/
    // Beginning of automatic wires (for undeclared instantiated-module outputs)
-   wire			boot;			// From support of support_lx45.v
-   wire [15:0]		busint_spyout;		// From lm3 of lm3.v
-   wire			dcm_reset;		// From support of support_lx45.v
-   wire [4:0]		disk_state;		// From lm3 of lm3.v
-   wire			fetch;			// From lm3 of lm3.v
-   wire			halt;			// From support of support_lx45.v
-   wire			interrupt;		// From support of support_lx45.v
-   wire			lpddr_calib_done;	// From rc of ram_controller_lx45.v
-   wire			lpddr_reset;		// From support of support_lx45.v
-   wire [13:0]		mcr_addr;		// From lm3 of lm3.v
-   wire [48:0]		mcr_data_out;		// From lm3 of lm3.v
-	wire [48:0]    mcr_data_in;   // From lm3 of lm3.v
-   wire			mcr_done;		// From rc of ram_controller_lx45.v
-   wire			mcr_ready;		// From rc of ram_controller_lx45.v
-   wire			mcr_write;		// From lm3 of lm3.v
-   wire			prefetch;		// From lm3 of lm3.v
-   wire			reset;			// From support of support_lx45.v
-   wire [21:0]		sdram_addr;		// From lm3 of lm3.v
-   wire [31:0]		sdram_data_cpu2rc;	// From lm3 of lm3.v
-	wire [31:0]    sdram_data_rc2cpu; // From lm3 of lm3.v
-   wire			sdram_done;		// From rc of ram_controller_lx45.v
-   wire			sdram_ready;		// From rc of ram_controller_lx45.v
-   wire			sdram_req;		// From lm3 of lm3.v
-   wire			sdram_write;		// From lm3 of lm3.v
-   wire			spy_rd;			// From lm3 of lm3.v
-   wire [3:0]		spy_reg;		// From lm3 of lm3.v
-   wire			spy_wr;			// From lm3 of lm3.v
-   wire			vga_blank;		// From lm3 of lm3.v
-   wire [14:0]		vram_cpu_addr;		// From lm3 of lm3.v
-   wire [31:0]		vram_cpu_data_out;	// From lm3 of lm3.v
-   wire			vram_cpu_done;		// From rc of ram_controller_lx45.v
-   wire			vram_cpu_ready;		// From rc of ram_controller_lx45.v
-   wire			vram_cpu_req;		// From lm3 of lm3.v
-   wire			vram_cpu_write;		// From lm3 of lm3.v
-   wire [14:0]		vram_vga_addr;		// From lm3 of lm3.v
-   wire [31:0]		vram_vga_data_out;	// From rc of ram_controller_lx45.v
-	wire [31:0]    vram_cpu_data_in; // From rc of ram_controller_lx45.v
-   wire			vram_vga_ready;		// From rc of ram_controller_lx45.v
-   wire			vram_vga_req;		// From lm3 of lm3.v
+   wire			boot;			// From support of support_pipistrello.v
+   wire [15:0]		busint_spyout;		// From uhdl_common of uhdl_common.v
+   wire			dcm_reset;		// From support of support_pipistrello.v
+   wire [4:0]		disk_state;		// From uhdl_common of uhdl_common.v
+   wire			fetch;			// From uhdl_common of uhdl_common.v
+   wire			halt;			// From support of support_pipistrello.v
+   wire			interrupt;		// From support of support_pipistrello.v
+   wire			lpddr_calib_done;	// From rc of ram_controller_pipistrello.v
+   wire			lpddr_reset;		// From support of support_pipistrello.v
+   wire [13:0]		mcr_addr;		// From uhdl_common of uhdl_common.v
+   wire [48:0]		mcr_data_out;		// From uhdl_common of uhdl_common.v
+	wire [48:0]    mcr_data_in;   // From uhdl_common of uhdl_common.v
+   wire			mcr_done;		// From rc of ram_controller_pipistrello.v
+   wire			mcr_ready;		// From rc of ram_controller_pipistrello.v
+   wire			mcr_write;		// From uhdl_common of uhdl_common.v
+   wire			prefetch;		// From uhdl_common of uhdl_common.v
+   wire			reset;			// From support of support_pipistrello.v
+   wire [21:0]		sdram_addr;		// From uhdl_common of uhdl_common.v
+   wire [31:0]		sdram_data_cpu2rc;	// From uhdl_common of uhdl_common.v
+	wire [31:0]    sdram_data_rc2cpu; // From uhdl_common of uhdl_common.v
+   wire			sdram_done;		// From rc of ram_controller_pipistrello.v
+   wire			sdram_ready;		// From rc of ram_controller_pipistrello.v
+   wire			sdram_req;		// From uhdl_common of uhdl_common.v
+   wire			sdram_write;		// From uhdl_common of uhdl_common.v
+   wire			spy_rd;			// From uhdl_common of uhdl_common.v
+   wire [3:0]		spy_reg;		// From uhdl_common of uhdl_common.v
+   wire			spy_wr;			// From uhdl_common of uhdl_common.v
+   wire			vga_blank;		// From uhdl_common of uhdl_common.v
+   wire [14:0]		vram_cpu_addr;		// From uhdl_common of uhdl_common.v
+   wire [31:0]		vram_cpu_data_out;	// From uhdl_common of uhdl_common.v
+   wire			vram_cpu_done;		// From rc of ram_controller_pipistrello.v
+   wire			vram_cpu_ready;		// From rc of ram_controller_pipistrello.v
+   wire			vram_cpu_req;		// From uhdl_common of uhdl_common.v
+   wire			vram_cpu_write;		// From uhdl_common of uhdl_common.v
+   wire [14:0]		vram_vga_addr;		// From uhdl_common of uhdl_common.v
+   wire [31:0]		vram_vga_data_out;	// From rc of ram_controller_pipistrello.v
+	wire [31:0]    vram_cpu_data_in; // From rc of ram_controller_pipistrello.v
+   wire			vram_vga_ready;		// From rc of ram_controller_pipistrello.v
+   wire			vram_vga_req;		// From uhdl_common of uhdl_common.v
    
    wire clk_dram;
    // End of automatics
@@ -115,7 +115,7 @@ module top_lx45(/*AUTOARG*/
      clkcnt <= clkcnt + 4'd1;
    BUFG cpuclk_bufg(.I(clkcnt[0]), .O(cpu_clk));
    
-   support_lx45 support
+   support_pipistrello support
      (
       .sysclk(clk50),
       .button_r(switch),
@@ -134,7 +134,7 @@ module top_lx45(/*AUTOARG*/
       .cpu_clk				(cpu_clk),
       .lpddr_calib_done			(lpddr_calib_done));
    
-   ram_controller_A7 rc
+   ram_controller_arty_a7 rc
      (
       .lpddr_clk_out(),
       .clk(clk50),
@@ -192,7 +192,7 @@ module top_lx45(/*AUTOARG*/
       .vram_cpu_write			(vram_cpu_write),
       .vram_vga_req			(vram_vga_req));
    
-   lm3 lm3(/*AUTOINST*/
+   uhdl_common uhdl_common(/*AUTOINST*/
 	   // Outputs
 	   .sdram_addr			(sdram_addr[21:0]),
 	   .sdram_data_cpu2rc		(sdram_data_cpu2rc[31:0]),

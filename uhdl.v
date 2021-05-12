@@ -1,4 +1,4 @@
-// top.v --- ---!!!
+// uhdl.v --- ---!!!
 
 `timescale 1ns/1ps
 // `default_nettype none
@@ -13,7 +13,7 @@
 /* verilator lint_off PINMISSING */
 /* verilator lint_off WIDTH */
 
-module top;
+module uhdl;
 
    reg boot;
    reg reset;
@@ -86,32 +86,32 @@ module top;
 
    /*AUTOWIRE*/
    // Beginning of automatic wires (for undeclared instantiated-module outputs)
-   wire [3:0]		bus_state;		// From lm3 of lm3.v
-   wire [15:0]		busint_spyout;		// From lm3 of lm3.v
-   wire [4:0]		disk_state;		// From lm3 of lm3.v
-   wire			fetch;			// From lm3 of lm3.v
-   wire [13:0]		mcr_addr;		// From lm3 of lm3.v
+   wire [3:0]		bus_state;		// From uhdl_common of uhdl_common.v
+   wire [15:0]		busint_spyout;		// From uhdl_common of uhdl_common.v
+   wire [4:0]		disk_state;		// From uhdl_common of uhdl_common.v
+   wire			fetch;			// From uhdl_common of uhdl_common.v
+   wire [13:0]		mcr_addr;		// From uhdl_common of uhdl_common.v
    wire [48:0]		mcr_data_out;		// From ram_controller of ram_controller.v, ...
    wire			mcr_done;		// From ram_controller of ram_controller.v
    wire			mcr_ready;		// From ram_controller of ram_controller.v
-   wire			mcr_write;		// From lm3 of lm3.v
-   wire			mmc_cs;			// From lm3 of lm3.v
-   wire			mmc_do;			// From lm3 of lm3.v
-   wire			mmc_sclk;		// From lm3 of lm3.v
-   wire			ms_ps2_clk;		// To/From lm3 of lm3.v
-   wire			ms_ps2_data;		// To/From lm3 of lm3.v
-   wire			prefetch;		// From lm3 of lm3.v
-   wire			rs232_txd;		// From lm3 of lm3.v
-   wire [21:0]		sdram_addr;		// From lm3 of lm3.v
-   wire [31:0]		sdram_data_cpu2rc;	// From lm3 of lm3.v
+   wire			mcr_write;		// From uhdl_common of uhdl_common.v
+   wire			mmc_cs;			// From uhdl_common of uhdl_common.v
+   wire			mmc_do;			// From uhdl_common of uhdl_common.v
+   wire			mmc_sclk;		// From uhdl_common of uhdl_common.v
+   wire			ms_ps2_clk;		// To/From uhdl_common of uhdl_common.v
+   wire			ms_ps2_data;		// To/From uhdl_common of uhdl_common.v
+   wire			prefetch;		// From uhdl_common of uhdl_common.v
+   wire			rs232_txd;		// From uhdl_common of uhdl_common.v
+   wire [21:0]		sdram_addr;		// From uhdl_common of uhdl_common.v
+   wire [31:0]		sdram_data_cpu2rc;	// From uhdl_common of uhdl_common.v
    wire [31:0]		sdram_data_out;		// From ram_controller of ram_controller.v
    wire			sdram_done;		// From ram_controller of ram_controller.v
    wire			sdram_ready;		// From ram_controller of ram_controller.v
-   wire			sdram_req;		// From lm3 of lm3.v
-   wire			sdram_write;		// From lm3 of lm3.v
-   wire			spy_rd;			// From lm3 of lm3.v
-   wire [3:0]		spy_reg;		// From lm3 of lm3.v
-   wire			spy_wr;			// From lm3 of lm3.v
+   wire			sdram_req;		// From uhdl_common of uhdl_common.v
+   wire			sdram_write;		// From uhdl_common of uhdl_common.v
+   wire			spy_rd;			// From uhdl_common of uhdl_common.v
+   wire [3:0]		spy_reg;		// From uhdl_common of uhdl_common.v
+   wire			spy_wr;			// From uhdl_common of uhdl_common.v
    wire			sram1_ce_n;		// From ram_controller of ram_controller.v
    wire			sram1_lb_n;		// From ram_controller of ram_controller.v
    wire [15:0]		sram1_out;		// From ram_controller of ram_controller.v
@@ -123,30 +123,30 @@ module top;
    wire [17:0]		sram_a;			// From ram_controller of ram_controller.v
    wire			sram_oe_n;		// From ram_controller of ram_controller.v
    wire			sram_we_n;		// From ram_controller of ram_controller.v
-   wire			vga_b;			// From lm3 of lm3.v
-   wire			vga_blank;		// From lm3 of lm3.v
-   wire			vga_g;			// From lm3 of lm3.v
-   wire			vga_hsync;		// From lm3 of lm3.v
-   wire			vga_r;			// From lm3 of lm3.v
-   wire			vga_vsync;		// From lm3 of lm3.v
-   wire [14:0]		vram_cpu_addr;		// From lm3 of lm3.v
+   wire			vga_b;			// From uhdl_common of uhdl_common.v
+   wire			vga_blank;		// From uhdl_common of uhdl_common.v
+   wire			vga_g;			// From uhdl_common of uhdl_common.v
+   wire			vga_hsync;		// From uhdl_common of uhdl_common.v
+   wire			vga_r;			// From uhdl_common of uhdl_common.v
+   wire			vga_vsync;		// From uhdl_common of uhdl_common.v
+   wire [14:0]		vram_cpu_addr;		// From uhdl_common of uhdl_common.v
    wire [31:0]		vram_cpu_data_out;	// From ram_controller of ram_controller.v, ...
    wire			vram_cpu_done;		// From ram_controller of ram_controller.v
    wire			vram_cpu_ready;		// From ram_controller of ram_controller.v
-   wire			vram_cpu_req;		// From lm3 of lm3.v
-   wire			vram_cpu_write;		// From lm3 of lm3.v
-   wire [14:0]		vram_vga_addr;		// From lm3 of lm3.v
+   wire			vram_cpu_req;		// From uhdl_common of uhdl_common.v
+   wire			vram_cpu_write;		// From uhdl_common of uhdl_common.v
+   wire [14:0]		vram_vga_addr;		// From uhdl_common of uhdl_common.v
    wire [31:0]		vram_vga_data_out;	// From ram_controller of ram_controller.v
    wire			vram_vga_ready;		// From ram_controller of ram_controller.v
-   wire			vram_vga_req;		// From lm3 of lm3.v
+   wire			vram_vga_req;		// From uhdl_common of uhdl_common.v
    // End of automatics
 
    ////////////////////////////////////////////////////////////////////////////////
 
    integer cycles;   
    
-   always @(posedge lm3.cpu.clk) begin
-      if (lm3.cpu.state == 6'b100000 && ~lm3.cpu.iwrited && ~lm3.cpu.cadr_contrl.inop) begin
+   always @(posedge uhdl_common.cpu.clk) begin
+      if (uhdl_common.cpu.state == 6'b100000 && ~uhdl_common.cpu.iwrited && ~uhdl_common.cpu.cadr_contrl.inop) begin
 	 cycles = cycles + 1;
       end
    end
@@ -210,7 +210,7 @@ module top;
 				 .vram_cpu_write	(vram_cpu_write),
 				 .vram_vga_req		(vram_vga_req));
 
-   lm3 lm3(/*AUTOINST*/
+   uhdl_common uhdl_common(/*AUTOINST*/
 	   // Outputs
 	   .sdram_addr			(sdram_addr[21:0]),
 	   .sdram_data_cpu2rc		(sdram_data_cpu2rc[31:0]),

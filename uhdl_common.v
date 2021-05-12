@@ -1,4 +1,4 @@
-// lm3.v --- common top level module for the LM-3
+// uhdl_common.v --- common top level module for the LM-3
 //
 // ---!!! Idea is to only have generic code here (PS/2, VGA, ...), for
 // ---!!!   the actual top-level module (say for LX45); one would need to
@@ -30,7 +30,7 @@
 `default_nettype none
 
 
-module lm3(/*AUTOARG*/
+module uhdl_common(/*AUTOARG*/
    // Outputs
    sdram_addr, sdram_data_cpu2rc, sdram_req, sdram_write,
    vram_cpu_addr, vram_cpu_data_out, vram_cpu_req, vram_cpu_write,

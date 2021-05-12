@@ -3,9 +3,9 @@
 
 // ISIM: wave add /
 
-`define VCDFILE "top_lx45_tb.vcd"
+`define VCDFILE "uhdl_lx45_tb.vcd"
 
-module top_A7_tb;
+module uhdl_arty_a7_tb;
 
    reg rs232_rxd;
    reg sysclk;
@@ -47,7 +47,7 @@ module top_A7_tb;
    wire mmc_di;
    
 
-   top_A7 DUT(
+   uhdl_arty_a7 DUT(
 		.ms_ps2_clk(),
 		.ms_ps2_data(),
 		/*AUTOINST*/
@@ -117,7 +117,7 @@ module top_A7_tb;
    initial begin
       $timeformat(-9, 0, "ns", 7);
       $dumpfile(`VCDFILE);
-      $dumpvars(0, top_A7_tb);
+      $dumpvars(0, uhdl_arty_a7_tb);
    end
 
    initial begin
@@ -143,15 +143,15 @@ module top_A7_tb;
       faults = 0;
    end
 
-   always @(posedge DUT.lm3.cpu.clk) begin
-      if (DUT.lm3.cpu.state == 6'b000001)
+   always @(posedge DUT.uhdl_common.cpu.clk) begin
+      if (DUT.uhdl_common.cpu.state == 6'b000001)
 	cycles = cycles + 1;
 
-      if (DUT.lm3.cpu.state == 6'b000001)
+      if (DUT.uhdl_common.cpu.state == 6'b000001)
 	$display("%0o %o A=%x M=%x N%b MD=%x LC=%x",
-		 DUT.lm3.cpu.cadr_lpc.lpc, DUT.lm3.cpu.ir, DUT.lm3.cpu.a, DUT.lm3.cpu.m, DUT.lm3.cpu.n, DUT.lm3.cpu.md, DUT.lm3.cpu.lc);
+		 DUT.uhdl_common.cpu.cadr_lpc.lpc, DUT.uhdl_common.cpu.ir, DUT.uhdl_common.cpu.a, DUT.uhdl_common.cpu.m, DUT.uhdl_common.cpu.n, DUT.uhdl_common.cpu.md, DUT.uhdl_common.cpu.lc);
 
-      if (DUT.lm3.cpu.cadr_lpc.lpc == 14'o26) begin
+      if (DUT.uhdl_common.cpu.cadr_lpc.lpc == 14'o26) begin
 	 faults = faults + 1;
 	 if (faults > 5) begin
 	    $display("=== fault ===");

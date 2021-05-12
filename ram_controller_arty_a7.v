@@ -6,7 +6,7 @@
 // 
 // Create Date: 07/21/2019 02:53:29 PM
 // Design Name: LM-3 CADR implementation
-// Module Name: ram_controller_A7
+// Module Name: ram_controller_arty_a7
 // Project Name: LM-3
 // Target Devices: Artix 7 XC7A35t
 // Tool Versions: Vivado 2018.3, MIG v4.2
@@ -23,7 +23,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module ram_controller_A7(
+module ram_controller_arty_a7(
   /// DDR3 interface
   // data interface
   inout wire [15:0] ddr3_dq,
