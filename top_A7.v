@@ -200,66 +200,7 @@ module top_A7(/*AUTOARG*/
       .cpu_clk				(cpu_clk),
       .lpddr_calib_done			(lpddr_calib_done));
    
-   `define USE_MEM_CONTROLLER
-   `ifndef USE_MEM_CONTROLLER
    ram_controller_A7 rc (
-      .lpddr_clk_out(),
-      .clk                  (main_clk),
-      //.mcr_data_out         (mcr_data_in),
-      //.mcr_data_in          (mcr_data_out),
-      .sdram_data_in        (sdram_data_cpu2rc),
-      .sdram_data_out       (sdram_data_rc2cpu),
-      .vram_cpu_data_in     (vram_cpu_data_out),
-      .vram_cpu_data_out    (vram_cpu_data_in),
-       // DDR3
-      .ddr3_addr            (ddr3_addr),  // output [13:0]		ddr3_addr
-      .ddr3_ba              (ddr3_ba),  // output [2:0]		ddr3_ba
-      .ddr3_cas_n           (ddr3_cas_n),  // output			ddr3_cas_n
-      .ddr3_ck_n            (ddr3_ck_n),  // output [0:0]		ddr3_ck_n
-      .ddr3_ck_p            (ddr3_ck_p),  // output [0:0]		ddr3_ck_p
-      .ddr3_cke             (ddr3_cke),  // output [0:0]		ddr3_cke
-      .ddr3_ras_n           (ddr3_ras_n),  // output			ddr3_ras_n
-      .ddr3_reset_n         (ddr3_reset_n),  // output			ddr3_reset_n
-      .ddr3_we_n            (ddr3_we_n),  // output			ddr3_we_n
-      .ddr3_dq              (ddr3_dq),  // inout [15:0]		ddr3_dq
-      .ddr3_dqs_n           (ddr3_dqs_n),  // inout [1:0]		ddr3_dqs_n
-      .ddr3_dqs_p           (ddr3_dqs_p),
-      .ddr3_cs_n            (ddr3_cs_n),
-      .ddr3_dm              (ddr3_dm),
-      .ddr3_odt             (ddr3_odt),
-      // outputs
-      .vram_vga_data_out	(vram_vga_data_out[31:0]),
-      .lpddr_calib_done		(lpddr_calib_done),
-      //.mcr_done				(mcr_done),
-      //.mcr_ready			(mcr_ready),
-      .sdram_done			(sdram_done),
-      .sdram_ready			(sdram_ready),
-      .vram_cpu_done		(vram_cpu_done),
-      .vram_cpu_ready		(vram_cpu_ready),
-      .vram_vga_ready		(vram_vga_ready),
-      // Inputs
-      //.mcr_addr				(mcr_addr[13:0]),
-      .vram_cpu_addr		(vram_cpu_addr[14:0]),
-      .vram_vga_addr		(vram_vga_addr[14:0]),
-      .sdram_addr			(sdram_addr[21:0]),
-      .cpu_clk				(cpu_clk),
-      .fetch				(fetch),
-      .lpddr_reset			(lpddr_reset),
-      .machrun				(machrun),
-      //.mcr_write			(mcr_write),
-      .prefetch				(prefetch),
-      .reset				(reset),
-      .sdram_req			(sdram_req),
-      .sdram_write			(sdram_write),
-      .sysclk				(sysclk),
-      .dram_clk             (clk_dram),
-      .ref_clk              (ref_clk),
-      .vga_clk				(vga_clk),
-      .vram_cpu_req			(vram_cpu_req),
-      .vram_cpu_write		(vram_cpu_write),
-      .vram_vga_req			(vram_vga_req));
-   `else
-   memory_controller_A7 mc (
       .sdram_data_in        (sdram_data_cpu2rc),
       .sdram_data_out       (sdram_data_rc2cpu),
       .vram_cpu_data_in     (vram_cpu_data_out),
@@ -309,7 +250,7 @@ module top_A7(/*AUTOARG*/
       .vram_cpu_req			(vram_cpu_req),
       .vram_cpu_write		(vram_cpu_write),
       .vram_vga_req			(vram_vga_req));
-   `endif
+
    lm3 lm3(/*AUTOINST*/
        .promdis(promdis),
 	   // Outputs

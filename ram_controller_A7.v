@@ -1,452 +1,384 @@
-// ram_controller_lx45.v --- ---!!!
-`timescale 1ns/1ps
+`timescale 1ns / 1ps
 `default_nettype none
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: Nicholas Nusgart
+// 
+// Create Date: 07/21/2019 02:53:29 PM
+// Design Name: LM-3 CADR implementation
+// Module Name: ram_controller_A7
+// Project Name: LM-3
+// Target Devices: Artix 7 XC7A35t
+// Tool Versions: Vivado 2018.3, MIG v4.2
+// Description: 
+//   Controls memory interfaces for the Artix-7.  In particular, this acts as
+// the CPU-DDR3 SDRAM interface and as the VRAM interface.
+//
+// Dependencies: 
+// dram_memif, ise_VRAM
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
 
-module ram_controller_A7(/*AUTOARG*/
-   // ram
-   ddr3_dq, ddr3_dm, ddr3_dqs_p, ddr3_dqs_n, ddr3_addr, ddr3_ba, ddr3_ck_p, 
-   ddr3_ck_n, ddr3_cs_n, ddr3_cas_n, ddr3_ras_n, ddr3_cke, ddr3_odt,
-   ddr3_reset_n, ddr3_we_n,
-   // Outputs
-   sdram_data_out, vram_cpu_data_out,
-   vram_vga_data_out, mcr_data_out, lpddr_calib_done, lpddr_clk_out,
-   mcr_done, mcr_ready, sdram_done, sdram_ready, vram_cpu_done,
-   vram_cpu_ready, vram_vga_ready,
-   // Inouts
-   // Inputs
-   mcr_addr, vram_cpu_addr, vram_vga_addr, sdram_addr, sdram_data_in,
-   vram_cpu_data_in, mcr_data_in, clk, cpu_clk, fetch, lpddr_reset,
-   machrun, mcr_write, prefetch, reset, sdram_req, sdram_write, dram_clk,
-   sysclk, vga_clk, vram_cpu_req, vram_cpu_write, vram_vga_req, ref_clk
-   );
+
+module ram_controller_A7(
+  /// DDR3 interface
+  // data interface
+  inout wire [15:0] ddr3_dq,
+  inout wire [1:0] ddr3_dqs_p,
+  inout wire [1:0] ddr3_dqs_n,
+  inout wire [13:0] ddr3_addr,
+  output wire [1:0] ddr3_dm,
+  output wire ddr3_odt,
+  
+  // command interface
+  output wire [2:0] ddr3_ba, 
+  output wire ddr3_cs_n,
+  output wire ddr3_cas_n,
+  output wire ddr3_ras_n,
+  output wire ddr3_we_n,
+  output wire ddr3_reset_n,
    
-   /// DDR3 interface
-   // data interface
-   inout [15:0] ddr3_dq;
-   inout [1:0] ddr3_dqs_p;
-   inout [1:0] ddr3_dqs_n;
-   inout [13:0] ddr3_addr;
-   output [1:0] ddr3_dm;
-   output wire ddr3_odt;
+  // clock
+  output wire ddr3_ck_p,
+  output wire ddr3_ck_n,
+  output wire ddr3_cke,
    
-   // command interface
-   output [2:0] ddr3_ba; 
-   output wire ddr3_cs_n;
-   output wire ddr3_cas_n;
-   output wire ddr3_ras_n;
-   output wire ddr3_we_n;
-   
-   output wire ddr3_reset_n;
-   output wire lpddr_calib_done;
-   output wire lpddr_clk_out;
-   
-   // clock
-   output wire ddr3_ck_p;
-   output wire ddr3_ck_n;
-   output wire ddr3_cke;
-   
-   /// ram-controller interface
-   input [21:0] sdram_addr;
-   input [31:0] sdram_data_in;
-   output [31:0] sdram_data_out;
-   output sdram_done;
-   output sdram_ready;
-   input wire sdram_req;
+  /// CPU Interface
+  input wire sdram_clk,
+  input wire ref_clk,
+  input wire vga_clk,
+  input wire cpu_clk,
+  input wire fetch,
+  
+  input wire machrun,
+  input wire prefetch,
+  input wire reset,
+  // SDRAM
+  input wire [21:0] sdram_addr,
+  input wire [31:0] sdram_data_in,
+  output reg [31:0] sdram_data_out,
+  output wire sdram_done,
+  output wire sdram_ready,
+  input wire sdram_req,
+  input wire sdram_write,
+  input wire sdram_reset,
+  output wire sdram_calib_done,
+  output wire sdram_clk_out,
+  
+  // VGA
+  input wire [14:0] vram_cpu_addr,
+  input wire [14:0] vram_vga_addr,
+  output wire [31:0] vram_cpu_data_out,
+  output wire [31:0] vram_vga_data_out,
+  input wire [31:0] vram_cpu_data_in,
+  input wire vram_cpu_req,
+  input wire vram_cpu_write,
+  input wire vram_vga_req,
+  output wire vram_cpu_done,
+  output wire vram_cpu_ready,
+  output wire vram_vga_ready,
+  
+  // microcode
+  // microcode interface
+  input wire [13:0] mcr_addr,
+  input wire [48:0] mcr_data_in,
+  output wire [48:0] mcr_data_out,
+  input wire mcr_write,
+  output wire mcr_done,
+  output wire mcr_ready
+  );
+  /*
+  input wire sdram_req;
    input wire sdram_write;
    input wire dram_clk;
-   input wire ref_clk;
-
+   input wire ref_clk;*/
    
-   // video ram interface
-   input [14:0] vram_cpu_addr;
-   input [14:0] vram_vga_addr;
-   output [31:0] vram_cpu_data_out;
-   output [31:0] vram_vga_data_out;
-   input [31:0] vram_cpu_data_in;
-   input wire vga_clk;
-   input wire vram_cpu_req;
-   input wire vram_cpu_write;
-   input wire vram_vga_req;
-   output wire vram_cpu_done;
-   output wire vram_cpu_ready;
-   output wire vram_vga_ready;
-   
-   // microcode interface
-   input [13:0] mcr_addr;
-   input [48:0] mcr_data_in;
-   output [48:0] mcr_data_out;
-   input wire mcr_write;
-   output wire mcr_done;
-   output wire mcr_ready;
-   
-   // other wires
-   input wire clk;
-   input wire cpu_clk;
-   input wire fetch;
-   input wire lpddr_reset;
-   input wire machrun;
-   input wire prefetch;
-   input wire reset;
-   input wire sysclk;
-   
-
-
-   ////////////////////////////////////////////////////////////////////////////////
-
-   parameter [2:0]
-     NSD_IDLE = 0,
-     NSD_READ = 1,
-     NSD_READBSY = 2,
-     NSD_READW = 3,
-     NSD_WRITE = 4,
-     NSD_WRITEBSY = 5,
-     NSD_WRITEW = 6;
-   parameter [6:0]
-     SD_IDLE = 7'b0000001,
-     SD_READ = 7'b0000010,
-     SD_READBSY = 7'b0000100,
-     SD_READW = 7'b0001000,
-     SD_WRITE = 7'b0010000,
-     SD_WRITEBSY = 7'b0100000,
-     SD_WRITEW = 7'b1000000;
-
-   reg [31:0] sdram_out;
-   reg [31:0] vram_vga_data;
-   reg [3:0] vram_cpu_ready_dly;
-   reg [3:0] vram_vga_ready_dly;
-   reg [6:0] sdram_state;
-   reg int_sdram_done;
-   wire int_sdram_ready;
-   reg sdram_done;
-   reg sdram_ready;
-
-   wire [27:0] lpddr_addr;
-   wire [2:0] lpddr_cmd;
-   wire [31:0] sdram_resp_in;
-   wire [31:0] vram_vga_ram_out;
-   wire [6:0] sdram_state_next;
-   wire c3_calib_done;
-   wire clock;
-   wire i_sdram_req;
-   wire i_sdram_write;
-   wire lpddr_clk;
-   wire lpddr_cmd_en;
-   wire lpddr_cmd_full;
-   wire lpddr_rd_done;
-   wire lpddr_rd_empty;
-   wire lpddr_rd_rdy;
-   wire lpddr_wr_done;
-   wire lpddr_wr_full;
-   wire lpddr_wr_rdy;
-   wire sys_clk;
-   wire sys_rst;
-   wire lpddr_wr_en;
-
-   /// local reset
-   reg pll_reset;
-   reg dr_pipe;
-   
-   always @(posedge sysclk, posedge reset)
-	if (reset)
-		{ pll_reset, dr_pipe } <= 2'b01;
-	else
-		{ pll_reset, dr_pipe } <= { dr_pipe, 1'b0 };
-
-   ////////////////////////////////////////////////////////////////////////////////
-
-   always @(posedge clk)
-     if (reset) begin
-       sdram_state <= SD_IDLE;
-     end else
-       sdram_state <= sdram_state_next;
-
-   assign sdram_state_next =
-			    (sdram_state[NSD_IDLE] && sdram_req) ? SD_READ :
-			    (sdram_state[NSD_IDLE] && sdram_write) ? SD_WRITE :
-			    (sdram_state[NSD_READ] && lpddr_rd_rdy) ? SD_READBSY :
-			    (sdram_state[NSD_READBSY] && lpddr_rd_done) ? SD_READW :
-			    (sdram_state[NSD_READW] && ~sdram_req) ? SD_IDLE :
-			    (sdram_state[NSD_WRITE] && lpddr_wr_rdy) ? SD_WRITEBSY :
-			    (sdram_state[NSD_WRITEBSY] && lpddr_wr_done) ? SD_WRITEW :
-			    (sdram_state[NSD_WRITEW] && ~sdram_write) ? SD_IDLE :
-			    sdram_state;
-   assign i_sdram_req = sdram_state[NSD_READ];
-   assign i_sdram_write = sdram_state[NSD_WRITE];
-
-   always @(posedge clk)
-     if (reset) begin
-       /*AUTORESET*/
-       // Beginning of autoreset for uninitialized flops
-       sdram_out <= 32'h0;
-	  // End of automatics
-     end else if (sdram_state[NSD_READBSY]) begin
-	   sdram_out <= sdram_addr[21:17] == 0 ? sdram_resp_in : 32'hffffffff;
-	 end
-
-   //always @(posedge clk)
-     /*if (reset) begin
-	/// *AUTORESET* /
-	// Beginning of autoreset for uninitialized flops
-	int_sdram_ready <= 1'h0;
-	// End of automatics
-     end else if (sdram_state[NSD_READ])
-       int_sdram_ready <= 1'b0;
-     else if (sdram_state[NSD_READW])
-       int_sdram_ready <= 1'b1;*/
-
-   always @(posedge clk)
-     if (reset) begin
-	/*AUTORESET*/
-	// Beginning of autoreset for uninitialized flops
-	int_sdram_done <= 1'h0;
-	// End of automatics
-     end else if (sdram_state[NSD_WRITE])
-       int_sdram_done <= 1'b0;
-     else if (sdram_state[NSD_WRITEW])
-       int_sdram_done <= 1'b1;
-
-   assign sdram_data_out = sdram_out;
-
-   always @(posedge cpu_clk)
-     if (reset) begin
-	/*AUTORESET*/
-	// Beginning of autoreset for uninitialized flops
-	sdram_ready <= 1'h0;
-	// End of automatics
-     end else
-       sdram_ready <= int_sdram_ready && sdram_req;
-
-   reg [21:0] intrn_sdram_addr;
-   reg [21:0] local_sdram_addr;
-   
-   always @(posedge ref_clk) begin
-     if (pll_reset) begin
-       intrn_sdram_addr <= 21'b0;
-       local_sdram_addr <= 21'b0;
-     end else begin
-       intrn_sdram_addr <= sdram_addr;
-       local_sdram_addr <= intrn_sdram_addr;
-     end
-   end
-
-   always @(posedge cpu_clk)
-     if (reset) begin
-	/*AUTORESET*/
-	// Beginning of autoreset for uninitialized flops
-	sdram_done <= 1'h0;
-	// End of automatics
-     end else
-       sdram_done <= int_sdram_done && sdram_write;
-
-   assign lpddr_cmd = sdram_write ? 3'b000 : 3'b001;
-   assign lpddr_addr = { 4'b0, local_sdram_addr, 2'b0 };
-   assign lpddr_cmd_en = (sdram_state[NSD_READ] && sdram_state_next == SD_READBSY) ||
-			 (sdram_state[NSD_WRITE] && sdram_state_next == SD_WRITEBSY);
-   assign lpddr_rd_rdy = ~lpddr_cmd_full;
-   assign lpddr_rd_done = ~lpddr_rd_empty;
-   //assign lpddr_wr_rdy = ~lpddr_cmd_full && ~lpddr_wr_full;
-   assign lpddr_wr_done = 1'b1;
-   assign lpddr_wr_en = sdram_state[NSD_WRITEBSY];
-   assign lpddr_clk_out = lpddr_clk;
-  
-  wire mm_sysclk;
-  
-  /// reset logic
-  reg [15:0] reset_ctr;
-  reg bb;
-//  assign zq_ack = bb;
-  always @(posedge sysclk) begin
-    if (lpddr_reset) begin
+  /// VRAM
+  assign vram_cpu_ready = 1'b1;
+  assign vram_vga_ready = 1'b1;
+  assign vram_cpu_done  = 1'b1; 
+  wire ena_a = vram_cpu_req | vram_cpu_write;
+  wire ena_b = vram_vga_req | 1'b0;
+  ise_vram inst (
+    .clka(cpu_clk),
+    .ena(ena_a),
+    .wea(vram_cpu_write),
+    .addra(vram_cpu_addr),
+    .dina(vram_cpu_data_in),
+    .douta(vram_cpu_data_out),
+    .clkb(vga_clk),
+    .enb(ena_b),
+    .web(1'b0),
+    .addrb(vram_vga_addr),
+    .dinb(32'b0),
+    .doutb(vram_vga_data_out)
+  );
+ /// microcode not implemented
+ assign mcr_data_out = 0;
+ assign mcr_ready = 0;
+ assign mcr_done = 0;
+ 
+ /// sdram: the main portion
+ // ddr interface
+ wire ui_clk;
+ wire ui_clk_sync_rst;
+ // reset logic
+ reg rs0;
+ reg [15:0] reset_ctr;
+ always @(posedge sdram_clk) begin
+    if (sdram_reset) begin
+      rs0 <= 1'b1;
+    end else if (rs0) begin
+      rs0 <= 1'b0;
+      `ifndef SIMULATION
       reset_ctr <= 16'd65535;
-      bb <= 0;
+      `else
+      reset_ctr <= 16'd100;
+      `endif
     end else if (reset_ctr != 16'b0) begin
       reset_ctr <= reset_ctr - 1;
     end
-    if (int_sdram_ready) begin
-      bb <= 1;
-    end
   end
-  
-  assign sys_rst = (reset_ctr == 0);
-  assign lpddr_calib_done = c3_calib_done || bb;
+ 
+ wire sys_rst = (reset_ctr == 0);
+ 
+ 
+ // wires
+ wire init_calib_complete;
+ assign sdram_calib_done = init_calib_complete;
+ 
+ reg [27:0] app_addr;
+ reg [2:0] app_cmd;
+ reg app_en;
+ wire app_rdy;
+ wire app_wdf_rdy;
+ 
+ reg [127:0] app_wdf_data;
+ reg app_wdf_wren;
+ wire app_wdf_end = 1;
+ wire [127:0] app_rd_data;
+ wire app_rd_data_end;
+ wire app_rd_data_valid;
+ 
+ 
+ wire app_sr_req = 0;
+ wire app_sr_active;
+ wire app_zq_req = 0;
+ wire app_zq_ack;
+ wire app_ref_req = 0;
+ wire app_ref_ack;
+ 
+ // SDRAM controller states
+ localparam INIT = 3'd0;
+ localparam IDLE = 3'd1;
+ localparam WRITE = 3'd2;
+ localparam WRITE_SEND = 3'd3;
+ localparam WRITE_DONE = 3'd4;
+ localparam READ = 3'd5;
+ localparam READ_DONE = 3'd6;
+ localparam WAIT = 3'd7;
+ // Interface Commmands
+ localparam CMD_WRITE = 3'b000;
+ localparam CMD_READ = 3'b001;
+ 
+ reg [2:0] state;
+ 
+ // cpu interface
+ reg [31:0] cpu_data_in;
+ reg [31:0] cpu_data_out;
+ reg [21:0] cpu_addr;
+ 
+ reg [27:0] local_addr;
+ reg [31:0] local_data_in;
+ reg [31:0] local_data_out;
+ reg local_req;
+ reg local_write;
+ reg local_done;
+ 
+ reg dram_write_done;
+ reg dram_read_done;
+ 
+ //assign sdram_ready = (state == IDLE);
+ assign sdram_clk_out = ui_clk;
+ 
+ reg cpu_req;
+ reg cpu_write;
+ reg cpu_done;
+ 
+ assign sdram_done = cpu_done;
+ assign sdram_ready = dram_read_done;
+ 
+ `ifdef SEP_CLOCKS
+ // metastability avoidance
+ // Needs work
+ always @ (posedge ui_clk) begin
+   cpu_req <= sdram_req;
+   local_req <= cpu_req;
+   //
+   cpu_write <= sdram_write;
+   local_write <= cpu_write;
+   // addr
+   cpu_addr <= sdram_addr;
+   local_addr <= {5'b0, cpu_addr, 1'b0};
+   // data in
+   cpu_data_in <= sdram_data_in;
+   local_data_in <= cpu_data_in;
+   // data out
+   cpu_data_out <= local_data_out;
+   sdram_data_out <= cpu_data_out;
+   // dram done
+   local_done <= dram_done;
+   cpu_done <= local_done;
+ end
+ `else
+ always @(*) begin
+   local_req = sdram_req;
+   local_write = sdram_write;
+   local_addr = {2'b0, sdram_addr, 3'b0};
+   local_data_in = sdram_data_in;
+   sdram_data_out = local_data_out;
+   cpu_done = dram_write_done;
+ end
+ `endif
+ 
+ always @ (posedge ui_clk) begin
+   if (ui_clk_sync_rst) begin
+     state <= INIT;
+     app_en <= 0;
+     app_wdf_wren <= 0;
+     dram_write_done <= 0;
+     dram_read_done <= 0;
+   end else begin
+     case (state)
+       INIT: begin
+         if (init_calib_complete) begin
+           state <= IDLE;
+         end
+       end
+       IDLE: begin
+         // todo controller logic
+         dram_write_done <= 0;
+         dram_read_done <= 0;
+         if (local_req) begin
+           state <= READ;
+         end else if (local_write) begin
+           state <= WRITE;
+         end
+       end
+       WRITE: begin
+         /*app_wdf_wren <= 1;
+         app_addr <= local_addr;
+         app_cmd <= CMD_WRITE;
+         app_wdf_data[31:0] <= local_data_in[31:0];
+         
+         if (app_wdf_rdy) begin
+           state <= WRITE_SEND;
+         end*/
+         if (app_rdy & app_wdf_rdy) begin
+           app_en <= 1;
+           app_wdf_wren <= 1;
+           app_addr <= local_addr;
+           app_cmd <= CMD_WRITE;
+           app_wdf_data[31:0] <= local_data_in[31:0];
+           state <= WRITE_DONE;
+         end
+       end
+       WRITE_DONE: begin
+        if (app_rdy & app_en) begin
+          app_en <= 0;
+        end
 
-  dram_memif u_ddr_memif
-      (
-       
-       
-// Memory interface ports
-       .ddr3_addr                      (ddr3_addr),
-       .ddr3_ba                        (ddr3_ba),
-       .ddr3_cas_n                     (ddr3_cas_n),
-       .ddr3_ck_n                      (ddr3_ck_n),
-       .ddr3_ck_p                      (ddr3_ck_p),
-       .ddr3_cke                       (ddr3_cke),
-       .ddr3_ras_n                     (ddr3_ras_n),
-       .ddr3_we_n                      (ddr3_we_n),
-       .ddr3_dq                        (ddr3_dq),
-       .ddr3_dqs_n                     (ddr3_dqs_n),
-       .ddr3_dqs_p                     (ddr3_dqs_p),
-       .ddr3_reset_n                   (ddr3_reset_n),
-       .init_calib_complete            (c3_calib_done),
+        if (app_wdf_rdy & app_wdf_wren) begin
+          app_wdf_wren <= 0;
+        end
+
+        if (~app_en & ~app_wdf_wren) begin
+          state <= WAIT;
+          dram_write_done <= 1;
+        end
+       end
+       READ: begin
+       if (app_rdy) begin
+          app_en <= 1;
+          app_addr <= local_addr;
+          app_cmd <= CMD_READ;
+          state <= READ_DONE;
+        end
+       end
+       READ_DONE: begin
+         // prevent double-reading RAM side
+         if (app_rdy & app_en) begin
+           app_en <= 0;
+         end
+         // read out data
+         if (app_rd_data_valid) begin
+           local_data_out <= app_rd_data[31:0];
+           state <= WAIT;
+           dram_read_done <= 1;
+        end
+       end
+       WAIT: begin
+         // prevent double-opearation CPU side
+         if (~local_req && ~local_write) begin
+           state <= IDLE;
+         end
+       end
+       // invalid state --> go to idle state
+       default: state <= IDLE;
+     endcase
+   end
+ end
+ 
+ dram_memif u_dram_memif (
+
+    // Memory interface ports
+    .ddr3_addr                      (ddr3_addr),  // output [13:0]		ddr3_addr
+    .ddr3_ba                        (ddr3_ba),  // output [2:0]		ddr3_ba
+    .ddr3_cas_n                     (ddr3_cas_n),  // output			ddr3_cas_n
+    .ddr3_ck_n                      (ddr3_ck_n),  // output [0:0]		ddr3_ck_n
+    .ddr3_ck_p                      (ddr3_ck_p),  // output [0:0]		ddr3_ck_p
+    .ddr3_cke                       (ddr3_cke),  // output [0:0]		ddr3_cke
+    .ddr3_ras_n                     (ddr3_ras_n),  // output			ddr3_ras_n
+    .ddr3_reset_n                   (ddr3_reset_n),  // output			ddr3_reset_n
+    .ddr3_we_n                      (ddr3_we_n),  // output			ddr3_we_n
+    .ddr3_dq                        (ddr3_dq),  // inout [15:0]		ddr3_dq
+    .ddr3_dqs_n                     (ddr3_dqs_n),  // inout [1:0]		ddr3_dqs_n
+    .ddr3_dqs_p                     (ddr3_dqs_p),  // inout [1:0]		ddr3_dqs_p
+    .init_calib_complete            (init_calib_complete),  // output			init_calib_complete
       
-       .ddr3_cs_n                      (ddr3_cs_n),
-       .ddr3_dm                        (ddr3_dm),
-       .ddr3_odt                       (ddr3_odt),
-// Application interface ports
-       .app_addr                       (lpddr_addr),
-       .app_cmd                        (lpddr_cmd),
-       .app_en                         (lpddr_cmd_en),
-       .app_wdf_data                   (sdram_data_in),
-       .app_wdf_end                    (1'b0),
-       .app_wdf_wren                   (lpddr_wr_en),
-       .app_rd_data                    (sdram_resp_in),
-       .app_rd_data_end                (lpddr_rd_empty),
-       //.app_rd_data_valid              (1'b0),
-       .app_rdy                        (int_sdram_ready),
-       .app_wdf_rdy                    (lpddr_wr_rdy),
-       .app_sr_req                     (1'b0),
-       .app_ref_req                    (1'b0),
-       .app_zq_req                     (1'b0),
-       //.app_sr_active                  (1'b0),
-       //.app_ref_ack                    (1'b0),
-       //.app_zq_ack                     (zq_ack),
-       .ui_clk                         (lpddr_clk),
-       //.ui_clk_sync_rst                (lpddr_reset),
-       .app_wdf_mask                   (4'b0000),
-// System Clock Ports
-       .sys_clk_i                      (dram_clk),
-       .clk_ref_i                      (ref_clk),
-       .sys_rst                        (sys_rst)
-       );
-
-//   mig_32bit lpddr_intf
-//     (
-//      .c3_sys_clk(sysclk),
-//      .c3_sys_rst_i(lpddr_reset),
-//      .c3_clk0(lpddr_clk),
-//      .c3_rst0(),
-//      .mcb3_dram_dq(mcb3_dram_dq),
-//      .mcb3_dram_a(mcb3_dram_a),
-//      .mcb3_dram_ba(mcb3_dram_ba),
-//      .mcb3_dram_cke(mcb3_dram_cke),
-//      .mcb3_dram_ras_n(mcb3_dram_ras_n),
-//      .mcb3_dram_cas_n(mcb3_dram_cas_n),
-//      .mcb3_dram_we_n(mcb3_dram_we_n),
-//      .mcb3_dram_dm(mcb3_dram_dm),
-//      .mcb3_dram_udqs(mcb3_dram_udqs),
-//      .mcb3_rzq(mcb3_rzq),
-//      .mcb3_dram_udm(mcb3_dram_udm),
-//      .mcb3_dram_dqs(mcb3_dram_dqs),
-//      .mcb3_dram_ck(mcb3_dram_ck),
-//      .mcb3_dram_ck_n(mcb3_dram_ck_n),
-//      .c3_calib_done(c3_calib_done),
-//      .c3_p0_cmd_clk(clk),
-//      .c3_p0_cmd_en(lpddr_cmd_en),
-//      .c3_p0_cmd_instr(lpddr_cmd),
-//      .c3_p0_cmd_bl(6'd0),
-//      .c3_p0_cmd_byte_addr(lpddr_addr),
-//      .c3_p0_cmd_empty(),
-//      .c3_p0_cmd_full(lpddr_cmd_full),
-//      .c3_p0_wr_clk(clk),
-//      .c3_p0_wr_en(lpddr_wr_en),
-//      .c3_p0_wr_mask(4'b0000),
-//      .c3_p0_wr_data(sdram_data_in),
-//      .c3_p0_wr_full(lpddr_wr_full),
-//      .c3_p0_wr_empty(),
-//      .c3_p0_wr_count(),
-//      .c3_p0_wr_underrun(),
-//      .c3_p0_wr_error(),
-//      .c3_p0_rd_clk(clk),
-//      .c3_p0_rd_en(1'b1),
-//      .c3_p0_rd_data(sdram_resp_in),
-//      .c3_p0_rd_full(),
-//      .c3_p0_rd_empty(lpddr_rd_empty)
-//      /*AUTOINST*/);
-
-`ifdef INFER_VRAM
-   vram videoram (
-     .clk1(cpu_clk),
-     .en1 (vram_cpu_req),
-     .we (vram_cpu_write),
-     .addr1(vram_cpu_addr),
-     .di(vram_cpu_data_in),
-     .res1(vram_cpu_data_out),
-     
-     .clk2(vga_clk),
-     .en2(vram_vga_req),
-     .addr2(vram_vga_addr),
-     .res2(vram_vga_ram_out)
-   );
-   `else
-   wire ena_a = vram_cpu_req | vram_cpu_write;
-   wire ena_b = vram_vga_req | 1'b0;
-   ise_vram inst
-     (
-      .clka(cpu_clk),
-      .ena(ena_a),
-      .wea(vram_cpu_write),
-      .addra(vram_cpu_addr),
-      .dina(vram_cpu_data_in),
-      .douta(vram_cpu_data_out),
-      .clkb(vga_clk),
-      .enb(ena_b),
-      .web(1'b0),
-      .addrb(vram_vga_addr),
-      .dinb(32'b0),
-      .doutb(vram_vga_ram_out)
-      /*AUTOINST*/);
-`endif
-   assign vram_vga_data_out = vram_vga_ready ? vram_vga_ram_out : vram_vga_data;
-
-   reg vga_reset;
-   reg r_pipe;
-
-   always @(posedge vga_clk)
-     if (vga_reset) begin
-	  /*AUTORESET*/
-	  // Beginning of autoreset for uninitialized flops
-	  vram_vga_data <= 32'h0;
-	  // End of automatics
-      end else if (vram_vga_ready)
-       vram_vga_data <= vram_vga_ram_out;
-   
-   always @(posedge vga_clk, posedge reset)
-	if (reset)
-		{ vga_reset, r_pipe } <= 2'b01;
-	else
-		{ vga_reset, r_pipe } <= { r_pipe, 1'b0 };
-
-   always @(posedge vga_clk)
-     if (vga_reset) begin
-	/*AUTORESET*/
-	// Beginning of autoreset for uninitialized flops
-	vram_vga_ready_dly <= 4'h0;
-	// End of automatics
-     end else
-       vram_vga_ready_dly <= { vram_vga_ready_dly[2:0], vram_vga_req };
-
-   assign vram_vga_ready = vram_vga_ready_dly[0];
-   assign vram_cpu_done = 1'b1;
-
-   always @(posedge cpu_clk)
-     if (reset) begin
-	/*AUTORESET*/
-	// Beginning of autoreset for uninitialized flops
-	vram_cpu_ready_dly <= 4'h0;
-	// End of automatics
-     end else
-       vram_cpu_ready_dly <= { vram_cpu_ready_dly[2:0], vram_cpu_req };
-
-   assign vram_cpu_ready = vram_cpu_ready_dly[3];
-   /// microcode is no-op
-   assign mcr_data_out = 0;
-   assign mcr_ready = 0;
-   assign mcr_done = 0;
-
+    .ddr3_cs_n                      (ddr3_cs_n),  // output [0:0]		ddr3_cs_n
+    .ddr3_dm                        (ddr3_dm),  // output [1:0]		ddr3_dm
+    .ddr3_odt                       (ddr3_odt),  // output [0:0]		ddr3_odt
+    // Application interface ports
+    .app_addr                       (app_addr),  // input [27:0]		app_addr
+    .app_cmd                        (app_cmd),  // input [2:0]		app_cmd
+    .app_en                         (app_en),  // input				app_en
+    .app_wdf_data                   (app_wdf_data),  // input [127:0]		app_wdf_data
+    .app_wdf_end                    (app_wdf_end),  // input				app_wdf_end
+    .app_wdf_wren                   (app_wdf_wren),  // input				app_wdf_wren
+    .app_rd_data                    (app_rd_data),  // output [127:0]		app_rd_data
+    .app_rd_data_end                (app_rd_data_end),  // output			app_rd_data_end
+    .app_rd_data_valid              (app_rd_data_valid),  // output			app_rd_data_valid
+    .app_rdy                        (app_rdy),  // output			app_rdy
+    .app_wdf_rdy                    (app_wdf_rdy),  // output			app_wdf_rdy
+    .app_sr_req                     (app_sr_req),  // input			app_sr_req
+    .app_ref_req                    (app_ref_req),  // input			app_ref_req
+    .app_zq_req                     (app_zq_req),  // input			app_zq_req
+    .app_sr_active                  (app_sr_active),  // output			app_sr_active
+    .app_ref_ack                    (app_ref_ack),  // output			app_ref_ack
+    .app_zq_ack                     (app_zq_ack),  // output			app_zq_ack
+    .ui_clk                         (ui_clk),  // output			ui_clk
+    .ui_clk_sync_rst                (ui_clk_sync_rst),  // output			ui_clk_sync_rst
+    //.app_wdf_mask                   (15'b0000000000001111),  // input [15:0]		app_wdf_mask
+    .app_wdf_mask                     (16'b1111111111110000),  // input [15:0]		app_wdf_mask
+    // System Clock Ports
+    .sys_clk_i                       (sdram_clk),
+    // Reference Clock Ports
+    .clk_ref_i                      (ref_clk),
+    .sys_rst                        (sys_rst) // input sys_rst
+    );
 endmodule
-
 `default_nettype wire
-
-// Local Variables:
-// verilog-library-directories: ("." "cores/xilinx" "cores/xilinx/mig_32bit/user_design/rtl")
-// End:

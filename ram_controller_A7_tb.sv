@@ -5,7 +5,7 @@
 // 
 // Create Date: 02/13/2021 01:41:18 PM
 // Design Name: 
-// Module Name: memory_controller_A7_tb
+// Module Name: ram_controller_A7_tb
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -25,7 +25,7 @@
 `endif
 // ISIM: wave add /
 
-module memory_controller_A7_tb;
+module ram_controller_A7_tb;
    // 200MHz reference clock
    reg clk200;
    reg clk100;
@@ -152,7 +152,7 @@ module memory_controller_A7_tb;
      .odt     (ddr3_odt)
    );   
    
-   memory_controller_A7 DUT(
+   ram_controller_A7 DUT(
      .ref_clk(clk200),
      .sdram_clk(clk100),
      .vga_clk(clk50),
