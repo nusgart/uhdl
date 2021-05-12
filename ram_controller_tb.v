@@ -380,3 +380,9 @@ module ram_controller_tb;
    end
 
 endmodule
+
+`default_nettype wire
+
+// Local Variables:
+// verilog-library-directories: (".")
+// End:
