@@ -7,38 +7,26 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module scancode_convert(/*AUTOARG*/
-   // Outputs
-   strobe_out, keycode,
-   // Inputs
-   clk, reset, strobe_in, code
-   );
+module scancode_convert
+  (input wire 	     strobe_in,
+   input wire [7:0]  code,
+   output wire 	     strobe_out,
+   output reg [15:0] keycode,
 
-   input wire clk;
-   input wire reset;
+   input wire 	     clk,
+   input wire 	     reset);
 
-   input wire strobe_in;
-   input [7:0] code;
-   output wire strobe_out;
-   output [15:0] keycode;
-
-   ////////////////////////////////////////////////////////////////////////////////
-
-   reg [7:0] sc = 0;
-   reg e0_prefix = 0;
+   reg [7:0] 	     sc = 0;
+   reg 		     e0_prefix = 0;
 
    /*AUTOWIRE*/
    // Beginning of automatic wires (for undeclared instantiated-module outputs)
    wire [7:0]		data;			// From scancode_rom of scancode_rom.v
    // End of automatics
-   /*AUTOREG*/
-   // Beginning of automatic regs (for this module's undeclared outputs)
-   reg [15:0]		keycode;
-   // End of automatics
 
    ////////////////////////////////////////////////////////////////////////////////
 
-   wire [8:0] addr = {e0_prefix, sc};
+   wire [8:0] 		addr = {e0_prefix, sc};
    scancode_rom scancode_rom(/*AUTOINST*/
 			     // Outputs
 			     .data		(data[7:0]),
