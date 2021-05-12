@@ -12,22 +12,19 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module VMAS(/*AUTOARG*/
-   // Outputs
-   mapi, vmas,
-   // Inputs
-   lc, md, ob, vma, memprepare, vmasel
-   );
+module VMAS
+  (input wire [25:0]  lc,
+   input wire [31:0]  md,
+   input wire [31:0]  ob,
+   input wire [31:0]  vma,
+   input wire	      memprepare,
+   input wire	      vmasel,
 
-   input [25:0] lc;
-   input [31:0] md;
-   input [31:0] ob;
-   input [31:0] vma;
-   input wire memprepare;
-   input wire vmasel;
+   output wire [23:8] mapi,
+   output wire [31:0] vmas,
 
-   output [23:8] mapi;
-   output [31:0] vmas;
+   input wire	      clk,
+   input wire	      reset);
 
    ////////////////////////////////////////////////////////////////////////////////
 

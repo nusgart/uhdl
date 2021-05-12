@@ -12,56 +12,50 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module SPY0(/*AUTOARG*/
-   // Outputs
-   ldclk, lddbirh, lddbirl, lddbirm, ldmdh, ldmdl, ldmode, ldopc,
-   ldscratch1, ldscratch2, ldvmah, ldvmal, spy_ah, spy_al, spy_bd,
-   spy_disk, spy_flag1, spy_flag2, spy_irh, spy_irl, spy_irm, spy_mdh,
-   spy_mdl, spy_mh, spy_ml, spy_obh, spy_obh_, spy_obl, spy_obl_,
-   spy_opc, spy_pc, spy_scratch, spy_sth, spy_stl, spy_vmah, spy_vmal,
-   // Inputs
-   eadr, dbread, dbwrite
-   );
+module SPY0
+  (input wire [4:0] eadr,
+   input wire	    dbread,
+   input wire	    dbwrite,
 
-   input [4:0] eadr;
-   input wire dbread;
-   input wire dbwrite;
-   output wire ldclk;
-   output wire lddbirh;
-   output wire lddbirl;
-   output wire lddbirm;
-   output wire ldmdh;
-   output wire ldmdl;
-   output wire ldmode;
-   output wire ldopc;
-   output wire ldscratch1;
-   output wire ldscratch2;
-   output wire ldvmah;
-   output wire ldvmal;
-   output wire spy_ah;
-   output wire spy_al;
-   output wire spy_bd;
-   output wire spy_disk;
-   output wire spy_flag1;
-   output wire spy_flag2;
-   output wire spy_irh;
-   output wire spy_irl;
-   output wire spy_irm;
-   output wire spy_mdh;
-   output wire spy_mdl;
-   output wire spy_mh;
-   output wire spy_ml;
-   output wire spy_obh;
-   output wire spy_obh_;
-   output wire spy_obl;
-   output wire spy_obl_;
-   output wire spy_opc;
-   output wire spy_pc;
-   output wire spy_scratch;
-   output wire spy_sth;
-   output wire spy_stl;
-   output wire spy_vmah;
-   output wire spy_vmal;
+   output wire	    ldclk,
+   output wire	    lddbirh,
+   output wire	    lddbirl,
+   output wire	    lddbirm,
+   output wire	    ldmdh,
+   output wire	    ldmdl,
+   output wire	    ldmode,
+   output wire	    ldopc,
+   output wire	    ldscratch1,
+   output wire	    ldscratch2,
+   output wire	    ldvmah,
+   output wire	    ldvmal,
+   output wire	    spy_ah,
+   output wire	    spy_al,
+   output wire	    spy_bd,
+   output wire	    spy_disk,
+   output wire	    spy_flag1,
+   output wire	    spy_flag2,
+   output wire	    spy_irh,
+   output wire	    spy_irl,
+   output wire	    spy_irm,
+   output wire	    spy_mdh,
+   output wire	    spy_mdl,
+   output wire	    spy_mh,
+   output wire	    spy_ml,
+   output wire	    spy_obh,
+   output wire	    spy_obh_,
+   output wire	    spy_obl,
+   output wire	    spy_obl_,
+   output wire	    spy_opc,
+   output wire	    spy_pc,
+   output wire	    spy_scratch,
+   output wire	    spy_sth,
+   output wire	    spy_stl,
+   output wire	    spy_vmah,
+   output wire	    spy_vmal,
+
+   input wire	    clk,
+   input wire	    reset);
 
    ////////////////////////////////////////////////////////////////////////////////
 

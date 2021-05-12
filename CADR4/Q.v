@@ -12,27 +12,17 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module Q(/*AUTOARG*/
-   // Outputs
-   q,
-   // Inputs
-   clk, reset, state_fetch, qs0, qs1, alu
-   );
+module Q
+  (input wire	     state_fetch,
 
-   input wire clk;
-   input wire reset;
+   input wire	     qs0,
+   input wire	     qs1,
 
-   input wire state_fetch;
+   input wire [32:0] alu,
+   output reg [31:0] q,
 
-   input wire qs0;
-   input wire qs1;
-
-   input [32:0] alu;
-   output [31:0] q;
-
-   ////////////////////////////////////////////////////////////////////////////////
-
-   reg [31:0] q;
+   input wire	     clk,
+   input wire	     reset);
 
    ////////////////////////////////////////////////////////////////////////////////
 

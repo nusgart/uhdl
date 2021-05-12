@@ -12,41 +12,31 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module MD(/*AUTOARG*/
-   // Outputs
-   md, mddrive, mdgetspar,
-   // Inputs
-   clk, reset, state_alu, state_fetch, state_mmu, state_write, spy_in,
-   mds, destmdr, ldmdh, ldmdl, loadmd, memrq, srcmd
-   );
+module MD
+  (input wire	     state_alu,
+   input wire	     state_fetch,
+   input wire	     state_mmu,
+   input wire	     state_write,
 
-   input wire clk;
-   input wire reset;
+   input wire [15:0] spy_in,
+   input wire [31:0] mds,
+   input wire	     destmdr,
+   input wire	     ldmdh,
+   input wire	     ldmdl,
+   input wire	     loadmd,
+   input wire	     memrq,
+   input wire	     srcmd,
+   output reg [31:0] md,
+   output wire	     mddrive,
+   output wire	     mdgetspar,
 
-   input wire state_alu;
-   input wire state_fetch;
-   input wire state_mmu;
-   input wire state_write;
+   input wire	     clk,
+   input wire	     reset);
 
-   input [15:0] spy_in;
-   input [31:0] mds;
-   input wire destmdr;
-   input wire ldmdh;
-   input wire ldmdl;
-   input wire loadmd;
-   input wire memrq;
-   input wire srcmd;
-   output [31:0] md;
-   output wire mddrive;
-   output wire mdgetspar;
-
-   ////////////////////////////////////////////////////////////////////////////////
-
-   reg [31:0] md;
-   reg mdhaspar;
-   reg mdpar;
-   wire ignpar;
-   wire mdclk;
+   reg		     mdhaspar;
+   reg		     mdpar;
+   wire		     ignpar;
+   wire		     mdclk;
 
    ////////////////////////////////////////////////////////////////////////////////
 

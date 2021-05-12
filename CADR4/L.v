@@ -12,26 +12,16 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module L(/*AUTOARG*/
-   // Outputs
-   l,
-   // Inputs
-   clk, reset, state_alu, state_write, ob, vmaenb
-   );
+module L
+  (input wire	     state_alu,
+   input wire	     state_write,
 
-   input wire clk;
-   input wire reset;
+   input wire [31:0] ob,
+   input wire	     vmaenb,
+   output reg [31:0] l,
 
-   input wire state_alu;
-   input wire state_write;
-
-   input [31:0] ob;
-   input wire vmaenb;
-   output [31:0] l;
-
-   ////////////////////////////////////////////////////////////////////////////////
-
-   reg [31:0] l;
+   input wire	     clk,
+   input wire	     reset);
 
    ////////////////////////////////////////////////////////////////////////////////
 

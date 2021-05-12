@@ -12,38 +12,26 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module PDLPTR(/*AUTOARG*/
-   // Outputs
-   pdlidx, pdlptr, pidrive, ppdrive,
-   // Inputs
-   clk, reset, state_alu, state_fetch, state_read, state_write, ob,
-   destpdlp, destpdlx, pdlcnt, srcpdlidx, srcpdlpop, srcpdlptr
-   );
+module PDLPTR
+  (input wire	     state_alu,
+   input wire	     state_fetch,
+   input wire	     state_read,
+   input wire	     state_write,
 
-   input wire clk;
-   input wire reset;
+   input wire [31:0] ob,
+   input wire	     destpdlp,
+   input wire	     destpdlx,
+   input wire	     pdlcnt,
+   input wire	     srcpdlidx,
+   input wire	     srcpdlpop,
+   input wire	     srcpdlptr,
+   output reg [9:0]  pdlidx,
+   output reg [9:0]  pdlptr,
+   output wire	     pidrive,
+   output wire	     ppdrive,
 
-   input wire state_alu;
-   input wire state_fetch;
-   input wire state_read;
-   input wire state_write;
-
-   input [31:0] ob;
-   input wire destpdlp;
-   input wire destpdlx;
-   input wire pdlcnt;
-   input wire srcpdlidx;
-   input wire srcpdlpop;
-   input wire srcpdlptr;
-   output [9:0] pdlidx;
-   output [9:0] pdlptr;
-   output wire pidrive;
-   output wire ppdrive;
-
-   ////////////////////////////////////////////////////////////////////////////////
-
-   reg [9:0] pdlidx;
-   reg [9:0] pdlptr;
+   input wire	     clk,
+   input wire	     reset);
 
    ////////////////////////////////////////////////////////////////////////////////
 

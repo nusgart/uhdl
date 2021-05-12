@@ -12,65 +12,44 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module OLORD1(/*AUTOARG*/
-   // Outputs
-   scratch, errstop, idebug, lpc_hold, machrun, nop11, opcclk, opcinh,
-   promdisable, promdisabled, srun, ssdone, stat_ovf, stathalt,
-   // Inputs
-   clk, reset, state_fetch, spy_in, boot, errhalt, ldclk, ldmode,
-   ldopc, ldscratch1, ldscratch2, set_promdisable, statstop, waiting
-   );
+module OLORD1
+  (input wire	     state_fetch,
 
-   input wire clk;
-   input wire reset;
+   input wire [15:0] spy_in,
+   input wire	     boot,
+   input wire	     errhalt,
+   input wire	     ldclk,
+   input wire	     ldmode,
+   input wire	     ldopc,
+   input wire	     ldscratch1,
+   input wire	     ldscratch2,
+   input wire	     set_promdisable,
+   input wire	     statstop,
+   input wire	     waiting,
+   output reg [15:0] scratch,
+   output reg	     errstop,
+   output reg	     idebug,
+   output reg	     lpc_hold,
+   output wire	     machrun,
+   output reg	     nop11,
+   output reg	     opcclk,
+   output reg	     opcinh,
+   output reg	     promdisable,
+   output reg	     promdisabled,
+   output reg	     srun,
+   output reg	     ssdone,
+   output wire	     stat_ovf,
+   output wire	     stathalt,
 
-   input wire state_fetch;
+   input wire	     clk,
+   input wire	     reset);
 
-   input [15:0] spy_in;
-   input wire boot;
-   input wire errhalt;
-   input wire ldclk;
-   input wire ldmode;
-   input wire ldopc;
-   input wire ldscratch1;
-   input wire ldscratch2;
-   input wire set_promdisable;
-   input wire statstop;
-   input wire waiting;
-   output [15:0] scratch;
-   output errstop;
-   output idebug;
-   output lpc_hold;
-   output wire machrun;
-   output nop11;
-   output opcclk;
-   output opcinh;
-   output promdisable;
-   output promdisabled;
-   output srun;
-   output ssdone;
-   output wire stat_ovf;
-   output wire stathalt;
-
-   ////////////////////////////////////////////////////////////////////////////////
-
-   reg [15:0] scratch;
-   reg errstop;
-   reg idebug;
-   reg ldstat;
-   reg lpc_hold;
-   reg nop11;
-   reg opcclk;
-   reg opcinh;
-   reg promdisable;
-   reg promdisabled;
-   reg run;
-   reg srun;
-   reg ssdone;
-   reg sstep;
-   reg stathenb;
-   reg step;
-   reg trapenb;
+   reg		     ldstat;
+   reg		     run;
+   reg		     sstep;
+   reg		     stathenb;
+   reg		     step;
+   reg		     trapenb;
 
    ////////////////////////////////////////////////////////////////////////////////
 

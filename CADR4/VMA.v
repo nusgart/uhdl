@@ -12,33 +12,22 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module VMA(/*AUTOARG*/
-   // Outputs
-   vma, vmadrive,
-   // Inputs
-   clk, reset, state_alu, state_fetch, state_write, spy_in, vmas,
-   ldvmah, ldvmal, srcvma, vmaenb
-   );
+module VMA
+  (input wire	     state_alu,
+   input wire	     state_fetch,
+   input wire	     state_write,
 
-   input wire clk;
-   input wire reset;
+   input wire [15:0] spy_in,
+   input wire [31:0] vmas,
+   input wire	     ldvmah,
+   input wire	     ldvmal,
+   input wire	     srcvma,
+   input wire	     vmaenb,
+   output reg [31:0] vma,
+   output wire	     vmadrive,
 
-   input wire state_alu;
-   input wire state_fetch;
-   input wire state_write;
-
-   input [15:0] spy_in;
-   input [31:0] vmas;
-   input wire ldvmah;
-   input wire ldvmal;
-   input wire srcvma;
-   input wire vmaenb;
-   output [31:0] vma;
-   output wire vmadrive;
-
-   ////////////////////////////////////////////////////////////////////////////////
-
-   reg [31:0] vma;
+   input wire	     clk,
+   input wire	     reset);
 
    ////////////////////////////////////////////////////////////////////////////////
 

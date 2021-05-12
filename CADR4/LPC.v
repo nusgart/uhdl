@@ -12,27 +12,19 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module LPC(/*AUTOARG*/
-   // Outputs
-   wpc,
-   // Inputs
-   clk, reset, state_fetch, lpc_hold, pc, ir, irdisp
-   );
+module LPC
+  (input wire	      state_fetch,
 
-   input wire clk;
-   input wire reset;
+   input wire	      lpc_hold,
+   input wire [13:0]  pc,
+   input wire [48:0]  ir,
+   input wire	      irdisp,
+   output wire [13:0] wpc,
 
-   input wire state_fetch;
+   input wire	      clk,
+   input wire	      reset);
 
-   input wire lpc_hold;
-   input [13:0] pc;
-   input [48:0] ir;
-   input wire irdisp;
-   output [13:0] wpc;
-
-   ////////////////////////////////////////////////////////////////////////////////
-
-   reg [13:0] lpc;
+   reg [13:0]	      lpc;
 
    ////////////////////////////////////////////////////////////////////////////////
 

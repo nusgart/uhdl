@@ -12,36 +12,27 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module DSPCTL(/*AUTOARG*/
-   // Outputs
-   dmask, dc, dispwr, dmapbenb,
-   // Inputs
-   clk, reset, state_fetch, funct, ir, irdisp
-   );
+module DSPCTL
+  (input wire	     state_fetch,
 
-   input wire clk;
-   input wire reset;
+   input wire [3:0]  funct,
+   input wire [48:0] ir,
+   input wire	     irdisp,
+   output wire [6:0] dmask,
+   output reg [9:0] dc,
+   output wire	     dispwr,
+   output wire	     dmapbenb,
 
-   input wire state_fetch;
+   input wire	     clk,
+   input wire	     reset);
 
-   input [3:0] funct;
-   input [48:0] ir;
-   input wire irdisp;
-   output [6:0] dmask;
-   output [9:0] dc;
-   output wire dispwr;
-   output wire dmapbenb;
+   localparam	     ADDR_WIDTH = 2;
+   localparam	     DATA_WIDTH = 7;
+   localparam	     MEM_DEPTH = 8;
 
-   ////////////////////////////////////////////////////////////////////////////////
+   reg [7:0]	     q;
 
-   localparam ADDR_WIDTH = 2;
-   localparam DATA_WIDTH = 7;
-   localparam MEM_DEPTH = 8;
-
-   reg [9:0] dc;
-   reg [7:0] q;
-   
-   wire nc_dmask;
+   wire		     nc_dmask;
 
    ////////////////////////////////////////////////////////////////////////////////
 
@@ -54,7 +45,7 @@ module DSPCTL(/*AUTOARG*/
      else if (state_fetch && irdisp)
        dc <= ir[41:32];
 
-   wire   nclk = ~clk;
+   wire nclk = ~clk;
    always @(posedge nclk)
      case ({1'b0, 1'b0, ir[7], ir[6], ir[5]})
        5'h00:   q = 8'h00;

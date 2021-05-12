@@ -15,40 +15,31 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module DRAM(/*AUTOARG*/
-   // Outputs
-   dpc, dn, dp, dr,
-   // Inputs
-   clk, reset, state_prefetch, state_write, vmo, a, r, ir, dmask,
-   dispwr
-   );
+module DRAM
+  (input wire	      state_prefetch,
+   input wire	      state_write,
 
-   input wire clk;
-   input wire reset;
+   input wire [23:0]  vmo,
+   input wire [31:0]  a,
+   input wire [31:0]  r,
+   input wire [48:0]  ir,
+   input wire [6:0]   dmask,
+   input wire	      dispwr,
+   output wire [13:0] dpc,
+   output wire	      dn,
+   output wire	      dp,
+   output wire	      dr,
 
-   input wire state_prefetch;
-   input wire state_write;
+   input wire	      clk,
+   input wire	      reset);
 
-   input [23:0] vmo;
-   input [31:0] a;
-   input [31:0] r;
-   input [48:0] ir;
-   input [6:0] dmask;
-   input wire dispwr;
-   output [13:0] dpc;
-   output wire dn;
-   output wire dp;
-   output wire dr;
+   localparam	      ADDR_WIDTH = 11;
+   localparam	      DATA_WIDTH = 17;
+   localparam	      MEM_DEPTH = 2048;
 
-   ////////////////////////////////////////////////////////////////////////////////
-
-   localparam ADDR_WIDTH = 11;
-   localparam DATA_WIDTH = 17;
-   localparam MEM_DEPTH = 2048;
-
-   wire [10:0] dadr;
-   wire daddr0;
-   wire dwe;
+   wire [10:0]	      dadr;
+   wire		      daddr0;
+   wire		      dwe;
 
    ////////////////////////////////////////////////////////////////////////////////
 
@@ -112,5 +103,5 @@ endmodule
 `default_nettype wire
 
 // Local Variables:
-// verilog-library-directories: (".." "../cores/xilinx")
+// verilog-library-directories: (".." "../boards/pipistrello/cores/xilinx")
 // End:

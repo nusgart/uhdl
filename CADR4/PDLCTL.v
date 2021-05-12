@@ -12,45 +12,35 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module PDLCTL(/*AUTOARG*/
-   // Outputs
-   pdla, pdlcnt, pdldrive, pdlenb, pdlwrite, prp, pwp,
-   // Inputs
-   clk, reset, state_alu, state_fetch, state_mmu, state_read,
-   state_write, ir, pdlidx, pdlptr, destpdl_p, destpdl_x, destpdltop,
-   nop, srcpdlpop, srcpdltop
-   );
+module PDLCTL
+  (input wire	     state_alu,
+   input wire	     state_fetch,
+   input wire	     state_mmu,
+   input wire	     state_read,
+   input wire	     state_write,
 
-   input wire clk;
-   input wire reset;
+   input wire [48:0] ir,
+   input wire [9:0]  pdlidx,
+   input wire [9:0]  pdlptr,
+   input wire	     destpdl_p,
+   input wire	     destpdl_x,
+   input wire	     destpdltop,
+   input wire	     nop,
+   input wire	     srcpdlpop,
+   input wire	     srcpdltop,
+   output wire [9:0] pdla,
+   output wire	     pdlcnt,
+   output wire	     pdldrive,
+   output wire	     pdlenb,
+   output wire	     pdlwrite,
+   output wire	     prp,
+   output wire	     pwp,
 
-   input wire state_alu;
-   input wire state_fetch;
-   input wire state_mmu;
-   input wire state_read;
-   input wire state_write;
+   input wire	     clk,
+   input wire	     reset);
 
-   input [48:0] ir;
-   input [9:0] pdlidx;
-   input [9:0] pdlptr;
-   input wire destpdl_p;
-   input wire destpdl_x;
-   input wire destpdltop;
-   input wire nop;
-   input wire srcpdlpop;
-   input wire srcpdltop;
-   output [9:0] pdla;
-   output wire pdlcnt;
-   output wire pdldrive;
-   output wire pdlenb;
-   output wire pdlwrite;
-   output wire prp;
-   output wire pwp;
-
-   ////////////////////////////////////////////////////////////////////////////////
-
-   reg pwidx;
-   wire pdlp;
+   reg		     pwidx;
+   wire		     pdlp;
 
    ////////////////////////////////////////////////////////////////////////////////
 

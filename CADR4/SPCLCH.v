@@ -9,15 +9,12 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module SPCLCH(/*AUTOARG*/
-   // Outputs
-   spc,
-   // Inputs
-   spco
-   );
+module SPCLCH
+  (input wire [18:0]  spco,
+   output wire [18:0] spc,
 
-   input [18:0] spco;
-   output [18:0] spc;
+   input wire	      clk,
+   input wire	      reset);
 
    ////////////////////////////////////////////////////////////////////////////////
 

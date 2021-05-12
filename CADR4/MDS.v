@@ -12,24 +12,19 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module MDS(/*AUTOARG*/
-   // Outputs
-   mds,
-   // Inputs
-   busint_bus, md, ob, loadmd, mdsel, memdrive
-   );
+module MDS
+  (input wire [31:0]  busint_bus,
+   input wire [31:0]  md,
+   input wire [31:0]  ob,
+   input wire	      loadmd,
+   input wire	      mdsel,
+   input wire	      memdrive,
+   output wire [31:0] mds,
 
-   input [31:0] busint_bus;
-   input [31:0] md;
-   input [31:0] ob;
-   input wire loadmd;
-   input wire mdsel;
-   input wire memdrive;
-   output [31:0] mds;
+   input wire	      clk,
+   input wire	      reset);
 
-   ////////////////////////////////////////////////////////////////////////////////
-
-   wire [31:0] mem;
+   wire [31:0]	      mem;
 
    ////////////////////////////////////////////////////////////////////////////////
 

@@ -12,30 +12,21 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module DEBUG(/*AUTOARG*/
-   // Outputs
-   i,
-   // Inputs
-   clk, reset, spy_in, iprom, iram, idebug, lddbirh, lddbirl, lddbirm,
-   promenable
-   );
+module DEBUG
+  (input wire [15:0]  spy_in,
+   input wire [48:0]  iprom,
+   input wire [48:0]  iram,
+   input wire	      idebug,
+   input wire	      lddbirh,
+   input wire	      lddbirl,
+   input wire	      lddbirm,
+   input wire	      promenable,
+   output wire [48:0] i,
 
-   input wire clk;
-   input wire reset;
+   input wire	      clk,
+   input wire	      reset);
 
-   input [15:0] spy_in;
-   input [48:0] iprom;
-   input [48:0] iram;
-   input wire idebug;
-   input wire lddbirh;
-   input wire lddbirl;
-   input wire lddbirm;
-   input wire promenable;
-   output [48:0] i;
-
-   ////////////////////////////////////////////////////////////////////////////////
-
-   reg [47:0] spy_ir;
+   reg [47:0]	      spy_ir;
 
    ////////////////////////////////////////////////////////////////////////////////
 

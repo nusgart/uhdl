@@ -9,7 +9,8 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module MBCPIN(/*AUTOARG*/);
+module MBCPIN
+  ();
 
 endmodule
 

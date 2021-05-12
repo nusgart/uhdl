@@ -12,23 +12,18 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module ICTL(/*AUTOARG*/
-   // Outputs
-   iwe,
-   // Inputs
-   state_write, idebug, iwrited, promdisabled
-   );
+module ICTL
+  (input wire  state_write,
 
-   input wire state_write;
+   input wire  idebug,
+   input wire  iwrited,
+   input wire  promdisabled,
+   output wire iwe,
 
-   input wire idebug;
-   input wire iwrited;
-   input wire promdisabled;
-   output wire iwe;
+   input wire  clk,
+   input wire  reset);
 
-   ////////////////////////////////////////////////////////////////////////////////
-
-   wire ramdisable;
+   wire        ramdisable;
 
    ////////////////////////////////////////////////////////////////////////////////
 

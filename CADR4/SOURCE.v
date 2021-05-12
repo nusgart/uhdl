@@ -12,67 +12,58 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module SOURCE(/*AUTOARG*/
-   // Outputs
-   funct, dest, div, imod, iralu, irbyte, irdisp, irjump, mul, destlc,
-   destintctl, destpdltop, destpdl_p, destpdl_x, destpdlx, destpdlp,
-   destspc, destimod0, destimod1, destvma, destmdr, destmem, destm,
-   srcdc, srcspc, srcpdlptr, srcpdlidx, srcpdltop, srcopc, srcq,
-   srcvma, srcmap, srcmd, srclc, srcspcpop, srcpdlpop,
-   // Inputs
-   ir, idebug, iwrited, nop
-   );
-
-   input [48:0] ir;
-   input wire idebug;
-   input wire iwrited;
-   input wire nop;
-   output [3:0] funct;
-   output wire dest;
+module SOURCE
+  (input wire [48:0] ir,
+   input wire	     idebug,
+   input wire	     iwrited,
+   input wire	     nop,
+   output wire [3:0] funct,
+   output wire	     dest,
 
 
-   output wire div;
-   output wire imod;
-   output wire iralu;
-   output wire irbyte;
-   output wire irdisp;
-   output wire irjump;
-   output wire mul;
+   output wire	     div,
+   output wire	     imod,
+   output wire	     iralu,
+   output wire	     irbyte,
+   output wire	     irdisp,
+   output wire	     irjump,
+   output wire	     mul,
 
    // Destination (see "(cadr) Destinations" for details):
-   output wire destlc;               // Location Counter.
-   output wire destintctl;           // Interrupt Control.
-   output wire destpdltop;           // PDL (addressed by Pointer).
-   output wire destpdl_p;            // PDL (addressed by Pointer), push.
-   output wire destpdl_x;            // PDL (addressed by Index).
-   output wire destpdlx;             // PDL Index.
-   output wire destpdlp;             // PDL Pointer.
-   output wire destspc;              // SPC data, push.
-   output wire destimod0;            // "OA register", bits <25-0>.
-   output wire destimod1;            // "OA register", bits <47-26>.
-   output wire destvma;              // VMA register (memory address).
-   output wire destmdr;              // MD register (memory data).
-   output wire destmem; ///---!!! DESTMEM: What is this in the CADR document?
-   output wire destm;   ///---!!! DESTM: What is this in the CADR documen?t
+   output wire	     destlc,	 // Location Counter.
+   output wire	     destintctl, // Interrupt Control.
+   output wire	     destpdltop, // PDL (addressed by Pointer).
+   output wire	     destpdl_p,	 // PDL (addressed by Pointer), push.
+   output wire	     destpdl_x,	 // PDL (addressed by Index).
+   output wire	     destpdlx,	 // PDL Index.
+   output wire	     destpdlp,	 // PDL Pointer.
+   output wire	     destspc,	 // SPC data, push.
+   output wire	     destimod0,	 // "OA register", bits <25-0>.
+   output wire	     destimod1,	 // "OA register", bits <47-26>.
+   output wire	     destvma,	 // VMA register (memory address).
+   output wire	     destmdr,	 // MD register (memory data).
+   output wire	     destmem, ///---!!! DESTMEM: What is this in the CADR document?
+   output wire	     destm, ///---!!! DESTM: What is this in the CADR documen?t
 
    // M "functional" source (see "(cadr) Destinations" for details):
-   output wire srcdc;             // Dispatch constant.
-   output wire srcspc;            // SPC pointer <28-24>, SPC data <18-0>.
-   output wire srcpdlptr;         // PDL pointer <9-0>.
-   output wire srcpdlidx;         // PDL index <9-0>.
-   output wire srcpdltop;         // PDL Buffer (addressed by Index).
-   output wire srcopc;            // OPC registers <13-0>.
-   output wire srcq;              // Q register.
-   output wire srcvma;            // VMA register (memory address).
-   output wire srcmap;            // MAP[MD].
-   output wire srcmd;             // MD register (memory data).
-   output wire srclc;             // LC (location counter).
-   output wire srcspcpop;         // SPC pointer and data, pop.
-   output wire srcpdlpop;         // PDL buffer, addressed by Pointer, pop.
+   output wire	     srcdc,   // Dispatch constant.
+   output wire	     srcspc,  // SPC pointer <28-24>, SPC data <18-0>.
+   output wire	     srcpdlptr, // PDL pointer <9-0>.
+   output wire	     srcpdlidx, // PDL index <9-0>.
+   output wire	     srcpdltop, // PDL Buffer (addressed by Index).
+   output wire	     srcopc,	// OPC registers <13-0>.
+   output wire	     srcq,	// Q register.
+   output wire	     srcvma,	// VMA register (memory address).
+   output wire	     srcmap,	// MAP[MD].
+   output wire	     srcmd,	// MD register (memory data).
+   output wire	     srclc,	// LC (location counter).
+   output wire	     srcspcpop, // SPC pointer and data, pop.
+   output wire	     srcpdlpop, // PDL buffer, addressed by Pointer, pop.
 
-   ////////////////////////////////////////////////////////////////////////////////
+   input wire	     clk,
+   input wire	     reset);
 
-   wire specalu;
+   wire		     specalu;
 
    ////////////////////////////////////////////////////////////////////////////////
 

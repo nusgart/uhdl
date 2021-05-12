@@ -12,32 +12,23 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module NPC(/*AUTOARG*/
-   // Outputs
-   ipc, pc,
-   // Inputs
-   clk, reset, state_fetch, dpc, spc, ir, pcs0, pcs1, spc1a, trap
-   );
+module NPC
+  (input wire	      state_fetch,
 
-   input wire clk;
-   input wire reset;
+   input wire [13:0]  dpc,
+   input wire [18:0]  spc,
+   input wire [48:0]  ir,
+   input wire	      pcs0,
+   input wire	      pcs1,
+   input wire	      spc1a,
+   input wire	      trap,
+   output wire [13:0] ipc,
+   output reg [13:0]  pc,
 
-   input wire state_fetch;
+   input wire	      clk,
+   input wire	      reset);
 
-   input [13:0] dpc;
-   input [18:0] spc;
-   input [48:0] ir;
-   input wire pcs0;
-   input wire pcs1;
-   input wire spc1a;
-   input wire trap;
-   output [13:0] ipc;
-   output [13:0] pc;
-
-   ////////////////////////////////////////////////////////////////////////////////
-
-   reg [13:0] pc;
-   wire [13:0] npc;
+   wire [13:0]	      npc;
 
    ////////////////////////////////////////////////////////////////////////////////
 

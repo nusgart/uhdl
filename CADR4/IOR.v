@@ -12,16 +12,13 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module IOR(/*AUTOARG*/
-   // Outputs
-   iob,
-   // Inputs
-   ob, i
-   );
+module IOR
+  (input wire [31:0]  ob,
+   input wire [48:0]  i,
+   output wire [47:0] iob,
 
-   input [31:0] ob;
-   input [48:0] i;
-   output [47:0] iob;
+   input wire	      clk,
+   input wire	      reset);
 
    ////////////////////////////////////////////////////////////////////////////////
 

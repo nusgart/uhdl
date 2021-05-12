@@ -12,40 +12,29 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module OLORD2(/*AUTOARG*/
-   // Outputs
-   boot, boot_trap, err, errhalt, reset, statstop,
-   // Inputs
-   clk, ext_reset, spy_in, errstop, ext_boot, ext_halt, ldmode, srun,
-   stat_ovf
-   );
+module OLORD2
+  (input wire [15:0] spy_in,
+   input wire	     errstop,
+   input wire	     ext_boot,
+   input wire	     ext_halt,
+   input wire	     ldmode,
+   input wire	     srun,
+   input wire	     stat_ovf,
+   output wire	     boot,
+   output reg	     boot_trap,
+   output wire	     err,
+   output wire	     errhalt,
+   output wire	     reset,
+   output reg	     statstop,
 
-   input wire clk;
-   input wire ext_reset;
+   input wire	     clk,
+   input wire	     ext_reset);
 
-   input [15:0] spy_in;
-   input wire errstop;
-   input wire ext_boot;
-   input wire ext_halt;
-   input wire ldmode;
-   input wire srun;
-   input wire stat_ovf;
-   output wire boot;
-   output boot_trap;
-   output wire err;
-   output wire errhalt;
-   output wire reset;
-   output statstop;
-
-   ////////////////////////////////////////////////////////////////////////////////
-
-   reg boot_trap;
-   reg halted;
-   reg statstop;
-   wire bus_reset;
-   wire prog_boot;
-   wire prog_bus_reset;
-   wire prog_reset;
+   reg		     halted;
+   wire		     bus_reset;
+   wire		     prog_boot;
+   wire		     prog_bus_reset;
+   wire		     prog_reset;
 
    ////////////////////////////////////////////////////////////////////////////////
 

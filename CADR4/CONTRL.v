@@ -12,66 +12,54 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module CONTRL(/*AUTOARG*/
-   // Outputs
-   iwrited, n, nop, nopa, pcs0, pcs1, spcdrive, spcenb, spcnt, spop,
-   spush, srcspcpopreal, srp, swp,
-   // Inputs
-   clk, reset, state_alu, state_fetch, state_write, funct, ir,
-   destspc, dn, dp, dr, irdisp, irjump, jcond, nop11, srcspc,
-   srcspcpop, trap
-   );
+module CONTRL
+  (input wire	     state_alu,
+   input wire	     state_fetch,
+   input wire	     state_write,
 
-   input wire clk;
-   input wire reset;
+   input wire [3:0]  funct,
+   input wire [48:0] ir,
+   input wire	     destspc,
+   input wire	     dn,
+   input wire	     dp,
+   input wire	     dr,
+   input wire	     irdisp,
+   input wire	     irjump,
+   input wire	     jcond,
+   input wire	     nop11,
+   input wire	     srcspc,
+   input wire	     srcspcpop,
+   input wire	     trap,
+   output reg	     iwrited,
+   output wire	     n,
+   output wire	     nop,
+   output wire	     nopa,
+   output wire	     pcs0,
+   output wire	     pcs1,
+   output wire	     spcdrive,
+   output wire	     spcenb,
+   output wire	     spcnt,
+   output wire	     spop,
+   output wire	     spush,
+   output wire	     srcspcpopreal,
+   output wire	     srp,
+   output wire	     swp,
 
-   input wire state_alu;
-   input wire state_fetch;
-   input wire state_write;
+   input wire	     clk,
+   input wire	     reset);
 
-   input [3:0] funct;
-   input [48:0] ir;
-   input wire destspc;
-   input wire dn;
-   input wire dp;
-   input wire dr;
-   input wire irdisp;
-   input wire irjump;
-   input wire jcond;
-   input wire nop11;
-   input wire srcspc;
-   input wire srcspcpop;
-   input wire trap;
-   output iwrited;
-   output wire n;
-   output wire nop;
-   output wire nopa;
-   output wire pcs0;
-   output wire pcs1;
-   output wire spcdrive;
-   output wire spcenb;
-   output wire spcnt;
-   output wire spop;
-   output wire spush;
-   output wire srcspcpopreal;
-   output wire srp;
-   output wire swp;
-
-   ////////////////////////////////////////////////////////////////////////////////
-
-   reg inop;
-   reg iwrited;
-   wire dfall;
-   wire dispenb;
-   wire ignpopj;
-   wire ipopj;
-   wire iwrite;
-   wire jcalf;
-   wire jfalse;
-   wire jret;
-   wire jretf;
-   wire popjwire;
-   wire popj;
+   reg		     inop;
+   wire		     dfall;
+   wire		     dispenb;
+   wire		     ignpopj;
+   wire		     ipopj;
+   wire		     iwrite;
+   wire		     jcalf;
+   wire		     jfalse;
+   wire		     jret;
+   wire		     jretf;
+   wire		     popjwire;
+   wire		     popj;
 
    ////////////////////////////////////////////////////////////////////////////////
 

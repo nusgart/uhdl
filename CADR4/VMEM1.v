@@ -14,30 +14,22 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module VMEM1(/*AUTOARG*/
-   // Outputs
-   vmo,
-   // Inputs
-   clk, reset, mapi, vma, vmap, vm1rp, vm1wp
-   );
+module VMEM1
+  (input wire [23:8]  mapi,
+   input wire [31:0]  vma,
+   input wire [4:0]   vmap,
+   input wire	      vm1rp,
+   input wire	      vm1wp,
+   output wire [23:0] vmo,
 
-   input wire clk;
-   input wire reset;
+   input wire	      clk,
+   input wire	      reset);
 
-   input [23:8] mapi;
-   input [31:0] vma;
-   input [4:0] vmap;
-   input wire vm1rp;
-   input wire vm1wp;
-   output [23:0] vmo;
+   localparam	      ADDR_WIDTH = 10;
+   localparam	      DATA_WIDTH = 24;
+   localparam	      MEM_DEPTH = 1024;
 
-   ////////////////////////////////////////////////////////////////////////////////
-
-   localparam ADDR_WIDTH = 10;
-   localparam DATA_WIDTH = 24;
-   localparam MEM_DEPTH = 1024;
-
-   wire [9:0] vmem1_adr;
+   wire [9:0]	      vmem1_adr;
 
    ////////////////////////////////////////////////////////////////////////////////
 
@@ -101,5 +93,5 @@ endmodule
 `default_nettype wire
 
 // Local Variables:
-// verilog-library-directories: (".." "../cores/xilinx")
+// verilog-library-directories: (".." "../boards/pipistrello/cores/xilinx")
 // End:

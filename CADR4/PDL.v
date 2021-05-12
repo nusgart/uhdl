@@ -13,29 +13,22 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module PDL(/*AUTOARG*/
-   // Outputs
-   pdlo,
-   // Inputs
-   clk, reset, l, pdla, prp, pwp
-   );
+module PDL
+  (input wire [31:0]  l,
+   input wire [9:0]   pdla,
+   input wire	      prp,
+   input wire	      pwp,
+   output wire [31:0] pdlo,
 
-   input wire clk;
-   input wire reset;
+   input wire	      clk,
+   input wire	      reset);
 
-   input [31:0] l;
-   input [9:0] pdla;
-   input wire prp;
-   input wire pwp;
-   output [31:0] pdlo;
+   localparam	      ADDR_WIDTH = 10;
+   localparam	      DATA_WIDTH = 32;
+   localparam	      MEM_DEPTH = 1024;
 
    ////////////////////////////////////////////////////////////////////////////////
 
-   localparam ADDR_WIDTH = 10;
-   localparam DATA_WIDTH = 32;
-   localparam MEM_DEPTH = 1024;
-
-   ////////////////////////////////////////////////////////////////////////////////
 //`define INFER
 
 `ifdef INFER
@@ -90,5 +83,5 @@ endmodule
 `default_nettype wire
 
 // Local Variables:
-// verilog-library-directories: (".." "../cores/xilinx")
+// verilog-library-directories: (".." "../boards/pipistrello/cores/xilinx")
 // End:

@@ -12,30 +12,20 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module ACTL(/*AUTOARG*/
-   // Outputs
-   aadr, wadr, arp, awp,
-   // Inputs
-   clk, reset, state_decode, state_write, ir, dest, destm
-   );
+module ACTL
+  (input wire	     state_decode,
+   input wire	     state_write,
 
-   input wire clk;
-   input wire reset;
+   input wire [48:0] ir,
+   input wire	     dest,
+   input wire	     destm,
+   output wire [9:0] aadr,
+   output reg [9:0]  wadr,
+   output wire	     arp,
+   output wire	     awp,
 
-   input wire state_decode;
-   input wire state_write;
-
-   input [48:0] ir;
-   input wire dest;
-   input wire destm;
-   output [9:0] aadr;
-   output [9:0] wadr;
-   output wire arp;
-   output wire awp;
-
-   ////////////////////////////////////////////////////////////////////////////////
-
-   reg [9:0] wadr;
+   input wire	     clk,
+   input wire	     reset);
 
    ////////////////////////////////////////////////////////////////////////////////
 

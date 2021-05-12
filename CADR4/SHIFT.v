@@ -14,24 +14,21 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module SHIFT(/*AUTOARG*/
-   // Outputs
-   r,
-   // Inputs
-   m, s0, s1, s2, s3, s4
-   );
+module SHIFT
+  (input wire [31:0]  m,
 
-   input [31:0] m;
-   input wire s0;
-   input wire s1;
-   input wire s2;
-   input wire s3;
-   input wire s4;
-   output [31:0] r;
+   input wire	      s0,
+   input wire	      s1,
+   input wire	      s2,
+   input wire	      s3,
+   input wire	      s4,
 
-   ////////////////////////////////////////////////////////////////////////////////
+   output wire [31:0] r,
 
-   wire [31:0] sa;
+   input wire	      clk,
+   input wire	      reset);
+
+   wire [31:0]	      sa;
 
    ////////////////////////////////////////////////////////////////////////////////
 

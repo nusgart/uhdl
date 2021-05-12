@@ -12,59 +12,51 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module VCTL2(/*AUTOARG*/
-   // Outputs
-   mdsel, memdrive, memrd, memwr, vm0rp, vm0wp, vm1rp, vm1wp, vmaenb,
-   vmasel, wmap,
-   // Inputs
-   state_decode, state_mmu, state_read, state_write, vma, ir, destmdr,
-   destmem, destvma, dispwr, dmapbenb, ifetch, irdisp, loadmd,
-   memprepare, memstart, nopa, srcmap, srcmd, wrcyc
-   );
+module VCTL2
+  (input wire	     state_decode,
+   input wire	     state_mmu,
+   input wire	     state_read,
+   input wire	     state_write,
 
-   input wire state_decode;
-   input wire state_mmu;
-   input wire state_read;
-   input wire state_write;
+   input wire [31:0] vma,
+   input wire [48:0] ir,
+   input wire	     destmdr,
+   input wire	     destmem,
+   input wire	     destvma,
+   input wire	     dispwr,
+   input wire	     dmapbenb,
+   input wire	     ifetch,
+   input wire	     irdisp,
+   input wire	     loadmd,
+   input wire	     memprepare,
+   input wire	     memstart,
+   input wire	     nopa,
+   input wire	     srcmap,
+   input wire	     srcmd,
+   input wire	     wrcyc,
+   output wire	     mdsel,
+   output wire	     memdrive,
+   output wire	     memrd,
+   output wire	     memwr,
+   output wire	     vm0rp,
+   output wire	     vm0wp,
+   output wire	     vm1rp,
+   output wire	     vm1wp,
+   output wire	     vmaenb,
+   output wire	     vmasel,
+   output wire	     wmap,
 
-   input [31:0] vma;
-   input [48:0] ir;
-   input wire destmdr;
-   input wire destmem;
-   input wire destvma;
-   input wire dispwr;
-   input wire dmapbenb;
-   input wire ifetch;
-   input wire irdisp;
-   input wire loadmd;
-   input wire memprepare;
-   input wire memstart;
-   input wire nopa;
-   input wire srcmap;
-   input wire srcmd;
-   input wire wrcyc;
-   output wire mdsel;
-   output wire memdrive;
-   output wire memrd;
-   output wire memwr;
-   output wire vm0rp;
-   output wire vm0wp;
-   output wire vm1rp;
-   output wire vm1wp;
-   output wire vmaenb;
-   output wire vmasel;
-   output wire wmap;
+   input wire	     clk,
+   input wire	     reset);
 
-   ////////////////////////////////////////////////////////////////////////////////
-
-   wire early_vm0_rd;
-   wire early_vm1_rd;
-   wire normal_vm0_rd;
-   wire normal_vm1_rd;
-   wire use_md;
-   wire mapwr0;
-   wire mapwr1;
-   wire lm_drive_enb;
+   wire		     early_vm0_rd;
+   wire		     early_vm1_rd;
+   wire		     normal_vm0_rd;
+   wire		     normal_vm1_rd;
+   wire		     use_md;
+   wire		     mapwr0;
+   wire		     mapwr1;
+   wire		     lm_drive_enb;
 
    ////////////////////////////////////////////////////////////////////////////////
 
