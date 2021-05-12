@@ -3,39 +3,30 @@
 /* verilator lint_off WIDTH */
 
 `timescale 1ns/1ps
-`default_nettype wire
+`default_nettype none
 
-module ps2_send(/*AUTOARG*/
-   // Outputs
-   busy, rdy, ps2_clk, ps2_data,
-   // Inputs
-   clk, reset, code, send
-   );
+module ps2_send
+  (input wire [7:0] code,
+   input wire	    send,
+   output wire	    busy,
+   output wire	    rdy,
 
-   input clk;
-   input reset;
-   input [7:0] code;
-   input send;
-   output busy;
-   output rdy;
-   output ps2_clk;
-   output ps2_data;
+   output wire	    ps2_clk,
+   output wire	    ps2_data,
 
-   ////////////////////////////////////////////////////////////////////////////////
+   input wire	    clk,
+   input wire	    reset);
 
    parameter FREQ = 40_625 / 2;//25000;
    parameter PS2_FREQ = 10;
    parameter DELAY = FREQ / PS2_FREQ;
 
-   reg [4:0] state;
-   reg [15:0] delay;
-   reg [10:0] ps2_out;
+   reg [4:0]   state;
+   reg [15:0]  delay;
+   reg [10:0]  ps2_out;
 
-   wire delay_done;
-   wire parity;
-
-   /*AUTOWIRE*/
-   /*AUTOREG*/
+   wire        delay_done;
+   wire        parity;
 
    ////////////////////////////////////////////////////////////////////////////////
 

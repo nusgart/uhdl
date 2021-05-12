@@ -20,54 +20,46 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module ps2(/*AUTOARG*/
-   // Outputs
-   code, parity, busy, rdy, error,
-   // Inputs
-   clk, reset, ps2_clk, ps2_data
-   );
+module ps2
+  (input wire	     ps2_clk,	// Clock from keyboard.
+   input wire	     ps2_data,	// Data from keyboard.
 
-   parameter FREQ = 40_625;//50000;	// Main clock frequency (KHz).
+   output wire [7:0] code,	// Received byte.
+   output wire	     parity,	// Parity bit for scancode.
+   output wire	     busy,	// Busy receiving scancode.
+   output wire	     rdy,	// Scancode ready pulse.
+   output wire	     error,	// Error receiving scancode.
+
+   input wire	     clk,	// Main clock.
+   input wire	     reset);	// Asynchronous reset.
+
+   parameter FREQ = 40_625;	// Main clock frequency (KHz).
    parameter PS2_FREQ = 10;	// Keyboard clock frequency (KHz).
-
-   input wire clk;			// Main clock.
-   input wire reset;			// Asynchronous reset.
-
-   input wire ps2_clk;		// Clock from keyboard.
-   input wire ps2_data;		// Data from keyboard.
-
-   output [7:0] code;		// Received byte.
-   output wire parity;		// Parity bit for scancode.
-   output wire busy;			// Busy receiving scancode.
-   output wire rdy;			// Scancode ready pulse.
-   output wire error;		// Error receiving scancode.
-
-   ////////////////////////////////////////////////////////////////////////////////
 
    localparam TIMEOUT = FREQ / PS2_FREQ; // Quiet timeout.
 
-   reg [13:0] timer_r;		// Time since last PS/2 clock edge.
-   wire [13:0] timer_c;
+   reg [13:0]	     timer_r;	// Time since last PS/2 clock edge.
+   wire [13:0]	     timer_c;
 
-   reg [3:0] bitcnt_r;		// Number of received scancode bits.
-   wire [3:0] bitcnt_c;
+   reg [3:0]	     bitcnt_r;	// Number of received scancode bits.
+   wire [3:0]	     bitcnt_c;
 
-   reg [4:0] ps2_clk_r;		// PS/2 clock sync/edge detect.
-   wire [4:0] ps2_clk_c;
+   reg [4:0]	     ps2_clk_r;	// PS/2 clock sync/edge detect.
+   wire [4:0]	     ps2_clk_c;
 
-   reg [9:0] sc_r;		// Scancode shift register.
-   wire [9:0] sc_c;
+   reg [9:0]	     sc_r;	// Scancode shift register.
+   wire [9:0]	     sc_c;
 
-   reg error_r;			// Set when an error occurs.
-   wire error_c;
+   reg		     error_r;	// Set when an error occurs.
+   wire		     error_c;
 
-   reg rdy_r;			// Set when scancode ready.
-   wire rdy_c;
+   reg		     rdy_r;	// Set when scancode ready.
+   wire		     rdy_c;
 
-   wire ps2_clk_edge;	   // On falling edge of PS/2 clock.
-   wire ps2_clk_fall_edge; // On rising edge of PS/2 clock.
-   wire ps2_clk_quiet;	   // When no edges on PS/2 clock for TIMEOUT.
-   wire ps2_clk_rise_edge; // When scancode has been received.
+   wire		     ps2_clk_edge; // On falling edge of PS/2 clock.
+   wire		     ps2_clk_fall_edge; // On rising edge of PS/2 clock.
+   wire		     ps2_clk_quiet; // When no edges on PS/2 clock for TIMEOUT.
+   wire		     ps2_clk_rise_edge; // When scancode has been received.
 
    wire scancode_rdy;
 
@@ -105,7 +97,7 @@ module ps2(/*AUTOARG*/
    // Detect error - clock low too long or idle during scancode RX.
    assign error_c = (timer_r == TIMEOUT && ps2_clk_r[1] == 0) ||
 		    (ps2_clk_quiet && bitcnt_r != 4'd11 && bitcnt_r != 4'd0) ?
-		    ///---!!!		    1 : error_r;		    
+		    ///---!!!		    1 : error_r;
 		    1 : (ps2_clk_quiet ? 0 : error_r);
 
    // Update various registers.
