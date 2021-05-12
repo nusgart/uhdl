@@ -123,7 +123,6 @@ module busint(/*AUTOARG*/
    wire ack_disk;
    wire ack_tv;
    wire ack_io;
-   wire ack_chaos;
    wire ack_unibus;
    wire ack_spy;
    wire ack_dram;
@@ -131,7 +130,6 @@ module busint(/*AUTOARG*/
    wire decode_disk;
    wire decode_tv;
    wire decode_io;
-   wire decode_chaos;
    wire decode_unibus;
    wire decode_spy;
    wire decode_dram;
@@ -139,7 +137,6 @@ module busint(/*AUTOARG*/
    wire [31:0] dataout_disk;
    wire [31:0] dataout_dram;
    wire [31:0] dataout_io;
-   wire [31:0] dataout_chaos;
    wire [31:0] dataout_spy;
    wire [31:0] dataout_tv;
    wire [31:0] dataout_unibus;
@@ -147,7 +144,6 @@ module busint(/*AUTOARG*/
    wire interrupt_disk;
    wire interrupt_tv;
    wire interrupt_io;
-   wire interrupt_chaos;
    wire interrupt_unibus;
 
    /*AUTOWIRE*/
@@ -262,21 +258,6 @@ module busint(/*AUTOARG*/
       .kb_ready				(kb_ready),
       .kb_data				(kb_data[15:0]));
 
-   xbus_chaos chaos
-     (
-      .dataout(dataout_chaos),
-      .req(req_valid),
-      .ack(ack_chaos),
-      .decode(decode_chaos),
-      .interrupt(interrupt_chaos),
-      /*AUTOINST*/
-      // Inputs
-      .clk				(clk),
-      .reset				(reset),
-      .addr				(addr[21:0]),
-      .datain				(datain[31:0]),
-      .write				(write));
-
    xbus_unibus unibus
      (
       .dataout(dataout_unibus),
@@ -333,7 +314,7 @@ module busint(/*AUTOARG*/
 	state <= state_ns;
      end
 
-   assign device_ack = ack_dram | ack_disk | ack_tv | ack_io | ack_chaos | ack_unibus | ack_spy | timedout;
+   assign device_ack = ack_dram | ack_disk | ack_tv | ack_io | ack_unibus | ack_spy | timedout;
 
    assign state_ns =
 		    (state == IDLE && req) ? REQ :
@@ -389,13 +370,12 @@ module busint(/*AUTOARG*/
 		   (req & decode_disk & ~write) ? dataout_disk :
 		   (req & decode_tv & ~write) ? dataout_tv :
 		   (req & decode_io & ~write) ? dataout_io :
-		   (req & decode_chaos & ~write) ? dataout_chaos :
 		   (req & decode_unibus & ~write) ? dataout_unibus :
 		   (req & decode_spy & ~write) ? dataout_spy :
 		   (req & timedout & ~write) ? 32'h00000000 : 32'hffffffff;
    assign ack = (load || state == WAIT);
    assign load = device_ack & ~write & (state == REQ);
-   assign interrupt = interrupt_disk | interrupt_tv | interrupt_io | interrupt_chaos | interrupt_unibus;
+   assign interrupt = interrupt_disk | interrupt_tv | interrupt_io | interrupt_unibus;
 
 endmodule
 

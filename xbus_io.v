@@ -184,12 +184,10 @@ module xbus_io(/*AUTOARG*/
 
 
    wire in_iob;
-   wire in_chaos;
    wire addr_match;
 
    assign in_iob = {addr[21:6], 6'b0} == 22'o17772000 ? 1'b1 : 1'b0;
-   assign in_chaos = {addr[21:3], 3'b0} == 22'o17772060 ? 1'b1 : 1'b0;
-   assign addr_match = in_iob & !in_chaos;
+   assign addr_match = in_iob;
    assign decode = req & addr_match;
 
    wire ms_int = iob_rdy[0] & iob_csr[1];
