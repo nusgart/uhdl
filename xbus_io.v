@@ -3,7 +3,7 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-`include ".version"
+`include "build_id.vh"
 
 module xbus_io(/*AUTOARG*/
    // Outputs

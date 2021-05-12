@@ -2,7 +2,7 @@
 *_tb
 obj_dir/
 *~
-.version
+build_id.vh
 *.bak
 *.map
 *.ncd
