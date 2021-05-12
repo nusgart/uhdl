@@ -28,7 +28,7 @@ module PROM(/*AUTOARG*/
    ////////////////////////////////////////////////////////////////////////////////
 
    rom #(.ADDRESS_WIDTH(9), .DATA_WIDTH(49), .MEM_DEPTH(512),
-	 .MEM_FILE("promh.hex")) PROM
+	 .MEM_FILE("CADR4/IRAML/promh.hex")) PROM
      (.clk_i(clk), .addr_i(promaddr), .q_o(iprom));
 
 endmodule
