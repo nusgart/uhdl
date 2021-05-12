@@ -5,41 +5,41 @@
 #include <verilated.h>
 #include <verilated_vcd_c.h>
 
-#include "Vuhdl.h"
+#include "Vtop.h"
 
 #define BOOT		top->uhdl__DOT__boot
 #define CLK		top->uhdl__DOT__clk
 #define CPU_CLK		top->uhdl__DOT__cpu_clk
 #define CLK50		top->uhdl__DOT__clk50
 #define CYCLES		top->uhdl__DOT__cycles
-#define IR		top->uhdl__DOT__uhdl_support__DOT__cpu__DOT__ir
-#define LC		top->uhdl__DOT__uhdl_support__DOT__cpu__DOT__lc
-#define M		top->uhdl__DOT__uhdl_support__DOT__cpu__DOT__m
-#define N		top->uhdl__DOT__uhdl_support__DOT__cpu__DOT__n
+#define IR		top->uhdl__DOT__lm3__DOT__cpu__DOT__ir
+#define LC		top->uhdl__DOT__lm3__DOT__cpu__DOT__lc
+#define M		top->uhdl__DOT__lm3__DOT__cpu__DOT__m
+#define N		top->uhdl__DOT__lm3__DOT__cpu__DOT__n
 #define VGA_CLK		top->uhdl__DOT__vga_clk
-#define PROMDISABLE	top->uhdl__DOT__uhdl_support__DOT__cpu__DOT__promdisable
-#define R		top->uhdl__DOT__uhdl_support__DOT__cpu__DOT__r
+#define PROMDISABLE	top->uhdl__DOT__lm3__DOT__cpu__DOT__promdisable
+#define R		top->uhdl__DOT__lm3__DOT__cpu__DOT__r
 #define RESET		top->uhdl__DOT__reset
-#define SET_PROMDISABLE	top->uhdl__DOT__uhdl_support__DOT__set_promdisable
-#define STATE		top->uhdl__DOT__uhdl_support__DOT__cpu__DOT__state
+#define SET_PROMDISABLE	top->uhdl__DOT__lm3__DOT__set_promdisable
+#define STATE		top->uhdl__DOT__lm3__DOT__cpu__DOT__state
 #define SYSCLK		top->uhdl__DOT__sysclk
-#define AMEM		top->uhdl__DOT__uhdl_support__DOT__cpu__DOT__cadr_amem__DOT__ram
-#define AMEM_OUT_A	top->uhdl__DOT__uhdl_support__DOT__cpu__DOT__cadr_amem__DOT__out_a
-#define DRAM		top->uhdl__DOT__uhdl_support__DOT__cpu__DOT__cadr_dram__DOT__ram
-#define IRAM		top->uhdl__DOT__uhdl_support__DOT__cpu__DOT__cadr_IRAM__DOT__ram
-#define LPC		top->uhdl__DOT__uhdl_support__DOT__cpu__DOT__cadr_lpc__DOT__lpc
-#define MMEM		top->uhdl__DOT__uhdl_support__DOT__cpu__DOT__cadr_mmem__DOT__ram
+#define AMEM		top->uhdl__DOT__lm3__DOT__cpu__DOT__cadr_amem__DOT__ram
+#define AMEM_OUT_A	top->uhdl__DOT__lm3__DOT__cpu__DOT__cadr_amem__DOT__out_a
+#define DRAM		top->uhdl__DOT__lm3__DOT__cpu__DOT__cadr_dram__DOT__ram
+#define IRAM		top->uhdl__DOT__lm3__DOT__cpu__DOT__cadr_IRAM__DOT__ram
+#define LPC		top->uhdl__DOT__lm3__DOT__cpu__DOT__cadr_lpc__DOT__lpc
+#define MMEM		top->uhdl__DOT__lm3__DOT__cpu__DOT__cadr_mmem__DOT__ram
 #define RAM1_H		top->uhdl__DOT__ram__DOT__ram1__DOT__ram_h
 #define RAM1_L		top->uhdl__DOT__ram__DOT__ram1__DOT__ram_l
 #define RAM2_H		top->uhdl__DOT__ram__DOT__ram2__DOT__ram_h
 #define RAM2_L		top->uhdl__DOT__ram__DOT__ram2__DOT__ram_l
 #define RC_STATE	top->uhdl__DOT__rc__DOT__state
-#define VMEM0		top->uhdl__DOT__uhdl_support__DOT__cpu__DOT__cadr_vmem0__DOT__ram
-#define VMEM1		top->uhdl__DOT__uhdl_support__DOT__cpu__DOT__cadr_vmem1__DOT__ram
+#define VMEM0		top->uhdl__DOT__lm3__DOT__cpu__DOT__cadr_vmem0__DOT__ram
+#define VMEM1		top->uhdl__DOT__lm3__DOT__cpu__DOT__cadr_vmem1__DOT__ram
 
 #define LOAD_MEMORIES
 
-Vuhdl *top;
+Vtop *top;
 
 static vluint64_t main_time = 0;
 
@@ -134,7 +134,7 @@ int rc_sync_check(void)
 				  STATE, 
 				  RC_STATE, 
 				  main_time);
-			vl_finish("uhdl.cpp", __LINE__, "");
+			vl_finish("top.cpp", __LINE__, "");
 		}
 	}
 }
@@ -168,7 +168,7 @@ int main(int argc, char** argv)
 	char *mem_filename;
 	int result = 0;
 
-	top = new Vuhdl;
+	top = new Vtop;
 
 	printf("built on: %s %s\n", __DATE__, __TIME__);
 
@@ -212,7 +212,7 @@ int main(int argc, char** argv)
 		VL_PRINTF("Enabling waves...\n");
 		tfp = new VerilatedVcdC;
 		top->trace(tfp, 99);
-		tfp->open("uhdl.vcd");
+		tfp->open("top.vcd");
 
 		if (show_min_time)
 			printf("show_min_time=%d\n", (int)show_min_time);
@@ -406,7 +406,7 @@ int main(int argc, char** argv)
 					result = 1;
 				} else
 					VL_PRINTF("MC STOP OK ");
-				vl_finish("uhdl.cpp", __LINE__, "");
+				vl_finish("top.cpp", __LINE__, "");
 			}
 
 		}
@@ -426,7 +426,7 @@ int main(int argc, char** argv)
 		if (loop_count > max_loop) {
 			VL_PRINTF("MC STOP ERROR PROM; lpc %o, main_time %ld\n", 
 				  LPC, main_time);
-			vl_finish("uhdl.cpp", __LINE__, "");
+			vl_finish("top.cpp", __LINE__, "");
 			result = 2;
 		}
 
@@ -440,7 +440,7 @@ int main(int argc, char** argv)
 		if (wait_count > 10000) {
 			VL_PRINTF("MC WAIT DISK; lpc %o, main_time %ld\n", 
 				  LPC, main_time);
-			vl_finish("uhdl.cpp", __LINE__, "");
+			vl_finish("top.cpp", __LINE__, "");
 			result = 2;
 		}
 
@@ -457,7 +457,7 @@ int main(int argc, char** argv)
 				tfp->dump(main_time);
 
 		if (show_max_time && main_time > show_max_time)
-			vl_finish("uhdl.cpp", __LINE__, "");
+			vl_finish("top.cpp", __LINE__, "");
 	}
 #endif
 
