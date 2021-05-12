@@ -5,21 +5,25 @@
 
 module support_pipistrello(/*AUTOARG*/
    // Outputs
-   output wire boot, 
-   output wire dcm_reset, 
-   output wire halt,
-   output wire interrupt,
-   output wire lpddr_reset, 
-   output wire reset,
+   boot, dcm_reset, halt, interrupt, lpddr_reset, reset,
    // Inputs
-   input wire button_b,
-   input wire button_c, 
-   input wire button_h, 
-   input wire button_r,
-   input wire cpu_clk, 
-   input wire lpddr_calib_done,
-   input wire sysclk
+   button_b, button_c, button_h, button_r, cpu_clk, lpddr_calib_done,
+   sysclk
    );
+
+   input button_b;
+   input button_c;
+   input button_h;
+   input button_r;
+   input cpu_clk;
+   input lpddr_calib_done;
+   input sysclk;
+   output boot;
+   output dcm_reset;
+   output halt;
+   output interrupt;
+   output lpddr_reset;
+   output reset;
 
    ////////////////////////////////////////////////////////////////////////////////
 
