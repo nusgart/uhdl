@@ -18,7 +18,7 @@ obj_dir/V$(TOPLEVEL): SRCS_V += ram_controller.v mmc_dpi.v vga_dpi.v mmc_dpi.cpp
 ifneq ($(BOARD),)
 include boards/$(BOARD).mk
 endif
-include hdlmake.mk/hdlmake.mk
+-include hdlmake.mk/hdlmake.mk
 
 hardcopy:
 	a2ps -A fill -B -2 --pro=color -o CADR4.ps $(CADR4_SRCS)
