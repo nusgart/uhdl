@@ -14,92 +14,83 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module busint(/*AUTOARG*/
-   // Outputs
-   dataout, ack, load, interrupt, sdram_addr, sdram_data_out,
-   sdram_req, sdram_write, bd_data_out, bd_cmd, bd_addr, bd_rd,
-   bd_start, bd_wr, disk_state, vram_addr, vram_data_out, vram_req,
-   vram_write, promdisable, spyout, spyrd, spywr, spyreg,
-   // Inputs
-   clk, reset, addr, datain, req, write, sdram_data_in, sdram_done,
-   sdram_ready, bd_state, bd_data_in, bd_bsy, bd_err, bd_iordy,
-   bd_rdy, vram_data_in, vram_done, vram_ready, kb_data, kb_ready,
-   ms_x, ms_y, ms_button, ms_ready, spyin
-   );
+module busint
+  (
+   // Bus interface ///////////////////////////////////////////////////////////////
 
-   input wire clk;
-   input wire reset;
-
-   input [21:0] addr;
-   input [31:0] datain;
-   input wire req;
-   input wire write;
-   output [31:0] dataout;
-   output wire ack;
-   output wire load;
-   output wire interrupt;
+   input wire [21:0]  addr,
+   input wire [31:0]  datain,
+   input wire 	      req,
+   input wire 	      write,
+   output wire [31:0] dataout,
+   output wire 	      ack,
+   output wire 	      load,
+   output wire 	      interrupt,
 
    // ---!!! //////////////////////////////////////////////////////////////////////
 
-   input [31:0] sdram_data_in;
-   input wire sdram_done;
-   input wire sdram_ready;
-   output [21:0] sdram_addr;
-   output [31:0] sdram_data_out;
-   output wire sdram_req;
-   output wire sdram_write;
+   input wire [31:0]  sdram_data_in,
+   input wire 	      sdram_done,
+   input wire 	      sdram_ready,
+   output wire [21:0] sdram_addr,
+   output wire [31:0] sdram_data_out,
+   output wire 	      sdram_req,
+   output wire 	      sdram_write,
 
    // ---!!! //////////////////////////////////////////////////////////////////////
 
-   input [11:0] bd_state;
-   input [15:0] bd_data_in;
-   input wire bd_bsy;
-   input wire bd_err;
-   input wire bd_iordy;
-   input wire bd_rdy;
-   output [15:0] bd_data_out;
-   output [1:0] bd_cmd;
-   output [23:0] bd_addr;
-   output wire bd_rd;
-   output wire bd_start;
-   output wire bd_wr;
+   input wire [11:0]  bd_state,
+   input wire [15:0]  bd_data_in,
+   input wire 	      bd_bsy,
+   input wire 	      bd_err,
+   input wire 	      bd_iordy,
+   input wire 	      bd_rdy,
+   output wire [15:0] bd_data_out,
+   output wire [1:0]  bd_cmd,
+   output wire [23:0] bd_addr,
+   output wire 	      bd_rd,
+   output wire 	      bd_start,
+   output wire 	      bd_wr,
 
-   output [4:0] disk_state;
-
-   // ---!!! //////////////////////////////////////////////////////////////////////
-
-   input [31:0] vram_data_in;
-   input wire vram_done;
-   input wire vram_ready;
-   output [14:0] vram_addr;
-   output [31:0] vram_data_out;
-   output wire vram_req;
-   output wire vram_write;
+   output wire [4:0]  disk_state,
 
    // ---!!! //////////////////////////////////////////////////////////////////////
 
-   input [15:0] kb_data;
-   input wire kb_ready;
+   input wire [31:0]  vram_data_in,
+   input wire 	      vram_done,
+   input wire 	      vram_ready,
+   output wire [14:0] vram_addr,
+   output wire [31:0] vram_data_out,
+   output wire 	      vram_req,
+   output wire 	      vram_write,
 
-   input [11:0] ms_x;
-   input [11:0] ms_y;
-   input [2:0] ms_button;
-   input wire ms_ready;
+   // ---!!! //////////////////////////////////////////////////////////////////////
+
+   input wire [15:0]  kb_data,
+   input wire 	      kb_ready,
+
+   input wire [11:0]  ms_x,
+   input wire [11:0]  ms_y,
+   input wire [2:0]   ms_button,
+   input wire 	      ms_ready,
 
    // ---!!! ///////////////////////////////////////////////////////////////////////
 
-   output wire promdisable;
+   output wire 	      promdisable,
 
    // ---!!! //////////////////////////////////////////////////////////////////////
 
-   input [15:0] spyin;
-   output [15:0] spyout;
-   output wire spyrd;
-   output wire spywr;
-   output [3:0] spyreg;
+   input wire [15:0]  spyin,
+   output wire [15:0] spyout,
+   output wire 	      spyrd,
+   output wire 	      spywr,
+   output wire [3:0]  spyreg,
 
    ////////////////////////////////////////////////////////////////////////////////
 
+   input wire 	      clk,
+   input wire 	      reset);
+   
    wire device_ack;
    wire timedout;
    wire req_valid;
