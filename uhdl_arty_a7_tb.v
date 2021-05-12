@@ -1,9 +1,9 @@
 `timescale 1ns/1ns
-// `default_nettype none
+`default_nettype none
 
 // ISIM: wave add /
 
-`define VCDFILE "uhdl_lx45_tb.vcd"
+`define VCDFILE "uhdl_arty_a7.vcd"
 
 module uhdl_arty_a7_tb;
 
@@ -143,15 +143,15 @@ module uhdl_arty_a7_tb;
       faults = 0;
    end
 
-   always @(posedge DUT.uhdl_common.cpu.clk) begin
-      if (DUT.uhdl_common.cpu.state == 6'b000001)
+   always @(posedge DUT.lm3.cpu.clk) begin
+      if (DUT.lm3.cpu.state == 6'b000001)
 	cycles = cycles + 1;
 
-      if (DUT.uhdl_common.cpu.state == 6'b000001)
+      if (DUT.lm3.cpu.state == 6'b000001)
 	$display("%0o %o A=%x M=%x N%b MD=%x LC=%x",
-		 DUT.uhdl_common.cpu.cadr_lpc.lpc, DUT.uhdl_common.cpu.ir, DUT.uhdl_common.cpu.a, DUT.uhdl_common.cpu.m, DUT.uhdl_common.cpu.n, DUT.uhdl_common.cpu.md, DUT.uhdl_common.cpu.lc);
+		 DUT.lm3.cpu.cadr_lpc.lpc, DUT.lm3.cpu.ir, DUT.lm3.cpu.a, DUT.lm3.cpu.m, DUT.lm3.cpu.n, DUT.lm3.cpu.md, DUT.lm3.cpu.lc);
 
-      if (DUT.uhdl_common.cpu.cadr_lpc.lpc == 14'o26) begin
+      if (DUT.lm3.cpu.cadr_lpc.lpc == 14'o26) begin
 	 faults = faults + 1;
 	 if (faults > 5) begin
 	    $display("=== fault ===");
@@ -161,3 +161,9 @@ module uhdl_arty_a7_tb;
    end
 
 endmodule
+
+`default_nettype wire
+
+// Local Variables:
+// verilog-library-directories: (".")
+// End:
