@@ -1,12 +1,12 @@
-// uhdl_common.v --- common top level module for the LM-3
+// udhl_common.v --- common top level module for the LM-3
 //
 // ---!!! Idea is to only have generic code here (PS/2, VGA, ...), for
-// ---!!!   the actual top-level module (say for LX45); one would need to
+// ---!!!   the actual top-level module (say for pipistrello); one would need to
 // ---!!!   implement:
 // ---!!!
-// ---!!!	top_lx45.v
-// ---!!!	support_lx45.v
-// ---!!!	ram_controller_lx45.v
+// ---!!!	uhdl_pipistrello.v
+// ---!!!	support_pipistrello.v
+// ---!!!	ram_controller_pipistrello.v
 // ---!!!
 // ---!!! Intent would be to skip wiring up busint, ps2_support, etc.  Mainly
 // ---!!! this module would take input from support_xx.v and
@@ -15,317 +15,250 @@
 // ---!!!
 // ---!!! Idea for flags to controll design:
 // ---!!!
-// ---!!! 	enable_vga / enable_hdmi (???)
-// ---!!! 	enable_spy_port
-// ---!!! 	enable_mmc
-// ---!!! 	enable_ps2 / enable_usb (???)
-// ---!!! 	enable_ethernet (???)
-`define enable_vga
-`define enable_mmc
-`define enable_ps2
-`define enable_spy_port
-
+// ---!!!	enable_vga / enable_hdmi (???)
+// ---!!!	enable_spy_port
+// ---!!!	enable_mmc
+// ---!!!	enable_ps2 / enable_usb (???)
+// ---!!!	enable_ethernet (???)
 
 `timescale 1ns/1ps
 `default_nettype none
 
+module uhdl_common
+  (// BUSINT ////////////////////////////////////////////////////////////////////////////////
 
-module uhdl_common(/*AUTOARG*/
-   // Outputs
-   sdram_addr, sdram_data_cpu2rc, sdram_req, sdram_write,
-   vram_cpu_addr, vram_cpu_data_out, vram_cpu_req, vram_cpu_write,
-   spy_reg, busint_spyout, spy_rd, spy_wr, disk_state, fetch,
-   prefetch, mcr_addr, mcr_data_out, mcr_write, mmc_cs, mmc_do, o_lc,
-   mmc_sclk, vram_vga_addr, vram_vga_req, vga_blank, vga_r, vga_g,
-   vga_b, vga_hsync, vga_vsync, rs232_txd, promdis, bdst, o_pc, o_bd_addr, o_bda,
-   // Inouts
-   ms_ps2_clk, ms_ps2_data,
-   // Inputs
-   clk50, reset, sdram_data_rc2cpu, sdram_done, sdram_ready,
-   vram_cpu_data_in, vram_cpu_done, vram_cpu_ready, cpu_clk, boot,
-   halt, interrupt, mcr_data_in, mcr_ready, mcr_done, mmc_di,
-   vram_vga_data_out, vram_vga_ready, vga_clk, kb_ps2_clk,
-   kb_ps2_data, rs232_rxd
-   );
+   // input wire [11:0] ms_x,
+   // input wire [11:0] ms_y,
+   // input wire [15:0] bd_data_bd2cpu,
+   // input wire [15:0] kb_data,
+   // input wire [15:0] spy_in,
+   // input wire [21:0] busint_addr,
+   // input wire [2:0] ms_button,
+   // input wire [31:0] md,
+   // input wire bd_bsy,
+   // input wire bd_err,
+   // input wire bd_iordy,
+   // input wire bd_rd,
+   // input wire bd_rdy,
+   // input wire kb_ready,
+   // input wire memrq,
+   // input wire ms_ready,
+   // input wire wrcyc,
+   // output wire [15:0] bd_data_cpu2bd,
+   // output wire [1:0] bd_cmd,
+   // output wire [23:0] bd_addr,
+   // output wire [31:0] busint_bus,
+   // output wire bd_start,
+   // output wire bd_wr,
+   // output wire bus_int,
+   // output wire loadmd,
+   // output wire memack,
+   // output wire set_promdisable,
 
-   ////////////////////////////////////////////////////////////////////////////////
+   output wire [21:0] sdram_addr, /// SUPPORT / RC
+   output wire [31:0] sdram_data_cpu2rc, /// SUPPORT / RC
+   input wire [31:0]  sdram_data_rc2cpu, /// SUPPORT / RC
+   input wire	      sdram_done, /// SUPPORT / RC
+   input wire	      sdram_ready, /// SUPPORT / RC
+   output wire	      sdram_req, /// SUPPORT / RC
+   output wire	      sdram_write, /// SUPPORT / RC
 
-   input clk50;			/// SUPPORT / RC
-   input reset;			/// SUPPORT / RC
+   output wire [14:0] vram_cpu_addr, /// SUPPORT / RC
+   output wire [31:0] vram_cpu_data_out, /// SUPPORT / RC
+   input wire [31:0]  vram_cpu_data_in, /// SUPPORT / RC
+   input wire	      vram_cpu_done, /// SUPPORT / RC
+   input wire	      vram_cpu_ready, /// SUPPORT / RC
+   output wire	      vram_cpu_req, /// SUPPORT / RC
+   output wire	      vram_cpu_write, /// SUPPORT / RC
 
-   // BUSINT ////////////////////////////////////////////////////////////////////////////////
-   output wire promdis;
-   // input [11:0] ms_x;
-   // input [11:0] ms_y;
-   // input [15:0] bd_data_bd2cpu;
-   // input [15:0] kb_data;
-   // input [15:0] spy_in;
-   // input [21:0] busint_addr;
-   // input [2:0] ms_button;
-   // input [31:0] md;
-   // input bd_bsy;
-   // input bd_err;
-   // input bd_iordy;
-   // input bd_rd;
-   // input bd_rdy;
-   // input kb_ready;
-   // input memrq;
-   // input ms_ready;
-   // input wrcyc;
-   // output [15:0] bd_data_cpu2bd;
-   // output [1:0] bd_cmd;
-   // output [23:0] bd_addr;
-   // output [31:0] busint_bus;
-   // output bd_start;
-   // output bd_wr;
-   // output bus_int;
-   // output loadmd;
-   // output memack;
-   // output set_promdisable;
+   output wire [3:0]  spy_reg,
+   output wire [15:0] busint_spyout,
+   output wire	      spy_rd,
+   output wire	      spy_wr,
 
-   output [21:0] sdram_addr;	    /// SUPPORT / RC
-   output [31:0] sdram_data_cpu2rc; /// SUPPORT / RC
-   input [31:0] sdram_data_rc2cpu;  /// SUPPORT / RC
-   input sdram_done;		    /// SUPPORT / RC
-   input sdram_ready;		    /// SUPPORT / RC
-   output sdram_req;		    /// SUPPORT / RC
-   output sdram_write;		    /// SUPPORT / RC
-
-   output [14:0] vram_cpu_addr;	    /// SUPPORT / RC
-   output [31:0] vram_cpu_data_out; /// SUPPORT / RC
-   input [31:0] vram_cpu_data_in;   /// SUPPORT / RC
-   input vram_cpu_done;		    /// SUPPORT / RC
-   input vram_cpu_ready;	    /// SUPPORT / RC
-   output vram_cpu_req;		    /// SUPPORT / RC
-   output vram_cpu_write;	    /// SUPPORT / RC
-
-   output [3:0] spy_reg;
-   output [15:0] busint_spyout;
-   output spy_rd;
-   output spy_wr;
-
-   output [4:0] disk_state;
-   output [11:0] bdst;
-   output [13:0] o_pc;
-   output wire [25:0] o_lc;
-   output wire [23:0] o_bd_addr;
-   output wire [5:0] o_bda;
+   output wire [4:0]  disk_state,
 
    // CADR ////////////////////////////////////////////////////////////////////////////////
 
-   // input [11:0] bd_state;
-   // input [15:0] spy_in;
-   // input [31:0] busint_bus;
-   // input [4:0] eadr;
-   // input bus_int;
-   // input dbread;
-   // input dbwrite;
-   // input loadmd;
-   // input memack;
-   // input set_promdisable;
-   // output [15:0] spy_out;
-   // output [21:8] pma;
-   // output [31:0] md;
-   // output [31:0] vma;
-   // output memrq;
-   // output wrcyc;
+   // input wire [11:0] bd_state,
+   // input wire [15:0] spy_in,
+   // input wire [31:0] busint_bus,
+   // input wire [4:0] eadr,
+   // input wire bus_int,
+   // input wire dbread,
+   // input wire dbwrite,
+   // input wire loadmd,
+   // input wire memack,
+   // input wire set_promdisable,
+   // output wire [15:0] spy_out,
+   // output wire [21:8] pma,
+   // output wire [31:0] md,
+   // output wire [31:0] vma,
+   // output wire memrq,
+   // output wire wrcyc,
 
-   input cpu_clk;		/// SUPPORT / RC
+   input wire	      cpu_clk, /// SUPPORT / RC
 
-   // ---!!! BOOT it is an output from support_lx45 without load.
-   // ---!!! HALT and INTERRUPT are hard set to low in support_lx45.
+   // ---!!! BOOT it is an output from support_pipistrello without load.
+   // ---!!! HALT and INTERRUPT are hard set to low in support_pipistrello.
    // ---!!! FETCH, PREFETCH is only used by ram_controller.v.
    // ---!!! DISK_STATE_IN is a dangling input?
    // ---!!! PC is a dangling output?
-   
-   input boot;			/// SUPPORT / RC
-   input halt;			/// SUPPORT / RC
-   input interrupt;		/// SUPPORT / RC
-   output fetch;
-   output prefetch;		/// SUPPORT / RC
 
-   output [13:0] mcr_addr;	/// SUPPORT / RC
-   output [48:0] mcr_data_out;	/// SUPPORT / RC
-   input [48:0] mcr_data_in;	/// SUPPORT / RC
-   input mcr_ready;		/// SUPPORT / RC
-   input mcr_done;		/// SUPPORT / RC
-   output mcr_write;		/// SUPPORT / RC
+   input wire	      boot, /// SUPPORT / RC
+   input wire	      halt, /// SUPPORT / RC
+   input wire	      interrupt, /// SUPPORT / RC
+   output wire	      fetch,
+   output wire	      prefetch, /// SUPPORT / RC
+
+   output wire [13:0] mcr_addr, /// SUPPORT / RC
+   output wire [48:0] mcr_data_out, /// SUPPORT / RC
+   input wire [48:0]  mcr_data_in, /// SUPPORT / RC
+   input wire	      mcr_ready, /// SUPPORT / RC
+   input wire	      mcr_done, /// SUPPORT / RC
+   output wire	      mcr_write, /// SUPPORT / RC
 
    // BLOCK DEV ////////////////////////////////////////////////////////////////////////////////
 
-   // input [15:0] bd_data_cpu2bd;
-   // input [1:0] bd_cmd;
-   // input [23:0] bd_addr;
-   // input bd_rd;<
-   // input bd_start;
-   // input bd_wr;
-   // output [11:0] bd_state;
-   // output [15:0] bd_data_bd2cpu;
-   // output bd_bsy;
-   // output bd_err;
-   // output bd_iordy;
-   // output bd_rdy;
+   // input wire [15:0] bd_data_cpu2bd,
+   // input wire [1:0] bd_cmd,
+   // input wire [23:0] bd_addr,
+   // input wire bd_rd,<
+   // input wire bd_start,
+   // input wire bd_wr,
+   // output wire [11:0] bd_state,
+   // output wire [15:0] bd_data_bd2cpu,
+   // output wire bd_bsy,
+   // output wire bd_err,
+   // output wire bd_iordy,
+   // output wire bd_rdy,
 
-   input wire mmc_di;
-   output wire mmc_cs;
-   output wire mmc_do;
-   output wire mmc_sclk;
+   input wire	      mmc_di,
+   output wire	      mmc_cs,
+   output wire	      mmc_do,
+   output wire	      mmc_sclk,
 
    // VGA ////////////////////////////////////////////////////////////////////////////////
 
-   output [14:0] vram_vga_addr;	   /// SUPPORT / RC
-   input [31:0] vram_vga_data_out; /// SUPPORT / RC
-   input vram_vga_ready;	   /// SUPPORT / RC
-   output vram_vga_req;		   /// SUPPORT / RC
+   output wire [14:0] vram_vga_addr, /// SUPPORT / RC
+   input wire [31:0]  vram_vga_data_out, /// SUPPORT / RC
+   input wire	      vram_vga_ready, /// SUPPORT / RC
+   output wire	      vram_vga_req, /// SUPPORT / RC
 
-   input vga_clk;		/// SUPPORT / RC
-   output vga_blank;
+   input wire	      vga_clk, /// SUPPORT / RC
+   output wire	      vga_blank,
 
-   output vga_r;
-   output vga_g;
-   output vga_b;
-   output wire vga_hsync;
-   output wire vga_vsync;
+   output wire	      vga_r,
+   output wire	      vga_g,
+   output wire	      vga_b,
+   output wire	      vga_hsync,
+   output wire	      vga_vsync,
 
    // PS/2 ////////////////////////////////////////////////////////////////////////////////
 
-   // output [11:0] ms_x;
-   // output [11:0] ms_x;
-   // output [15:0] kb_data;
-   // output [2:0] ms_button;
-   // output kb_ready;
-   // output ms_ready;
+   // output wire [11:0] ms_x,
+   // output wire [11:0] ms_x,
+   // output wire [15:0] kb_data,
+   // output wire [2:0] ms_button,
+   // output wire kb_ready,
+   // output wire ms_ready,
 
-   input wire kb_ps2_clk;
-   input wire kb_ps2_data;
+   input wire	      kb_ps2_clk,
+   input wire	      kb_ps2_data,
 
-   inout wire ms_ps2_clk;
-   inout wire ms_ps2_data;
+   inout wire	      ms_ps2_clk,
+   inout wire	      ms_ps2_data,
 
    // SPY ////////////////////////////////////////////////////////////////////////////////
 
-   // input [15:0] spy_out;
-   // output [15:0] spy_in;
-   // output [4:0] eadr;
-   // output dbread;
-   // output dbwrite;
+   // input wire [15:0] spy_out,
+   // output wire [15:0] spy_in,
+   // output wire [4:0] eadr,
+   // output wire dbread,
+   // output wire dbwrite,
 
-   input rs232_rxd;
-   output rs232_txd;
+   input wire	      rs232_rxd,
+   output wire	      rs232_txd,
 
    ////////////////////////////////////////////////////////////////////////////////
 
-   wire [11:0] bd_state;
-   wire [11:0] ms_x, ms_y;
-   wire [13:0] mcr_addr;
-   wire [13:0] pc;
-   wire [14:0] vram_cpu_addr;
-   wire [14:0] vram_vga_addr;
-   wire [15:0] bd_data_bd2cpu;
-   wire [15:0] bd_data_cpu2bd;
-   wire [15:0] busint_spyout;
-   wire [15:0] kb_data;
-   wire [15:0] spy_bd_data_bd2cpu;
-   wire [15:0] spy_bd_data_cpu2bd;
-   wire [15:0] spy_bd_state;
-   wire [15:0] spy_in;
-   wire [15:0] spy_out;
-   wire [15:0] sram1_in;
-   wire [15:0] sram1_out;
-   wire [15:0] sram2_in;
-   wire [15:0] sram2_out;
-   wire [1:0] bd_cmd;
-   wire [1:0] spy_bd_cmd;
-   wire [21:0] busint_addr;
-   wire [21:0] sdram_addr;
-   wire [21:8] pma;
-   wire [23:0] bd_addr;
-   wire [23:0] spy_bd_addr;
-   wire [2:0] ms_button;
-   wire [31:0] busint_bus;
-   wire [31:0] md;
-   wire [31:0] sdram_data_cpu2rc;
-   wire [31:0] sdram_data_rc2cpu;
-   wire [31:0] vma;
-   wire [31:0] vram_cpu_data_in;
-   wire [31:0] vram_cpu_data_out;
-   wire [31:0] vram_vga_data_out;
-   wire [3:0] dots;
-   wire [3:0] rc_state;
-   wire [3:0] spy_reg;
-   wire [48:0] mcr_data_in;
-   wire [48:0] mcr_data_out;
-   wire [4:0] disk_state;
-   wire [4:0] disk_state_in;
-   wire [4:0] eadr;
-   wire [5:0] cpu_state;
-   wire bd_bsy;
-   wire bd_err;
-   wire bd_iordy;
-   wire bd_rd;
-   wire bd_rdy;
-   wire bd_start;
-   wire bd_wr;
-   wire boot;
-   wire bus_int;
-   wire clk50;
-   wire cpu_clk;
-   wire dbread, dbwrite;
-   wire dcm_reset;
-   wire fetch;
-   wire halt;
-   wire interrupt;
-   wire kb_ps2_clk_in;
-   wire kb_ps2_data_in;
-   wire kb_ready;
-   wire loadmd;
-   wire lpddr_reset;
-   wire mcr_done;
-   wire mcr_ready;
-   wire mcr_write;
-   wire memack;
-   wire memrq;
-   wire ms_ps2_clk_in;
-   wire ms_ps2_clk_out;
-   wire ms_ps2_data_in;
-   wire ms_ps2_data_out;
-   wire ms_ps2_dir;
-   wire ms_ready;
-   wire vga_clk;
-   wire vga_clk_locked;
-   wire prefetch;
-   wire reset;
-   wire rs232_rxd, rs232_txd;
-   wire sdram_done;
-   wire sdram_ready;
-   wire sdram_req;
-   wire sdram_write;
-   wire spy_bd_bsy;
-   wire spy_bd_err;
-   wire spy_bd_iordy;
-   wire spy_bd_rd;
-   wire spy_bd_rdy;
-   wire spy_bd_start;
-   wire spy_bd_wr;
-   wire spy_rd;
-   wire spy_wr;
-   wire sysclk_buf;
-   wire vga_r, vga_b, vga_g, vga_blank;
-   wire vga_reset;
-   wire vram_cpu_done;
-   wire vram_cpu_ready;
-   wire vram_cpu_req;
-   wire vram_cpu_write;
-   wire vram_vga_ready;
-   wire vram_vga_req;
-   wire wrcyc;
-   wire set_promdisable;
-   //////ccc
-   assign promdis = set_promdisable;
-   assign bdst = bd_state;
-   assign o_bd_addr = bd_addr;
-   assign o_bda = {bd_bsy, bd_start, bd_rd, bd_wr, bd_cmd};
-   
+   output wire [11:0] bdst,
+   output wire [13:0] o_pc,
+   output wire [25:0] o_lc,
+   output wire [23:0] o_bd_addr,
+   output wire [5:0] o_bda,
+   output wire promdis,
+      
+   ////////////////////////////////////////////////////////////////////////////////
+
+   input wire	      clk50, /// SUPPORT / RC
+   input wire	      reset); /// SUPPORT / RC
+
+   wire [11:0]	      bd_state;
+   wire [11:0]	      ms_x, ms_y;
+   wire [13:0]	      pc;
+   wire [15:0]	      bd_data_bd2cpu;
+   wire [15:0]	      bd_data_cpu2bd;
+   wire [15:0]	      kb_data;
+   wire [15:0]	      spy_bd_data_bd2cpu;
+   wire [15:0]	      spy_bd_data_cpu2bd;
+   wire [15:0]	      spy_bd_state;
+   wire [15:0]	      spy_in;
+   wire [15:0]	      spy_out;
+   wire [15:0]	      sram1_in;
+   wire [15:0]	      sram1_out;
+   wire [15:0]	      sram2_in;
+   wire [15:0]	      sram2_out;
+   wire [1:0]	      bd_cmd;
+   wire [1:0]	      spy_bd_cmd;
+   wire [21:0]	      busint_addr;
+   wire [21:8]	      pma;
+   wire [23:0]	      bd_addr;
+   wire [23:0]	      spy_bd_addr;
+   wire [2:0]	      ms_button;
+   wire [31:0]	      busint_bus;
+   wire [31:0]	      md;
+   wire [31:0]	      vma;
+   wire [3:0]	      dots;
+   wire [3:0]	      rc_state;
+   wire [4:0]	      disk_state_in;
+   wire [4:0]	      eadr;
+   wire [5:0]	      cpu_state;
+   wire		      bd_bsy;
+   wire		      bd_err;
+   wire		      bd_iordy;
+   wire		      bd_rd;
+   wire		      bd_rdy;
+   wire		      bd_start;
+   wire		      bd_wr;
+   wire		      bus_int;
+   wire		      dbread, dbwrite;
+   wire		      kb_ps2_clk_in;
+   wire		      kb_ps2_data_in;
+   wire		      kb_ready;
+   wire		      loadmd;
+   wire		      lpddr_reset;
+   wire		      memack;
+   wire		      memrq;
+   wire		      ms_ps2_clk_in;
+   wire		      ms_ps2_clk_out;
+   wire		      ms_ps2_data_in;
+   wire		      ms_ps2_data_out;
+   wire		      ms_ps2_dir;
+   wire		      ms_ready;
+   wire		      vga_clk_locked;
+   wire		      spy_bd_bsy;
+   wire		      spy_bd_err;
+   wire		      spy_bd_iordy;
+   wire		      spy_bd_rd;
+   wire		      spy_bd_rdy;
+   wire		      spy_bd_start;
+   wire		      spy_bd_wr;
+   wire		      sysclk_buf;
+   wire		      vga_reset;
+   wire		      wrcyc;
+   wire		      set_promdisable;
+
    ////////////////////////////////////////////////////////////////////////////////
 
    assign busint_addr = {pma, vma[7:0]};
@@ -371,7 +304,6 @@ module uhdl_common(/*AUTOARG*/
       .bd_wr				(bd_wr),
       .disk_state			(disk_state[4:0]),
       // Inputs
-      .reset				(reset),
       .sdram_done			(sdram_done),
       .sdram_ready			(sdram_ready),
       .bd_bsy				(bd_bsy),
@@ -383,7 +315,8 @@ module uhdl_common(/*AUTOARG*/
       .ms_x				(ms_x[11:0]),
       .ms_y				(ms_y[11:0]),
       .ms_button			(ms_button[2:0]),
-      .ms_ready				(ms_ready));	  //    input ms_ready;
+      .ms_ready				(ms_ready),
+      .reset				(reset));	  //    input ms_ready;
 
    assign disk_state_in = disk_state;
 
@@ -523,15 +456,14 @@ module uhdl_common(/*AUTOARG*/
       .ms_ps2_data_out			(ms_ps2_data_out),
       .ms_ps2_dir			(ms_ps2_dir),
       // Inputs
-      .reset				(reset),
       .ms_ps2_clk_in			(ms_ps2_clk_in),
-      .ms_ps2_data_in			(ms_ps2_data_in)); //    input ms_ps2_data_in;
+      .ms_ps2_data_in			(ms_ps2_data_in),
+      .reset				(reset)); //    input ms_ps2_data_in;
 `endif
 
 `ifdef enable_spy_port
    spy_port spy_port
      (
-      .sysclk(clk50),		//    input sysclk;
       .clk(cpu_clk),		//    input clk;
       .spy_in(spy_out),		//    input [15:0] spy_in;
       .spy_out(spy_in),		//    output [15:0] spy_out;
