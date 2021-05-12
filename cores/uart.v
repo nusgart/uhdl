@@ -5,67 +5,52 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module uart(/*AUTOARG*/
-   // Outputs
-   rx_data, ld_tx_ack, rx_ack, rx_empty, tx_empty, tx_out,
-   // Inputs
-   tx_data, clk, ld_tx_req, reset, rx_enable, rx_in, rx_req,
-   tx_enable
-   );
+module uart
+  (input wire [7:0] tx_data,
+
+   input wire	    ld_tx_req,
+   input wire	    rx_enable,
+   input wire	    rx_in,
+   input wire	    rx_req,
+   input wire	    tx_enable,
+   output reg [7:0] rx_data,
+   output wire	    ld_tx_ack,
+   output wire	    rx_ack,
+   output reg	    rx_empty,
+   output reg	    tx_empty,
+   output reg	    tx_out,
+
+   input wire	    clk,
+   input wire	    reset);
 
    parameter [31:0] FREQ = 40_625_000;//50000000;
    parameter [31:0] RATE = 115200;
 
-   input [7:0] tx_data;
-   input clk;
-   input ld_tx_req;
-   input reset;
-   input rx_enable;
-   input rx_in;
-   input rx_req;
-   input tx_enable;
-   output [7:0] rx_data;
-   output ld_tx_ack;
-   output rx_ack;
-   output rx_empty;
-   output tx_empty;
-   output tx_out;
-   wire clk, ld_tx_req, reset, rx_enable, rx_in, rx_req, tx_enable, rx_ack, ld_tx_ack;
+   reg [15:0]	    rx_bit_time;
+   reg [15:0]	    tx_bit_time;
+   reg [1:0]	    rx_ld_state;
+   reg [1:0]	    tx_ld;
+   reg [3:0]	    rx_bit_cnt;
+   reg [3:0]	    tx_bit_cnt;
+   reg [7:0]	    rx_reg;
+   reg [7:0]	    tx_reg;
+   reg		    rx_bit_middle, rx_bit_end;
+   reg		    rx_busy;
+   reg		    rx_d1;
+   reg		    rx_d2;
+   reg		    rx_frame_err;
+   reg		    rx_over_run;
+   reg		    rx_sampled;
+   reg		    rx_start_bit;
+   reg		    tx_bit_start, tx_bit_end;
+   reg		    tx_over_run;
 
-   ////////////////////////////////////////////////////////////////////////////////
+   wire [1:0]	    rx_ld_next;
+   wire [1:0]	    tx_ld_next;
+   wire		    ld_tx_data;
+   wire		    rx_waiting;
 
-   parameter BITWIDTH = FREQ / RATE;
-
-   reg [15:0] rx_bit_time;
-   reg [15:0] tx_bit_time;
-   reg [1:0] rx_ld_state;
-   reg [1:0] tx_ld;
-   reg [3:0] rx_bit_cnt;
-   reg [3:0] tx_bit_cnt;
-   reg [7:0] rx_data;
-   reg [7:0] rx_reg;
-   reg [7:0] tx_reg;
-   reg rx_bit_middle, rx_bit_end;
-   reg rx_busy;
-   reg rx_d1;
-   reg rx_d2;
-   reg rx_empty;
-   reg rx_frame_err;
-   reg rx_over_run;
-   reg rx_sampled;
-   reg rx_start_bit;
-   reg tx_bit_start, tx_bit_end;
-   reg tx_empty;
-   reg tx_out;
-   reg tx_over_run;
-
-   wire [1:0] rx_ld_next;
-   wire [1:0] tx_ld_next;
-   wire ld_tx_data;
-   wire rx_waiting;
-
-   /*AUTOWIRE*/
-   /*AUTOREG*/
+   localparam BITWIDTH = FREQ / RATE;
 
    ////////////////////////////////////////////////////////////////////////////////
 
