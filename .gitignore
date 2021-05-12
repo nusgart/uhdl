@@ -7,7 +7,6 @@ obj_dir/
 *.map
 *.ncd
 *.bit
-/uhdl*
 *.mcs
 *.prm
 /ise/
