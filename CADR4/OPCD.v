@@ -12,22 +12,19 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module OPCD(/*AUTOARG*/
-   // Outputs
-   dcdrive, opcdrive,
-   // Inputs
-   state_alu, state_fetch, state_mmu, state_write, srcdc, srcopc
-   );
+module OPCD
+  (input wire  state_alu,
+   input wire  state_fetch,
+   input wire  state_mmu,
+   input wire  state_write,
 
-   input wire state_alu;
-   input wire state_fetch;
-   input wire state_mmu;
-   input wire state_write;
+   input wire  srcdc,
+   input wire  srcopc,
+   output wire dcdrive,
+   output wire opcdrive,
 
-   input wire srcdc;
-   input wire srcopc;
-   output wire dcdrive;
-   output wire opcdrive;
+   input wire  clk,
+   input wire  reset);
 
    ////////////////////////////////////////////////////////////////////////////////
 

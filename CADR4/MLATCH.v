@@ -13,23 +13,20 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module MLATCH(/*AUTOARG*/
-   // Outputs
-   m,
-   // Inputs
-   spco, mf, mmem, pdlo, spcptr, mfdrive, mpassm, pdldrive, spcdrive
-   );
+module MLATCH
+  (input wire [18:0]  spco,
+   input wire [31:0]  mf,
+   input wire [31:0]  mmem,
+   input wire [31:0]  pdlo,
+   input wire [4:0]   spcptr,
+   input wire	      mfdrive,
+   input wire	      mpassm,
+   input wire	      pdldrive,
+   input wire	      spcdrive,
+   output wire [31:0] m,
 
-   input [18:0] spco;
-   input [31:0] mf;
-   input [31:0] mmem;
-   input [31:0] pdlo;
-   input [4:0] spcptr;
-   input wire mfdrive;
-   input wire mpassm;
-   input wire pdldrive;
-   input wire spcdrive;
-   output [31:0] m;
+   input wire	      clk,
+   input wire	      reset);
 
    ////////////////////////////////////////////////////////////////////////////////
 

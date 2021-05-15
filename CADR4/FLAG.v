@@ -12,47 +12,34 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module FLAG(/*AUTOARG*/
-   // Outputs
-   int_enable, jcond, lc_byte_mode, prog_unibus_reset, sequence_break,
-   // Inputs
-   clk, reset, state_fetch, ob, r, alu, ir, aeqm, destintctl, nopa,
-   sintr, vmaok
-   );
+module FLAG
+  (input wire	     state_fetch,
 
-   input wire clk;
-   input wire reset;
+   input wire [31:0] ob,
+   input wire [31:0] r,
+   input wire [32:0] alu,
+   input wire [48:0] ir,
+   input wire	     aeqm,
+   input wire	     destintctl,
+   input wire	     nopa,
+   input wire	     sintr,
+   input wire	     vmaok,
+   output reg	     int_enable,
+   output wire	     jcond,
+   output reg	     lc_byte_mode,
+   output reg	     prog_unibus_reset,
+   output reg	     sequence_break,
 
-   input wire state_fetch;
+   input wire	     clk,
+   input wire	     reset);
 
-   input [31:0] ob;
-   input [31:0] r;
-   input [32:0] alu;
-   input [48:0] ir;
-   input wire aeqm;
-   input wire destintctl;
-   input wire nopa;
-   input wire sintr;
-   input wire vmaok;
-   output int_enable;
-   output wire jcond;
-   output lc_byte_mode;
-   output prog_unibus_reset;
-   output sequence_break;
-
-   ////////////////////////////////////////////////////////////////////////////////
-
-   reg int_enable;
-   reg lc_byte_mode;
-   reg prog_unibus_reset;
-   reg sequence_break;
-   wire [2:0] conds;
-   wire ilong;
-   wire pgf_or_int;
-   wire pgf_or_int_or_sb;
-   wire sint;
-   wire statbit;
-   wire aluneg;
+   wire [2:0]	     conds;
+   wire		     ilong;
+   wire		     pgf_or_int;
+   wire		     pgf_or_int_or_sb;
+   wire		     sint;
+   wire		     statbit;
+   wire		     aluneg;
 
    ////////////////////////////////////////////////////////////////////////////////
 

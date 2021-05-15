@@ -1,60 +1,46 @@
-// xbus_tv.v --- VRAM interface 
+// xbus_tv.v --- VRAM interface
 
 `timescale 1ns/1ps
 `default_nettype none
 
-module xbus_tv(/*AUTOARG*/
-   // Outputs
-   dataout, ack, decode, interrupt, vram_addr, vram_data_out,
-   vram_req, vram_write,
-   // Inputs
-   clk, reset, addr, datain, req, write, vram_data_in, vram_done,
-   vram_ready
-   );
+module xbus_tv
+  (input wire [21:0]  addr,
+   input wire [31:0]  datain,
+   input wire	      req,
+   input wire	      write,
+   output reg [31:0]  dataout,
+   output wire	      ack,
+   output wire	      decode,
+   output wire	      interrupt,
 
-   input wire clk;
-   input wire reset;
+   output wire [14:0] vram_addr,
+   input wire [31:0]  vram_data_in,
+   output wire [31:0] vram_data_out,
+   input wire	      vram_done,
+   input wire	      vram_ready,
+   output wire	      vram_req,
+   output wire	      vram_write,
 
-   input [21:0] addr;
-   input [31:0] datain;
-   input wire req;
-   input wire write;
-   output [31:0] dataout;
-   output wire ack;
-   output wire decode;
-   output wire interrupt;
+   input wire	      clk,
+   input wire	      reset);
 
-   output [14:0] vram_addr;
-   input [31:0] vram_data_in;
-   output [31:0] vram_data_out;
-   input wire vram_done;
-   input wire vram_ready;
-   output wire vram_req;
-   output wire vram_write;
+   reg		      clear_tv_int;
+   reg		      set_tv_int;
+   reg		      tv_int;
+   reg		      tv_int_en;
 
-   ////////////////////////////////////////////////////////////////////////////////
+   wire		      fb_read_req;
+   wire		      fb_write_req;
 
-   reg clear_tv_int;
-   reg set_tv_int;
-   reg tv_int;
-   reg tv_int_en;
-
-   wire fb_read_req;
-   wire fb_write_req;
-
-   wire in_color;
-   wire in_fb;
-   wire in_reg;
-   wire start_fb_read;
-   wire start_fb_write;
+   wire		      in_color;
+   wire		      in_fb;
+   wire		      in_reg;
+   wire		      start_fb_read;
+   wire		      start_fb_write;
 
    /*AUTOWIRE*/
    // Beginning of automatic wires (for undeclared instantiated-module outputs)
-   wire			hz60_clk_fired;		// From hz60 of hz60.v
-   // End of automatics
-   /*AUTOREG*/
-   // Beginning of automatic regs (for this module's undeclared outputs)
-   reg [31:0]		dataout;
+   wire		      hz60_clk_fired;		// From hz60 of hz60.v
    // End of automatics
 
    ////////////////////////////////////////////////////////////////////////////////
@@ -72,14 +58,14 @@ module xbus_tv(/*AUTOARG*/
    ////////////////////////////////////////////////////////////////////////////////
    // State machine to wait for memory controller
 
-   parameter
+   localparam
      IDLE = 3'd0,
      WRITE = 3'd1,
      READ = 3'd2,
      DONE = 3'd3;
 
-   wire [2:0] state_ns;
-   reg [2:0] state;
+   wire [2:0]	      state_ns;
+   reg [2:0]	      state;
 
    always @(posedge clk)
      if (reset)
@@ -184,6 +170,5 @@ endmodule
 `default_nettype wire
 
 // Local Variables:
-// verilog-library-directories: (".")
+// verilog-library-directories: ("." "cores")
 // End:
-

@@ -1,27 +1,77 @@
-// spy_port.v --- ---!!!
+// spy_port.v --- UART interface into SPY0
+//
+// SPYTX<7-4>	= Operation
+//		      0-1	Unused.
+//		      2		Read content of spy register. [??? Is this used?]
+//		      3		Set DATA<15-12>.
+//		      4		Set DATA<11-8>.
+//		      5		Set DATA<7-4>.
+//		      6		Set DATA<3-0>.
+//		      7		Unused.
+//		      10	Read content of spy register.
+//		      11	Read content of spy register.
+//		      12	Write DATA into spy register.
+//		      13	Write DATA into spy register.
+//		      14	Read spy block-device register.
+//		      15	Write DATA into spy block-device register.
+//		      16-17	Unused.
+// SPYTX<3-0>	= Data source.  When reading or writing the spy register
+//		  (operations 10-13), this is the EADR signal used in SPY0.
+//
+// The response when reading (operation 10 and 11) will be split into
+// four octets (same format when setting DATA):
+//
+// SPYRX<7-4>	= What part of the DATA register that was read:
+//		      0-2	Unused.
+//		      3		DATA<15-12>.
+//		      4		DATA<11-8>.
+//		      5		DATA<7-4>.
+//		      6		DATA<3-0>.
+//		      7-17	Unused.
+// SPYRX<3-0>	= Data that was read.
+//
+// N.B., When communicating, err on the safe side by sending commands slowly,
+//
+// * Protocol for writing a value to a spy register.
+//
+//     DATA is data to write.  SPY is a spy register (see SPY0).
+//
+//	 1) Set DATA<15-12> by sending { DATA[15:12], 0x30 }.
+//	 2) Set DATA<11-8> by sending { DATA[11:8], 0x40 }.
+//	 3) Set DATA<7-4> by sending { DATA[7:4], 0x50 }.
+//	 4) Set DATA<3-0> by sending { DATA[3:0], 0x60 }.
+//	 5) Issue write command for the specified spy register:
+//		{ SPY[3:0], 0xa0 }
+//
+// * Protocol for reading a value from a spy register.
+//
+//     DATA is data that has been read.  SPY is a spy register (see
+//     SPY0).  The same response _maybe_ occur multiple times, so take
+//     care to drop any duplicate octets.
+//
+//       1) Issue read command for the specified spy register by
+//       sending:
+//		{ SPY[3:0], 0x80 }
+//       2) There response will be four octets:
+//		{ DATA<15-12>, 0x3 }
+//		{ DATA<11-8>, 0x4 }
+//		{ DATA<7-4>, 0x5 }
+//		{ DATA<3-0>, 0x6 }
 
 `timescale 1ns/1ps
 `default_nettype none
 
-module spy_port(/*AUTOARG*/
-   // Outputs
-   spy_out, eadr, dbread, dbwrite, rs232_txd,
-   // Inputs
-   spy_in, clk, reset, rs232_rxd, sysclk
-   );
-
-   input [15:0] spy_in;
-   input clk;
-   input reset;
-   input rs232_rxd;
-   input sysclk;
-   output [15:0] spy_out;
-   output [4:0] eadr;
-   output dbread;
-   output dbwrite;
-   output rs232_txd;
-   wire clk, reset, rs232_rxd, sysclk;
-
+module spy_port
+  (input wire [15:0] spy_in,
+   input wire 	     rs232_rxd,
+   output reg [15:0] spy_out,
+   output reg [4:0]  eadr,
+   output reg 	     dbread,
+   output reg 	     dbwrite,
+   output wire 	     rs232_txd,
+   input wire 	     clk,
+   input wire 	     reset);
+   
    ////////////////////////////////////////////////////////////////////////////////
 
    parameter SPYU_IDLE = 4'd0,
@@ -43,14 +93,10 @@ module spy_port(/*AUTOARG*/
    reg [15:0] data;
    reg [15:0] response;
    reg [15:0] spy_bd_reg, spy_bd_data;
-   reg [15:0] spy_out;
    reg [2:0] tx_state;
    reg [3:0] spyu_state;
-   reg [4:0] eadr;
    reg [4:0] reg_addr;
    reg [7:0] rx_data;
-   reg dbread;
-   reg dbwrite;
    reg respond;
 
    wire [2:0] tx_next_state;
@@ -66,18 +112,15 @@ module spy_port(/*AUTOARG*/
    wire start_write;
    wire tx_delay_done;
    wire tx_done;
-   wire tx_enable = 1;
-   wire tx_empty;
    wire tx_start;
-   wire rs232_txd;
-   
-   /*AUTOWIRE*/
-   /*AUTOREG*/
+
 
    ////////////////////////////////////////////////////////////////////////////////
 
    wire rx_enable = 1;
    wire rx_empty;
+   wire tx_enable = 1;
+   wire tx_empty;
    uart spy_uart(.reset(reset),
 		 .tx_out(rs232_txd),
 		 .rx_data(rx_out),
@@ -90,11 +133,11 @@ module spy_port(/*AUTOARG*/
 		 .tx_empty		(tx_empty),
 		 // Inputs
 		 .tx_data		(tx_data[7:0]),
-		 .clk			(clk),
 		 .ld_tx_req		(ld_tx_req),
 		 .rx_enable		(rx_enable),
 		 .rx_req		(rx_req),
-		 .tx_enable		(tx_enable));
+		 .tx_enable		(tx_enable),
+		 .clk			(clk));
 
    assign spyu_next_state =
 			   (spyu_state == SPYU_IDLE && ~rx_empty) ? SPYU_RX1 :
@@ -173,18 +216,6 @@ module spy_port(/*AUTOARG*/
      end else begin
 	dbwrite <= (spyu_state == SPYU_OPW1);
      end
-     
-   always @(posedge clk) begin
-     if (reset) begin
-       response <= 16'b0;
-     end else begin
-       if (dbread) begin
-         response <= spy_in;
-       end else if (start_bd_read) begin
-         response <= spy_bd_reg;
-       end
-     end
-   end
 
    always @(posedge clk)
      if (reset) begin
@@ -202,6 +233,19 @@ module spy_port(/*AUTOARG*/
 	if (start_read || start_write)
 	  eadr <= reg_addr;
 	respond <= dbread;
+     end
+
+   always @(posedge clk)
+     if (reset) begin
+	/*AUTORESET*/
+	// Beginning of autoreset for uninitialized flops
+	response <= 16'h0;
+	// End of automatics
+     end else begin
+	if (dbread)
+	  response <= spy_in;
+	else if (start_bd_read)
+	  response <= spy_bd_reg;
      end
 
    assign tx_start =
@@ -256,5 +300,5 @@ endmodule
 `default_nettype wire
 
 // Local Variables:
-// verilog-library-directories: (".")
+// verilog-library-directories: ("." "cores")
 // End:

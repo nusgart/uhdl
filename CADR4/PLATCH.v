@@ -9,15 +9,12 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module PLATCH(/*AUTOARG*/
-   // Outputs
-   pdl,
-   // Inputs
-   pdlo
-   );
+module PLATCH
+  (input wire [31:0]  pdlo,
+   output wire [31:0] pdl,
 
-   input [31:0] pdlo;
-   output [31:0] pdl;
+   input wire	      clk,
+   input wire	      reset);
 
    ////////////////////////////////////////////////////////////////////////////////
 

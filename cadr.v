@@ -3,49 +3,39 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module cadr(/*AUTOARG*/
-   // Outputs
-   spy_out, mcr_addr, mcr_data_out, mcr_write, md, memrq, wrcyc, vma,
-   pma, o_pc, o_lc,
-   // Inputs
-   clk, ext_int, ext_reset, ext_boot, ext_halt, spy_in, dbread,
-   dbwrite, eadr, mcr_data_in, mcr_ready, mcr_done, bd_state,
-   disk_state_in, loadmd, busint_bus, bus_int, memack,
-   set_promdisable
-   );
+module cadr
+  (input wire 	    ext_int,
+   input wire 	      ext_reset,
+   input wire 	      ext_boot,
+   input wire 	      ext_halt,
+   input wire [15:0]  spy_in,
+   output wire [15:0] spy_out,
+   input wire 	      dbread,
+   input wire 	      dbwrite,
+   input wire [4:0]   eadr,
+   output reg [13:0]  mcr_addr,
+   output reg [48:0]  mcr_data_out,
+   input wire [48:0]  mcr_data_in,
+   input wire 	      mcr_ready,
+   output reg 	      mcr_write,
+   input wire 	      mcr_done,
+   output wire [31:0] md,
+   output wire 	      memrq,
+   output wire 	      wrcyc,
+   output wire [31:0] vma,
+   output wire [21:8] pma,
+   input wire [11:0]  bd_state,
+   input wire [4:0]   disk_state_in,
+   input wire 	      loadmd,
+   input wire [31:0]  busint_bus,
+   input wire 	      bus_int,
+   input wire 	      memack,
+   input wire 	      set_promdisable,
 
-   input wire clk;
-   input wire ext_int;
-   input wire ext_reset;
-   input wire ext_boot;
-   input wire ext_halt;
-   input [15:0] spy_in;
-   output [15:0] spy_out;
-   input wire dbread;
-   input wire dbwrite;
-   input [4:0] eadr;
-   output [13:0] mcr_addr;
-   output [48:0] mcr_data_out;
-   input [48:0] mcr_data_in;
-   input wire mcr_ready;
-   output mcr_write;
-   input wire mcr_done;
-   output [31:0] md;
-   output wire memrq;
-   output wire wrcyc;
-   output [31:0] vma;
-   output [21:8] pma;
-   input [11:0] bd_state;
-   input [4:0] disk_state_in;
-   input wire loadmd;
-   input [31:0] busint_bus;
-   input wire bus_int;
-   input wire memack;
-   input wire set_promdisable;
-   output wire [13:0] o_pc;
-   output wire [25:0] o_lc;
+   output wire [13:0] o_pc,
+   output wire [25:0] o_lc,
 
-   ////////////////////////////////////////////////////////////////////////////////
+   input wire 	      clk);
 
    /*AUTOWIRE*/
    // Beginning of automatic wires (for undeclared instantiated-module outputs)
@@ -300,15 +290,11 @@ module cadr(/*AUTOARG*/
    wire			yout31;			// From cadr_alu of ALU.v
    wire			yout7;			// From cadr_alu of ALU.v
    // End of automatics
-   /*AUTOREG*/
-   // Beginning of automatic regs (for this module's undeclared outputs)
-   reg [13:0]		mcr_addr;
-   reg [48:0]		mcr_data_out;
-   reg			mcr_write;
-   // End of automatics
+
+   ////////////////////////////////////////////////////////////////////////////////
+
    assign o_pc = pc;
    assign o_lc = lc;
-   ////////////////////////////////////////////////////////////////////////////////
 
    parameter [5:0]
      STATE_RESET = 6'b000000,
@@ -369,18 +355,20 @@ module cadr(/*AUTOARG*/
 		  .arp			(arp),
 		  .awp			(awp),
 		  // Inputs
-		  .clk			(clk),
-		  .reset		(reset),
 		  .state_decode		(state_decode),
 		  .state_write		(state_write),
 		  .ir			(ir[48:0]),
 		  .dest			(dest),
-		  .destm		(destm));
+		  .destm		(destm),
+		  .clk			(clk),
+		  .reset		(reset));
    ALATCH cadr_alatch(/*AUTOINST*/
 		      // Outputs
 		      .a		(a[31:0]),
 		      // Inputs
-		      .amem		(amem[31:0]));
+		      .amem		(amem[31:0]),
+		      .clk		(clk),
+		      .reset		(reset));
    ALU cadr_alu(/*AUTOINST*/
 		// Outputs
 		.alu			(alu[32:0]),
@@ -414,7 +402,9 @@ module cadr(/*AUTOARG*/
 		.cin20_n		(cin20_n),
 		.cin24_n		(cin24_n),
 		.cin28_n		(cin28_n),
-		.cin32_n		(cin32_n));
+		.cin32_n		(cin32_n),
+		.clk			(clk),
+		.reset			(reset));
    ALUC4 cadr_aluc4(/*AUTOINST*/
 		    // Outputs
 		    .osel		(osel[1:0]),
@@ -452,7 +442,9 @@ module cadr(/*AUTOARG*/
 		    .yout19		(yout19),
 		    .yout23		(yout23),
 		    .yout27		(yout27),
-		    .yout31		(yout31));
+		    .yout31		(yout31),
+		    .clk		(clk),
+		    .reset		(reset));
    AMEM cadr_amem(/*AUTOINST*/
 		  // Outputs
 		  .amem			(amem[31:0]),
@@ -480,8 +472,6 @@ module cadr(/*AUTOARG*/
 		      .srp		(srp),
 		      .swp		(swp),
 		      // Inputs
-		      .clk		(clk),
-		      .reset		(reset),
 		      .state_alu	(state_alu),
 		      .state_fetch	(state_fetch),
 		      .state_write	(state_write),
@@ -497,7 +487,9 @@ module cadr(/*AUTOARG*/
 		      .nop11		(nop11),
 		      .srcspc		(srcspc),
 		      .srcspcpop	(srcspcpop),
-		      .trap		(trap));
+		      .trap		(trap),
+		      .clk		(clk),
+		      .reset		(reset));
    DRAM cadr_dram(/*AUTOINST*/
 		  // Outputs
 		  .dpc			(dpc[13:0]),
@@ -522,12 +514,12 @@ module cadr(/*AUTOARG*/
 		      .dispwr		(dispwr),
 		      .dmapbenb		(dmapbenb),
 		      // Inputs
-		      .clk		(clk),
-		      .reset		(reset),
 		      .state_fetch	(state_fetch),
 		      .funct		(funct[3:0]),
 		      .ir		(ir[48:0]),
-		      .irdisp		(irdisp));
+		      .irdisp		(irdisp),
+		      .clk		(clk),
+		      .reset		(reset));
    FLAG cadr_flag(/*AUTOINST*/
 		  // Outputs
 		  .int_enable		(int_enable),
@@ -536,8 +528,6 @@ module cadr(/*AUTOARG*/
 		  .prog_unibus_reset	(prog_unibus_reset),
 		  .sequence_break	(sequence_break),
 		  // Inputs
-		  .clk			(clk),
-		  .reset		(reset),
 		  .state_fetch		(state_fetch),
 		  .ob			(ob[31:0]),
 		  .r			(r[31:0]),
@@ -547,51 +537,53 @@ module cadr(/*AUTOARG*/
 		  .destintctl		(destintctl),
 		  .nopa			(nopa),
 		  .sintr		(sintr),
-		  .vmaok		(vmaok));
+		  .vmaok		(vmaok),
+		  .clk			(clk),
+		  .reset		(reset));
    IOR cadr_ior(/*AUTOINST*/
 		// Outputs
 		.iob			(iob[47:0]),
 		// Inputs
 		.ob			(ob[31:0]),
-		.i			(i[48:0]));
+		.i			(i[48:0]),
+		.clk			(clk),
+		.reset			(reset));
    IREG cadr_ireg(/*AUTOINST*/
 		  // Outputs
 		  .ir			(ir[48:0]),
 		  // Inputs
-		  .clk			(clk),
-		  .reset		(reset),
 		  .state_fetch		(state_fetch),
 		  .iob			(iob[47:0]),
 		  .i			(i[48:0]),
 		  .destimod0		(destimod0),
-		  .destimod1		(destimod1));
+		  .destimod1		(destimod1),
+		  .clk			(clk),
+		  .reset		(reset));
    IWR cadr_iwr(/*AUTOINST*/
 		// Outputs
 		.iwr			(iwr[48:0]),
 		// Inputs
-		.clk			(clk),
-		.reset			(reset),
 		.state_fetch		(state_fetch),
 		.a			(a[31:0]),
-		.m			(m[31:0]));
+		.m			(m[31:0]),
+		.clk			(clk),
+		.reset			(reset));
    L cadr_l(/*AUTOINST*/
 	    // Outputs
 	    .l				(l[31:0]),
 	    // Inputs
-	    .clk			(clk),
-	    .reset			(reset),
 	    .state_alu			(state_alu),
 	    .state_write		(state_write),
 	    .ob				(ob[31:0]),
-	    .vmaenb			(vmaenb));
+	    .vmaenb			(vmaenb),
+	    .clk			(clk),
+	    .reset			(reset));
    LC cadr_lc(/*AUTOINST*/
 	      // Outputs
 	      .lc			(lc[25:0]),
 	      .mf			(mf[31:0]),
 	      .lca			(lca[3:0]),
 	      // Inputs
-	      .clk			(clk),
-	      .reset			(reset),
 	      .state_alu		(state_alu),
 	      .state_fetch		(state_fetch),
 	      .state_mmu		(state_mmu),
@@ -624,7 +616,9 @@ module cadr(/*AUTOARG*/
 	      .qdrive			(qdrive),
 	      .sequence_break		(sequence_break),
 	      .srclc			(srclc),
-	      .vmadrive			(vmadrive));
+	      .vmadrive			(vmadrive),
+	      .clk			(clk),
+	      .reset			(reset));
    LCC cadr_lcc(/*AUTOINST*/
 		// Outputs
 		.ifetch			(ifetch),
@@ -636,8 +630,6 @@ module cadr(/*AUTOARG*/
 		.sintr			(sintr),
 		.spc1a			(spc1a),
 		// Inputs
-		.clk			(clk),
-		.reset			(reset),
 		.state_fetch		(state_fetch),
 		.spc			(spc[18:0]),
 		.lc			(lc[25:0]),
@@ -648,18 +640,20 @@ module cadr(/*AUTOARG*/
 		.irdisp			(irdisp),
 		.lc_byte_mode		(lc_byte_mode),
 		.spop			(spop),
-		.srcspcpopreal		(srcspcpopreal));
+		.srcspcpopreal		(srcspcpopreal),
+		.clk			(clk),
+		.reset			(reset));
    LPC cadr_lpc(/*AUTOINST*/
 		// Outputs
 		.wpc			(wpc[13:0]),
 		// Inputs
-		.clk			(clk),
-		.reset			(reset),
 		.state_fetch		(state_fetch),
 		.lpc_hold		(lpc_hold),
 		.pc			(pc[13:0]),
 		.ir			(ir[48:0]),
-		.irdisp			(irdisp));
+		.irdisp			(irdisp),
+		.clk			(clk),
+		.reset			(reset));
    MCTL cadr_mctl(/*AUTOINST*/
 		  // Outputs
 		  .madr			(madr[4:0]),
@@ -672,7 +666,9 @@ module cadr(/*AUTOARG*/
 		  .state_write		(state_write),
 		  .ir			(ir[48:0]),
 		  .wadr			(wadr[9:0]),
-		  .destm		(destm));
+		  .destm		(destm),
+		  .clk			(clk),
+		  .reset		(reset));
    MD cadr_md(/*AUTOINST*/
 	      // Outputs
 	      .md			(md[31:0]),
@@ -702,7 +698,9 @@ module cadr(/*AUTOARG*/
 		.ob			(ob[31:0]),
 		.loadmd			(loadmd),
 		.mdsel			(mdsel),
-		.memdrive		(memdrive));
+		.memdrive		(memdrive),
+		.clk			(clk),
+		.reset			(reset));
    MF cadr_mf(/*AUTOINST*/
 	      // Outputs
 	      .mfdrive			(mfdrive),
@@ -713,7 +711,9 @@ module cadr(/*AUTOARG*/
 	      .state_write		(state_write),
 	      .pdlenb			(pdlenb),
 	      .spcenb			(spcenb),
-	      .srcm			(srcm));
+	      .srcm			(srcm),
+	      .clk			(clk),
+	      .reset			(reset));
    MLATCH cadr_mlatch(/*AUTOINST*/
 		      // Outputs
 		      .m		(m[31:0]),
@@ -726,7 +726,9 @@ module cadr(/*AUTOARG*/
 		      .mfdrive		(mfdrive),
 		      .mpassm		(mpassm),
 		      .pdldrive		(pdldrive),
-		      .spcdrive		(spcdrive));
+		      .spcdrive		(spcdrive),
+		      .clk		(clk),
+		      .reset		(reset));
    MMEM cadr_mmem(/*AUTOINST*/
 		  // Outputs
 		  .mmem			(mmem[31:0]),
@@ -746,21 +748,22 @@ module cadr(/*AUTOARG*/
 	      .msk			(msk[31:0]),
 	      .q			(q[31:0]),
 	      .r			(r[31:0]),
-	      .alu			(alu[32:0]));
+	      .alu			(alu[32:0]),
+	      .clk			(clk),
+	      .reset			(reset));
    MSKG4 cadr_mskg4(/*AUTOINST*/
 		    // Outputs
 		    .msk		(msk[31:0]),
 		    // Inputs
-		    .clk		(clk),
 		    .mskl		(mskl[4:0]),
-		    .mskr		(mskr[4:0]));
+		    .mskr		(mskr[4:0]),
+		    .clk		(clk),
+		    .reset		(reset));
    NPC cadr_npc(/*AUTOINST*/
 		// Outputs
 		.ipc			(ipc[13:0]),
 		.pc			(pc[13:0]),
 		// Inputs
-		.clk			(clk),
-		.reset			(reset),
 		.state_fetch		(state_fetch),
 		.dpc			(dpc[13:0]),
 		.spc			(spc[18:0]),
@@ -768,7 +771,9 @@ module cadr(/*AUTOARG*/
 		.pcs0			(pcs0),
 		.pcs1			(pcs1),
 		.spc1a			(spc1a),
-		.trap			(trap));
+		.trap			(trap),
+		.clk			(clk),
+		.reset			(reset));
    OPCD cadr_opcd(/*AUTOINST*/
 		  // Outputs
 		  .dcdrive		(dcdrive),
@@ -779,7 +784,9 @@ module cadr(/*AUTOARG*/
 		  .state_mmu		(state_mmu),
 		  .state_write		(state_write),
 		  .srcdc		(srcdc),
-		  .srcopc		(srcopc));
+		  .srcopc		(srcopc),
+		  .clk			(clk),
+		  .reset		(reset));
    PDL cadr_pdl(/*AUTOINST*/
 		// Outputs
 		.pdlo			(pdlo[31:0]),
@@ -794,7 +801,9 @@ module cadr(/*AUTOARG*/
 		      // Outputs
 		      .pdl		(pdl[31:0]),
 		      // Inputs
-		      .pdlo		(pdlo[31:0]));
+		      .pdlo		(pdlo[31:0]),
+		      .clk		(clk),
+		      .reset		(reset));
    PDLCTL cadr_pdlctl(/*AUTOINST*/
 		      // Outputs
 		      .pdla		(pdla[9:0]),
@@ -805,8 +814,6 @@ module cadr(/*AUTOARG*/
 		      .prp		(prp),
 		      .pwp		(pwp),
 		      // Inputs
-		      .clk		(clk),
-		      .reset		(reset),
 		      .state_alu	(state_alu),
 		      .state_fetch	(state_fetch),
 		      .state_mmu	(state_mmu),
@@ -820,7 +827,9 @@ module cadr(/*AUTOARG*/
 		      .destpdltop	(destpdltop),
 		      .nop		(nop),
 		      .srcpdlpop	(srcpdlpop),
-		      .srcpdltop	(srcpdltop));
+		      .srcpdltop	(srcpdltop),
+		      .clk		(clk),
+		      .reset		(reset));
    PDLPTR cadr_pdlptr(/*AUTOINST*/
 		      // Outputs
 		      .pdlidx		(pdlidx[9:0]),
@@ -828,8 +837,6 @@ module cadr(/*AUTOARG*/
 		      .pidrive		(pidrive),
 		      .ppdrive		(ppdrive),
 		      // Inputs
-		      .clk		(clk),
-		      .reset		(reset),
 		      .state_alu	(state_alu),
 		      .state_fetch	(state_fetch),
 		      .state_read	(state_read),
@@ -840,7 +847,9 @@ module cadr(/*AUTOARG*/
 		      .pdlcnt		(pdlcnt),
 		      .srcpdlidx	(srcpdlidx),
 		      .srcpdlpop	(srcpdlpop),
-		      .srcpdlptr	(srcpdlptr));
+		      .srcpdlptr	(srcpdlptr),
+		      .clk		(clk),
+		      .reset		(reset));
    QCTL cadr_qctl(/*AUTOINST*/
 		  // Outputs
 		  .qs0			(qs0),
@@ -853,17 +862,19 @@ module cadr(/*AUTOARG*/
 		  .state_fetch		(state_fetch),
 		  .ir			(ir[48:0]),
 		  .iralu		(iralu),
-		  .srcq			(srcq));
+		  .srcq			(srcq),
+		  .clk			(clk),
+		  .reset		(reset));
    Q cadr_q(/*AUTOINST*/
 	    // Outputs
 	    .q				(q[31:0]),
 	    // Inputs
-	    .clk			(clk),
-	    .reset			(reset),
 	    .state_fetch		(state_fetch),
 	    .qs0			(qs0),
 	    .qs1			(qs1),
-	    .alu			(alu[32:0]));
+	    .alu			(alu[32:0]),
+	    .clk			(clk),
+	    .reset			(reset));
    SHIFT cadr_shift(/*AUTOINST*/
 		    // Outputs
 		    .r			(r[31:0]),
@@ -873,7 +884,9 @@ module cadr(/*AUTOARG*/
 		    .s1			(s1),
 		    .s2			(s2),
 		    .s3			(s3),
-		    .s4			(s4));
+		    .s4			(s4),
+		    .clk		(clk),
+		    .reset		(reset));
    SMCTL cadr_smctl(/*AUTOINST*/
 		    // Outputs
 		    .mskl		(mskl[4:0]),
@@ -887,7 +900,9 @@ module cadr(/*AUTOARG*/
 		    .ir			(ir[48:0]),
 		    .irbyte		(irbyte),
 		    .sh3		(sh3),
-		    .sh4		(sh4));
+		    .sh4		(sh4),
+		    .clk		(clk),
+		    .reset		(reset));
    SOURCE cadr_source(/*AUTOINST*/
 		      // Outputs
 		      .funct		(funct[3:0]),
@@ -930,7 +945,9 @@ module cadr(/*AUTOARG*/
 		      .ir		(ir[48:0]),
 		      .idebug		(idebug),
 		      .iwrited		(iwrited),
-		      .nop		(nop));
+		      .nop		(nop),
+		      .clk		(clk),
+		      .reset		(reset));
    SPC cadr_spc(/*AUTOINST*/
 		// Outputs
 		.spco			(spco[18:0]),
@@ -948,7 +965,9 @@ module cadr(/*AUTOARG*/
 		      // Outputs
 		      .spc		(spc[18:0]),
 		      // Inputs
-		      .spco		(spco[18:0]));
+		      .spco		(spco[18:0]),
+		      .clk		(clk),
+		      .reset		(reset));
    SPCW cadr_spcw(/*AUTOINST*/
 		  // Outputs
 		  .spcw			(spcw[18:0]),
@@ -957,13 +976,13 @@ module cadr(/*AUTOARG*/
 		  .wpc			(wpc[13:0]),
 		  .l			(l[31:0]),
 		  .destspc		(destspc),
-		  .n			(n));
+		  .n			(n),
+		  .clk			(clk),
+		  .reset		(reset));
    SPY124 cadr_spy124(/*AUTOINST*/
 		      // Outputs
 		      .spy_out		(spy_out[15:0]),
 		      // Inputs
-		      .clk		(clk),
-		      .reset		(reset),
 		      .state_write	(state_write),
 		      .bd_state_in	(bd_state[11:0]),
 		      .opc		(opc[13:0]),
@@ -1018,12 +1037,16 @@ module cadr(/*AUTOARG*/
 		      .stathalt		(stathalt),
 		      .vmaok		(vmaok),
 		      .waiting		(waiting),
-		      .wmap		(wmap));
+		      .wmap		(wmap),
+		      .clk		(clk),
+		      .reset		(reset));
    TRAP cadr_trap(/*AUTOINST*/
 		  // Outputs
 		  .trap			(trap),
 		  // Inputs
-		  .boot_trap		(boot_trap));
+		  .boot_trap		(boot_trap),
+		  .clk			(clk),
+		  .reset		(reset));
    VCTL1 cadr_vctl1(/*AUTOINST*/
 		    // Outputs
 		    .memprepare		(memprepare),
@@ -1035,8 +1058,6 @@ module cadr(/*AUTOARG*/
 		    .waiting		(waiting),
 		    .wrcyc		(wrcyc),
 		    // Inputs
-		    .clk		(clk),
-		    .reset		(reset),
 		    .state_alu		(state_alu),
 		    .state_fetch	(state_fetch),
 		    .state_prefetch	(state_prefetch),
@@ -1048,7 +1069,9 @@ module cadr(/*AUTOARG*/
 		    .memack		(memack),
 		    .memrd		(memrd),
 		    .memwr		(memwr),
-		    .needfetch		(needfetch));
+		    .needfetch		(needfetch),
+		    .clk		(clk),
+		    .reset		(reset));
    VCTL2 cadr_vctl2(/*AUTOINST*/
 		    // Outputs
 		    .mdsel		(mdsel),
@@ -1082,14 +1105,14 @@ module cadr(/*AUTOARG*/
 		    .nopa		(nopa),
 		    .srcmap		(srcmap),
 		    .srcmd		(srcmd),
-		    .wrcyc		(wrcyc));
+		    .wrcyc		(wrcyc),
+		    .clk		(clk),
+		    .reset		(reset));
    VMA cadr_vma(/*AUTOINST*/
 		// Outputs
 		.vma			(vma[31:0]),
 		.vmadrive		(vmadrive),
 		// Inputs
-		.clk			(clk),
-		.reset			(reset),
 		.state_alu		(state_alu),
 		.state_fetch		(state_fetch),
 		.state_write		(state_write),
@@ -1098,7 +1121,9 @@ module cadr(/*AUTOARG*/
 		.ldvmah			(ldvmah),
 		.ldvmal			(ldvmal),
 		.srcvma			(srcvma),
-		.vmaenb			(vmaenb));
+		.vmaenb			(vmaenb),
+		.clk			(clk),
+		.reset			(reset));
    VMAS cadr_vmas(/*AUTOINST*/
 		  // Outputs
 		  .mapi			(mapi[23:8]),
@@ -1109,7 +1134,9 @@ module cadr(/*AUTOARG*/
 		  .ob			(ob[31:0]),
 		  .vma			(vma[31:0]),
 		  .memprepare		(memprepare),
-		  .vmasel		(vmasel));
+		  .vmasel		(vmasel),
+		  .clk			(clk),
+		  .reset		(reset));
    VMEM0 cadr_vmem0(/*AUTOINST*/
 		    // Outputs
 		    .vmap		(vmap[4:0]),
@@ -1145,7 +1172,9 @@ module cadr(/*AUTOARG*/
 		      .state_mmu	(state_mmu),
 		      .state_write	(state_write),
 		      .vmo		(vmo[23:0]),
-		      .srcmap		(srcmap));
+		      .srcmap		(srcmap),
+		      .clk		(clk),
+		      .reset		(reset));
 
    ////////////////////////////////////////////////////////////////////////////////
      // IRAML
@@ -1154,8 +1183,6 @@ module cadr(/*AUTOARG*/
 		    // Outputs
 		    .i			(i[48:0]),
 		    // Inputs
-		    .clk		(clk),
-		    .reset		(reset),
 		    .spy_in		(spy_in[15:0]),
 		    .iprom		(iprom[48:0]),
 		    .iram		(iram[48:0]),
@@ -1163,7 +1190,9 @@ module cadr(/*AUTOARG*/
 		    .lddbirh		(lddbirh),
 		    .lddbirl		(lddbirl),
 		    .lddbirm		(lddbirm),
-		    .promenable		(promenable));
+		    .promenable		(promenable),
+		    .clk		(clk),
+		    .reset		(reset));
    ICTL cadr_ictl(/*AUTOINST*/
 		  // Outputs
 		  .iwe			(iwe),
@@ -1171,7 +1200,9 @@ module cadr(/*AUTOARG*/
 		  .state_write		(state_write),
 		  .idebug		(idebug),
 		  .iwrited		(iwrited),
-		  .promdisabled		(promdisabled));
+		  .promdisabled		(promdisabled),
+		  .clk			(clk),
+		  .reset		(reset));
    OLORD1 cadr_olord1(/*AUTOINST*/
 		      // Outputs
 		      .scratch		(scratch[15:0]),
@@ -1189,8 +1220,6 @@ module cadr(/*AUTOARG*/
 		      .stat_ovf		(stat_ovf),
 		      .stathalt		(stathalt),
 		      // Inputs
-		      .clk		(clk),
-		      .reset		(reset),
 		      .state_fetch	(state_fetch),
 		      .spy_in		(spy_in[15:0]),
 		      .boot		(boot),
@@ -1202,7 +1231,9 @@ module cadr(/*AUTOARG*/
 		      .ldscratch2	(ldscratch2),
 		      .set_promdisable	(set_promdisable),
 		      .statstop		(statstop),
-		      .waiting		(waiting));
+		      .waiting		(waiting),
+		      .clk		(clk),
+		      .reset		(reset));
    OLORD2 cadr_olord2(/*AUTOINST*/
 		      // Outputs
 		      .boot		(boot),
@@ -1212,25 +1243,25 @@ module cadr(/*AUTOARG*/
 		      .reset		(reset),
 		      .statstop		(statstop),
 		      // Inputs
-		      .clk		(clk),
-		      .ext_reset	(ext_reset),
 		      .spy_in		(spy_in[15:0]),
 		      .errstop		(errstop),
 		      .ext_boot		(ext_boot),
 		      .ext_halt		(ext_halt),
 		      .ldmode		(ldmode),
 		      .srun		(srun),
-		      .stat_ovf		(stat_ovf));
+		      .stat_ovf		(stat_ovf),
+		      .clk		(clk),
+		      .ext_reset	(ext_reset));
    OPCS cadr_opcs(/*AUTOINST*/
 		  // Outputs
 		  .opc			(opc[13:0]),
 		  // Inputs
-		  .clk			(clk),
-		  .reset		(reset),
 		  .state_fetch		(state_fetch),
 		  .pc			(pc[13:0]),
 		  .opcclk		(opcclk),
-		  .opcinh		(opcinh));
+		  .opcinh		(opcinh),
+		  .clk			(clk),
+		  .reset		(reset));
    PCTL cadr_pctl(/*AUTOINST*/
 		  // Outputs
 		  .promaddr		(promaddr[8:0]),
@@ -1239,13 +1270,16 @@ module cadr(/*AUTOARG*/
 		  .pc			(pc[13:0]),
 		  .idebug		(idebug),
 		  .iwrited		(iwrited),
-		  .promdisabled		(promdisabled));
+		  .promdisabled		(promdisabled),
+		  .clk			(clk),
+		  .reset		(reset));
    PROM cadr_prom(/*AUTOINST*/
 		  // Outputs
 		  .iprom		(iprom[48:0]),
 		  // Inputs
+		  .promaddr		(promaddr[8:0]),
 		  .clk			(clk),
-		  .promaddr		(promaddr[8:0]));
+		  .reset		(reset));
    IRAM cadr_iram(/*AUTOINST*/
 		  // Outputs
 		  .iram			(iram[48:0]),
@@ -1296,7 +1330,9 @@ module cadr(/*AUTOARG*/
 		  // Inputs
 		  .eadr			(eadr[4:0]),
 		  .dbread		(dbread),
-		  .dbwrite		(dbwrite));
+		  .dbwrite		(dbwrite),
+		  .clk			(clk),
+		  .reset		(reset));
 
 endmodule
 

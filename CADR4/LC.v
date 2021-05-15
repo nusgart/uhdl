@@ -12,63 +12,50 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module LC(/*AUTOARG*/
-   // Outputs
-   lc, mf, lca,
-   // Inputs
-   clk, reset, state_alu, state_fetch, state_mmu, state_write, opc,
-   vmo, md, ob, q, vma, vmap, dc, pdlidx, pdlptr, dcdrive, destlc,
-   int_enable, lc0b, lc_byte_mode, lcinc, mapdrive, mddrive,
-   needfetch, opcdrive, pfr, pfw, pidrive, ppdrive, prog_unibus_reset,
-   qdrive, sequence_break, srclc, vmadrive
-   );
+module LC
+  (input wire	      state_alu,
+   input wire 	      state_fetch,
+   input wire 	      state_mmu,
+   input wire 	      state_write,
 
-   input wire clk;
-   input wire reset;
+   input wire [13:0]  opc,
+   input wire [23:0]  vmo,
+   input wire [31:0]  md,
+   input wire [31:0]  ob,
+   input wire [31:0]  q,
+   input wire [31:0]  vma,
+   input wire [4:0]   vmap,
+   input wire [9:0]   dc,
+   input wire [9:0]   pdlidx,
+   input wire [9:0]   pdlptr,
+   input wire 	      dcdrive,
+   input wire 	      destlc,
+   input wire 	      int_enable,
+   input wire 	      lc0b,
+   input wire 	      lc_byte_mode,
+   input wire 	      lcinc,
+   input wire 	      mapdrive,
+   input wire 	      mddrive,
+   input wire 	      needfetch,
+   input wire 	      opcdrive,
+   input wire 	      pfr,
+   input wire 	      pfw,
+   input wire 	      pidrive,
+   input wire 	      ppdrive,
+   input wire 	      prog_unibus_reset,
+   input wire 	      qdrive,
+   input wire 	      sequence_break,
+   input wire 	      srclc,
+   input wire 	      vmadrive,
+   output reg [25:0]  lc,
+   output wire [31:0] mf,
+   output wire [3:0]       lca, // ---!!! This can't be a wire for whatever reason...
 
-   input wire state_alu;
-   input wire state_fetch;
-   input wire state_mmu;
-   input wire state_write;
+   input wire 	      clk,
+   input wire 	      reset);
 
-   input [13:0] opc;
-   input [23:0] vmo;
-   input [31:0] md;
-   input [31:0] ob;
-   input [31:0] q;
-   input [31:0] vma;
-   input [4:0] vmap;
-   input [9:0] dc;
-   input [9:0] pdlidx;
-   input [9:0] pdlptr;
-   input wire dcdrive;
-   input wire destlc;
-   input wire int_enable;
-   input wire lc0b;
-   input wire lc_byte_mode;
-   input wire lcinc;
-   input wire mapdrive;
-   input wire mddrive;
-   input wire needfetch;
-   input wire opcdrive;
-   input wire pfr;
-   input wire pfw;
-   input wire pidrive;
-   input wire ppdrive;
-   input wire prog_unibus_reset;
-   input wire qdrive;
-   input wire sequence_break;
-   input wire srclc;
-   input wire vmadrive;
-   output [25:0] lc;
-   output [31:0] mf;
-
-   ////////////////////////////////////////////////////////////////////////////////
-
-   reg [25:0] lc;
-   output [3:0] lca; // ---!!! This can't be a wire for whatever reason...
-   wire lcdrive;
-   wire lcry3;
+   wire		      lcdrive;
+   wire		      lcry3;
 
    ////////////////////////////////////////////////////////////////////////////////
 

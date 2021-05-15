@@ -13,24 +13,19 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module MO(/*AUTOARG*/
-   // Outputs
-   ob,
-   // Inputs
-   osel, a, msk, q, r, alu
-   );
+module MO
+  (input wire [1:0]   osel,
+   input wire [31:0]  a,
+   input wire [31:0]  msk,
+   input wire [31:0]  q,
+   input wire [31:0]  r,
+   input wire [32:0]  alu,
+   output wire [31:0] ob,
 
-   input [1:0] osel;
-   input [31:0] a;
-   input [31:0] msk;
-   input [31:0] q;
-   input [31:0] r;
-   input [32:0] alu;
-   output [31:0] ob;
+   input wire	      clk,
+   input wire	      reset);
 
-   ////////////////////////////////////////////////////////////////////////////////
-
-   wire [31:0] mo;              // Masker output.
+   wire [31:0]	      mo;	// Masker output.
 
    ////////////////////////////////////////////////////////////////////////////////
 

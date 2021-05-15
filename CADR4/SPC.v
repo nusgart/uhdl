@@ -12,39 +12,29 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module SPC(/*AUTOARG*/
-   // Outputs
-   spco, spcptr,
-   // Inputs
-   clk, reset, state_fetch, spcw, spcnt, spush, srp, swp
-   );
+module SPC
+  (input wire	      state_fetch,
 
-   input wire clk;
-   input wire reset;
+   input wire [18:0]  spcw,
+   input wire	      spcnt,
+   input wire	      spush,
+   input wire	      srp,
+   input wire	      swp,
+   output wire [18:0] spco,
+   output reg [4:0]   spcptr,
 
-   input wire state_fetch;
+   input wire	      clk,
+   input wire	      reset);
 
-   input [18:0] spcw;
-   input wire spcnt;
-   input wire spush;
-   input wire srp;
-   input wire swp;
-   output [18:0] spco;
-   output [4:0] spcptr;
+   localparam	      ADDR_WIDTH = 5;
+   localparam	      DATA_WIDTH = 19;
+   localparam	      MEM_DEPTH = 32;
 
-   ////////////////////////////////////////////////////////////////////////////////
-
-   localparam ADDR_WIDTH = 5;
-   localparam DATA_WIDTH = 19;
-   localparam MEM_DEPTH = 32;
-
-   reg [4:0] spcptr;
-
-   wire [4:0] spcadr;
+   wire [4:0]	      spcadr;
 
    ////////////////////////////////////////////////////////////////////////////////
 
-   wire [4:0] spcptr_p1;
+   wire [4:0]	      spcptr_p1;
    assign spcptr_p1 = spcptr + 5'b00001;
    assign spcadr = (spcnt && spush) ? spcptr_p1 : spcptr;
 //`undef ISE
@@ -111,5 +101,5 @@ endmodule
 `default_nettype wire
 
 // Local Variables:
-// verilog-library-directories: (".." "../cores/xilinx")
+// verilog-library-directories: (".." "../boards/pipistrello/cores/xilinx")
 // End:

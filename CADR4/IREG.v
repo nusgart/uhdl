@@ -12,27 +12,17 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module IREG(/*AUTOARG*/
-   // Outputs
-   ir,
-   // Inputs
-   clk, reset, state_fetch, iob, i, destimod0, destimod1
-   );
+module IREG
+  (input wire	     state_fetch,
 
-   input wire clk;
-   input wire reset;
+   input wire [47:0] iob,
+   input wire [48:0] i,
+   input wire	     destimod0,
+   input wire	     destimod1,
+   output reg [48:0] ir,
 
-   input wire state_fetch;
-
-   input [47:0] iob;
-   input [48:0] i;
-   input wire destimod0;
-   input wire destimod1;
-   output [48:0] ir;
-
-   ////////////////////////////////////////////////////////////////////////////////
-
-   reg [48:0] ir;
+   input wire	     clk,
+   input wire	     reset);
 
    ////////////////////////////////////////////////////////////////////////////////
 

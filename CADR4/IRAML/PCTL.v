@@ -12,25 +12,20 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module PCTL(/*AUTOARG*/
-   // Outputs
-   promaddr, promenable,
-   // Inputs
-   pc, idebug, iwrited, promdisabled
-   );
+module PCTL
+  (input wire [13:0] pc,
+   input wire	     idebug,
+   input wire	     iwrited,
+   input wire	     promdisabled,
 
-   input [13:0] pc;
-   input wire idebug;
-   input wire iwrited;
-   input wire promdisabled;
-   output [8:0] promaddr;
-   output wire promenable;
+   output wire [8:0] promaddr,
+   output wire	     promenable,
+   input wire	     clk,
+   input wire	     reset);
 
-   ////////////////////////////////////////////////////////////////////////////////
-
-   wire [11:0] prompc;
-   wire bottom_1k;
-   wire promce;
+   wire [11:0]	     prompc;
+   wire		     bottom_1k;
+   wire		     promce;
 
    ////////////////////////////////////////////////////////////////////////////////
 

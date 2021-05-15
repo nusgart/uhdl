@@ -13,7 +13,8 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module SPY4(/*AUTOARG*/);
+module SPY4
+  ();
 
 endmodule
 

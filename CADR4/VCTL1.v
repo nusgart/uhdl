@@ -12,50 +12,37 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module VCTL1(/*AUTOARG*/
-   // Outputs
-   memprepare, memrq, memstart, pfr, pfw, vmaok, waiting, wrcyc,
-   // Inputs
-   clk, reset, state_alu, state_fetch, state_prefetch, state_write,
-   ifetch, lcinc, lvmo_22, lvmo_23, memack, memrd, memwr, needfetch
-   );
+module VCTL1
+  (input wire  state_alu,
+   input wire  state_fetch,
+   input wire  state_prefetch,
+   input wire  state_write,
 
-   input wire clk;
-   input wire reset;
+   input wire  ifetch,
+   input wire  lcinc,
+   input wire  lvmo_22,
+   input wire  lvmo_23,
+   input wire  memack,
+   input wire  memrd,
+   input wire  memwr,
+   input wire  needfetch,
+   output reg  memprepare,
+   output wire memrq,
+   output reg  memstart,
+   output wire pfr, // VMA permissions (read).
+   output wire pfw, // VMA permissions (write).
+   output reg  vmaok, // VMA access OK.
+   output wire waiting,
+   output reg  wrcyc,
 
-   input wire state_alu;
-   input wire state_fetch;
-   input wire state_prefetch;
-   input wire state_write;
+   input wire  clk,
+   input wire  reset);
 
-   input wire ifetch;
-   input wire lcinc;
-   input wire lvmo_22;
-   input wire lvmo_23;
-   input wire memack;
-   input wire memrd;
-   input wire memwr;
-   input wire needfetch;
-   output memprepare;
-   output wire memrq;
-   output memstart;
-   output wire pfr;                  // VMA permissions (read).
-   output wire pfw;                  // VMA permissions (write).
-   output vmaok;                // VMA access OK.
-   output wire waiting;
-   output wrcyc;
-
-   ////////////////////////////////////////////////////////////////////////////////
-
-   reg mbusy;
-   reg memcheck;
-   reg memprepare;
-   reg memstart;
-   reg rdcyc;
-   reg vmaok;
-   reg wrcyc;
-   wire mfinish;
-   wire memop;
+   reg	       mbusy;
+   reg	       memcheck;
+   reg	       rdcyc;
+   wire        mfinish;
+   wire        memop;
 
    ////////////////////////////////////////////////////////////////////////////////
 

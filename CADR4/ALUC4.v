@@ -12,47 +12,39 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module ALUC4(/*AUTOARG*/
-   // Outputs
-   osel, aluf, alumode, cin0, cin4_n, cin8_n, cin12_n, cin16_n,
-   cin20_n, cin24_n, cin28_n, cin32_n,
-   // Inputs
-   a, q, ir, iralu, irjump, div, mul, xout3, xout7, xout11, xout15,
-   xout19, xout23, xout27, xout31, yout3, yout7, yout11, yout15,
-   yout19, yout23, yout27, yout31
-   );
+module ALUC4
+  (input wire [31:0] a,
+   input wire [31:0] q,
+   input wire [48:0] ir,
 
-   input [31:0] a;
-   input [31:0] q;
-   input [48:0] ir;
+   input wire	     iralu,
+   input wire	     irjump,
 
-   input wire iralu;
-   input wire irjump;
+   input wire	     div,
+   input wire	     mul,
 
-   input wire div;
-   input wire mul;
+   output wire [1:0] osel,
 
-   output [1:0] osel;
+   output wire [3:0] aluf,
+   output wire	     alumode,
+   output wire	     cin0,
 
-   output [3:0] aluf;
-   output wire alumode;
-   output wire cin0;
+   input wire	     xout3, xout7, xout11, xout15, xout19, xout23, xout27, xout31,
+   input wire	     yout3, yout7, yout11, yout15, yout19, yout23, yout27, yout31,
+   output wire	     cin4_n, cin8_n, cin12_n, cin16_n, cin20_n, cin24_n, cin28_n, cin32_n,
 
-   input wire xout3, xout7, xout11, xout15, xout19, xout23, xout27, xout31;
-   input wire yout3, yout7, yout11, yout15, yout19, yout23, yout27, yout31;
-   output wire cin4_n, cin8_n, cin12_n, cin16_n, cin20_n, cin24_n, cin28_n, cin32_n;
+   input wire	     clk,
+   input wire	     reset);
 
-   ////////////////////////////////////////////////////////////////////////////////
+   wire		     aluadd;
+   wire		     alusub;
+   wire		     divaddcond;
+   wire		     divposlasttime;
+   wire		     divsubcond;
+   wire		     mulnop;
 
-   wire aluadd;
-   wire alusub;
-   wire divaddcond;
-   wire divposlasttime;
-   wire divsubcond;
-   wire mulnop;
-
-   wire xx0, xx1;
-   wire yy0, yy1;
+   wire		     xx0, xx1;
+   wire		     yy0, yy1;
 
    ////////////////////////////////////////////////////////////////////////////////
 
@@ -120,5 +112,5 @@ endmodule
 `default_nettype wire
 
 // Local Variables:
-// verilog-library-directories: ("..")
+// verilog-library-directories: (".." "../cores")
 // End:

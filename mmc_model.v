@@ -21,12 +21,12 @@ module mmc_model(/*AUTOARG*/
 
    input wire spiClk;
    input wire spiDataIn;
-   output spiDataOut;
+   output reg spiDataOut;
    input wire spiCS_n;
 
    ////////////////////////////////////////////////////////////////////////////////
 
-   parameter [3:0]
+   localparam [3:0]
      POWERUP = 4'd0,
      IDLE = 4'd1,
      CMD = 4'd2,
@@ -52,7 +52,6 @@ module mmc_model(/*AUTOARG*/
    reg [7:0] respByte;
    reg [7:0] rxByte;
    reg [7:0] wr_data[0:511];
-   reg spiDataOut;
 
 `ifdef USE_FILE
    integer file_fd;

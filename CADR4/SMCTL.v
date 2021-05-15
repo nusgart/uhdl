@@ -12,31 +12,26 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module SMCTL(/*AUTOARG*/
-   // Outputs
-   mskl, mskr, s0, s1, s2, s3, s4,
-   // Inputs
-   ir, irbyte, sh3, sh4
-   );
+module SMCTL
+  (input wire [48:0] ir,
+   input wire	     irbyte,
+   input wire	     sh3,
+   input wire	     sh4,
 
-   input [48:0] ir;
-   input wire irbyte;
-   input wire sh3;
-   input wire sh4;
+   output wire [4:0] mskl,
+   output wire [4:0] mskr,
 
-   output [4:0] mskl;
-   output [4:0] mskr;
+   output wire	     s0,
+   output wire	     s1,
+   output wire	     s2,
+   output wire	     s3,
+   output wire	     s4,
 
-   output wire s0;
-   output wire s1;
-   output wire s2;
-   output wire s3;
-   output wire s4;
+   input wire	     clk,
+   input wire	     reset);
 
-   ////////////////////////////////////////////////////////////////////////////////
-
-   wire mr;
-   wire sr;
+   wire		     mr;
+   wire		     sr;
 
    ////////////////////////////////////////////////////////////////////////////////
 

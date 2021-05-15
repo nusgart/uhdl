@@ -9,15 +9,12 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module TRAP(/*AUTOARG*/
-   // Outputs
-   trap,
-   // Inputs
-   boot_trap
-   );
+module TRAP
+  (input wire  boot_trap,
+   output wire trap,
 
-   input wire boot_trap;
-   output wire trap;
+   input wire  clk,
+   input wire  reset);
 
    ////////////////////////////////////////////////////////////////////////////////
 

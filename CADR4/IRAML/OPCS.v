@@ -12,27 +12,18 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module OPCS(/*AUTOARG*/
-   // Outputs
-   opc,
-   // Inputs
-   clk, reset, state_fetch, pc, opcclk, opcinh
-   );
+module OPCS
+  (input wire	     state_fetch,
 
-   input wire clk;
-   input wire reset;
+   input wire [13:0] pc,
+   input wire	     opcclk,
+   input wire	     opcinh,
+   output reg [13:0] opc,
 
-   input wire state_fetch;
+   input wire	     clk,
+   input wire	     reset);
 
-   input [13:0] pc;
-   input wire opcclk;
-   input wire opcinh;
-   output [13:0] opc;
-
-   ////////////////////////////////////////////////////////////////////////////////
-
-   reg [13:0] opc;
-   wire opcclka;
+   wire		     opcclka;
 
    ////////////////////////////////////////////////////////////////////////////////
 

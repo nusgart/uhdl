@@ -12,24 +12,21 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module VMEMDR(/*AUTOARG*/
-   // Outputs
-   pma, lvmo_22, lvmo_23, mapdrive,
-   // Inputs
-   state_alu, state_fetch, state_mmu, state_write, vmo, srcmap
-   );
+module VMEMDR
+  (input wire	      state_alu,
+   input wire	      state_fetch,
+   input wire	      state_mmu,
+   input wire	      state_write,
 
-   input wire state_alu;
-   input wire state_fetch;
-   input wire state_mmu;
-   input wire state_write;
+   input wire [23:0]  vmo,
+   input wire	      srcmap,
+   output wire [21:8] pma,
+   output wire	      lvmo_22,
+   output wire	      lvmo_23,
+   output wire	      mapdrive,
 
-   input [23:0] vmo;
-   input wire srcmap;
-   output [21:8] pma;
-   output wire lvmo_22;
-   output wire lvmo_23;
-   output wire mapdrive;
+   input wire	      clk,
+   input wire	      reset);
 
    ////////////////////////////////////////////////////////////////////////////////
 

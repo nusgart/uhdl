@@ -12,51 +12,41 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module LCC(/*AUTOARG*/
-   // Outputs
-   ifetch, lc0b, lcinc, needfetch, sh3, sh4, sintr, spc1a,
-   // Inputs
-   clk, reset, state_fetch, spc, lc, ir, bus_int, destlc, ext_int,
-   irdisp, lc_byte_mode, spop, srcspcpopreal
-   );
+module LCC
+  (input wire	     state_fetch,
 
-   input wire clk;
-   input wire reset;
+   input wire [18:0] spc,
+   input wire [25:0] lc,
+   input wire [48:0] ir,
+   input wire	     bus_int,
+   input wire	     destlc,
+   input wire	     ext_int,
+   input wire	     irdisp,
+   input wire	     lc_byte_mode,
+   input wire	     spop,
+   input wire	     srcspcpopreal,
+   output wire	     ifetch,
+   output wire	     lc0b,
+   output wire	     lcinc,
+   output wire	     needfetch,
+   output wire	     sh3,
+   output wire	     sh4,
+   output reg	     sintr,
+   output wire	     spc1a,
 
-   input wire state_fetch;
+   input wire	     clk,
+   input wire	     reset);
 
-   input [18:0] spc;
-   input [25:0] lc;
-   input [48:0] ir;
-   input wire bus_int;
-   input wire destlc;
-   input wire ext_int;
-   input wire irdisp;
-   input wire lc_byte_mode;
-   input wire spop;
-   input wire srcspcpopreal;
-   output wire ifetch;
-   output wire lc0b;
-   output wire lcinc;
-   output wire needfetch;
-   output wire sh3;
-   output wire sh4;
-   output sintr;
-   output wire spc1a;
-
-   ////////////////////////////////////////////////////////////////////////////////
-
-   reg newlc;
-   reg next_instrd;
-   reg sintr;
-   wire have_wrong_word;
-   wire inst_in_2nd_or_4th_quarter;
-   wire inst_in_left_half;
-   wire last_byte_in_word;
-   wire lc_modifies_mrot;
-   wire newlc_in;
-   wire next_instr;
-   wire spcmung;
+   reg		     newlc;
+   reg		     next_instrd;
+   wire		     have_wrong_word;
+   wire		     inst_in_2nd_or_4th_quarter;
+   wire		     inst_in_left_half;
+   wire		     last_byte_in_word;
+   wire		     lc_modifies_mrot;
+   wire		     newlc_in;
+   wire		     next_instr;
+   wire		     spcmung;
 
    ////////////////////////////////////////////////////////////////////////////////
 

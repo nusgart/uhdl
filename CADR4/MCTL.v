@@ -12,24 +12,21 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module MCTL(/*AUTOARG*/
-   // Outputs
-   madr, mpassm, mrp, mwp, srcm,
-   // Inputs
-   state_decode, state_write, ir, wadr, destm
-   );
+module MCTL
+  (input wire	     state_decode,
+   input wire	     state_write,
 
-   input wire state_decode;
-   input wire state_write;
+   input wire [48:0] ir,
+   input wire [9:0]  wadr,
+   input wire	     destm,
+   output wire [4:0] madr,
+   output wire	     mpassm,
+   output wire	     mrp,
+   output wire	     mwp,
+   output wire	     srcm,
 
-   input [48:0] ir;
-   input [9:0] wadr;
-   input wire destm;
-   output [4:0] madr;
-   output wire mpassm;
-   output wire mrp;
-   output wire mwp;
-   output wire srcm;
+   input wire	     clk,
+   input wire	     reset);
 
    ////////////////////////////////////////////////////////////////////////////////
 

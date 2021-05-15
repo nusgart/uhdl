@@ -3,37 +3,26 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module ps2_support(/*AUTOARG*/
-   // Outputs
-   kb_ready, kb_data, ms_ready, ms_x, ms_y, ms_button, ms_ps2_clk_out,
-   ms_ps2_data_out, ms_ps2_dir,
-   // Inputs
-   clk, reset, kb_ps2_clk_in, kb_ps2_data_in, ms_ps2_clk_in,
-   ms_ps2_data_in
-   );
+module ps2_support
+  (input wire 	      kb_ps2_clk_in,
+   input wire 	      kb_ps2_data_in,
+   output reg 	      kb_ready,
+   output reg [15:0] kb_data,
 
-   input wire clk;
-   input wire reset;
+   input wire 	      ms_ps2_clk_in,
+   input wire 	      ms_ps2_data_in,
+   output reg 	      ms_ready,
+   output reg [11:0]  ms_x, ms_y,
+   output reg [2:0]   ms_button,
+   output wire 	      ms_ps2_clk_out,
+   output wire 	      ms_ps2_data_out,
+   output wire 	      ms_ps2_dir,
 
-   input wire kb_ps2_clk_in;
-   input wire kb_ps2_data_in;
-   output kb_ready;
-   output [15:0] kb_data;
-
-   input wire ms_ps2_clk_in;
-   input wire ms_ps2_data_in;
-   output ms_ready;
-   output [11:0] ms_x, ms_y;
-   output [2:0] ms_button;
-   output wire ms_ps2_clk_out;
-   output wire ms_ps2_data_out;
-   output wire ms_ps2_dir;
+   input wire 	      clk,
+   input wire 	      reset);
 
    ////////////////////////////////////////////////////////////////////////////////
    // Keyboard
-
-   reg [15:0] kb_data;
-   reg kb_ready;
 
    wire [15:0] kb_bits;
    wire kb_strobe;
@@ -64,13 +53,8 @@ module ps2_support(/*AUTOARG*/
    ////////////////////////////////////////////////////////////////////////////////
    // Mouse
 
-   reg [11:0] ms_x, ms_y;
    wire [11:0] m_x, m_y;
-
-   reg ms_ready;
    wire m_ready;
-
-   reg [2:0] ms_button;
    wire [2:0] m_button;
 
    mouse mouse
@@ -93,18 +77,18 @@ module ps2_support(/*AUTOARG*/
 
    always @(posedge clk)
      if (reset) begin
-       /*AUTORESET*/
-       // Beginning of autoreset for uninitialized flops
-       ms_button <= 3'h0;
-       ms_ready <= 1'h0;
-       ms_x <= 12'h0;
-       ms_y <= 12'h0;
-       // End of automatics
+	/*AUTORESET*/
+	// Beginning of autoreset for uninitialized flops
+	ms_button <= 3'h0;
+	ms_ready <= 1'h0;
+	ms_x <= 12'h0;
+	ms_y <= 12'h0;
+	// End of automatics
      end else begin
-       ms_x <= m_x;
-       ms_y <= m_y;
-       ms_button <= m_button;
-       ms_ready <= m_ready;
+	ms_x <= m_x;
+	ms_y <= m_y;
+	ms_button <= m_button;
+	ms_ready <= m_ready;
      end
 
 endmodule

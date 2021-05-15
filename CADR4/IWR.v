@@ -12,26 +12,16 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module IWR(/*AUTOARG*/
-   // Outputs
-   iwr,
-   // Inputs
-   clk, reset, state_fetch, a, m
-   );
+module IWR
+  (input wire	     state_fetch,
 
-   input wire clk;
-   input wire reset;
+   input wire [31:0] a,
+   input wire [31:0] m,
 
-   input wire state_fetch;
+   output reg [48:0] iwr,
 
-   input [31:0] a;
-   input [31:0] m;
-
-   output [48:0] iwr;
-
-   ////////////////////////////////////////////////////////////////////////////////
-
-   reg [48:0] iwr;
+   input wire	     clk,
+   input wire	     reset);
 
    ////////////////////////////////////////////////////////////////////////////////
 

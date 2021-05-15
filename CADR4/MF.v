@@ -12,27 +12,21 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module MF(/*AUTOARG*/
-   // Outputs
-   mfdrive,
-   // Inputs
-   state_alu, state_fetch, state_mmu, state_write, pdlenb, spcenb,
-   srcm
-   );
+module MF
+  (input wire  state_alu,
+   input wire  state_fetch,
+   input wire  state_mmu,
+   input wire  state_write,
 
-   input wire state_alu;
-   input wire state_fetch;
-   input wire state_mmu;
-   input wire state_write;
+   input wire  pdlenb,
+   input wire  spcenb,
+   input wire  srcm,
+   output wire mfdrive,
 
-   input wire pdlenb;
-   input wire spcenb;
-   input wire srcm;
-   output wire mfdrive;
+   input wire  clk,
+   input wire  reset);
 
-   ////////////////////////////////////////////////////////////////////////////////
-
-   wire mfenb;
+   wire        mfenb;
 
    ////////////////////////////////////////////////////////////////////////////////
 

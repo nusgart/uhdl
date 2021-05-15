@@ -12,23 +12,18 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module SPCW(/*AUTOARG*/
-   // Outputs
-   spcw,
-   // Inputs
-   ipc, wpc, l, destspc, n
-   );
+module SPCW
+  (input wire [13:0]  ipc,
+   input wire [13:0]  wpc,
+   input wire [31:0]  l,
+   input wire	      destspc,
+   input wire	      n,
+   output wire [18:0] spcw,
 
-   input [13:0] ipc;
-   input [13:0] wpc;
-   input [31:0] l;
-   input wire destspc;
-   input wire n;
-   output [18:0] spcw;
+   input wire	      clk,
+   input wire	      reset);
 
-   ////////////////////////////////////////////////////////////////////////////////
-
-   wire [13:0] reta;
+   wire [13:0]	      reta;
 
    ////////////////////////////////////////////////////////////////////////////////
 

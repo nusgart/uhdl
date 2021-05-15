@@ -216,6 +216,8 @@ module spy_port_tb;
 
 endmodule
 
+`default_nettype wire
+
 // Local Variables:
 // verilog-library-directories: (".")
 // End:

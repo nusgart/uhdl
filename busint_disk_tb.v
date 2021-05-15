@@ -3,6 +3,10 @@
 
 // ISIM: wave add /
 
+`ifndef VCDFILE
+ `define VCDFILE "busint_disk_tb.vcd"
+`endif
+
 module busint_disk_tb;
 
    reg clk;
@@ -93,8 +97,6 @@ module busint_disk_tb;
 		 .spywr			(spywr),
 		 .spyreg		(spyreg[3:0]),
 		 // Inputs
-		 .clk			(clk),
-		 .reset			(reset),
 		 .addr			(addr[21:0]),
 		 .datain		(datain[31:0]),
 		 .req			(req),
@@ -117,7 +119,9 @@ module busint_disk_tb;
 		 .ms_y			(ms_y[11:0]),
 		 .ms_button		(ms_button[2:0]),
 		 .ms_ready		(ms_ready),
-		 .spyin			(spyin[15:0]));
+		 .spyin			(spyin[15:0]),
+		 .clk			(clk),
+		 .reset			(reset));
 
    task wait_for_disk_idle;
       reg [31:0] status;
@@ -161,18 +165,18 @@ module busint_disk_tb;
       integer i;
       begin
 	 for (i = 0; i < 256; i = i + 1)
-      	   busint.busint.dram.ram[i] = 0;
+	   busint.busint.dram.ram[i] = 0;
       end
    endtask
 
    task fill_ram;
       begin
-      	 busint.busint.dram.ram['o1000] = 'h11112222;
+	 busint.busint.dram.ram['o1000] = 'h11112222;
 	 busint.busint.dram.ram['o1001] = 'h33334444;
-     	 busint.busint.dram.ram['o1002] = 'h55556666;
-     	 busint.busint.dram.ram['o1003] = 'h12345678;
-     	 busint.busint.dram.ram['o1004] = 'h87654321;
-     	 busint.busint.dram.ram['o1005] = 'h00000000;
+	 busint.busint.dram.ram['o1002] = 'h55556666;
+	 busint.busint.dram.ram['o1003] = 'h12345678;
+	 busint.busint.dram.ram['o1004] = 'h87654321;
+	 busint.busint.dram.ram['o1005] = 'h00000000;
 	 busint.busint.dram.ram['o1006] = 'h00000000;
       end
    endtask
@@ -292,9 +296,9 @@ module busint_disk_tb;
 			.bd_rd		(bd_rd),
 			.bd_start	(bd_start),
 			.bd_wr		(bd_wr),
-			.clk		(clk),
 			.mmc_di		(mmc_di),
 			.mmcclk		(mmcclk),
+			.clk		(clk),
 			.reset		(reset));
 
    mmc_model mmc_card(
@@ -305,3 +309,9 @@ module busint_disk_tb;
 		      );
 
 endmodule
+
+`default_nettype wire
+
+// Local Variables:
+// verilog-library-directories: (".")
+// End:

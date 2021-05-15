@@ -13,23 +13,20 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module AMEM(/*AUTOARG*/
-   // Outputs
+module AMEM
+  (input wire [31:0]  l,
+   input wire [9:0]   aadr,
+   input wire	      arp,
+   input wire	      awp,
+
    output wire [31:0] amem,
-   // Inputs
-   input wire clk,
-   input wire reset,
-   input wire [31:0] l,
-   input wire [9:0] aadr,
-   input wire arp,
-   input wire awp
-   );
 
-   ////////////////////////////////////////////////////////////////////////////////
+   input wire	      clk,
+   input wire	      reset);
 
-   localparam ADDR_WIDTH = 10;
-   localparam DATA_WIDTH = 32;
-   localparam MEM_DEPTH = 1024;
+   localparam	      ADDR_WIDTH = 10;
+   localparam	      DATA_WIDTH = 32;
+   localparam	      MEM_DEPTH = 1024;
 
    ////////////////////////////////////////////////////////////////////////////////
 //`define INFER
@@ -86,5 +83,5 @@ endmodule
 `default_nettype wire
 
 // Local Variables:
-// verilog-library-directories: (".." "../cores/xilinx")
+// verilog-library-directories: (".." "../boards/pipistrello/cores/xilinx")
 // End:

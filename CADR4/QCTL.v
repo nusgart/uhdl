@@ -12,25 +12,22 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module QCTL(/*AUTOARG*/
-   // Outputs
-   qs0, qs1, qdrive,
-   // Inputs
-   state_alu, state_write, state_mmu, state_fetch, ir, iralu, srcq
-   );
+module QCTL
+  (input wire	     state_alu,
+   input wire	     state_write,
+   input wire	     state_mmu,
+   input wire	     state_fetch,
 
-   input wire state_alu;
-   input wire state_write;
-   input wire state_mmu;
-   input wire state_fetch;
+   input wire [48:0] ir,
+   input wire	     iralu,
+   input wire	     srcq,
 
-   input [48:0] ir;
-   input wire iralu;
-   input wire srcq;
+   output wire	     qs0,
+   output wire	     qs1,
+   output wire	     qdrive,
 
-   output wire qs0;
-   output wire qs1;
-   output wire qdrive;
+   input wire	     clk,
+   input wire	     reset);
 
    ////////////////////////////////////////////////////////////////////////////////
 

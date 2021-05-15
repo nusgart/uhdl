@@ -13,15 +13,41 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module xbus_disk(/*AUTOARG*/
-   // Outputs
-   dataout, interrupt, addrout, reqout, writeout, ackout, busreqout,
-   decodeout, bd_data_out, bd_cmd, bd_addr, bd_rd, bd_start, bd_wr,
-   disk_state,
-   // Inputs
-   clk, reset, addrin, datain, reqin, writein, ackin, busgrantin,
-   decodein, bd_state, bd_data_in, bd_bsy, bd_err, bd_iordy, bd_rdy
-   );
+module xbus_disk
+  (input wire [21:0]  addrin,
+   input wire [31:0]  datain,
+   input wire 	      reqin,
+   input wire 	      writein,
+   output wire [31:0] dataout,
+   input wire 	      ackin,
+   input wire 	      busgrantin,
+   input wire 	      decodein,
+   output wire 	      interrupt,
+
+   output reg [21:0]  addrout,
+   output reg 	      reqout,
+   output reg 	      writeout,
+   output wire 	      ackout,
+   output reg 	      busreqout,
+   output wire 	      decodeout,
+
+   input wire [11:0]  bd_state,
+   input wire [15:0]  bd_data_in,
+   input wire 	      bd_bsy,
+   input wire 	      bd_err,
+   input wire 	      bd_iordy,
+   input wire 	      bd_rdy,
+   output reg [15:0]  bd_data_out,
+   output reg [1:0]   bd_cmd,
+   output wire [23:0] bd_addr,
+   output reg 	      bd_rd,
+   output reg 	      bd_start,
+   output reg 	      bd_wr,
+
+   output wire [4:0]  disk_state,
+
+   input wire 	      clk,
+   input wire 	      reset);
 
    // Trident T-300
    parameter
@@ -29,92 +55,41 @@ module xbus_disk(/*AUTOARG*/
      DISK_HEADS = 19,
      DISK_BLOCKS = 17;
 
-   input wire clk;
-   input wire reset;
+   wire 	      active;
+   wire 	      decode;
 
-   input [21:0] addrin;
-   input [31:0] datain;
-   input wire reqin;
-   input wire writein;
-   output [31:0] dataout;
-   input wire ackin;
-   input wire busgrantin;
-   input wire decodein;
-   output wire interrupt;
+   reg [2:0] 	      disk_unit;
+   reg [11:0] 	      disk_cyl;
+   reg [4:0] 	      disk_head;
+   reg [4:0] 	      disk_block;
 
-   output [21:0] addrout;
-   output reqout;
-   output writeout;
-   output wire ackout;
-   output busreqout;
-   output wire decodeout;
+   reg [21:0] 	      disk_clp;
 
-   input [11:0] bd_state;
-   input [15:0] bd_data_in;
-   input wire bd_bsy;
-   input wire bd_err;
-   input wire bd_iordy;
-   input wire bd_rdy;
-   output [15:0] bd_data_out;
-   output [1:0] bd_cmd;
-   output [23:0] bd_addr;
-   output bd_rd;
-   output bd_start;
-   output bd_wr;
+   reg [15:0] 	      disk_data_hold;
 
-   output [4:0] disk_state;
+   reg [31:0] 	      ccw;
 
-   ////////////////////////////////////////////////////////////////////////////////
+   reg 		      clear_err;
+   reg 		      set_err;
 
-   wire active;
-   wire decode;
+   reg [7:0] 	      wc;
+   reg 		      inc_wc;
+   reg 		      clear_wc;
 
-   reg [2:0] disk_unit;
-   reg [11:0] disk_cyl;
-   reg [4:0] disk_head;
-   reg [4:0] disk_block;
+   reg 		      assert_int;
+   reg 		      deassert_int;
 
-   reg [21:0] disk_clp;
+   reg [31:0] 	      dma_data_hold;
+   reg [31:0] 	      dma_dataout;
+   reg [31:0] 	      reg_dataout;
 
-   reg [15:0] disk_data_hold;
+   reg 		      disk_start;
 
-   reg [31:0] ccw;
+   reg 		      done_intr_enb;
+   reg 		      attn_intr_enb;
 
-   reg clear_err;
-   reg set_err;
-
-   reg [7:0] wc;
-   reg inc_wc;
-   reg clear_wc;
-
-   reg assert_int;
-   reg deassert_int;
-
-   reg [31:0] dma_data_hold;
-   reg [31:0] dma_dataout;
-   reg [31:0] reg_dataout;
-
-   reg disk_start;
-
-   reg done_intr_enb;
-   reg attn_intr_enb;
-
-   reg inc_da;
-   reg inc_clp;
-
-   /*AUTOWIRE*/
-   /*AUTOREG*/
-   // Beginning of automatic regs (for this module's undeclared outputs)
-   reg [21:0]		addrout;
-   reg [1:0]		bd_cmd;
-   reg [15:0]		bd_data_out;
-   reg			bd_rd;
-   reg			bd_start;
-   reg			bd_wr;
-   reg			busreqout;
-   reg			reqout;
-   reg			writeout;
-   // End of automatics
+   reg 		      inc_da;
+   reg 		      inc_clp;
 
    ////////////////////////////////////////////////////////////////////////////////
    // Disk state machine
@@ -126,7 +101,7 @@ module xbus_disk(/*AUTOARG*/
      DISK_CMD_RECAL = 10'o1005,
      DISK_CMD_CLEAR = 10'o0405;
 
-   reg [9:0] disk_cmd;
+   reg [9:0] 	      disk_cmd;
 
    localparam [4:0]
      IDLE = 0,
@@ -152,8 +127,8 @@ module xbus_disk(/*AUTOARG*/
      RESET = 20,
      RESET0 = 21;
 
-   reg [4:0] state;
-   reg [4:0] state_ns;
+   reg [4:0] 	      state;
+   reg [4:0] 	      state_ns;
 
    always @(posedge clk)
      if (reset)
@@ -380,8 +355,8 @@ module xbus_disk(/*AUTOARG*/
 
    ////////////////////////////////////////////////////////////////////////////////
 
-   wire disk_state_rd;
-   wire disk_state_wr;
+   wire        disk_state_rd;
+   wire        disk_state_wr;
 
    assign disk_state_rd = (state == READ0) || (state == READ1) || (state == READ2) || (state == READ3);
    assign disk_state_wr = (state == WRITE0) || (state == WRITE1) || (state == WRITE2);
@@ -649,13 +624,13 @@ module xbus_disk(/*AUTOARG*/
    // = (cyl * 32 * 10) + cyl + cyl + cyl
    // = ((cyl * 8) + cyl + cyl) * 32 + cyl + cyl + cyl
    assign cylx10 = { 3'b0, disk_cyl, 3'b0 } + { 6'b0, disk_cyl } + { 6'b0, disk_cyl };
-   
+
    // (cyl * blocks/track * heads/unit) = cyl * 323
    assign cyl_blocks = { cylx10, 5'b0 } + { 11'b0, disk_cyl } + { 11'b0, disk_cyl } + { 11'b0, disk_cyl };
-   
+
    // (head * blocks/track) = head * 17
    assign head_blocks = { disk_head, 4'b0000 } + { 4'b0000, disk_head };
-   
+
    assign block_number = cyl_blocks + { 14'b0, head_blocks } + { 18'b0, disk_block };
 
    always @(posedge clk)

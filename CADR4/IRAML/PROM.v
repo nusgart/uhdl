@@ -13,22 +13,21 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module PROM(/*AUTOARG*/
-   // Outputs
-   iprom,
-   // Inputs
-   clk, promaddr
-   );
+module PROM
+  (input wire [8:0]   promaddr,
+   output wire [48:0] iprom,
 
-   input wire clk;
+   input wire	      clk,
+   input wire	      reset);
 
-   input [8:0] promaddr;
-   output [48:0] iprom;
+   localparam	      ADDR_WIDTH = 9;
+   localparam	      DATA_WIDTH = 49;
+   localparam	      MEM_DEPTH = 512;
 
    ////////////////////////////////////////////////////////////////////////////////
 
-   rom #(.ADDRESS_WIDTH(9), .DATA_WIDTH(49), .MEM_DEPTH(512),
-	 .MEM_FILE("promh.hex")) PROM
+   rom #(.ADDRESS_WIDTH(ADDR_WIDTH), .DATA_WIDTH(DATA_WIDTH), .MEM_DEPTH(MEM_DEPTH),
+	 .MEM_FILE("CADR4/IRAML/promh.hex")) PROM
      (.clk_i(clk), .addr_i(promaddr), .q_o(iprom));
 
 endmodule

@@ -13,36 +13,28 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module ALU(/*AUTOARG*/
-   // Outputs
-   alu, aeqm, xout3, xout7, xout11, xout15, xout19, xout23, xout27,
-   xout31, yout3, yout7, yout11, yout15, yout19, yout23, yout27,
-   yout31,
-   // Inputs
-   aluf, alumode, a, m, cin0, cin4_n, cin8_n, cin12_n, cin16_n,
-   cin20_n, cin24_n, cin28_n, cin32_n
-   );
+module ALU
+  (input wire [3:0]   aluf,
+   input wire	      alumode,
 
-   input [3:0] aluf;
-   input wire alumode;
+   input wire [31:0]  a,
+   input wire [31:0]  m,
 
-   input [31:0] a;
-   input [31:0] m;
+   output wire [32:0] alu,
+   output wire	      aeqm,
 
-   output [32:0] alu;
-   output wire aeqm;
+   input wire	      cin0, cin4_n, cin8_n, cin12_n, cin16_n, cin20_n, cin24_n, cin28_n, cin32_n,
 
-   input wire cin0, cin4_n, cin8_n, cin12_n, cin16_n, cin20_n, cin24_n, cin28_n, cin32_n;
+   output wire	      xout3, xout7, xout11, xout15, xout19, xout23, xout27, xout31,
+   output wire	      yout3, yout7, yout11, yout15, yout19, yout23, yout27, yout31,
 
-   output wire xout3, xout7, xout11, xout15, xout19, xout23, xout27, xout31;
-   output wire yout3, yout7, yout11, yout15, yout19, yout23, yout27, yout31;
+   input wire	      clk,
+   input wire	      reset);
 
-   ////////////////////////////////////////////////////////////////////////////////
+   wire [2:0]	      nc_alu;
+   wire [7:0]	      aeqm_bits;
 
-   wire [2:0] nc_alu;
-   wire [7:0] aeqm_bits;
-
-   wire   COUT_N, AEB, X, Y;
+   wire		      COUT_N, AEB, X, Y;
 
    ////////////////////////////////////////////////////////////////////////////////
 
@@ -139,5 +131,5 @@ endmodule
 `default_nettype wire
 
 // Local Variables:
-// verilog-library-directories: ("..")
+// verilog-library-directories: (".." "../cores")
 // End:

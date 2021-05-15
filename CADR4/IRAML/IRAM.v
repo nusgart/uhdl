@@ -28,24 +28,20 @@
 
 `timescale 1ns/1ps
 `default_nettype none
-`define ISE
-module IRAM(/*AUTOARG*/
-   // Outputs
+
+module IRAM
+  (input wire [13:0]  pc,
+   input wire [48:0]  iwr,
+   input wire	      iwe,
+
    output wire [48:0] iram,
-   // Inputs
-   input wire clk,
-   input wire reset,
-   input wire [13:0] pc,
-   input wire [48:0] iwr, 
-   input wire iwe
-   );
 
+   input wire	      clk,
+   input wire	      reset);
 
-   ////////////////////////////////////////////////////////////////////////////////
-
-   localparam ADDR_WIDTH = 14;
-   localparam DATA_WIDTH = 49;
-   localparam MEM_DEPTH = 16384;
+   localparam	      ADDR_WIDTH = 14;
+   localparam	      DATA_WIDTH = 49;
+   localparam	      MEM_DEPTH = 16384;
 
    ////////////////////////////////////////////////////////////////////////////////
 `ifdef SIMULATION
@@ -100,5 +96,5 @@ endmodule
 `default_nettype wire
 
 // Local Variables:
-// verilog-library-directories: ("../.." "../../cores/xilinx")
+// verilog-library-directories: ("../.." "../../boards/pipistrello/cores/xilinx")
 // End:

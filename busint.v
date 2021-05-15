@@ -14,92 +14,83 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module busint(/*AUTOARG*/
-   // Outputs
-   dataout, ack, load, interrupt, sdram_addr, sdram_data_out,
-   sdram_req, sdram_write, bd_data_out, bd_cmd, bd_addr, bd_rd,
-   bd_start, bd_wr, disk_state, vram_addr, vram_data_out, vram_req,
-   vram_write, promdisable, spyout, spyrd, spywr, spyreg,
-   // Inputs
-   clk, reset, addr, datain, req, write, sdram_data_in, sdram_done,
-   sdram_ready, bd_state, bd_data_in, bd_bsy, bd_err, bd_iordy,
-   bd_rdy, vram_data_in, vram_done, vram_ready, kb_data, kb_ready,
-   ms_x, ms_y, ms_button, ms_ready, spyin
-   );
+module busint
+  (
+   // Bus interface ///////////////////////////////////////////////////////////////
 
-   input wire clk;
-   input wire reset;
-
-   input [21:0] addr;
-   input [31:0] datain;
-   input wire req;
-   input wire write;
-   output [31:0] dataout;
-   output wire ack;
-   output wire load;
-   output wire interrupt;
+   input wire [21:0]  addr,
+   input wire [31:0]  datain,
+   input wire 	      req,
+   input wire 	      write,
+   output wire [31:0] dataout,
+   output wire 	      ack,
+   output wire 	      load,
+   output wire 	      interrupt,
 
    // ---!!! //////////////////////////////////////////////////////////////////////
 
-   input [31:0] sdram_data_in;
-   input wire sdram_done;
-   input wire sdram_ready;
-   output [21:0] sdram_addr;
-   output [31:0] sdram_data_out;
-   output wire sdram_req;
-   output wire sdram_write;
+   input wire [31:0]  sdram_data_in,
+   input wire 	      sdram_done,
+   input wire 	      sdram_ready,
+   output wire [21:0] sdram_addr,
+   output wire [31:0] sdram_data_out,
+   output wire 	      sdram_req,
+   output wire 	      sdram_write,
 
    // ---!!! //////////////////////////////////////////////////////////////////////
 
-   input [11:0] bd_state;
-   input [15:0] bd_data_in;
-   input wire bd_bsy;
-   input wire bd_err;
-   input wire bd_iordy;
-   input wire bd_rdy;
-   output [15:0] bd_data_out;
-   output [1:0] bd_cmd;
-   output [23:0] bd_addr;
-   output wire bd_rd;
-   output wire bd_start;
-   output wire bd_wr;
+   input wire [11:0]  bd_state,
+   input wire [15:0]  bd_data_in,
+   input wire 	      bd_bsy,
+   input wire 	      bd_err,
+   input wire 	      bd_iordy,
+   input wire 	      bd_rdy,
+   output wire [15:0] bd_data_out,
+   output wire [1:0]  bd_cmd,
+   output wire [23:0] bd_addr,
+   output wire 	      bd_rd,
+   output wire 	      bd_start,
+   output wire 	      bd_wr,
 
-   output [4:0] disk_state;
-
-   // ---!!! //////////////////////////////////////////////////////////////////////
-
-   input [31:0] vram_data_in;
-   input wire vram_done;
-   input wire vram_ready;
-   output [14:0] vram_addr;
-   output [31:0] vram_data_out;
-   output wire vram_req;
-   output wire vram_write;
+   output wire [4:0]  disk_state,
 
    // ---!!! //////////////////////////////////////////////////////////////////////
 
-   input [15:0] kb_data;
-   input wire kb_ready;
+   input wire [31:0]  vram_data_in,
+   input wire 	      vram_done,
+   input wire 	      vram_ready,
+   output wire [14:0] vram_addr,
+   output wire [31:0] vram_data_out,
+   output wire 	      vram_req,
+   output wire 	      vram_write,
 
-   input [11:0] ms_x;
-   input [11:0] ms_y;
-   input [2:0] ms_button;
-   input wire ms_ready;
+   // ---!!! //////////////////////////////////////////////////////////////////////
+
+   input wire [15:0]  kb_data,
+   input wire 	      kb_ready,
+
+   input wire [11:0]  ms_x,
+   input wire [11:0]  ms_y,
+   input wire [2:0]   ms_button,
+   input wire 	      ms_ready,
 
    // ---!!! ///////////////////////////////////////////////////////////////////////
 
-   output wire promdisable;
+   output wire 	      promdisable,
 
    // ---!!! //////////////////////////////////////////////////////////////////////
 
-   input [15:0] spyin;
-   output [15:0] spyout;
-   output wire spyrd;
-   output wire spywr;
-   output [3:0] spyreg;
+   input wire [15:0]  spyin,
+   output wire [15:0] spyout,
+   output wire 	      spyrd,
+   output wire 	      spywr,
+   output wire [3:0]  spyreg,
 
    ////////////////////////////////////////////////////////////////////////////////
 
+   input wire 	      clk,
+   input wire 	      reset);
+   
    wire device_ack;
    wire timedout;
    wire req_valid;
@@ -123,7 +114,6 @@ module busint(/*AUTOARG*/
    wire ack_disk;
    wire ack_tv;
    wire ack_io;
-   wire ack_chaos;
    wire ack_unibus;
    wire ack_spy;
    wire ack_dram;
@@ -131,7 +121,6 @@ module busint(/*AUTOARG*/
    wire decode_disk;
    wire decode_tv;
    wire decode_io;
-   wire decode_chaos;
    wire decode_unibus;
    wire decode_spy;
    wire decode_dram;
@@ -139,7 +128,6 @@ module busint(/*AUTOARG*/
    wire [31:0] dataout_disk;
    wire [31:0] dataout_dram;
    wire [31:0] dataout_io;
-   wire [31:0] dataout_chaos;
    wire [31:0] dataout_spy;
    wire [31:0] dataout_tv;
    wire [31:0] dataout_unibus;
@@ -147,7 +135,6 @@ module busint(/*AUTOARG*/
    wire interrupt_disk;
    wire interrupt_tv;
    wire interrupt_io;
-   wire interrupt_chaos;
    wire interrupt_unibus;
 
    /*AUTOWIRE*/
@@ -262,21 +249,6 @@ module busint(/*AUTOARG*/
       .kb_ready				(kb_ready),
       .kb_data				(kb_data[15:0]));
 
-   xbus_chaos chaos
-     (
-      .dataout(dataout_chaos),
-      .req(req_valid),
-      .ack(ack_chaos),
-      .decode(decode_chaos),
-      .interrupt(interrupt_chaos),
-      /*AUTOINST*/
-      // Inputs
-      .clk				(clk),
-      .reset				(reset),
-      .addr				(addr[21:0]),
-      .datain				(datain[31:0]),
-      .write				(write));
-
    xbus_unibus unibus
      (
       .dataout(dataout_unibus),
@@ -333,7 +305,7 @@ module busint(/*AUTOARG*/
 	state <= state_ns;
      end
 
-   assign device_ack = ack_dram | ack_disk | ack_tv | ack_io | ack_chaos | ack_unibus | ack_spy | timedout;
+   assign device_ack = ack_dram | ack_disk | ack_tv | ack_io | ack_unibus | ack_spy | timedout;
 
    assign state_ns =
 		    (state == IDLE && req) ? REQ :
@@ -389,13 +361,12 @@ module busint(/*AUTOARG*/
 		   (req & decode_disk & ~write) ? dataout_disk :
 		   (req & decode_tv & ~write) ? dataout_tv :
 		   (req & decode_io & ~write) ? dataout_io :
-		   (req & decode_chaos & ~write) ? dataout_chaos :
 		   (req & decode_unibus & ~write) ? dataout_unibus :
 		   (req & decode_spy & ~write) ? dataout_spy :
 		   (req & timedout & ~write) ? 32'h00000000 : 32'hffffffff;
    assign ack = (load || state == WAIT);
    assign load = device_ack & ~write & (state == REQ);
-   assign interrupt = interrupt_disk | interrupt_tv | interrupt_io | interrupt_chaos | interrupt_unibus;
+   assign interrupt = interrupt_disk | interrupt_tv | interrupt_io | interrupt_unibus;
 
 endmodule
 

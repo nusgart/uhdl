@@ -5,34 +5,27 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module mmc_wrapper(/*AUTOARG*/
-   // Outputs
-   state_out, data_out, done, mmc_cs, mmc_do, mmc_sclk,
-   // Inputs
-   cmd, data_in, clk, init, mmc_clk, mmc_di, rd, reset, send, speed,
-   stop, wr
-   );
+module mmc_wrapper
+  (input wire 	     mmc_clk,
+   input wire 	     mmc_di,
+   output wire 	     mmc_cs,
+   output wire 	     mmc_do,
+   output wire 	     mmc_sclk,
+   input wire [47:0] cmd,
 
-   input [47:0] cmd;
-   input [7:0] data_in;
-   input wire clk;
-   input wire init;
-   input wire mmc_clk;
-   input wire mmc_di;
-   input wire rd;
-   input wire reset;
-   input wire send;
-   input wire speed;
-   input wire stop;
-   input wire wr;
-   output [3:0] state_out;
-   output [7:0] data_out;
-   output wire done;
-   output wire mmc_cs;
-   output wire mmc_do;
-   output wire mmc_sclk;
+   input wire [7:0]  data_in,
+   input wire 	     init,
+   input wire 	     rd,
+   input wire 	     send,
+   input wire 	     speed,
+   input wire 	     stop,
+   input wire 	     wr,
+   output wire [3:0] state_out,
+   output wire [7:0] data_out,
+   output wire 	     done,
 
-   ////////////////////////////////////////////////////////////////////////////////
+   input wire 	     clk,
+   input wire 	     reset);
 
    reg [13:0] mmc2sampled0, mmc2sampled1;
    reg [62:0] sampled2mmc0, sampled2mmc1;
@@ -107,9 +100,9 @@ module mmc_wrapper(/*AUTOARG*/
       .state_out(mmc2state_out),
       /*AUTOINST*/
       // Outputs
+      .mmc_sclk				(mmc_sclk),
       .mmc_cs				(mmc_cs),
       .mmc_do				(mmc_do),
-      .mmc_sclk				(mmc_sclk),
       // Inputs
       .mmc_di				(mmc_di),
       .reset				(reset));
