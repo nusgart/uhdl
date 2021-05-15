@@ -1,6 +1,7 @@
 export VERILATOR_ROOT = $(HOME)/w/verilator
 
-BOARD		?= pipistrello
+BOARD		?= arty_a7
+#BOARD		?= pipistrello
 PROJECT		= $(if $(BOARD), uhdl_$(BOARD), uhdl)
 
 include cadr.mk
