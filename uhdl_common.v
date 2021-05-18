@@ -262,6 +262,14 @@ module uhdl_common
    ////////////////////////////////////////////////////////////////////////////////
 
    assign busint_addr = {pma, vma[7:0]};
+   
+   // diagnostic output wires
+   assign promdis = set_promdisable;
+   assign bdst = bd_state[11:0];
+   assign o_bd_addr = bd_addr[23:0];
+   assign o_bda = {bd_bsy, bd_start, bd_rd, bd_wr, bd_cmd};
+   
+   
 
    busint busint
      (

@@ -6,13 +6,14 @@
 // 
 // Create Date: 07/21/2019 02:53:29 PM
 // Design Name: LM-3 CADR implementation
-// Module Name: ram_controller_arty_a7
+// Module Name: ram_controller_X7
 // Project Name: LM-3
 // Target Devices: Artix 7 XC7A35t
 // Tool Versions: Vivado 2018.3, MIG v4.2
 // Description: 
-//   Controls memory interfaces for the Artix-7.  In particular, this acts as
-// the CPU-DDR3 SDRAM interface and as the VRAM interface.
+//   Controls memory interfaces for Xilinx 7-series FPGAs.  In particular, this
+//  acts as the CPU-DDR3 SDRAM interface and as the VRAM interface.  This will
+//  work with any 7-series FPGA using a MIG DDR3 controller IP in UI mode.
 //
 // Dependencies: 
 // dram_memif, ise_VRAM
@@ -23,7 +24,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module ram_controller_arty_a7(
+module ram_controller_X7(
   /// DDR3 interface
   // data interface
   inout wire [15:0] ddr3_dq,

@@ -13,7 +13,7 @@ TOPLEVEL	= uhdl_arty_a7
 SYN_SRCS_V	+= \
 	uhdl_arty_a7.v \
 	support_arty_a7.v \
-	ram_controller_arty_a7.v \
+	ram_controller_X7.sv \
 	led_controller.sv
 
 SYN_SRCS_IP	+= \

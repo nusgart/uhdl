@@ -24,6 +24,7 @@ module led_controller(
     output wire [15:0] led,
     input wire sysclk,
     input wire reset,
+    input wire sdram_reset,
     input wire [2:0] rst_st,
     input wire [11:0] bdst,
     input wire prom_disable,
@@ -50,7 +51,9 @@ module led_controller(
    initial prom_disabled = 0;
    
    always @(posedge sysclk) begin
-     if (prom_disable) begin
+     if (reset) begin
+        prom_disabled <= 0;
+     end else if (prom_disable) begin
         prom_disabled <= 1;
       end else begin
         prom_disabled <= prom_disabled;
@@ -61,7 +64,9 @@ module led_controller(
    initial calib_done = 0;
    
    always @(posedge sysclk) begin
-     if (ddr_calib_done) begin
+     if (sdram_reset) begin
+       calib_done <= 1'b0;
+     end else if (ddr_calib_done) begin
        calib_done <= 1;
      end else begin
        calib_done <= calib_done;
@@ -73,7 +78,9 @@ module led_controller(
    initial booted = 0;
    
    always @(posedge sysclk) begin
-     if (boot) begin
+     if (reset) begin
+       booted <= 0;
+     end else if (boot) begin
        booted <= 1;
       end else begin
         booted <= booted;
@@ -139,6 +146,13 @@ module led_controller(
        4'b0110: begin
          r_led <= lc[25:10];
        end
+       
+       4'b0111: begin
+         r_led[13:0] <= pc;
+         r_led[14] <= booted;
+         r_led[15] <= prom_disabled;
+       end
+       
        endcase
      end
    end
