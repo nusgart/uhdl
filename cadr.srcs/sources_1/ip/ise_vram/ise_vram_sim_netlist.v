@@ -3,8 +3,8 @@
 // Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
 // Date        : Wed Jun  5 13:49:25 2019
 // Host        : nnusgart-G3-3579 running 64-bit Ubuntu 18.04.2 LTS
-// Command     : write_verilog -force -mode funcsim
-//               /home/nnusgart/Xilinx/cadr/cadr.srcs/sources_1/ip/ise_vram/ise_vram_sim_netlist.v
+// Command     : write_verilog -force -mode funcsim -rename_top ise_vram -prefix
+//               ise_vram_ ise_vram_sim_netlist.v
 // Design      : ise_vram
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -214,7 +214,6 @@ module ise_vram
         .web(web));
 endmodule
 
-(* ORIG_REF_NAME = "bindec" *) 
 module ise_vram_bindec
    (ena_array,
     addra,
@@ -264,7 +263,6 @@ module ise_vram_bindec_0
         .O(enb_array));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_generic_cstr" *) 
 module ise_vram_blk_mem_gen_generic_cstr
    (douta,
     doutb,
@@ -1013,7 +1011,6 @@ module ise_vram_blk_mem_gen_generic_cstr
         .web(web));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_mux" *) 
 module ise_vram_blk_mem_gen_mux
    (douta,
     DOADO,
@@ -2845,7 +2842,6 @@ module ise_vram_blk_mem_gen_mux__parameterized0
         .R(1'b0));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
 module ise_vram_blk_mem_gen_prim_width
    (ram_douta,
     ram_doutb,
@@ -4176,7 +4172,6 @@ module ise_vram_blk_mem_gen_prim_width__parameterized9
         .web(web));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
 module ise_vram_blk_mem_gen_prim_wrapper
    (ram_douta,
     ram_doutb,
@@ -9752,7 +9747,6 @@ module ise_vram_blk_mem_gen_prim_wrapper__parameterized9
         .O(addrb_12_sn_1));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_top" *) 
 module ise_vram_blk_mem_gen_top
    (douta,
     doutb,
@@ -9832,7 +9826,7 @@ endmodule
 (* C_WEA_WIDTH = "1" *) (* C_WEB_WIDTH = "1" *) (* C_WRITE_DEPTH_A = "21504" *) 
 (* C_WRITE_DEPTH_B = "21504" *) (* C_WRITE_MODE_A = "WRITE_FIRST" *) (* C_WRITE_MODE_B = "WRITE_FIRST" *) 
 (* C_WRITE_WIDTH_A = "32" *) (* C_WRITE_WIDTH_B = "32" *) (* C_XDEVICEFAMILY = "artix7" *) 
-(* ORIG_REF_NAME = "blk_mem_gen_v8_4_2" *) (* downgradeipidentifiedwarnings = "yes" *) 
+(* downgradeipidentifiedwarnings = "yes" *) 
 module ise_vram_blk_mem_gen_v8_4_2
    (clka,
     rsta,
@@ -10078,7 +10072,6 @@ module ise_vram_blk_mem_gen_v8_4_2
         .web(web));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_v8_4_2_synth" *) 
 module ise_vram_blk_mem_gen_v8_4_2_synth
    (douta,
     doutb,

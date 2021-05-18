@@ -1,10 +1,10 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
-// Date        : Wed Jun  5 13:49:17 2019
+// Date        : Wed Jun  5 13:49:16 2019
 // Host        : nnusgart-G3-3579 running 64-bit Ubuntu 18.04.2 LTS
-// Command     : write_verilog -force -mode synth_stub
-//               /home/nnusgart/Xilinx/cadr/cadr.srcs/sources_1/ip/ise_IRAM/ise_IRAM_stub.v
+// Command     : write_verilog -force -mode synth_stub -rename_top ise_IRAM -prefix
+//               ise_IRAM_ ise_IRAM_stub.v
 // Design      : ise_IRAM
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7a35ticsg324-1L

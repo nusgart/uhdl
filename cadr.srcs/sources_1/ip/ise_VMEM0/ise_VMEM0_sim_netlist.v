@@ -1,10 +1,10 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
-// Date        : Wed Jun  5 13:47:34 2019
+// Date        : Wed Jun  5 13:47:33 2019
 // Host        : nnusgart-G3-3579 running 64-bit Ubuntu 18.04.2 LTS
-// Command     : write_verilog -force -mode funcsim
-//               /home/nnusgart/Xilinx/cadr/cadr.srcs/sources_1/ip/ise_VMEM0/ise_VMEM0_sim_netlist.v
+// Command     : write_verilog -force -mode funcsim -rename_top ise_VMEM0 -prefix
+//               ise_VMEM0_ ise_VMEM0_sim_netlist.v
 // Design      : ise_VMEM0
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -214,7 +214,6 @@ module ise_VMEM0
         .web(web));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_generic_cstr" *) 
 module ise_VMEM0_blk_mem_gen_generic_cstr
    (douta,
     doutb,
@@ -269,7 +268,6 @@ module ise_VMEM0_blk_mem_gen_generic_cstr
         .web(web));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
 module ise_VMEM0_blk_mem_gen_prim_width
    (douta,
     doutb,
@@ -324,7 +322,6 @@ module ise_VMEM0_blk_mem_gen_prim_width
         .web(web));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
 module ise_VMEM0_blk_mem_gen_prim_wrapper
    (douta,
     doutb,
@@ -502,7 +499,6 @@ module ise_VMEM0_blk_mem_gen_prim_wrapper
         .WEBWE({1'b0,1'b0,web,web}));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_top" *) 
 module ise_VMEM0_blk_mem_gen_top
    (douta,
     doutb,
@@ -582,7 +578,7 @@ endmodule
 (* C_WEA_WIDTH = "1" *) (* C_WEB_WIDTH = "1" *) (* C_WRITE_DEPTH_A = "2048" *) 
 (* C_WRITE_DEPTH_B = "2048" *) (* C_WRITE_MODE_A = "WRITE_FIRST" *) (* C_WRITE_MODE_B = "WRITE_FIRST" *) 
 (* C_WRITE_WIDTH_A = "5" *) (* C_WRITE_WIDTH_B = "5" *) (* C_XDEVICEFAMILY = "artix7" *) 
-(* ORIG_REF_NAME = "blk_mem_gen_v8_4_2" *) (* downgradeipidentifiedwarnings = "yes" *) 
+(* downgradeipidentifiedwarnings = "yes" *) 
 module ise_VMEM0_blk_mem_gen_v8_4_2
    (clka,
     rsta,
@@ -793,7 +789,6 @@ module ise_VMEM0_blk_mem_gen_v8_4_2
         .web(web));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_v8_4_2_synth" *) 
 module ise_VMEM0_blk_mem_gen_v8_4_2_synth
    (douta,
     doutb,

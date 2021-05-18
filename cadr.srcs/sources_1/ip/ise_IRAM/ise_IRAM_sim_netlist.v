@@ -3,8 +3,8 @@
 // Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
 // Date        : Wed Jun  5 13:49:17 2019
 // Host        : nnusgart-G3-3579 running 64-bit Ubuntu 18.04.2 LTS
-// Command     : write_verilog -force -mode funcsim
-//               /home/nnusgart/Xilinx/cadr/cadr.srcs/sources_1/ip/ise_IRAM/ise_IRAM_sim_netlist.v
+// Command     : write_verilog -force -mode funcsim -rename_top ise_IRAM -prefix
+//               ise_IRAM_ ise_IRAM_sim_netlist.v
 // Design      : ise_IRAM
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -197,7 +197,6 @@ module ise_IRAM
         .web(1'b0));
 endmodule
 
-(* ORIG_REF_NAME = "bindec" *) 
 module ise_IRAM_bindec
    (ena_array,
     ena,
@@ -233,7 +232,6 @@ module ise_IRAM_bindec
         .O(ena_array[2]));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_generic_cstr" *) 
 module ise_IRAM_blk_mem_gen_generic_cstr
    (douta,
     addra,
@@ -664,7 +662,6 @@ module ise_IRAM_blk_mem_gen_generic_cstr
         .wea(wea));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_mux" *) 
 module ise_IRAM_blk_mem_gen_mux
    (douta,
     addra,
@@ -1290,7 +1287,6 @@ module ise_IRAM_blk_mem_gen_mux
         .R(1'b0));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
 module ise_IRAM_blk_mem_gen_prim_width
    (douta,
     clka,
@@ -2057,7 +2053,6 @@ module ise_IRAM_blk_mem_gen_prim_width__parameterized9
         .wea(wea));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
 module ise_IRAM_blk_mem_gen_prim_wrapper
    (douta,
     clka,
@@ -7496,7 +7491,6 @@ module ise_IRAM_blk_mem_gen_prim_wrapper__parameterized9
         .WEBWE({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_top" *) 
 module ise_IRAM_blk_mem_gen_top
    (douta,
     addra,
@@ -7552,7 +7546,7 @@ endmodule
 (* C_WEA_WIDTH = "1" *) (* C_WEB_WIDTH = "1" *) (* C_WRITE_DEPTH_A = "16384" *) 
 (* C_WRITE_DEPTH_B = "16384" *) (* C_WRITE_MODE_A = "NO_CHANGE" *) (* C_WRITE_MODE_B = "WRITE_FIRST" *) 
 (* C_WRITE_WIDTH_A = "49" *) (* C_WRITE_WIDTH_B = "49" *) (* C_XDEVICEFAMILY = "artix7" *) 
-(* ORIG_REF_NAME = "blk_mem_gen_v8_4_2" *) (* downgradeipidentifiedwarnings = "yes" *) 
+(* downgradeipidentifiedwarnings = "yes" *) 
 module ise_IRAM_blk_mem_gen_v8_4_2
    (clka,
     rsta,
@@ -7850,7 +7844,6 @@ module ise_IRAM_blk_mem_gen_v8_4_2
         .wea(wea));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_v8_4_2_synth" *) 
 module ise_IRAM_blk_mem_gen_v8_4_2_synth
    (douta,
     addra,

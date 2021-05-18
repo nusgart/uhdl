@@ -1,10 +1,10 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
--- Date        : Wed Jun  5 13:49:26 2019
+-- Date        : Wed Jun  5 13:49:25 2019
 -- Host        : nnusgart-G3-3579 running 64-bit Ubuntu 18.04.2 LTS
--- Command     : write_vhdl -force -mode funcsim
---               /home/nnusgart/Xilinx/cadr/cadr.srcs/sources_1/ip/ise_vram/ise_vram_sim_netlist.vhdl
+-- Command     : write_vhdl -force -mode funcsim -rename_top ise_vram -prefix
+--               ise_vram_ ise_vram_sim_netlist.vhdl
 -- Design      : ise_vram
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -20,8 +20,6 @@ entity ise_vram_bindec is
     addra : in STD_LOGIC_VECTOR ( 4 downto 0 );
     ena : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of ise_vram_bindec : entity is "bindec";
 end ise_vram_bindec;
 
 architecture STRUCTURE of ise_vram_bindec is
@@ -116,8 +114,6 @@ entity ise_vram_blk_mem_gen_mux is
     \douta[29]\ : in STD_LOGIC_VECTOR ( 1 downto 0 );
     \douta[31]_0\ : in STD_LOGIC_VECTOR ( 1 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of ise_vram_blk_mem_gen_mux : entity is "blk_mem_gen_mux";
 end ise_vram_blk_mem_gen_mux;
 
 architecture STRUCTURE of ise_vram_blk_mem_gen_mux is
@@ -2267,8 +2263,6 @@ entity ise_vram_blk_mem_gen_prim_wrapper is
     wea : in STD_LOGIC_VECTOR ( 0 to 0 );
     web : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of ise_vram_blk_mem_gen_prim_wrapper : entity is "blk_mem_gen_prim_wrapper";
 end ise_vram_blk_mem_gen_prim_wrapper;
 
 architecture STRUCTURE of ise_vram_blk_mem_gen_prim_wrapper is
@@ -7940,8 +7934,6 @@ entity ise_vram_blk_mem_gen_prim_width is
     wea : in STD_LOGIC_VECTOR ( 0 to 0 );
     web : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of ise_vram_blk_mem_gen_prim_width : entity is "blk_mem_gen_prim_width";
 end ise_vram_blk_mem_gen_prim_width;
 
 architecture STRUCTURE of ise_vram_blk_mem_gen_prim_width is
@@ -8901,8 +8893,6 @@ entity ise_vram_blk_mem_gen_generic_cstr is
     ena : in STD_LOGIC;
     enb : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of ise_vram_blk_mem_gen_generic_cstr : entity is "blk_mem_gen_generic_cstr";
 end ise_vram_blk_mem_gen_generic_cstr;
 
 architecture STRUCTURE of ise_vram_blk_mem_gen_generic_cstr is
@@ -10126,8 +10116,6 @@ entity ise_vram_blk_mem_gen_top is
     ena : in STD_LOGIC;
     enb : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of ise_vram_blk_mem_gen_top : entity is "blk_mem_gen_top";
 end ise_vram_blk_mem_gen_top;
 
 architecture STRUCTURE of ise_vram_blk_mem_gen_top is
@@ -10167,8 +10155,6 @@ entity ise_vram_blk_mem_gen_v8_4_2_synth is
     ena : in STD_LOGIC;
     enb : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of ise_vram_blk_mem_gen_v8_4_2_synth : entity is "blk_mem_gen_v8_4_2_synth";
 end ise_vram_blk_mem_gen_v8_4_2_synth;
 
 architecture STRUCTURE of ise_vram_blk_mem_gen_v8_4_2_synth is
@@ -10409,8 +10395,6 @@ entity ise_vram_blk_mem_gen_v8_4_2 is
   attribute C_WRITE_WIDTH_B of ise_vram_blk_mem_gen_v8_4_2 : entity is 32;
   attribute C_XDEVICEFAMILY : string;
   attribute C_XDEVICEFAMILY of ise_vram_blk_mem_gen_v8_4_2 : entity is "artix7";
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of ise_vram_blk_mem_gen_v8_4_2 : entity is "blk_mem_gen_v8_4_2";
   attribute downgradeipidentifiedwarnings : string;
   attribute downgradeipidentifiedwarnings of ise_vram_blk_mem_gen_v8_4_2 : entity is "yes";
 end ise_vram_blk_mem_gen_v8_4_2;

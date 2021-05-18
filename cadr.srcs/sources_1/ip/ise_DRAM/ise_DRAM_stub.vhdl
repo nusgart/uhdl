@@ -1,10 +1,10 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
--- Date        : Wed Jun  5 13:47:34 2019
+-- Date        : Wed Jun  5 13:47:33 2019
 -- Host        : nnusgart-G3-3579 running 64-bit Ubuntu 18.04.2 LTS
--- Command     : write_vhdl -force -mode synth_stub
---               /home/nnusgart/Xilinx/cadr/cadr.srcs/sources_1/ip/ise_DRAM/ise_DRAM_stub.vhdl
+-- Command     : write_vhdl -force -mode synth_stub -rename_top ise_DRAM -prefix
+--               ise_DRAM_ ise_DRAM_stub.vhdl
 -- Design      : ise_DRAM
 -- Purpose     : Stub declaration of top-level module interface
 -- Device      : xc7a35ticsg324-1L
