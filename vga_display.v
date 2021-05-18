@@ -19,7 +19,7 @@ module vga_display
    input wire	      vga_clk,	// VGA clock.
    input wire	      reset);
 
-   `define FULLSCR
+   //`define FULLSCR
    `ifndef FULLSCR
    `ifdef LOWRES
    parameter H_DISP = 640;//1920;//1280;
@@ -74,7 +74,7 @@ module vga_display
    localparam V_COUNTER_MAX = (V_DISP + V_FPORCH + V_SYNC + V_BPORCH);
 
    localparam H_BOX_OFFSET = (H_DISP - BOX_WIDTH) / 2;
-   localparam V_BOX_OFFSET = 0;//(V_DISP - BOX_HEIGHT) / 2;
+   localparam V_BOX_OFFSET = (V_DISP - BOX_HEIGHT) / 2;
 
    reg [10:0] h_counter;
    reg [10:0] h_pos;
