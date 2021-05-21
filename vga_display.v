@@ -33,6 +33,12 @@ module vga_display
    parameter V_BPORCH = 33;//30;
    `define NEG_POL
    `else
+   /*
+    * Mode information obtained from XRandR
+    * 1920x1080 (0x6ca) 148.500MHz +HSync +VSync
+    *        h: width  1920 start 2008 end 2052 total 2200 skew    0 clock  67.50KHz
+    *        v: height 1080 start 1084 end 1089 total 1125           clock  60.00Hz
+    */
    parameter H_DISP = 1920;
    parameter H_FPORCH = 88;
    parameter H_SYNC = 44;
@@ -76,10 +82,10 @@ module vga_display
    localparam H_BOX_OFFSET = (H_DISP - BOX_WIDTH) / 2;
    localparam V_BOX_OFFSET = (V_DISP - BOX_HEIGHT) / 2;
 
-   reg [10:0] h_counter;
-   reg [10:0] h_pos;
-   reg [10:0] v_counter;
-   reg [10:0] v_pos;
+   reg [12:0] h_counter;
+   reg [12:0] h_pos;
+   reg [12:0] v_counter;
+   reg [12:0] v_pos;
    reg [14:0] v_addr;
 
    wire h_in_border;
@@ -147,7 +153,7 @@ module vga_display
      if (localreset) begin
 	/*AUTORESET*/
 	// Beginning of autoreset for uninitialized flops
-	h_counter <= 11'h0;
+	h_counter <= 13'h0;
 	// End of automatics
      end else if (h_counter >= H_COUNTER_MAX)
        h_counter <= 0;
@@ -158,7 +164,7 @@ module vga_display
      if (localreset) begin
 	/*AUTORESET*/
 	// Beginning of autoreset for uninitialized flops
-	v_counter <= 11'h0;
+	v_counter <= 13'h0;
 	// End of automatics
      end else if (vclk) begin
 	if (v_counter >= V_COUNTER_MAX)
@@ -174,7 +180,7 @@ module vga_display
      if (localreset) begin
 	/*AUTORESET*/
 	// Beginning of autoreset for uninitialized flops
-	h_pos <= 11'h0;
+	h_pos <= 13'h0;
 	// End of automatics
      end else if (h_in_box) begin
 	if (h_pos >= BOX_WIDTH)
