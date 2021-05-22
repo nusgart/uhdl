@@ -164,7 +164,7 @@ set_property IOSTANDARD LVCMOS33 [get_ports {led[5]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {led[4]}]
 
 create_clock -period 10.000 -name sysclk -waveform {0.000 5.000} [get_ports sysclk]
-create_generated_clock -name clkcnt -source [get_pins mc/u_dram_memif/u_dram_memif_mig/u_ddr3_infrastructure/gen_mmcm.mmcm_i/CLKFBOUT] -divide_by 2 [get_pins {clkcnt_reg[0]/Q}]
+create_generated_clock -name clkcnt -source [get_pins rc/u_dram_memif/u_dram_memif_mig/u_ddr3_infrastructure/gen_mmcm.mmcm_i/CLKFBOUT] -divide_by 2 [get_pins {clkcnt_reg[0]/Q}]
 
 set_property PACKAGE_PIN B8 [get_ports {button[3]}]
 set_property PACKAGE_PIN B9 [get_ports {button[2]}]

@@ -3,8 +3,8 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module xbus_unibus
-  (input wire [21:0] addr,
+module xbus_unibus (
+  input wire [21:0] addr,
    input wire [31:0] datain,
    input wire	     req,
    input wire	     write,

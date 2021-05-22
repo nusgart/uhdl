@@ -349,7 +349,7 @@ module block_dev_mmc
    assign bd_state = { mmc_active, state };
 
    //always @(state or r_bd_cmd or bd_cmd_hold or r_bd_start or bd_rd or bd_wr or mmc_done or mmc_out or mmc_hold or bd_data_out or data_hold or lba32 or inited or wc or bc) begin
-   always @(state or r_bd_cmd or bd_cmd_hold or r_bd_start or bd_rd or bd_wr or mmc_done or mmc_out or mmc_hold or bd_data_out) begin
+   always @(*) begin
       state_next = state;
       mmc_cmd = 0;
       mmc_rd = 0;

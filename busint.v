@@ -167,8 +167,7 @@ module busint
       .sdram_ready			(sdram_ready),
       .sdram_done			(sdram_done));
 
-   xbus_disk disk
-     (
+   xbus_disk disk (
       .addrin(addr),
       .datain(disk_datain),
       .dataout(dataout_disk),
@@ -203,8 +202,7 @@ module busint
       .bd_iordy				(bd_iordy),
       .bd_rdy				(bd_rdy));
 
-   xbus_tv tv
-     (
+   xbus_tv tv (
       .dataout(dataout_tv),
       .req(req_valid),
       .ack(ack_tv),
@@ -226,8 +224,7 @@ module busint
       .vram_done			(vram_done),
       .vram_ready			(vram_ready));
 
-   xbus_io io
-     (
+   xbus_io io (
       .datain(datain),
       .dataout(dataout_io),
       .req(req_valid),
@@ -249,8 +246,7 @@ module busint
       .kb_ready				(kb_ready),
       .kb_data				(kb_data[15:0]));
 
-   xbus_unibus unibus
-     (
+   xbus_unibus unibus (
       .dataout(dataout_unibus),
       .req(req_valid),
       .ack(ack_unibus),
@@ -261,13 +257,13 @@ module busint
       .promdisable			(promdisable),
       // Inputs
       .clk				(clk),
+      .reset                            (reset),
       .addr				(addr[21:0]),
       .datain				(datain[31:0]),
       .write				(write),
       .timedout				(timedout));
 
-   xbus_spy spy
-     (
+   xbus_spy spy (
       .dataout(dataout_spy),
       .req(req_valid),
       .ack(ack_spy),
@@ -280,6 +276,7 @@ module busint
       .spywr				(spywr),
       // Inputs
       .clk				(clk),
+      .reset                            (reset),
       .addr				(addr[21:0]),
       .datain				(datain[31:0]),
       .write				(write),
